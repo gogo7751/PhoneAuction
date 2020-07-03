@@ -6,6 +6,7 @@
 
     <!-- Black Series -->
     <color name="black">#000000</color>
+    <color name="alpha_black">#CC000000</color>
 
 
 </resources>

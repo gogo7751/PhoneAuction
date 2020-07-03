@@ -2,6 +2,29 @@
     <string name="app_name">PhoneAuction</string>
     <string name="you_know_nothing">You know nothing</string>
 
+    <!-- Post -->
+    <string name="select_post_spinner">請選擇</string>
+
     <!-- General -->
     <string name="nt_dollars_">NT$%d</string>
+
+    <!-- Brand -->
+    <string-array name="brand_list">
+        <item>Apple</item>
+        <item>SAMSUNG</item>
+        <item>Sony</item>
+        <item>Google</item>
+        <item>ASUS</item>
+        <item>OPPO</item>
+        <item>HUAWEI</item>
+        <item>小米</item>
+        <item>HTC</item>
+        <item>Nokia</item>
+        <item>realme</item>
+        <item>LG</item>
+        <item>SUGAR</item>
+        <item>SHARP</item>
+        <item>koobee</item>
+        <item>vivo</item>
+    </string-array>
 </resources>

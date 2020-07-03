@@ -134,8 +134,6 @@ dependencies {
 
     testImplementation "org.mockito:mockito-core:2.19.0"
     androidTestImplementation "org.mockito:mockito-core:2.19.0"
-//    androidTestImplementation "org.mockito:mockito-inline:2.19.0"
-    androidTestImplementation "org.mockito:mockito-android:2.19.0"
 
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     androidTestImplementation 'androidx.test:runner:1.2.0'

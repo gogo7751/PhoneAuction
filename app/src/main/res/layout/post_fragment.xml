@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable
+            name="viewModel"
+            type="com.eric.phoneauction.postFragment.PostViewModel" />
 
     </data>
 
@@ -11,47 +14,292 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="44dp"
-            android:layout_height="44dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="16dp"
-            android:src="@drawable/icons_back"
-            app:layout_constraintTop_toTopOf="parent"
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/view_post_bg"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/imageView_post_back"
+                    android:layout_width="33dp"
+                    android:layout_height="33dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:src="@drawable/icons_back"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/text_post_image_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/noto_sans_bold"
+                    android:letterSpacing="0.15"
+                    android:text="新增商品照片"
+                    android:textColor="@color/alpha_black"
+                    android:textSize="20dp"
+                    app:layout_constraintStart_toStartOf="@id/imageView_post_back"
+                    app:layout_constraintTop_toBottomOf="@id/imageView_post_back" />
+
+                <ImageView
+                    android:id="@+id/image_post1"
+                    android:layout_width="66dp"
+                    android:layout_height="66dp"
+                    android:layout_marginTop="8dp"
+                    android:src="@drawable/ic_post_image"
+                    android:alpha="0.7"
+                    app:layout_constraintStart_toStartOf="@id/text_post_image_title"
+                    app:layout_constraintTop_toBottomOf="@id/text_post_image_title" />
+
+                <ImageView
+                    android:id="@+id/image_post2"
+                    android:layout_width="66dp"
+                    android:layout_height="66dp"
+                    android:layout_marginStart="8dp"
+                    android:src="@drawable/ic_post_image"
+                    android:alpha="0.7"
+                    app:layout_constraintStart_toEndOf="@id/image_post1"
+                    app:layout_constraintTop_toTopOf="@+id/image_post1" />
+
+                <ImageView
+                    android:id="@+id/image_post3"
+                    android:layout_width="66dp"
+                    android:layout_height="66dp"
+                    android:layout_marginStart="8dp"
+                    android:src="@drawable/ic_post_image"
+                    android:alpha="0.7"
+                    app:layout_constraintStart_toEndOf="@id/image_post2"
+                    app:layout_constraintTop_toTopOf="@+id/image_post1" />
+
+                <ImageView
+                    android:id="@+id/image_post4"
+                    android:layout_width="66dp"
+                    android:layout_height="66dp"
+                    android:layout_marginStart="8dp"
+                    android:src="@drawable/ic_post_image"
+                    android:alpha="0.7"
+                    app:layout_constraintStart_toEndOf="@id/image_post3"
+                    app:layout_constraintTop_toTopOf="@+id/image_post1" />
+
+                <ImageView
+                    android:id="@+id/image_post5"
+                    android:layout_width="66dp"
+                    android:layout_height="66dp"
+                    android:layout_marginStart="8dp"
+                    android:src="@drawable/ic_post_image"
+                    android:alpha="0.7"
+                    app:layout_constraintStart_toEndOf="@id/image_post4"
+                    app:layout_constraintTop_toTopOf="@+id/image_post1" />
+
+                <TextView
+                    android:id="@+id/text_post_brand_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/noto_sans_bold"
+                    android:letterSpacing="0.15"
+                    android:text="選擇品牌"
+                    android:textColor="@color/alpha_black"
+                    android:textSize="20dp"
+                    app:layout_constraintStart_toStartOf="@id/imageView_post_back"
+                    app:layout_constraintTop_toBottomOf="@id/image_post1" />
+
+                <Spinner
+                    android:id="@+id/spinner_brand"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:spinnerMode="dialog"
+                    app:layout_constraintStart_toStartOf="@+id/text_post_brand_title"
+                    app:layout_constraintTop_toBottomOf="@+id/text_post_brand_title" />
+
+                <TextView
+                    android:id="@+id/text_post_name_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/noto_sans_bold"
+                    android:letterSpacing="0.15"
+                    android:text="選擇型號"
+                    android:textColor="@color/alpha_black"
+                    android:textSize="20dp"
+                    app:layout_constraintStart_toStartOf="@id/imageView_post_back"
+                    app:layout_constraintTop_toBottomOf="@+id/spinner_brand" />
+
+                <Spinner
+                    android:id="@+id/spinner_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintStart_toStartOf="@+id/text_post_name_title"
+                    app:layout_constraintTop_toBottomOf="@+id/text_post_name_title" />
+
+                <TextView
+                    android:id="@+id/text_post_name_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/noto_sans_bold"
+                    android:letterSpacing="0.15"
+                    android:text="商品描述"
+                    android:textColor="@color/alpha_black"
+                    android:textSize="20dp"
+                    app:layout_constraintStart_toStartOf="@id/spinner_name"
+                    app:layout_constraintTop_toBottomOf="@id/spinner_name" />
+
+
+                <EditText
+                    android:id="@+id/edit_post_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:hint="請描述外觀、功能、顏色、容量等"
+                    app:layout_constraintStart_toStartOf="@+id/text_post_name_description"
+                    app:layout_constraintTop_toBottomOf="@+id/text_post_name_description" />
+
+                <TextView
+                    android:id="@+id/text_post_name_tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/noto_sans_bold"
+                    android:letterSpacing="0.15"
+                    android:text="選擇出售方式"
+                    android:textSize="20dp"
+                    android:textColor="@color/alpha_black"
+                    app:layout_constraintStart_toStartOf="@+id/edit_post_description"
+                    app:layout_constraintTop_toBottomOf="@+id/edit_post_description" />
+
+                <Spinner
+                    android:id="@+id/spinner_tag"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintStart_toStartOf="@+id/text_post_name_tag"
+                    app:layout_constraintTop_toBottomOf="@+id/text_post_name_tag" />
+
+                <TextView
+                    android:id="@+id/text_post_name_direct"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/noto_sans_bold"
+                    android:letterSpacing="0.15"
+                    android:text="直購"
+                    android:textSize="20dp"
+                    android:textColor="@color/alpha_black"
+                    app:layout_constraintStart_toStartOf="@+id/spinner_tag"
+                    app:layout_constraintTop_toBottomOf="@+id/spinner_tag" />
+
+                <EditText
+                    android:id="@+id/edit_post_direct"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="輸入金額"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:inputType="number"
+                    app:layout_constraintStart_toStartOf="@+id/text_post_name_direct"
+                    app:layout_constraintTop_toBottomOf="@+id/text_post_name_direct" />
+
+                <TextView
+                    android:id="@+id/text_post_name_auction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/noto_sans_bold"
+                    android:letterSpacing="0.15"
+                    android:text="拍賣"
+                    android:textSize="20dp"
+                    android:textColor="@color/alpha_black"
+                    app:layout_constraintStart_toStartOf="@+id/edit_post_direct"
+                    app:layout_constraintTop_toBottomOf="@+id/edit_post_direct" />
+
+                <EditText
+                    android:id="@+id/edit_post_auction"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="輸入起標金額"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:inputType="number"
+                    app:layout_constraintStart_toStartOf="@+id/text_post_name_auction"
+                    app:layout_constraintTop_toBottomOf="@+id/text_post_name_auction" />
+
+                <TextView
+                    android:id="@+id/text_post_trade"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/noto_sans_bold"
+                    android:letterSpacing="0.15"
+                    android:text="交易方式"
+                    android:textSize="20dp"
+                    android:textColor="@color/alpha_black"
+                    app:layout_constraintStart_toStartOf="@+id/edit_post_auction"
+                    app:layout_constraintTop_toBottomOf="@+id/edit_post_auction" />
+
+                <Spinner
+                    android:id="@+id/spinner_trade"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintStart_toStartOf="@+id/text_post_trade"
+                    app:layout_constraintTop_toBottomOf="@+id/text_post_trade" />
+
+
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
 
         <View
             android:id="@+id/view_post_bg"
             android:layout_width="match_parent"
             android:layout_height="61dp"
             android:background="@android:color/white"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/button_post"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:background="@drawable/edittext_home"
-            android:fontFamily="@font/noto_sans"
-            android:text="刊登"
-            android:textSize="18dp"
+            android:layout_height="40dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:letterSpacing="0.15"
+            android:background="@drawable/edittext_home"
             android:ellipsize="end"
-            app:layout_constraintStart_toStartOf="@+id/view_post_bg"
+            android:fontFamily="@font/noto_sans"
+            android:letterSpacing="0.15"
+            android:text="刊登"
+            android:textSize="18dp"
             app:layout_constraintBottom_toBottomOf="@+id/view_post_bg"
             app:layout_constraintEnd_toEndOf="@+id/view_post_bg"
-            app:layout_constraintTop_toTopOf="@id/view_post_bg"
-            />
+            app:layout_constraintStart_toStartOf="@+id/view_post_bg"
+            app:layout_constraintTop_toTopOf="@id/view_post_bg" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 </layout>
