@@ -1,0 +1,24 @@
+package com.eric.phoneauction.chatFragment
+
+
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+
+import com.eric.phoneauction.R
+
+class ChatFragment : Fragment() {
+
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.chat_fragment, container, false)
+    }
+
+
+
+}

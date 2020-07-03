@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">PhoneAuction</string>
+    <string name="you_know_nothing">You know nothing</string>
+
+    <!-- General -->
+    <string name="nt_dollars_">NT$%d</string>
 </resources>

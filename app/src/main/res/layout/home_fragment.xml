@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.eric.phoneauction.homeFragment.HomeViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/layout_swipe_refresh_home"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/button_auction">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview_home"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="2"
+                tools:listitem="@layout/item_home_gird"
+                tools:itemCount="8">
+            </androidx.recyclerview.widget.RecyclerView>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@style/ProgressTheme"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:setupApiStatus="@{viewModel.status}"
+            tools:visibility="gone" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:setupApiErrorMessage="@{viewModel.error}"
+            tools:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/image_search"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="8dp"
+            android:alpha="0.7"
+            android:background="@drawable/ic_search_black"
+            app:layout_constraintTop_toTopOf="@id/image_home"
+            app:layout_constraintStart_toStartOf="@id/image_home"
+            app:layout_constraintBottom_toBottomOf="@id/image_home"/>
+
+        <ImageView
+            android:id="@+id/image_home"
+            android:layout_width="305dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@drawable/edittext_home"/>
+
+        <EditText
+            android:id="@+id/edit_search"
+            android:layout_width="280dp"
+            android:layout_height="40dp"
+            android:maxLines="1"
+            android:hint="搜尋 Phone 拍賣"
+            android:background="@null"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/noto_sans"
+            app:layout_constraintTop_toTopOf="@id/image_home"
+            app:layout_constraintStart_toEndOf="@id/image_search"/>
+
+        <ImageView
+            android:id="@+id/image_collection"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="@drawable/ic_heart"
+            android:alpha="0.7"
+            android:layout_marginTop="18dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <Button
+            android:id="@+id/button_auction"
+            android:layout_width="140dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/edittext_home"
+            android:fontFamily="@font/noto_sans"
+            android:text="拍賣商品"
+            android:textSize="18dp"
+            android:letterSpacing="0.15"
+            android:ellipsize="end"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/image_home" />
+
+        <Button
+            android:id="@+id/button_direct"
+            android:layout_width="140dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/edittext_home"
+            android:text="直購商品"
+            android:textSize="18dp"
+            android:letterSpacing="0.15"
+            android:ellipsize="end"
+            android:fontFamily="@font/noto_sans"
+            app:layout_constraintStart_toEndOf="@id/button_auction"
+            app:layout_constraintTop_toBottomOf="@id/image_home" />
+
+        <Button
+            android:id="@+id/button_sort"
+            android:layout_width="67dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/edittext_home"
+            android:text="排序"
+            android:textSize="15dp"
+            android:letterSpacing="0.15"
+            android:ellipsize="end"
+            android:fontFamily="@font/noto_sans"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image_collection" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
