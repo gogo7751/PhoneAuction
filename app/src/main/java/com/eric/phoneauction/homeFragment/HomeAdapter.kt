@@ -32,6 +32,7 @@ class HomeAdapter(val viewModel: HomeViewModel) : androidx.recyclerview.widget.L
         }
     }
 
+
     override fun onCreateViewHolder(parent: ViewGroup,
                                     viewType: Int): HomeViewHolder {
         return HomeViewHolder(

@@ -10,6 +10,7 @@ import androidx.databinding.BindingAdapter
 import app.appworks.school.publisher.network.LoadApiStatus
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.eric.phoneauction.data.TimeUtil
 import com.eric.phoneauction.ext.toDisplayFormat
 
 @BindingAdapter("setupApiErrorMessage")
@@ -98,7 +99,7 @@ fun bindPrice(textView: TextView, price: Int?) {
 
 @BindingAdapter("timeToDisplayFormat")
 fun bindDisplayFormatTime(textView: TextView, time: Long?) {
-    textView.text = time?.toDisplayFormat()
+    textView.text = time?.let { TimeUtil.StampToDate(it) }
 }
 
 

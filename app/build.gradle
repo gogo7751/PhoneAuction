@@ -1,17 +1,10 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
-
 apply plugin: 'kotlin-kapt'
-
 apply plugin: "androidx.navigation.safeargs.kotlin"
-
 apply plugin: 'com.google.gms.google-services'
-
 apply plugin: "kotlin-allopen"
-
 apply plugin: 'org.jetbrains.dokka-android'
 apply plugin: 'com.jfrog.bintray'
 apply plugin: 'maven-publish'
@@ -78,6 +71,9 @@ dependencies {
 
     // Room and Lifecycle dependencies
     implementation "androidx.room:room-runtime:$version_room"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
     kapt "androidx.room:room-compiler:$version_room"
 
     // Navigation
@@ -145,7 +141,6 @@ dependencies {
 }
 
 
-
 dokka {
     outputFormat = 'html'
     outputDirectory = "$buildDir/javadoc"
@@ -159,7 +154,7 @@ buildscript {
         jcenter()
         mavenCentral()
         maven {
-            url  "https://dl.bintray.com/kotlin/kotlin-eap"
+            url "https://dl.bintray.com/kotlin/kotlin-eap"
         }
     }
     dependencies {

@@ -17,5 +17,13 @@ interface PhoneAuctionRepository {
 
     fun getLiveEvent(): MutableLiveData<List<Event>>
 
+    suspend fun post(event: Event): Result<Boolean>
 
+    suspend fun getAuction(): Result<List<Event>>
+
+    suspend fun getDirect(): Result<List<Event>>
+
+    fun getAuction1():  MutableLiveData<List<Event>>
+
+    fun getDirect1():  MutableLiveData<List<Event>>
 }

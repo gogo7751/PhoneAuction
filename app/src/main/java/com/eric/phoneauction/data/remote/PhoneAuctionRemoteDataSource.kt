@@ -1,5 +1,6 @@
 package com.eric.phoneauction.data.remote
 
+import android.icu.util.Calendar
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.eric.phoneauction.PhoneAuctionApplication
@@ -34,7 +35,6 @@ object PhoneAuctionRemoteDataSource :
                         val event = document.toObject(Event::class.java)
                         list.add(event)
                     }
-                    Log.d("123con", "${continuation.resume(Result.Success(list))}")
                 } else {
                     task.exception?.let {
 
@@ -73,4 +73,138 @@ object PhoneAuctionRemoteDataSource :
             }
         return liveData
     }
+
+    override suspend fun post(event: Event): Result<Boolean> = suspendCoroutine { continuation ->
+        val articles = FirebaseFirestore.getInstance().collection(PATH_EVENTS)
+        val document = articles.document()
+
+        event.id = document.id
+        event.createdTime = Calendar.getInstance().timeInMillis
+        event.endTime = Calendar.getInstance().timeInMillis + 259200
+
+        document
+            .set(event)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Logger.i("Publish: $event")
+                    continuation.resume(Result.Success(true))
+                } else {
+                    task.exception?.let {
+
+                        Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
+                        continuation.resume(Result.Error(it))
+                        return@addOnCompleteListener
+                    }
+                    continuation.resume(Result.Fail(PhoneAuctionApplication.instance.getString(R.string.you_know_nothing)))
+                }
+            }
+    }
+
+    override suspend fun getAuction(): Result<List<Event>> = suspendCoroutine { continuation ->
+        FirebaseFirestore.getInstance()
+            .collection(PATH_EVENTS)
+            .whereEqualTo("tag","auction")
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val list = mutableListOf<Event>()
+                    for (document in task.result!!) {
+                        Logger.d(document.id + " => " + document.data)
+
+                        val event = document.toObject(Event::class.java)
+                        list.add(event)
+                    }
+                } else {
+                    task.exception?.let {
+
+                        Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
+                        continuation.resume(Result.Error(it))
+                        return@addOnCompleteListener
+                    }
+                    continuation.resume(Result.Fail(PhoneAuctionApplication.instance.getString(R.string.you_know_nothing)))
+                }
+            }
+    }
+
+    override suspend fun getDirect(): Result<List<Event>> = suspendCoroutine { continuation ->
+        FirebaseFirestore.getInstance()
+            .collection(PATH_EVENTS)
+            .whereEqualTo("tag","direct")
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val list = mutableListOf<Event>()
+                    for (document in task.result!!) {
+                        Logger.d(document.id + " => " + document.data)
+
+                        val event = document.toObject(Event::class.java)
+                        list.add(event)
+                    }
+                } else {
+                    task.exception?.let {
+
+                        Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
+                        continuation.resume(Result.Error(it))
+                        return@addOnCompleteListener
+                    }
+                    continuation.resume(Result.Fail(PhoneAuctionApplication.instance.getString(R.string.you_know_nothing)))
+                }
+            }
+    }
+
+        override fun getAuction1(): MutableLiveData<List<Event>> {
+        val liveData = MutableLiveData<List<Event>>()
+
+        FirebaseFirestore.getInstance()
+            .collection(PATH_EVENTS)
+            .whereEqualTo("tag","auction")
+            .addSnapshotListener { snapshot, exception ->
+
+                Logger.i("addSnapshotListener detect")
+
+                exception?.let {
+                    Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
+                }
+
+                val list = mutableListOf<Event>()
+                for (document in snapshot!!) {
+                    Logger.d(document.id + " => " + document.data)
+
+                    val article = document.toObject(Event::class.java)
+                    list.add(article)
+                }
+
+                liveData.value = list
+            }
+        return liveData
+    }
+
+    override fun getDirect1(): MutableLiveData<List<Event>> {
+        val liveData = MutableLiveData<List<Event>>()
+
+        FirebaseFirestore.getInstance()
+            .collection(PATH_EVENTS)
+            .whereEqualTo("tag","direct")
+            .addSnapshotListener { snapshot, exception ->
+
+                Logger.i("addSnapshotListener detect")
+
+                exception?.let {
+                    Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
+                }
+
+                val list = mutableListOf<Event>()
+                for (document in snapshot!!) {
+                    Logger.d(document.id + " => " + document.data)
+
+                    val article = document.toObject(Event::class.java)
+                    list.add(article)
+                }
+
+                liveData.value = list
+            }
+        return liveData
+    }
 }
+
+

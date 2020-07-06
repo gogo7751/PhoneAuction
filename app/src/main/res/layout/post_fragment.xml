@@ -7,7 +7,8 @@
         <variable
             name="viewModel"
             type="com.eric.phoneauction.postFragment.PostViewModel" />
-
+        <import type="app.appworks.school.publisher.network.LoadApiStatus"/>
+        <import type="android.view.View"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,12 +16,15 @@
         android:layout_height="match_parent">
 
         <ScrollView
+            android:id="@+id/scrollView_post"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@id/view_post_bg"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -54,8 +58,8 @@
                     android:layout_width="66dp"
                     android:layout_height="66dp"
                     android:layout_marginTop="8dp"
-                    android:src="@drawable/ic_post_image"
                     android:alpha="0.7"
+                    android:src="@drawable/ic_post_image"
                     app:layout_constraintStart_toStartOf="@id/text_post_image_title"
                     app:layout_constraintTop_toBottomOf="@id/text_post_image_title" />
 
@@ -64,8 +68,8 @@
                     android:layout_width="66dp"
                     android:layout_height="66dp"
                     android:layout_marginStart="8dp"
-                    android:src="@drawable/ic_post_image"
                     android:alpha="0.7"
+                    android:src="@drawable/ic_post_image"
                     app:layout_constraintStart_toEndOf="@id/image_post1"
                     app:layout_constraintTop_toTopOf="@+id/image_post1" />
 
@@ -74,8 +78,8 @@
                     android:layout_width="66dp"
                     android:layout_height="66dp"
                     android:layout_marginStart="8dp"
-                    android:src="@drawable/ic_post_image"
                     android:alpha="0.7"
+                    android:src="@drawable/ic_post_image"
                     app:layout_constraintStart_toEndOf="@id/image_post2"
                     app:layout_constraintTop_toTopOf="@+id/image_post1" />
 
@@ -84,8 +88,8 @@
                     android:layout_width="66dp"
                     android:layout_height="66dp"
                     android:layout_marginStart="8dp"
-                    android:src="@drawable/ic_post_image"
                     android:alpha="0.7"
+                    android:src="@drawable/ic_post_image"
                     app:layout_constraintStart_toEndOf="@id/image_post3"
                     app:layout_constraintTop_toTopOf="@+id/image_post1" />
 
@@ -94,8 +98,8 @@
                     android:layout_width="66dp"
                     android:layout_height="66dp"
                     android:layout_marginStart="8dp"
-                    android:src="@drawable/ic_post_image"
                     android:alpha="0.7"
+                    android:src="@drawable/ic_post_image"
                     app:layout_constraintStart_toEndOf="@id/image_post4"
                     app:layout_constraintTop_toTopOf="@+id/image_post1" />
 
@@ -106,7 +110,7 @@
                     android:layout_marginTop="16dp"
                     android:fontFamily="@font/noto_sans_bold"
                     android:letterSpacing="0.15"
-                    android:text="選擇品牌"
+                    android:text="品牌"
                     android:textColor="@color/alpha_black"
                     android:textSize="20dp"
                     app:layout_constraintStart_toStartOf="@id/imageView_post_back"
@@ -116,7 +120,7 @@
                     android:id="@+id/spinner_brand"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
-                    android:layout_marginStart="25dp"
+                    android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
                     android:spinnerMode="dialog"
@@ -124,27 +128,50 @@
                     app:layout_constraintTop_toBottomOf="@+id/text_post_brand_title" />
 
                 <TextView
-                    android:id="@+id/text_post_name_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:fontFamily="@font/noto_sans_bold"
-                    android:letterSpacing="0.15"
-                    android:text="選擇型號"
-                    android:textColor="@color/alpha_black"
-                    android:textSize="20dp"
-                    app:layout_constraintStart_toStartOf="@id/imageView_post_back"
-                    app:layout_constraintTop_toBottomOf="@+id/spinner_brand" />
+                android:id="@+id/text_post_name_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/noto_sans_bold"
+                android:letterSpacing="0.15"
+                android:text="型號"
+                android:textColor="@color/alpha_black"
+                android:textSize="20dp"
+                app:layout_constraintStart_toStartOf="@id/imageView_post_back"
+                app:layout_constraintTop_toBottomOf="@+id/spinner_brand" />
 
                 <Spinner
                     android:id="@+id/spinner_name"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
                     app:layout_constraintStart_toStartOf="@+id/text_post_name_title"
                     app:layout_constraintTop_toBottomOf="@+id/text_post_name_title" />
+
+                <TextView
+                    android:id="@+id/text_post_name_storage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/noto_sans_bold"
+                    android:letterSpacing="0.15"
+                    android:text="容量"
+                    android:textColor="@color/alpha_black"
+                    android:textSize="20dp"
+                    app:layout_constraintStart_toStartOf="@id/imageView_post_back"
+                    app:layout_constraintTop_toBottomOf="@+id/spinner_name" />
+
+                <Spinner
+                    android:id="@+id/spinner_storage"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintStart_toStartOf="@+id/text_post_name_title"
+                    app:layout_constraintTop_toBottomOf="@+id/text_post_name_storage" />
 
                 <TextView
                     android:id="@+id/text_post_name_description"
@@ -156,39 +183,39 @@
                     android:text="商品描述"
                     android:textColor="@color/alpha_black"
                     android:textSize="20dp"
-                    app:layout_constraintStart_toStartOf="@id/spinner_name"
-                    app:layout_constraintTop_toBottomOf="@id/spinner_name" />
+                    app:layout_constraintStart_toStartOf="@+id/text_post_name_title"
+                    app:layout_constraintTop_toBottomOf="@+id/spinner_storage" />
 
 
                 <EditText
                     android:id="@+id/edit_post_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="24dp"
                     android:layout_marginTop="8dp"
-                    android:layout_marginEnd="16dp"
-                    android:hint="請描述外觀、功能、顏色、容量等"
-                    app:layout_constraintStart_toStartOf="@+id/text_post_name_description"
+                    android:hint="請描述外觀、狀況、顏色等"
+                    android:text="@={viewModel.description}"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text_post_name_description" />
 
                 <TextView
                     android:id="@+id/text_post_name_tag"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="122dp"
+                    android:layout_height="25dp"
                     android:layout_marginTop="16dp"
                     android:fontFamily="@font/noto_sans_bold"
                     android:letterSpacing="0.15"
-                    android:text="選擇出售方式"
-                    android:textSize="20dp"
+                    android:text="出售方式"
                     android:textColor="@color/alpha_black"
-                    app:layout_constraintStart_toStartOf="@+id/edit_post_description"
+                    android:textSize="20dp"
+                    app:layout_constraintStart_toStartOf="@+id/text_post_name_description"
                     app:layout_constraintTop_toBottomOf="@+id/edit_post_description" />
 
                 <Spinner
                     android:id="@+id/spinner_tag"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
                     app:layout_constraintStart_toStartOf="@+id/text_post_name_tag"
@@ -202,21 +229,24 @@
                     android:fontFamily="@font/noto_sans_bold"
                     android:letterSpacing="0.15"
                     android:text="直購"
-                    android:textSize="20dp"
                     android:textColor="@color/alpha_black"
-                    app:layout_constraintStart_toStartOf="@+id/spinner_tag"
+                    android:textSize="20dp"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="@+id/text_post_name_tag"
                     app:layout_constraintTop_toBottomOf="@+id/spinner_tag" />
 
                 <EditText
                     android:id="@+id/edit_post_direct"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="輸入金額"
-                    android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginStart="26dp"
                     android:layout_marginEnd="16dp"
+                    android:hint="輸入金額"
                     android:inputType="number"
-                    app:layout_constraintStart_toStartOf="@+id/text_post_name_direct"
+                    android:visibility="gone"
+                    android:text="@={viewModel.price}"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text_post_name_direct" />
 
                 <TextView
@@ -227,21 +257,24 @@
                     android:fontFamily="@font/noto_sans_bold"
                     android:letterSpacing="0.15"
                     android:text="拍賣"
-                    android:textSize="20dp"
                     android:textColor="@color/alpha_black"
-                    app:layout_constraintStart_toStartOf="@+id/edit_post_direct"
+                    android:textSize="20dp"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="@+id/text_post_name_direct"
                     app:layout_constraintTop_toBottomOf="@+id/edit_post_direct" />
 
                 <EditText
                     android:id="@+id/edit_post_auction"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="輸入起標金額"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="26dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
+                    android:hint="輸入起標金額"
                     android:inputType="number"
-                    app:layout_constraintStart_toStartOf="@+id/text_post_name_auction"
+                    android:visibility="gone"
+                    android:text="@={viewModel.price}"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text_post_name_auction" />
 
                 <TextView
@@ -252,23 +285,22 @@
                     android:fontFamily="@font/noto_sans_bold"
                     android:letterSpacing="0.15"
                     android:text="交易方式"
-                    android:textSize="20dp"
                     android:textColor="@color/alpha_black"
-                    app:layout_constraintStart_toStartOf="@+id/edit_post_auction"
+                    android:textSize="20dp"
+                    app:layout_constraintStart_toStartOf="@+id/text_post_name_auction"
                     app:layout_constraintTop_toBottomOf="@+id/edit_post_auction" />
 
                 <Spinner
                     android:id="@+id/spinner_trade"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
                     app:layout_constraintStart_toStartOf="@+id/text_post_trade"
-                    app:layout_constraintTop_toBottomOf="@+id/text_post_trade" />
-
-
-
+                    app:layout_constraintTop_toBottomOf="@+id/text_post_trade"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -289,16 +321,28 @@
             android:layout_height="40dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:background="@drawable/edittext_home"
+            android:background="@drawable/button"
             android:ellipsize="end"
             android:fontFamily="@font/noto_sans"
             android:letterSpacing="0.15"
+            android:textColor="@android:color/white"
             android:text="刊登"
             android:textSize="18dp"
             app:layout_constraintBottom_toBottomOf="@+id/view_post_bg"
             app:layout_constraintEnd_toEndOf="@+id/view_post_bg"
             app:layout_constraintStart_toStartOf="@+id/view_post_bg"
             app:layout_constraintTop_toTopOf="@id/view_post_bg" />
+
+        <ProgressBar
+            android:id="@+id/progress_payment_checkout"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:theme="@style/ProgressTheme"
+            android:visibility="@{viewModel.status == LoadApiStatus.LOADING ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="@+id/button_post"
+            app:layout_constraintEnd_toEndOf="@+id/button_post"
+            app:layout_constraintStart_toStartOf="@+id/button_post"
+            app:layout_constraintTop_toTopOf="@+id/button_post"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

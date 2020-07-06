@@ -7,6 +7,10 @@
         <variable
             name="event"
             type="com.eric.phoneauction.data.Event" />
+        <variable
+            name="viewModel"
+            type="com.eric.phoneauction.homeFragment.HomeViewModel" />
+        <import type="com.eric.phoneauction.data.TimeUtil"/>
         <variable name="itemPosition" type="Integer"/>
         <variable name="itemCount" type="Integer"/>
     </data>
@@ -32,23 +36,52 @@
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
                 app:layout_constraintDimensionRatio="5:7"
-                app:imageUrl="@{event.images}"
+                app:imageUrl="@{event.images[0]}"
                 tools:src="@tools:sample/backgrounds/scenic" />
         </com.google.android.material.card.MaterialCardView>
 
         <TextView
-            android:id="@+id/text_home_title"
+            android:id="@+id/text_home_brand"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:maxLines="2"
             android:fontFamily="@font/noto_sans"
-            android:text="@{event.productName}"
+            android:text="@{event.brand}"
             android:letterSpacing="0.15"
             android:ellipsize="end"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/image_home_main"
-            tools:text="iPhone 11 64G" />
+            tools:text="APPLE" />
+
+        <TextView
+            android:id="@+id/text_home_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:textSize="13dp"
+            android:fontFamily="@font/noto_sans"
+            android:text="@{event.productName}"
+            android:letterSpacing="0.15"
+            android:ellipsize="end"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_home_brand"
+            tools:text="iPhone 11" />
+
+        <TextView
+            android:id="@+id/text_home_storage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:layout_marginStart="5dp"
+            android:fontFamily="@font/noto_sans"
+            android:letterSpacing="0.15"
+            android:textSize="13dp"
+            android:maxLines="2"
+            android:text="@{event.storage}"
+            app:layout_constraintStart_toEndOf="@+id/text_home_title"
+            app:layout_constraintTop_toTopOf="@+id/text_home_title"
+            tools:text="64G" />
 
         <TextView
             android:id="@+id/text_home_price"
@@ -77,13 +110,12 @@
             android:id="@+id/text_home_time"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="12dp"
+            android:ellipsize="end"
             android:fontFamily="@font/noto_sans"
             android:letterSpacing="0.15"
-            android:ellipsize="end"
-            app:layout_constraintStart_toEndOf="@id/text_home_price"
-            app:layout_constraintTop_toBottomOf="@+id/text_home_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/text_home_price"
+            app:timeToDisplayFormat="@{event.endTime}"
             tools:text="15:00:20" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

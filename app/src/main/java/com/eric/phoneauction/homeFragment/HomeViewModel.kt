@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 
 class HomeViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) : ViewModel() {
 
-    lateinit var timer: CountDownTimer
+    var timer: CountDownTimer
     var currentTime = MutableLiveData<Long>()
 
     private var _events = MutableLiveData<List<Event>>()
@@ -124,6 +124,8 @@ class HomeViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
         _status.value = LoadApiStatus.DONE
         _refreshStatus.value = false
     }
+
+
 
     fun refresh() {
 

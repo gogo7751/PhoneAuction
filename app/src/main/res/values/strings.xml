@@ -24,7 +24,266 @@
         <item>LG</item>
         <item>SUGAR</item>
         <item>SHARP</item>
-        <item>koobee</item>
         <item>vivo</item>
     </string-array>
+
+    <!-- Trade -->
+    <string-array name="trade_list">
+        <item>面交</item>
+        <item>超商取貨</item>
+        <item>郵寄</item>
+    </string-array>
+
+    <!-- Tag -->
+    <string-array name="tag_list">
+        <item>直購</item>
+        <item>拍賣</item>
+    </string-array>
+
+    <!-- Storage -->
+    <string-array name="storage_list">
+        <item>16G</item>
+        <item>32G</item>
+        <item>64G</item>
+        <item>128G</item>
+        <item>256G</item>
+        <item>512G</item>
+    </string-array>
+
+    <!-- name -->
+    <string-array name="name_list">
+        <item>請先選擇品牌</item>
+    </string-array>
+
+    <!-- iPhone -->
+    <string-array name="iphone_list">
+        <item>iPhone 6</item>
+        <item>iPhone 6 Plus</item>
+        <item>iPhone 6S</item>
+        <item>iPhone 6S Plus</item>
+        <item>iPhone 7</item>
+        <item>iPhone 7 Plus</item>
+        <item>iPhone 8</item>
+        <item>iPhone 8 Plus</item>
+        <item>iPhone X</item>
+        <item>iPhone XS</item>
+        <item>iPhone XS Max</item>
+        <item>iPhone XR</item>
+        <item>iPhone 11</item>
+        <item>iPhone 11 Pro</item>
+        <item>iPhone 11 Pro Max</item>
+        <item>iPhone SE</item>
+    </string-array>
+
+    <!-- SAMSUNG -->
+    <string-array name="samsung_list">
+        <item>Galaxy Z Filp</item>
+        <item>Galaxy S20 Ultra</item>
+        <item>Galaxy S20+</item>
+        <item>Galaxy S20</item>
+        <item>Galaxy S10+</item>
+        <item>Galaxy S10</item>
+        <item>Galaxy S9+</item>
+        <item>Galaxy S8+</item>
+        <item>Galaxy S8</item>
+        <item>Galaxy Note 10+</item>
+        <item>Galaxy Note 10</item>
+        <item>Galaxy Note 10 Lite</item>
+        <item>Galaxy Note 9</item>
+        <item>Galaxy Note 8</item>
+        <item>Galaxy A80</item>
+        <item>Galaxy A71</item>
+        <item>Galaxy A51</item>
+        <item>Galaxy A70</item>
+        <item>Galaxy A9(2018)</item>
+        <item>Galaxy A8+(2018)</item>
+        <item>Galaxy A8(2018)</item>
+        <item>Galaxy A31</item>
+        <item>Galaxy A60</item>
+        <item>Galaxy A7(2018)</item>
+        <item>Galaxy A30s</item>
+        <item>Galaxy A30</item>
+        <item>Galaxy A21s</item>
+        <item>Galaxy M11</item>
+        <item>Galaxy A50</item>
+        <item>Galaxy J7</item>
+        <item>Galaxy J7 Prime</item>
+        <item>Galaxy J7 Pro</item>
+    </string-array>
+
+    <!-- Sony -->
+    <string-array name="sony_list">
+        <item>Xperia 1 II</item>
+        <item>Xperia 10 II</item>
+        <item>Xperia 5</item>
+        <item>Xperia 1</item>
+        <item>Galaxy XZ3</item>
+        <item>Galaxy L3</item>
+        <item>Galaxy 10</item>
+        <item>Galaxy XZ Premium</item>
+        <item>Galaxy XZ</item>
+        <item>Galaxy Z5</item>
+        <item>Galaxy Z5 Premium</item>
+        <item>Galaxy Z3</item>
+        <item>Galaxy Z2</item>
+        <item>Galaxy XZ1</item>
+        <item>Galaxy XA1</item>
+        <item>Galaxy XA1 Plus</item>
+        <item>Galaxy XZ2</item>
+        <item>Galaxy XA2</item>
+        <item>Galaxy 10 Plus</item>
+        <item>Galaxy XZs</item>
+    </string-array>
+
+    <!-- Google -->
+    <string-array name="google_list">
+        <item>Pixel 4 XL</item>
+        <item>Pixel 4</item>
+        <item>Pixel 3 XL</item>
+        <item>Pixel 3</item>
+        <item>Pixel 3a</item>
+        <item>Pixel 3a XL</item>
+        <item>Nexus 9 LTE</item>
+        <item>Nexus 6P</item>
+        <item>Nexus 6</item>
+    </string-array>
+
+    <!-- Asus -->
+    <string-array name="asus_list">
+        <item>Zenfone 6</item>
+        <item>Zenfone 5Z</item>
+        <item>Zenfone 5</item>
+        <item>Zenfone Max Pro M2</item>
+        <item>Zenfone Max M2</item>
+        <item>ROG Phone</item>
+        <item>ROG Phone II</item>
+        <item>Zenfone Live</item>
+        <item>Nexus 6</item>
+    </string-array>
+
+    <!-- OPPO -->
+    <string-array name="oppo_list">
+        <item>Reno 2</item>
+        <item>Reno 2Z</item>
+        <item>Reno 10倍變焦版</item>
+        <item>Reno</item>
+        <item>Reno Z</item>
+        <item>R17</item>
+        <item>R15</item>
+        <item>R11s</item>
+        <item>R9s</item>
+        <item>R9s Plus</item>
+    </string-array>
+
+
+    <!-- HUAWEI -->
+    <string-array name="huawei_list">
+        <item>Mate 20 X</item>
+        <item>Mate 20 Pro</item>
+        <item>Mate 10</item>
+        <item>P 20</item>
+        <item>P 10</item>
+        <item>Y9</item>
+        <item>Y9 Prime</item>
+        <item>Y7s</item>
+        <item>Y7 Prime</item>
+        <item>Y6(2018)</item>
+        <item>nova 4e</item>
+        <item>nova 2i</item>
+    </string-array>
+
+    <!-- 小米 -->
+    <string-array name="mi_list">
+        <item>紅米 Note 8 Pro</item>
+        <item>紅米 Note 8T</item>
+        <item>小米 9</item>
+        <item>小米 Max 3</item>
+        <item>小米 Note 7</item>
+        <item>小米 MIX2</item>
+    </string-array>
+
+    <!-- HTC -->
+    <string-array name="htc_list">
+        <item>EXODUS 1s</item>
+        <item>EXODUS 1</item>
+        <item>Desire 20 pro</item>
+        <item>Desrie 19 +</item>
+        <item>Desire 19s</item>
+        <item>Desire 12+</item>
+        <item>Desire 12s</item>
+        <item>U12 +</item>
+        <item>U12 life</item>
+    </string-array>
+
+    <!-- Nokia -->
+    <string-array name="nokia_list">
+        <item>5.3</item>
+        <item>7.2</item>
+        <item>8.1</item>
+        <item>8110</item>
+        <item>5.1 Plus</item>
+        <item>6.1 Plus</item>
+        <item>8</item>
+        <item>2720 Flip</item>
+        <item>3310 2017</item>
+        <item>7 Plus</item>
+        <item>3.1 Plus</item>
+    </string-array>
+
+    <!-- realme -->
+    <string-array name="realme_list">
+        <item>XT</item>
+        <item>C3</item>
+        <item>5 Pro</item>
+        <item>5</item>
+    </string-array>
+
+    <!-- LG -->
+    <string-array name="lg_list">
+        <item>V60 ThinQ</item>
+        <item>G8X ThinQ</item>
+        <item>K61</item>
+        <item>K51S</item>
+        <item>Q7 BTS Edition</item>
+        <item>K11+</item>
+    </string-array>
+
+    <!-- SUGAR -->
+    <string-array name="sugar_list">
+        <item>T30</item>
+        <item>T50</item>
+        <item>T20</item>
+        <item>C13</item>
+        <item>S11</item>
+        <item>P11</item>
+        <item>T10</item>
+        <item>Y12</item>
+        <item>Y8 Max</item>
+        <item>S20</item>
+        <item>F20</item>
+        <item>C12</item>
+    </string-array>
+
+    <!-- Sharp -->
+    <string-array name="sharp_list">
+        <item>AQUOS V</item>
+        <item>AQUOS zreo</item>
+        <item>AQUOS R3</item>
+        <item>AQUOS Zero 2</item>
+    </string-array>
+
+
+    <!-- vivo -->
+    <string-array name="vivo_list">
+        <item>Y19</item>
+        <item>Y50</item>
+        <item>Y15</item>
+        <item>Y12</item>
+        <item>Y17 Pro</item>
+        <item>Y15 Pro</item>
+        <item>S1</item>
+        <item>Y95</item>
+        <item>V11</item>
+    </string-array>
+
 </resources>
