@@ -2,6 +2,10 @@
     <string name="app_name">PhoneAuction</string>
     <string name="you_know_nothing">You know nothing</string>
 
+    <!-- Fb -->
+    <string name="facebook_app_id">2889906371135498</string> <string name="fb_login_protocol_scheme">fb2889906371135498</string>
+
+
     <!-- Post -->
     <string name="select_post_spinner">請選擇</string>
 

@@ -2,6 +2,8 @@ package com.eric.phoneauction.ext
 
 import androidx.fragment.app.Fragment
 import com.eric.phoneauction.PhoneAuctionApplication
+import com.eric.phoneauction.data.Event
+import com.eric.phoneauction.factory.EventViewModelFactory
 import com.eric.phoneauction.factory.ViewModelFactory
 
 /**
@@ -13,4 +15,9 @@ import com.eric.phoneauction.factory.ViewModelFactory
 fun Fragment.getVmFactory(): ViewModelFactory {
     val repository = (requireContext().applicationContext as PhoneAuctionApplication).repository
     return ViewModelFactory(repository)
+}
+
+fun Fragment.getVmFactory(event: Event): EventViewModelFactory {
+    val repository = (requireContext().applicationContext as PhoneAuctionApplication).repository
+    return EventViewModelFactory(repository, event)
 }

@@ -22,14 +22,10 @@ import androidx.navigation.fragment.findNavController
 import com.eric.phoneauction.MainViewModel
 import com.eric.phoneauction.PhoneAuctionApplication
 import com.eric.phoneauction.R
-import com.eric.phoneauction.data.Event
 import com.eric.phoneauction.databinding.PostFragmentBinding
 import com.eric.phoneauction.ext.getVmFactory
-import com.eric.phoneauction.homeFragment.HomeViewModel
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_main.*
-import java.io.IOException
 import java.util.*
 
 @Suppress("DEPRECATION")
@@ -59,43 +55,44 @@ class PostFragment : Fragment() {
             saveUri = Uri.parse(savedInstanceState.getString("saveUri"))
         }
 
+        permission()
+
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
         binding.imagePost1.setOnClickListener {
-            permission()
             toAlbum1()
             Handler().postDelayed({
                 uploadImage1()
-            }, 3000)
+            }, 5000)
         }
 
         binding.imagePost2.setOnClickListener {
             toAlbum2()
             Handler().postDelayed({
                 uploadImage2()
-            }, 3000)
+            }, 5000)
         }
 
         binding.imagePost3.setOnClickListener {
             toAlbum3()
             Handler().postDelayed({
                 uploadImage3()
-            }, 3000)
+            }, 5000)
         }
 
         binding.imagePost4.setOnClickListener {
             toAlbum4()
             Handler().postDelayed({
                 uploadImage4()
-            }, 3000)
+            }, 5000)
         }
 
         binding.imagePost5.setOnClickListener {
             toAlbum5()
             Handler().postDelayed({
                 uploadImage5()
-            }, 3000)
+            }, 5000)
         }
 
         //送出post
@@ -130,79 +127,49 @@ class PostFragment : Fragment() {
                 when (position) {
                     1 -> {
                         binding.spinnerName.adapter = PostSpinnerAdapter(
-                            PhoneAuctionApplication.instance.resources.getStringArray(R.array.iphone_list)
-                        )
-                    }
+                            PhoneAuctionApplication.instance.resources.getStringArray(R.array.iphone_list)) }
                     2 -> {
                         binding.spinnerName.adapter = PostSpinnerAdapter(
-                            PhoneAuctionApplication.instance.resources.getStringArray(R.array.samsung_list)
-                        )
-                    }
+                            PhoneAuctionApplication.instance.resources.getStringArray(R.array.samsung_list)) }
                     3 -> {
                         binding.spinnerName.adapter = PostSpinnerAdapter(
-                            PhoneAuctionApplication.instance.resources.getStringArray(R.array.sony_list)
-                        )
-                    }
+                            PhoneAuctionApplication.instance.resources.getStringArray(R.array.sony_list)) }
                     4 -> {
                         binding.spinnerName.adapter = PostSpinnerAdapter(
-                            PhoneAuctionApplication.instance.resources.getStringArray(R.array.google_list)
-                        )
-                    }
+                            PhoneAuctionApplication.instance.resources.getStringArray(R.array.google_list)) }
                     5 -> {
                         binding.spinnerName.adapter = PostSpinnerAdapter(
-                            PhoneAuctionApplication.instance.resources.getStringArray(R.array.asus_list)
-                        )
-                    }
+                            PhoneAuctionApplication.instance.resources.getStringArray(R.array.asus_list)) }
                     6 -> {
                         binding.spinnerName.adapter = PostSpinnerAdapter(
-                            PhoneAuctionApplication.instance.resources.getStringArray(R.array.oppo_list)
-                        )
-                    }
+                            PhoneAuctionApplication.instance.resources.getStringArray(R.array.oppo_list)) }
                     7 -> {
                         binding.spinnerName.adapter = PostSpinnerAdapter(
-                            PhoneAuctionApplication.instance.resources.getStringArray(R.array.huawei_list)
-                        )
-                    }
+                            PhoneAuctionApplication.instance.resources.getStringArray(R.array.huawei_list)) }
                     8 -> {
                         binding.spinnerName.adapter = PostSpinnerAdapter(
-                            PhoneAuctionApplication.instance.resources.getStringArray(R.array.mi_list)
-                        )
-                    }
+                            PhoneAuctionApplication.instance.resources.getStringArray(R.array.mi_list)) }
                     9 -> {
                         binding.spinnerName.adapter = PostSpinnerAdapter(
-                            PhoneAuctionApplication.instance.resources.getStringArray(R.array.htc_list)
-                        )
-                    }
+                            PhoneAuctionApplication.instance.resources.getStringArray(R.array.htc_list)) }
                     10 -> {
                         binding.spinnerName.adapter = PostSpinnerAdapter(
-                            PhoneAuctionApplication.instance.resources.getStringArray(R.array.nokia_list)
-                        )
-                    }
+                            PhoneAuctionApplication.instance.resources.getStringArray(R.array.nokia_list)) }
                     11 -> {
                         binding.spinnerName.adapter = PostSpinnerAdapter(
-                            PhoneAuctionApplication.instance.resources.getStringArray(R.array.realme_list)
-                        )
-                    }
+                            PhoneAuctionApplication.instance.resources.getStringArray(R.array.realme_list)) }
                     12 -> {
                         binding.spinnerName.adapter = PostSpinnerAdapter(
-                            PhoneAuctionApplication.instance.resources.getStringArray(R.array.lg_list)
-                        )
-                    }
+                            PhoneAuctionApplication.instance.resources.getStringArray(R.array.lg_list)) }
                     13 -> {
                         binding.spinnerName.adapter = PostSpinnerAdapter(
-                            PhoneAuctionApplication.instance.resources.getStringArray(R.array.sugar_list)
-                        )
-                    }
+                            PhoneAuctionApplication.instance.resources.getStringArray(R.array.sugar_list)) }
                     14 -> {
                         binding.spinnerName.adapter = PostSpinnerAdapter(
-                            PhoneAuctionApplication.instance.resources.getStringArray(R.array.sharp_list)
-                        )
-                    }
+                            PhoneAuctionApplication.instance.resources.getStringArray(R.array.sharp_list)) }
                     15 -> {
                         binding.spinnerName.adapter = PostSpinnerAdapter(
-                            PhoneAuctionApplication.instance.resources.getStringArray(R.array.vivo_list)
-                        )
-                    }
+                            PhoneAuctionApplication.instance.resources.getStringArray(R.array.vivo_list)) }
                 }
                 viewModel.brand.value = binding.spinnerBrand.selectedItem.toString()
             }
@@ -292,7 +259,7 @@ class PostFragment : Fragment() {
     //bottom navigation view gone
     override fun onDestroy() {
         super.onDestroy()
-        (activity as AppCompatActivity).bottomNavView.visibility = View.GONE
+        (activity as AppCompatActivity).bottomNavView.visibility = View.VISIBLE
     }
 
     //上傳圖片

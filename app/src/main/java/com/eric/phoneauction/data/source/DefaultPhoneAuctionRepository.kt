@@ -32,11 +32,5 @@ class DefaultPhoneAuctionRepository(private val remoteDataSource: PhoneAuctionDa
     override suspend fun getDirect(): Result<List<Event>> {
         return remoteDataSource.getDirect()
     }
-    override fun getAuction1(): MutableLiveData<List<Event>> {
-        return remoteDataSource.getLiveEvent()
-    }
 
-    override fun getDirect1(): MutableLiveData<List<Event>> {
-        return remoteDataSource.getLiveEvent()
-    }
 }

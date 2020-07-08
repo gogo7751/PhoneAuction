@@ -10,7 +10,7 @@
         <variable
             name="viewModel"
             type="com.eric.phoneauction.homeFragment.HomeViewModel" />
-        <import type="com.eric.phoneauction.data.TimeUtil"/>
+        <import type="com.eric.phoneauction.util.TimeUtil"/>
         <variable name="itemPosition" type="Integer"/>
         <variable name="itemCount" type="Integer"/>
     </data>

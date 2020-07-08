@@ -32,8 +32,8 @@
 
                 <ImageView
                     android:id="@+id/imageView_post_back"
-                    android:layout_width="33dp"
-                    android:layout_height="33dp"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:src="@drawable/icons_back"
@@ -59,6 +59,7 @@
                     android:layout_height="66dp"
                     android:layout_marginTop="8dp"
                     android:alpha="0.7"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/ic_post_image"
                     app:layout_constraintStart_toStartOf="@id/text_post_image_title"
                     app:layout_constraintTop_toBottomOf="@id/text_post_image_title" />
@@ -69,6 +70,7 @@
                     android:layout_height="66dp"
                     android:layout_marginStart="8dp"
                     android:alpha="0.7"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/ic_post_image"
                     app:layout_constraintStart_toEndOf="@id/image_post1"
                     app:layout_constraintTop_toTopOf="@+id/image_post1" />
@@ -79,6 +81,7 @@
                     android:layout_height="66dp"
                     android:layout_marginStart="8dp"
                     android:alpha="0.7"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/ic_post_image"
                     app:layout_constraintStart_toEndOf="@id/image_post2"
                     app:layout_constraintTop_toTopOf="@+id/image_post1" />
@@ -89,6 +92,7 @@
                     android:layout_height="66dp"
                     android:layout_marginStart="8dp"
                     android:alpha="0.7"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/ic_post_image"
                     app:layout_constraintStart_toEndOf="@id/image_post3"
                     app:layout_constraintTop_toTopOf="@+id/image_post1" />
@@ -99,6 +103,7 @@
                     android:layout_height="66dp"
                     android:layout_marginStart="8dp"
                     android:alpha="0.7"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/ic_post_image"
                     app:layout_constraintStart_toEndOf="@id/image_post4"
                     app:layout_constraintTop_toTopOf="@+id/image_post1" />
@@ -196,6 +201,8 @@
                     android:hint="請描述外觀、狀況、顏色等"
                     android:text="@={viewModel.description}"
                     app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text_post_name_description" />
 
                 <TextView
@@ -246,6 +253,7 @@
                     android:inputType="number"
                     android:visibility="gone"
                     android:text="@={viewModel.price}"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text_post_name_direct" />
 
@@ -274,6 +282,7 @@
                     android:inputType="number"
                     android:visibility="gone"
                     android:text="@={viewModel.price}"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text_post_name_auction" />
 

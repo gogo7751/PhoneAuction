@@ -8,5 +8,6 @@
     <color name="black">#000000</color>
     <color name="alpha_black">#CC000000</color>
 
-
+    <!-- White Series -->
+    <color name="white">#ffffff</color>
 </resources>

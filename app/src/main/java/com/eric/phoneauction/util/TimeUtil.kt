@@ -1,4 +1,4 @@
-package com.eric.phoneauction.data
+package com.eric.phoneauction.util
 
 import android.annotation.SuppressLint
 import java.text.SimpleDateFormat

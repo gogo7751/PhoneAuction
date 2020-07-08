@@ -23,7 +23,4 @@ interface PhoneAuctionRepository {
 
     suspend fun getDirect(): Result<List<Event>>
 
-    fun getAuction1():  MutableLiveData<List<Event>>
-
-    fun getDirect1():  MutableLiveData<List<Event>>
 }

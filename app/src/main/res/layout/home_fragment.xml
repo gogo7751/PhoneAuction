@@ -7,6 +7,9 @@
         <variable
             name="viewModel"
             type="com.eric.phoneauction.homeFragment.HomeViewModel" />
+        <variable
+            name="isLiveDataDesign"
+            type="Boolean" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -30,6 +33,7 @@
                 android:layout_height="match_parent"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:spanCount="2"
+                app:events="@{isLiveDataDesign ? viewModel.liveEvents : viewModel.events}"
                 tools:listitem="@layout/item_home_gird"
                 tools:itemCount="8">
             </androidx.recyclerview.widget.RecyclerView>
@@ -69,17 +73,19 @@
 
         <ImageView
             android:id="@+id/image_home"
-            android:layout_width="305dp"
+            android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/image_collection"
             android:background="@drawable/edittext_home"/>
 
         <EditText
             android:id="@+id/edit_search"
-            android:layout_width="280dp"
+            android:layout_width="0dp"
             android:layout_height="40dp"
             android:maxLines="1"
             android:hint="搜尋 Phone 拍賣"
@@ -87,7 +93,8 @@
             android:layout_marginStart="8dp"
             android:fontFamily="@font/noto_sans"
             app:layout_constraintTop_toTopOf="@id/image_home"
-            app:layout_constraintStart_toEndOf="@id/image_search"/>
+            app:layout_constraintStart_toEndOf="@id/image_search"
+            app:layout_constraintEnd_toEndOf="@id/image_home"/>
 
         <ImageView
             android:id="@+id/image_collection"
@@ -105,7 +112,7 @@
             android:layout_width="140dp"
             android:layout_height="40dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/edittext_home"
             android:fontFamily="@font/noto_sans"
             android:text="拍賣商品"
@@ -120,30 +127,28 @@
             android:layout_width="140dp"
             android:layout_height="40dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:background="@drawable/edittext_home"
-            android:text="直購商品"
-            android:textSize="18dp"
-            android:letterSpacing="0.15"
             android:ellipsize="end"
             android:fontFamily="@font/noto_sans"
+            android:letterSpacing="0.15"
+            android:text="直購商品"
+            android:textSize="18dp"
             app:layout_constraintStart_toEndOf="@id/button_auction"
-            app:layout_constraintTop_toBottomOf="@id/image_home" />
+            app:layout_constraintTop_toTopOf="@+id/button_auction" />
 
         <Button
             android:id="@+id/button_sort"
             android:layout_width="67dp"
             android:layout_height="30dp"
-            android:layout_marginTop="14dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/edittext_home"
-            android:text="排序"
-            android:textSize="15dp"
-            android:letterSpacing="0.15"
             android:ellipsize="end"
             android:fontFamily="@font/noto_sans"
+            android:letterSpacing="0.15"
+            android:text="排序"
+            android:textSize="15dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/image_collection" />
+            app:layout_constraintTop_toTopOf="@+id/button_auction" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

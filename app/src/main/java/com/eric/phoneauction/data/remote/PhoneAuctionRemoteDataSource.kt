@@ -35,6 +35,7 @@ object PhoneAuctionRemoteDataSource :
                         val event = document.toObject(Event::class.java)
                         list.add(event)
                     }
+                    continuation.resume(Result.Success(list))
                 } else {
                     task.exception?.let {
 
@@ -103,7 +104,7 @@ object PhoneAuctionRemoteDataSource :
     override suspend fun getAuction(): Result<List<Event>> = suspendCoroutine { continuation ->
         FirebaseFirestore.getInstance()
             .collection(PATH_EVENTS)
-            .whereEqualTo("tag","auction")
+            .whereEqualTo("tag","拍賣")
             .get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -114,6 +115,7 @@ object PhoneAuctionRemoteDataSource :
                         val event = document.toObject(Event::class.java)
                         list.add(event)
                     }
+                    continuation.resume(Result.Success(list))
                 } else {
                     task.exception?.let {
 
@@ -129,20 +131,19 @@ object PhoneAuctionRemoteDataSource :
     override suspend fun getDirect(): Result<List<Event>> = suspendCoroutine { continuation ->
         FirebaseFirestore.getInstance()
             .collection(PATH_EVENTS)
-            .whereEqualTo("tag","direct")
+            .whereEqualTo("tag","直購")
             .get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val list = mutableListOf<Event>()
                     for (document in task.result!!) {
                         Logger.d(document.id + " => " + document.data)
-
                         val event = document.toObject(Event::class.java)
                         list.add(event)
                     }
+                    continuation.resume(Result.Success(list))
                 } else {
                     task.exception?.let {
-
                         Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
                         continuation.resume(Result.Error(it))
                         return@addOnCompleteListener
@@ -152,59 +153,6 @@ object PhoneAuctionRemoteDataSource :
             }
     }
 
-        override fun getAuction1(): MutableLiveData<List<Event>> {
-        val liveData = MutableLiveData<List<Event>>()
-
-        FirebaseFirestore.getInstance()
-            .collection(PATH_EVENTS)
-            .whereEqualTo("tag","auction")
-            .addSnapshotListener { snapshot, exception ->
-
-                Logger.i("addSnapshotListener detect")
-
-                exception?.let {
-                    Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
-                }
-
-                val list = mutableListOf<Event>()
-                for (document in snapshot!!) {
-                    Logger.d(document.id + " => " + document.data)
-
-                    val article = document.toObject(Event::class.java)
-                    list.add(article)
-                }
-
-                liveData.value = list
-            }
-        return liveData
-    }
-
-    override fun getDirect1(): MutableLiveData<List<Event>> {
-        val liveData = MutableLiveData<List<Event>>()
-
-        FirebaseFirestore.getInstance()
-            .collection(PATH_EVENTS)
-            .whereEqualTo("tag","direct")
-            .addSnapshotListener { snapshot, exception ->
-
-                Logger.i("addSnapshotListener detect")
-
-                exception?.let {
-                    Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
-                }
-
-                val list = mutableListOf<Event>()
-                for (document in snapshot!!) {
-                    Logger.d(document.id + " => " + document.data)
-
-                    val article = document.toObject(Event::class.java)
-                    list.add(article)
-                }
-
-                liveData.value = list
-            }
-        return liveData
-    }
 }
 
 
