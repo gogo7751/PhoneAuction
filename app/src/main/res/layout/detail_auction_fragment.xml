@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable name="viewModel" type="com.eric.phoneauction.detailAuctionFragment.DetailAuctionViewModel"/>
+        <import type="android.view.View"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:id="@+id/scrollView_detail"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/view_detail_auction_bg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_detail_auction"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:orientation="horizontal"
+                    app:images="@{viewModel.event.images}"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:listitem="@layout/item_detail_gallery" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_detail_auction_circles"
+                    android:layout_width="0dp"
+                    android:layout_height="6dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:addDecoration="@{viewModel.decoration}"
+                    app:count="@{viewModel.event.images.size}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@id/recycler_detail_auction"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <ImageView
+                    android:id="@+id/imageView_detail_auction_back"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:src="@drawable/ic_back01"
+                    android:onClick="@{() -> viewModel.leaveDetail()}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/text_detail_auction_brand"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="16dp"
+                    android:textSize="20dp"
+                    android:fontFamily="@font/noto_sans"
+                    android:textColor="@color/alpha_black"
+                    android:letterSpacing="0.1"
+                    android:text="@{viewModel.event.brand}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/recycler_detail_auction"
+                    tools:text="APPLE" />
+
+                <TextView
+                    android:id="@+id/text_detail_auction_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:layout_marginStart="8dp"
+                    android:textSize="20dp"
+                    android:fontFamily="@font/noto_sans"
+                    android:textColor="@color/alpha_black"
+                    android:letterSpacing="0.1"
+                    android:text="@{viewModel.event.productName}"
+                    app:layout_constraintStart_toEndOf="@+id/text_detail_auction_brand"
+                    app:layout_constraintTop_toTopOf="@+id/text_detail_auction_brand"
+                    tools:text="iPhone 11" />
+
+                <TextView
+                    android:id="@+id/text_detail_auction_storage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:layout_marginStart="8dp"
+                    android:textSize="20dp"
+                    android:fontFamily="@font/noto_sans"
+                    android:textColor="@color/alpha_black"
+                    android:letterSpacing="0.1"
+                    android:text="@{viewModel.event.storage}"
+                    app:layout_constraintStart_toEndOf="@+id/text_detail_auction_name"
+                    app:layout_constraintTop_toTopOf="@+id/text_detail_auction_name"
+                    tools:text="256G" />
+
+                <View
+                    android:id="@+id/view_detail_auction_tag"
+                    android:layout_width="40dp"
+                    android:layout_height="26dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="16dp"
+                    android:background="@drawable/button_tag"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_detail_auction_brand"
+                    />
+
+                <TextView
+                    android:id="@+id/text_detail_auction_tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:fontFamily="@font/noto_sans"
+                    android:letterSpacing="0.1"
+                    android:text="@{viewModel.event.tag}"
+                    app:layout_constraintStart_toStartOf="@+id/view_detail_auction_tag"
+                    app:layout_constraintEnd_toEndOf="@+id/view_detail_auction_tag"
+                    app:layout_constraintTop_toTopOf="@+id/view_detail_auction_tag"
+                    app:layout_constraintBottom_toBottomOf="@+id/view_detail_auction_tag"
+                    tools:text="拍賣" />
+
+                <TextView
+                    android:id="@+id/text_detail_auction_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:fontFamily="@font/noto_sans"
+                    android:letterSpacing="0.1"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:textSize="20dp"
+                    app:price="@{viewModel.event.price}"
+                    android:textColor="@color/alpha_black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view_detail_auction_tag"
+                    tools:text="NT$11,000" />
+
+                <ImageView
+                    android:id="@+id/image_detail_auction_clock"
+                    android:layout_width="23dp"
+                    android:layout_height="23dp"
+                    android:layout_marginStart="25dp"
+                    app:srcCompat="@drawable/ic_clock"
+                    app:layout_constraintStart_toEndOf="@+id/text_detail_auction_tag"
+                    app:layout_constraintTop_toTopOf="@+id/text_detail_auction_tag"
+                    app:layout_constraintBottom_toBottomOf="@id/text_detail_auction_tag"
+                    />
+
+                <TextView
+                    android:id="@+id/text_detail_auction_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:layout_marginStart="4dp"
+                    android:fontFamily="@font/noto_sans_bold"
+                    android:letterSpacing="0.1"
+                    android:textSize="16dp"
+                    app:timeToDisplayFormat="@{viewModel.event.endTime}"
+                    app:layout_constraintStart_toEndOf="@+id/image_detail_auction_clock"
+                    app:layout_constraintTop_toTopOf="@+id/text_detail_auction_tag"
+                    app:layout_constraintBottom_toBottomOf="@id/text_detail_auction_tag"
+                    tools:text="11:25:30" />
+
+                <TextView
+                    android:id="@+id/text_detail_auction_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="@{viewModel.event.userId}"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_detail_auction_price"
+                    tools:text="gogo7751" />
+
+                <TextView
+                    android:id="@+id/text_detail_auction_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@{viewModel.event.description}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/text_detail_auction_id"
+                    tools:text="使用不到一年,生日收到新手機,故出售舊手機,9成新,無外傷,保固還有三個月,要看其他地方可以直接私訊"/>
+
+                <TextView
+                    android:id="@+id/text_detail_auction_also"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="你可能會喜歡"
+                    android:textSize="20dp"
+                    android:fontFamily="@font/noto_sans"
+                    android:textColor="@color/alpha_black"
+                    android:letterSpacing="0.1"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_detail_auction_description"
+                     />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_detail_auction_alsoLike"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:spanCount="2"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/text_detail_auction_also" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+        <View
+            android:id="@+id/view_detail_auction_bg"
+            android:layout_width="match_parent"
+            android:layout_height="61dp"
+            android:background="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/button_post"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:background="@drawable/button"
+            android:ellipsize="end"
+            android:fontFamily="@font/noto_sans"
+            android:letterSpacing="0.15"
+            android:text="我要出價"
+            android:textColor="@android:color/white"
+            android:textSize="18dp"
+            app:layout_constraintBottom_toBottomOf="@+id/view_detail_auction_bg"
+            app:layout_constraintEnd_toEndOf="@+id/view_detail_auction_bg"
+            app:layout_constraintStart_toEndOf="@+id/button_message"
+            app:layout_constraintTop_toTopOf="@+id/view_detail_auction_bg" />
+
+        <Button
+            android:id="@+id/button_message"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="16dp"
+            android:ellipsize="end"
+            android:background="@drawable/button_bg"
+            android:fontFamily="@font/noto_sans"
+            android:letterSpacing="0.15"
+            android:text="對話"
+            android:textColor="@android:color/black"
+            android:textSize="18dp"
+            app:layout_constraintBottom_toBottomOf="@+id/view_detail_auction_bg"
+            app:layout_constraintStart_toEndOf="@+id/imageView_detail_auction_collection"
+            app:layout_constraintTop_toTopOf="@+id/view_detail_auction_bg" />
+
+        <ImageView
+            android:id="@+id/imageView_detail_auction_collection"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="16dp"
+            android:src="@drawable/ic_heart"
+            app:layout_constraintBottom_toBottomOf="@+id/view_detail_auction_bg"
+            app:layout_constraintStart_toStartOf="@+id/view_detail_auction_bg"
+            app:layout_constraintTop_toTopOf="@+id/view_detail_auction_bg" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

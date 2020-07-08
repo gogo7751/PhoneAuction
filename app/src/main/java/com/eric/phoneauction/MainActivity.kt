@@ -1,25 +1,25 @@
 package com.eric.phoneauction
 
-import android.icu.util.Calendar
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import com.eric.phoneauction.databinding.ActivityMainBinding
+import com.eric.phoneauction.ext.getVmFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.firestore.FirebaseFirestore
-
+import com.google.firebase.storage.FirebaseStorage
 
 class MainActivity : AppCompatActivity() {
 
+    val viewModel by viewModels<MainViewModel> { getVmFactory() }
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
+        viewModel
 //        addData()
         setupBottomNav()
     }
@@ -72,11 +72,11 @@ class MainActivity : AppCompatActivity() {
 //            "price" to 10000,
 //            "productName" to "S20 Ultra",
 //            "trade" to "面交",
+//            "storage" to "32G"
 //            "userId" to "gogo7751"
 //        )
 //        document.set(data)
 //    }
-
 
 
 

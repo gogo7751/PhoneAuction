@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 
 class HomeViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) : ViewModel() {
 
-    lateinit var timer: CountDownTimer
+    var timer: CountDownTimer
     var currentTime = MutableLiveData<Long>()
 
     private var _events = MutableLiveData<List<Event>>()
@@ -28,6 +28,11 @@ class HomeViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
 
     var liveEvents = MutableLiveData<List<Event>>()
 
+    // Handle navigation to detail
+    private val _navigateToDetail = MutableLiveData<Event>()
+
+    val navigateToDetail: LiveData<Event>
+        get() = _navigateToDetail
 
     // status: The internal MutableLiveData that stores the status of the most recent request
     private val _status = MutableLiveData<LoadApiStatus>()
@@ -71,12 +76,13 @@ class HomeViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
             getEventsResult()
         }
 
-        timer = object : CountDownTimer(259200, 1000) {
+
+        timer = object : CountDownTimer(259200000, 1000) {
             override fun onFinish() {
             }
 
             override fun onTick(millisUntilFinished: Long) {
-                currentTime.value = millisUntilFinished / 1000
+                _navigateToDetail.value?.endTime = millisUntilFinished / 1000
             }
         }
         timer.start()
@@ -119,6 +125,80 @@ class HomeViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
         }
     }
 
+    fun getAuctionResult() {
+
+        coroutineScope.launch {
+
+            _status.value = LoadApiStatus.LOADING
+
+            val result = phoneAuctionRepository.getAuction()
+
+            _events.value = when (result) {
+                is com.eric.phoneauction.data.Result.Success -> {
+                    _error.value = null
+                    _status.value = LoadApiStatus.DONE
+                    result.data
+                }
+                is com.eric.phoneauction.data.Result.Fail -> {
+                    Log.d("Result","fail")
+                    _error.value = result.error
+                    _status.value = LoadApiStatus.ERROR
+                    null
+                }
+                is com.eric.phoneauction.data.Result.Error -> {
+                    Log.d("Result","error")
+                    _error.value = result.exception.toString()
+                    _status.value = LoadApiStatus.ERROR
+                    null
+                }
+                else -> {
+                    _error.value = PhoneAuctionApplication.instance.getString(R.string.you_know_nothing)
+                    _status.value = LoadApiStatus.ERROR
+                    null
+                }
+            }
+            _refreshStatus.value = false
+        }
+    }
+
+
+    fun getDirectResult() {
+
+        coroutineScope.launch {
+
+            _status.value = LoadApiStatus.LOADING
+
+            val result = phoneAuctionRepository.getDirect()
+
+            _events.value = when (result) {
+                is com.eric.phoneauction.data.Result.Success -> {
+                    _error.value = null
+                    _status.value = LoadApiStatus.DONE
+                    result.data
+                }
+                is com.eric.phoneauction.data.Result.Fail -> {
+                    Log.d("Result","fail")
+                    _error.value = result.error
+                    _status.value = LoadApiStatus.ERROR
+                    null
+                }
+                is com.eric.phoneauction.data.Result.Error -> {
+                    Log.d("Result","error")
+                    _error.value = result.exception.toString()
+                    _status.value = LoadApiStatus.ERROR
+                    null
+                }
+                else -> {
+                    _error.value = PhoneAuctionApplication.instance.getString(R.string.you_know_nothing)
+                    _status.value = LoadApiStatus.ERROR
+                    null
+                }
+            }
+            _refreshStatus.value = false
+        }
+    }
+
+
     fun getLiveEventsResult() {
         liveEvents = phoneAuctionRepository.getLiveEvent()
         _status.value = LoadApiStatus.DONE
@@ -136,5 +216,13 @@ class HomeViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
                 getEventsResult()
             }
         }
+    }
+
+    fun navigateToDetail(event: Event) {
+        _navigateToDetail.value = event
+    }
+
+    fun onDetailNavigated() {
+        _navigateToDetail.value = null
     }
 }

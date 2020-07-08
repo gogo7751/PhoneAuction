@@ -59,5 +59,39 @@
         app:destination="@id/notificationFragment"
         app:popUpTo="@id/navigation"
         app:popUpToInclusive="true" />
+    <fragment
+        android:id="@+id/detailAuctionFragment"
+        android:name="com.eric.phoneauction.detailAuctionFragment.DetailAuctionFragment"
+        android:label="DetailAuctionFragment"
+        tools:layout="@layout/detail_auction_fragment" >
+        <argument
+            android:name="event"
+            app:argType="com.eric.phoneauction.data.Event"
+            app:nullable="false"/>
+        <argument
+            android:name="tag"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailDirectFragment"
+        android:name="com.eric.phoneauction.detailDirectFragment.DetailDirectFragment"
+        android:label="DetailDirectFragment"
+        tools:layout="@layout/detail_direct_fragment">
+        <argument
+            android:name="event"
+            app:argType="com.eric.phoneauction.data.Event"
+            app:nullable="false"/>
+        <argument
+            android:name="tag"
+            app:argType="string" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_detailDirectFragment"
+        app:destination="@id/detailDirectFragment"
+        app:popUpToInclusive="true" />
+    <action
+        android:id="@+id/action_global_detailAuctionFragment"
+        app:destination="@id/detailAuctionFragment"
+        app:popUpToInclusive="true" />
 
 </navigation>
