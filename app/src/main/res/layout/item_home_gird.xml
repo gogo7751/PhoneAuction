@@ -10,7 +10,9 @@
         <variable
             name="viewModel"
             type="com.eric.phoneauction.homeFragment.HomeViewModel" />
-        <import type="com.eric.phoneauction.util.TimeUtil"/>
+        <variable
+            name="countDown"
+            type="String" />
         <variable name="itemPosition" type="Integer"/>
         <variable name="itemCount" type="Integer"/>
     </data>
@@ -111,11 +113,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:fontFamily="@font/noto_sans"
-            android:letterSpacing="0.15"
+            android:fontFamily="@font/noto_sans_bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/text_home_price"
-            app:timeToDisplayFormat="@{event.endTime}"
+            android:text="@{countDown}"
             tools:text="15:00:20" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -57,7 +57,7 @@ class PostViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
             endTime = -1,
             createdTime = -1,
             tag = tag.value.toString(),
-            userId = "123"
+            userId = "gogo7751"
         )
     }
 

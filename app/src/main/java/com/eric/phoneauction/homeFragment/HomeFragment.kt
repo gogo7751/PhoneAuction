@@ -14,8 +14,6 @@ import com.eric.phoneauction.databinding.HomeFragmentBinding
 import com.eric.phoneauction.ext.getVmFactory
 import com.eric.phoneauction.ext.toDisplayFormat
 import com.eric.phoneauction.util.Logger
-import com.eric.phoneauction.util.TimeUtil
-import com.eric.phoneauction.util.Util
 import java.text.SimpleDateFormat
 
 
@@ -35,7 +33,7 @@ class HomeFragment : Fragment() {
 
         val adapter = HomeAdapter(HomeAdapter.OnClickListener{
             viewModel.navigateToDetail(it)
-        })
+        }, viewModel)
         binding.recyclerviewHome.adapter = adapter
 
         viewModel.events.observe(viewLifecycleOwner, Observer {

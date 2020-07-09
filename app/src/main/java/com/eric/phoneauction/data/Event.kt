@@ -10,7 +10,7 @@ data class Event(
     var storage: String = "",
     var brand: String = "",
     var price: Int = 0,
-    var images: List<String>? = listOf(),
+    var images: List<String> = listOf(),
     var trade: String = "",
     var description: String = "",
     var endTime: Long = -1,

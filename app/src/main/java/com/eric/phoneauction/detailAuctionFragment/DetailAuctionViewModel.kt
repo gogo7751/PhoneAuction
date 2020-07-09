@@ -1,6 +1,7 @@
 package com.eric.phoneauction.detailAuctionFragment
 
 import android.graphics.Rect
+import android.os.CountDownTimer
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.LiveData
@@ -13,7 +14,10 @@ import com.eric.phoneauction.PhoneAuctionApplication
 import com.eric.phoneauction.R
 import com.eric.phoneauction.data.Event
 import com.eric.phoneauction.data.source.PhoneAuctionRepository
+import com.eric.phoneauction.homeFragment.HomeAdapter
+import com.eric.phoneauction.homeFragment.HomeViewModel
 import com.eric.phoneauction.util.Logger
+import com.eric.phoneauction.util.Util
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -35,6 +39,9 @@ class DetailAuctionViewModel(
 
     val events: LiveData<List<Event>>
         get() = _events
+
+    lateinit var timer: CountDownTimer
+    val countDown = MutableLiveData<String>()
 
     // Handle navigation to detail
     private val _navigateToDetail = MutableLiveData<Event>()
@@ -103,6 +110,7 @@ class DetailAuctionViewModel(
         Logger.i("[${this::class.simpleName}]${this}")
         Logger.i("------------------------------------")
         getAuctionResult()
+        getCountdown()
     }
 
     override fun onCleared() {
@@ -158,6 +166,33 @@ class DetailAuctionViewModel(
             }
             _refreshStatus.value = false
         }
+    }
+
+    fun getCountdown() {
+
+        timer = object : CountDownTimer(event.value?.endTime!!, HomeAdapter.ONE_SECOND) {
+            override fun onFinish() {
+                TODO("Not yet implemented")
+            }
+
+            override fun onTick(millisUntilFinished: Long) {
+                val sec = millisUntilFinished / HomeAdapter.ONE_SECOND % 60
+                val min = millisUntilFinished / HomeAdapter.ONE_SECOND / 60 % 60
+                val hr = millisUntilFinished / HomeAdapter.ONE_SECOND / 60 / 60 % 24
+                countDown.value = StringBuilder()
+                    .append(Util.lessThenTenPadStart(hr)).append(Util.getString(R.string.hours))
+                    .append(Util.lessThenTenPadStart(min)).append(Util.getString(R.string.minutes))
+                    .append(Util.lessThenTenPadStart(sec)).append(Util.getString(R.string.seconds)).toString()
+            }
+        }
+    }
+
+    fun timerStart(){
+        timer.start()
+    }
+
+    fun timerStop(){
+        timer.cancel()
     }
 
     fun navigateToAdd2cart(event: Event) {

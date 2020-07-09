@@ -1,5 +1,6 @@
 package com.eric.phoneauction
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -9,19 +10,23 @@ import com.eric.phoneauction.databinding.ActivityMainBinding
 import com.eric.phoneauction.ext.getVmFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.storage.FirebaseStorage
+import java.util.*
+
 
 class MainActivity : AppCompatActivity() {
 
+
     val viewModel by viewModels<MainViewModel> { getVmFactory() }
     private lateinit var binding: ActivityMainBinding
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         viewModel
-//        addData()
         setupBottomNav()
+
     }
 
 
@@ -55,28 +60,6 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
     }
 
-//    fun addData() {
-//        val events = FirebaseFirestore.getInstance()
-//            .collection("events")
-//
-//        val document = events.document()
-//
-//        val data = hashMapOf(
-//            "brand" to "Samsung",
-//            "description" to "紫色，9成新，女用機",
-//            "createdTime" to Calendar.getInstance().timeInMillis,
-//            "endTime" to Calendar.getInstance().timeInMillis + 259200,
-//            "id" to document.id,
-//            "tag" to "direct",
-//            "images" to "https://d2482qdi0l0aam.cloudfront.net/assets/201807242228/0.jpg",
-//            "price" to 10000,
-//            "productName" to "S20 Ultra",
-//            "trade" to "面交",
-//            "storage" to "32G"
-//            "userId" to "gogo7751"
-//        )
-//        document.set(data)
-//    }
 
 
 

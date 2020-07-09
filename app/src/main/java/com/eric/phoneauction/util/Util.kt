@@ -11,21 +11,38 @@ object Util {
         return PhoneAuctionApplication.instance.getColor(resourceId)
     }
 
-    @SuppressLint("SimpleDateFormat")
-    @JvmStatic
-    fun StampToDate(time: Long): String {
-        // 進來的time以秒為單位，Date輸入為毫秒為單位，要注意
+//    @SuppressLint("SimpleDateFormat")
+//    @JvmStatic
+//    fun StampToDate(time: Long): String {
+//        // 進來的time以秒為單位，Date輸入為毫秒為單位，要注意
+//
+//        val simpleDateFormat = SimpleDateFormat("HH:mm:ss")
+//
+//        return simpleDateFormat.format(Date(time))
+//    }
+//
+//    @JvmStatic
+//    fun DateToStamp(date: String, locale: Locale): Long {
+//        val simpleDateFormat = SimpleDateFormat("HH:mm:ss", locale)
+//
+//        /// 輸出為毫秒為單位
+//        return simpleDateFormat.parse(date).time
+//    }
+//
+//    fun convertDateToTimeStamp(date: String): Long{
+//        val stamp = SimpleDateFormat("yyyy-MM-dd").parse(date)
+//        return stamp.time
+//    }
 
-        val simpleDateFormat = SimpleDateFormat("HH:mm:ss")
-
-        return simpleDateFormat.format(Date(time))
+    fun lessThenTenPadStart(time: Long): String{
+        return if(time < 10){
+            time.toString().padStart(2,'0')
+        }else time.toString()
     }
 
-    @JvmStatic
-    fun DateToStamp(date: String, locale: Locale): Long {
-        val simpleDateFormat = SimpleDateFormat("HH:mm:ss", locale)
-
-        /// 輸出為毫秒為單位
-        return simpleDateFormat.parse(date).time
+    fun getString(resourceId: Int): String {
+        return PhoneAuctionApplication.instance.getString(resourceId)
     }
+
+
 }

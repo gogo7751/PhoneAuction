@@ -7,7 +7,11 @@
     <!-- Black Series -->
     <color name="black">#000000</color>
     <color name="alpha_black">#CC000000</color>
+    <color name="black212121">#212121</color>
 
     <!-- White Series -->
     <color name="white">#ffffff</color>
+
+    <!-- Blue Series -->
+    <color name="fbBlue">#3b5998</color>
 </resources>

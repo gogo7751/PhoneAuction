@@ -65,7 +65,6 @@ object PhoneAuctionRemoteDataSource :
                 val list = mutableListOf<Event>()
                 for (document in snapshot!!) {
                     Logger.d(document.id + " => " + document.data)
-
                     val article = document.toObject(Event::class.java)
                     list.add(article)
                 }

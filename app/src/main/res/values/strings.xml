@@ -3,8 +3,13 @@
     <string name="you_know_nothing">You know nothing</string>
 
     <!-- Fb -->
-    <string name="facebook_app_id">2889906371135498</string> <string name="fb_login_protocol_scheme">fb2889906371135498</string>
+    <string name="facebook_app_id">2889906371135498</string>
+    <string name="fb_login_protocol_scheme">fb2889906371135498</string>
 
+    <!-- time -->
+    <string name="hours">\u0020:\u0020</string>
+    <string name="minutes">\u0020:\u0020</string>
+    <string name="seconds">\u0020</string>
 
     <!-- Post -->
     <string name="select_post_spinner">請選擇</string>
@@ -289,5 +294,8 @@
         <item>Y95</item>
         <item>V11</item>
     </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
