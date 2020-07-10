@@ -49,17 +49,17 @@ class DetailAuctionViewModel(
     val navigateToDetail: LiveData<Event>
         get() = _navigateToDetail
 
+    // Handle navigation to auction
+    private val _navigateToAuction = MutableLiveData<Event>()
+
+    val navigateToAuction: LiveData<Event>
+        get() = _navigateToAuction
+
     // it for gallery circles design
     private val _snapPosition = MutableLiveData<Int>()
 
     val snapPosition: LiveData<Int>
         get() = _snapPosition
-
-    // Handle navigation to Add2cart
-    private val _navigateToAdd2cart = MutableLiveData<Event>()
-
-    val navigateToAdd2cart: LiveData<Event>
-        get() = _navigateToAdd2cart
 
     // Handle leave detail
     private val _leaveDetail = MutableLiveData<Boolean>()
@@ -195,12 +195,13 @@ class DetailAuctionViewModel(
         timer.cancel()
     }
 
-    fun navigateToAdd2cart(event: Event) {
-        _navigateToAdd2cart.value = event
+
+    fun navigateToAuction(event: Event) {
+        _navigateToAuction.value = event
     }
 
-    fun onAdd2cartNavigated() {
-        _navigateToAdd2cart.value = null
+    fun onAuctionNavigated() {
+        _navigateToAuction.value = null
     }
 
     fun navigateToDetail(event: Event) {

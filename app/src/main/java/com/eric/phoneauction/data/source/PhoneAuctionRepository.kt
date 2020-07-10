@@ -19,6 +19,8 @@ interface PhoneAuctionRepository {
 
     suspend fun post(event: Event): Result<Boolean>
 
+    suspend fun postAuction(event: Event, price: Int): Result<Boolean>
+
     suspend fun getAuction(): Result<List<Event>>
 
     suspend fun getDirect(): Result<List<Event>>

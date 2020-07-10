@@ -1,5 +1,6 @@
-package com.eric.phoneauction.postFragment
+package com.eric.phoneauction.auctionDialog
 
+import androidx.core.os.persistableBundleOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,38 +10,45 @@ import com.eric.phoneauction.R
 import com.eric.phoneauction.data.Event
 import com.eric.phoneauction.data.source.PhoneAuctionRepository
 import com.eric.phoneauction.util.Logger
-import com.google.firebase.storage.StorageMetadata
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class PostViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) : ViewModel() {
+class AuctionViewModel(
+    val phoneAuctionRepository: PhoneAuctionRepository,
+    arguments: Event
+) : ViewModel() {
 
-//    private val _event = MutableLiveData<Event>()
-//
-//    val event: LiveData<Event>
-//        get() = _event
+    private val _event = MutableLiveData<Event>().apply {
+        value = arguments
+    }
 
-    val event = MutableLiveData<Event>()
+    val event: LiveData<Event>
+        get() = _event
 
-    var productName = MutableLiveData<String>()
-    var storage = MutableLiveData<String>()
-    var brand = MutableLiveData<String>()
-    var price = MutableLiveData<String>()
-    var image1 = MutableLiveData<String>()
-    var image2 = MutableLiveData<String>()
-    var image3 = MutableLiveData<String>()
-    var image4 = MutableLiveData<String>()
-    var image5 = MutableLiveData<String>()
-    var trade = MutableLiveData<String>()
-    var description = MutableLiveData<String>()
-    var tag = MutableLiveData<String>()
-
+    // Handle leave auction
     private val _leave = MutableLiveData<Boolean>()
 
     val leave: LiveData<Boolean>
         get() = _leave
+
+    val price = MutableLiveData<Int>().apply {
+        value = event.value?.price
+    }
+
+    // Handle navigation to detail
+    private val _navigateToDetail = MutableLiveData<Event>()
+
+    val navigateToDetail: LiveData<Event>
+        get() = _navigateToDetail
+
+    // Handle leave detail
+    private val _leaveDetail = MutableLiveData<Boolean>()
+
+    val leaveDetail: LiveData<Boolean>
+        get() = _leaveDetail
+
 
     // status: The internal MutableLiveData that stores the status of the most recent request
     private val _status = MutableLiveData<LoadApiStatus>()
@@ -54,20 +62,20 @@ class PostViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
     val error: LiveData<String>
         get() = _error
 
+    // status for the loading icon of swl
+    private val _refreshStatus = MutableLiveData<Boolean>()
+
+    val refreshStatus: LiveData<Boolean>
+        get() = _refreshStatus
+
+
     // Create a Coroutine scope using a job to be able to cancel when needed
     private var viewModelJob = Job()
 
     // the Coroutine runs using the Main (UI) dispatcher
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
-    /**
-     * When the [ViewModel] is finished, we cancel our coroutine [viewModelJob], which tells the
-     * Retrofit service to stop.
-     */
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
-    }
+
 
     init {
         Logger.i("------------------------------------")
@@ -75,42 +83,21 @@ class PostViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
         Logger.i("------------------------------------")
     }
 
-    fun getEvent(): Event {
-        val images = listOf<String>(
-            image1.value.toString(),
-            image2.value.toString(),
-            image3.value.toString(),
-            image4.value.toString(),
-            image5.value.toString()
-        )
-        return Event(
-            id = "",
-            productName = productName.value.toString(),
-            storage = storage.value.toString(),
-            brand = brand.value.toString(),
-            price = price.value?.toInt() as Int,
-            images = images,
-            trade = trade.value.toString(),
-            description = description.value.toString(),
-            endTime = -1,
-            createdTime = -1,
-            tag = tag.value.toString(),
-            userId = "gogo7751",
-            deal = true
-        )
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
     }
 
-    fun post(event: Event) {
+    fun postAuction(event: Event, price: Int) {
 
         coroutineScope.launch {
 
             _status.value = LoadApiStatus.LOADING
 
-            when (val result = phoneAuctionRepository.post(event)) {
+            when (val result = phoneAuctionRepository.postAuction(event, price)) {
                 is com.eric.phoneauction.data.Result.Success -> {
                     _error.value = null
                     _status.value = LoadApiStatus.DONE
-                    leave(true)
                 }
                 is com.eric.phoneauction.data.Result.Fail -> {
                     _error.value = result.error
@@ -128,11 +115,41 @@ class PostViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
         }
     }
 
-    fun leave(needRefresh: Boolean = false) {
-        _leave.value = needRefresh
+
+    fun addMinimalPrice(originPrice: Int) {
+        price.value = originPrice.times(1.01).toInt()
     }
 
-    fun onLeft() {
+    fun add100() {
+        price.value = price.value?.plus(100)
+    }
+
+    fun add300() {
+        price.value = price.value?.plus(300)
+    }
+
+    fun add500() {
+        price.value = price.value?.plus(500)
+    }
+
+
+    fun navigateToDetail(event: Event) {
+        _navigateToDetail.value = event
+    }
+
+    fun leaveDetail() {
+        _leaveDetail.value = true
+    }
+
+
+    fun leave() {
+        _leave.value = true
+    }
+
+    fun onLeaveCompleted() {
         _leave.value = null
     }
+
+
+    fun nothing() {}
 }

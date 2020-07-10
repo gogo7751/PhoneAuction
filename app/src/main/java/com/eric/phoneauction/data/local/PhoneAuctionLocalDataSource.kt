@@ -26,6 +26,10 @@ class PhoneAuctionLocalDataSource(val context: Context) :
         TODO("Not yet implemented")
     }
 
+    override suspend fun postAuction(event: Event, price: Int): Result<Boolean> {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun getAuction(): Result<List<Event>> {
         TODO("Not yet implemented")
     }

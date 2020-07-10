@@ -15,7 +15,7 @@
         android:id="@+id/chatFragment"
         android:name="com.eric.phoneauction.chatFragment.ChatFragment"
         android:label="chat_fragment"
-        tools:layout="@layout/chat_fragment" />
+        tools:layout="@layout/fragment_chat" />
 
     <fragment
         android:id="@+id/postFragment"
@@ -27,13 +27,13 @@
         android:id="@+id/profileFragment"
         android:name="com.eric.phoneauction.profileFragment.ProfileFragment"
         android:label="profile_fragment"
-        tools:layout="@layout/profile_fragment" />
+        tools:layout="@layout/fragment_profile" />
 
     <fragment
         android:id="@+id/notificationFragment"
         android:name="com.eric.phoneauction.notificationFragment.NotificationFragment"
         android:label="notification_fragment"
-        tools:layout="@layout/notification_fragment" />
+        tools:layout="@layout/fragment_notification" />
     <action
         android:id="@+id/action_global_homeFragment"
         app:destination="@id/homeFragment"
@@ -59,6 +59,7 @@
         app:destination="@id/notificationFragment"
         app:popUpTo="@id/navigation"
         app:popUpToInclusive="true" />
+    <action android:id="@+id/navigate_to_message_dialog" app:destination="@id/messageDialog"/>
     <fragment
         android:id="@+id/detailAuctionFragment"
         android:name="com.eric.phoneauction.detailAuctionFragment.DetailAuctionFragment"
@@ -93,5 +94,37 @@
         android:id="@+id/action_global_detailAuctionFragment"
         app:destination="@id/detailAuctionFragment"
         app:popUpToInclusive="true" />
+    <dialog
+        android:id="@+id/auctionDialog"
+        android:name="com.eric.phoneauction.auctionDialog.AuctionDialog"
+        android:label="AuctionDialog">
+    <argument
+        android:name="event"
+        app:argType="com.eric.phoneauction.data.Event"
+        app:nullable="false"/>
+        <action
+            android:id="@+id/action_auctionDialog_to_checkSuccessAuctionFragment"
+            app:destination="@id/checkSuccessAuctionFragment"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="true" />
+    </dialog>
+    <action
+        android:id="@+id/action_global_auctionDialog"
+        app:destination="@id/auctionDialog"
+        app:popUpToInclusive="true" />
+
+    <dialog android:id="@+id/messageDialog"
+        android:name="com.eric.phoneauction.dialog.MessageDialog"
+        android:label="MessageDialog"
+        tools:layout="@layout/dialog_message">
+
+        <argument android:name="messageTypeKey"
+            app:argType="com.eric.phoneauction.dialog.MessageDialog$MessageType"
+            app:nullable="false"/>
+    </dialog>
+    <fragment
+        android:id="@+id/checkSuccessAuctionFragment"
+        android:name="com.eric.phoneauction.checkout.CheckSuccessAuctionFragment"
+        android:label="CheckSuccessAuctionFragment" />
 
 </navigation>

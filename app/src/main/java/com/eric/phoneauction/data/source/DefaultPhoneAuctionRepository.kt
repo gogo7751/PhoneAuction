@@ -25,6 +25,10 @@ class DefaultPhoneAuctionRepository(private val remoteDataSource: PhoneAuctionDa
         return remoteDataSource.post(event)
     }
 
+    override suspend fun postAuction(event: Event, price: Int): Result<Boolean> {
+        return remoteDataSource.postAuction(event, price)
+    }
+
     override suspend fun getAuction(): Result<List<Event>> {
         return remoteDataSource.getAuction()
     }

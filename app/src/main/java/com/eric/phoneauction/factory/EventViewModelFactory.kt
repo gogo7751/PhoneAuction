@@ -2,6 +2,7 @@ package com.eric.phoneauction.factory
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.eric.phoneauction.auctionDialog.AuctionViewModel
 import com.eric.phoneauction.data.Event
 import com.eric.phoneauction.data.source.PhoneAuctionRepository
 import com.eric.phoneauction.detailAuctionFragment.DetailAuctionViewModel
@@ -20,6 +21,9 @@ class EventViewModelFactory constructor(
 
                 isAssignableFrom(DetailDirectViewModel::class.java) ->
                     DetailDirectViewModel(phoneAuctionRepository, event)
+
+                isAssignableFrom(AuctionViewModel::class.java) ->
+                    AuctionViewModel(phoneAuctionRepository, event)
                 else ->
                     throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }

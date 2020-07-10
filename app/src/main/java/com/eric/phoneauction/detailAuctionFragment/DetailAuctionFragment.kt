@@ -22,6 +22,7 @@ class DetailAuctionFragment : Fragment() {
     lateinit var binding: DetailAuctionFragmentBinding
     private val viewModel by viewModels<DetailAuctionViewModel> { getVmFactory(DetailAuctionFragmentArgs.fromBundle(requireArguments()).event) }
     private val homeViewModel by viewModels<HomeViewModel> { getVmFactory() }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -90,6 +91,13 @@ class DetailAuctionFragment : Fragment() {
             }
         })
 
+        viewModel.navigateToAuction.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                findNavController().navigate(NavigationDirections.actionGlobalAuctionDialog(it))
+                viewModel.onAuctionNavigated()
+            }
+        })
+
         viewModel.countDown.observe(viewLifecycleOwner, Observer {
             it?.let {
                 binding.textDetailAuctionTime.text = it
@@ -104,7 +112,6 @@ class DetailAuctionFragment : Fragment() {
     //bottom navigation view gone
     override fun onDestroy() {
         super.onDestroy()
-        (activity as AppCompatActivity).bottomNavView.visibility = View.VISIBLE
         viewModel.timerStop()
     }
 

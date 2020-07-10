@@ -52,6 +52,7 @@
             android:text="@{event.brand}"
             android:letterSpacing="0.15"
             android:ellipsize="end"
+            android:textColor="@color/black212121"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/image_home_main"
             tools:text="APPLE" />
@@ -66,6 +67,7 @@
             android:text="@{event.productName}"
             android:letterSpacing="0.15"
             android:ellipsize="end"
+            android:textColor="@color/black212121"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_home_brand"
             tools:text="iPhone 11" />
@@ -80,6 +82,7 @@
             android:letterSpacing="0.15"
             android:textSize="13dp"
             android:maxLines="2"
+            android:textColor="@color/black212121"
             android:text="@{event.storage}"
             app:layout_constraintStart_toEndOf="@+id/text_home_title"
             app:layout_constraintTop_toTopOf="@+id/text_home_title"
@@ -94,6 +97,7 @@
             android:fontFamily="@font/noto_sans_bold"
             android:letterSpacing="0.15"
             android:ellipsize="end"
+            android:textColor="@color/black212121"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_home_title"
             tools:text="NT$1200" />
@@ -113,6 +117,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ellipsize="end"
+            android:textColor="@color/black212121"
             android:fontFamily="@font/noto_sans_bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/text_home_price"

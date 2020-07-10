@@ -6,14 +6,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.eric.phoneauction.NavigationDirections
+import com.eric.phoneauction.PhoneAuctionApplication
 import com.eric.phoneauction.databinding.HomeFragmentBinding
 import com.eric.phoneauction.ext.getVmFactory
 import com.eric.phoneauction.ext.toDisplayFormat
 import com.eric.phoneauction.util.Logger
+import kotlinx.android.synthetic.main.activity_main.*
 import java.text.SimpleDateFormat
 
 
@@ -92,6 +95,8 @@ class HomeFragment : Fragment() {
             adapter.notifyDataSetChanged()
         }
 
+
+        (activity as AppCompatActivity).bottomNavView.visibility = View.VISIBLE
         return binding.root
     }
 

@@ -16,6 +16,7 @@ data class Event(
     var endTime: Long = -1,
     var createdTime: Long = -1,
     var tag: String = "",
-    var userId: String = ""
+    var userId: String = "",
+    var deal: Boolean = true
 ): Parcelable
 

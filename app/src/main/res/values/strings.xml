@@ -11,6 +11,10 @@
     <string name="minutes">\u0020:\u0020</string>
     <string name="seconds">\u0020</string>
 
+    <!-- 出價 -->
+    <string name="auction_success">出價成功</string>
+    <string name="direct_success">購買成功</string>
+
     <!-- Post -->
     <string name="select_post_spinner">請選擇</string>
 

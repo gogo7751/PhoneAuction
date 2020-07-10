@@ -95,9 +95,8 @@ class LoginActivity : AppCompatActivity() {
                         //Third step
                         //Login
                         moveMainPage(task.result?.user)
-                        token?.userId
-                        token?.graphDomain
-                        Logger.d("123456${token?.userId} + ${token?.graphDomain}")
+
+                        Logger.d("${task.result?.user?.photoUrl}")
                     }else{
                         //Show the error message
                         Toast.makeText(this,task.exception?.message,Toast.LENGTH_LONG).show()
