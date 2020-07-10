@@ -3,6 +3,7 @@ package com.eric.phoneauction.factory
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.eric.phoneauction.MainViewModel
+import com.eric.phoneauction.checkout.CheckoutSuccessViewModel
 import com.eric.phoneauction.data.source.PhoneAuctionRepository
 import com.eric.phoneauction.homeFragment.HomeViewModel
 import com.eric.phoneauction.postFragment.PostViewModel
@@ -24,6 +25,9 @@ class ViewModelFactory constructor(
 
                 isAssignableFrom(MainViewModel::class.java) ->
                     MainViewModel(phoneAuctionRepository)
+
+                isAssignableFrom(CheckoutSuccessViewModel::class.java) ->
+                    CheckoutSuccessViewModel(phoneAuctionRepository)
 
                 else ->
                     throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")

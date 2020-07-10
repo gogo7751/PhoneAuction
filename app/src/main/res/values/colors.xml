@@ -3,11 +3,24 @@
     <color name="colorPrimary">#f6b76a</color>
     <color name="colorPrimaryDark">#f6b76a</color>
     <color name="colorAccent">#f6b76a</color>
+    <color name="translucent_80">#cc000000</color>
 
     <!-- Black Series -->
     <color name="black">#000000</color>
     <color name="alpha_black">#CC000000</color>
+    <color name="black212121">#212121</color>
+    <color name="black_3f3a3a">#3f3a3a</color>
 
     <!-- White Series -->
     <color name="white">#ffffff</color>
+
+    <!-- Gary Series -->
+    <color name="gary757575">#757575</color>
+
+    <!-- Blue Series -->
+    <color name="fbBlue">#3b5998</color>
+
+    <!-- Red Series -->
+    <color name="red_d0021b">#d0021b</color>
+
 </resources>

@@ -24,6 +24,7 @@ object PhoneAuctionRemoteDataSource :
     override suspend fun getEvents(): Result<List<Event>> = suspendCoroutine { continuation ->
         FirebaseFirestore.getInstance()
             .collection(PATH_EVENTS)
+            .whereEqualTo("deal", true)
             .orderBy(KEY_CREATED_TIME, Query.Direction.DESCENDING)
             .get()
             .addOnCompleteListener { task ->
@@ -53,6 +54,7 @@ object PhoneAuctionRemoteDataSource :
 
         FirebaseFirestore.getInstance()
             .collection(PATH_EVENTS)
+            .whereEqualTo("deal", true)
             .orderBy(KEY_CREATED_TIME, Query.Direction.DESCENDING)
             .addSnapshotListener { snapshot, exception ->
 
@@ -65,7 +67,6 @@ object PhoneAuctionRemoteDataSource :
                 val list = mutableListOf<Event>()
                 for (document in snapshot!!) {
                     Logger.d(document.id + " => " + document.data)
-
                     val article = document.toObject(Event::class.java)
                     list.add(article)
                 }
@@ -101,10 +102,33 @@ object PhoneAuctionRemoteDataSource :
             }
     }
 
+    override suspend fun postAuction(event: Event, price: Int): Result<Boolean> = suspendCoroutine { continuation ->
+        val articles = FirebaseFirestore.getInstance().collection(PATH_EVENTS)
+
+        articles
+            .document(event.id)
+            .update("price", price)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Logger.i("Publish: $event")
+                    continuation.resume(Result.Success(true))
+                } else {
+                    task.exception?.let {
+
+                        Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
+                        continuation.resume(Result.Error(it))
+                        return@addOnCompleteListener
+                    }
+                    continuation.resume(Result.Fail(PhoneAuctionApplication.instance.getString(R.string.you_know_nothing)))
+                }
+            }
+    }
+
     override suspend fun getAuction(): Result<List<Event>> = suspendCoroutine { continuation ->
         FirebaseFirestore.getInstance()
             .collection(PATH_EVENTS)
             .whereEqualTo("tag","拍賣")
+            .whereEqualTo("deal", true)
             .get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -132,6 +156,7 @@ object PhoneAuctionRemoteDataSource :
         FirebaseFirestore.getInstance()
             .collection(PATH_EVENTS)
             .whereEqualTo("tag","直購")
+            .whereEqualTo("deal", true)
             .get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {

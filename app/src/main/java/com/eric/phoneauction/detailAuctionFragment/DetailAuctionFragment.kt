@@ -14,13 +14,14 @@ import com.eric.phoneauction.NavigationDirections
 import com.eric.phoneauction.databinding.DetailAuctionFragmentBinding
 import com.eric.phoneauction.ext.getVmFactory
 import com.eric.phoneauction.homeFragment.HomeAdapter
-import com.eric.phoneauction.util.Logger
+import com.eric.phoneauction.homeFragment.HomeViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
 class DetailAuctionFragment : Fragment() {
 
     lateinit var binding: DetailAuctionFragmentBinding
     private val viewModel by viewModels<DetailAuctionViewModel> { getVmFactory(DetailAuctionFragmentArgs.fromBundle(requireArguments()).event) }
+    private val homeViewModel by viewModels<HomeViewModel> { getVmFactory() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,7 +36,7 @@ class DetailAuctionFragment : Fragment() {
 
         val adapter = HomeAdapter(HomeAdapter.OnClickListener{
             viewModel.navigateToDetail(it)
-        })
+        }, homeViewModel)
         binding.recyclerDetailAuctionAlsoLike.adapter = adapter
         binding.recyclerDetailAuction.adapter = DetailGalleryAdapter()
         binding.recyclerDetailAuctionCircles.adapter = DetailCircleAdapter()
@@ -59,13 +60,13 @@ class DetailAuctionFragment : Fragment() {
 
         // set the initial position to the center of infinite gallery
         viewModel.event.value?.let { product ->
-            product.images?.size?.times(100)?.let {
+            product.images.size.times(100).let {
                 binding.recyclerDetailAuction
                     .scrollToPosition(it)
             }
 
             viewModel.snapPosition.observe(viewLifecycleOwner, Observer {
-                (binding.recyclerDetailAuctionCircles.adapter as DetailCircleAdapter).selectedPosition.value = (it % product.images?.size as Int)
+                (binding.recyclerDetailAuctionCircles.adapter as DetailCircleAdapter).selectedPosition.value = (it % product.images.size)
             })
         }
 
@@ -90,7 +91,20 @@ class DetailAuctionFragment : Fragment() {
             }
         })
 
+        viewModel.navigateToAuction.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                findNavController().navigate(NavigationDirections.actionGlobalAuctionDialog(it))
+                viewModel.onAuctionNavigated()
+            }
+        })
 
+        viewModel.countDown.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                binding.textDetailAuctionTime.text = it
+            }
+        })
+
+        viewModel.timerStart()
         (activity as AppCompatActivity).bottomNavView.visibility = View.GONE
         return binding.root
     }
@@ -98,7 +112,7 @@ class DetailAuctionFragment : Fragment() {
     //bottom navigation view gone
     override fun onDestroy() {
         super.onDestroy()
-        (activity as AppCompatActivity).bottomNavView.visibility = View.VISIBLE
+        viewModel.timerStop()
     }
 
 }

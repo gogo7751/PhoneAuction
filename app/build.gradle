@@ -74,6 +74,8 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     kapt "androidx.room:room-compiler:$version_room"
 
     // Navigation
@@ -116,14 +118,18 @@ dependencies {
     debugImplementation "androidx.fragment:fragment-testing:$version_fragment"
 
     // Firebase
-    implementation 'com.google.firebase:firebase-firestore:21.4.3'
+    implementation 'com.google.firebase:firebase-firestore:21.5.0'
     implementation 'com.google.firebase:firebase-storage:19.1.1'
 
     // Firebase Authentication (帳號驗證模組)
-    implementation 'com.google.firebase:firebase-auth:19.3.1'
+    implementation 'com.google.firebase:firebase-auth:19.3.2'
+    implementation 'com.google.firebase:firebase-messaging:20.2.2'
 
     // Firebase核心
-    implementation 'com.google.firebase:firebase-core:17.4.3'
+    implementation 'com.google.firebase:firebase-core:17.4.4'
+
+    //Lottie
+    implementation 'com.airbnb.android:lottie:3.4.1'
 
 
     //bottomNav

@@ -37,30 +37,6 @@ class PostViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
     var description = MutableLiveData<String>()
     var tag = MutableLiveData<String>()
 
-    fun getEvent(): Event {
-        val images = listOf<String>(
-            image1.value.toString(),
-            image2.value.toString(),
-            image3.value.toString(),
-            image4.value.toString(),
-            image5.value.toString()
-        )
-        return Event(
-            id = "",
-            productName = productName.value.toString(),
-            storage = storage.value.toString(),
-            brand = brand.value.toString(),
-            price = price.value!!.toInt(),
-            images = images,
-            trade = trade.value.toString(),
-            description = description.value.toString(),
-            endTime = -1,
-            createdTime = -1,
-            tag = tag.value.toString(),
-            userId = "123"
-        )
-    }
-
     private val _leave = MutableLiveData<Boolean>()
 
     val leave: LiveData<Boolean>
@@ -97,6 +73,31 @@ class PostViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
         Logger.i("------------------------------------")
         Logger.i("[${this::class.simpleName}]${this}")
         Logger.i("------------------------------------")
+    }
+
+    fun getEvent(): Event {
+        val images = listOf<String>(
+            image1.value.toString(),
+            image2.value.toString(),
+            image3.value.toString(),
+            image4.value.toString(),
+            image5.value.toString()
+        )
+        return Event(
+            id = "",
+            productName = productName.value.toString(),
+            storage = storage.value.toString(),
+            brand = brand.value.toString(),
+            price = price.value?.toInt() as Int,
+            images = images,
+            trade = trade.value.toString(),
+            description = description.value.toString(),
+            endTime = -1,
+            createdTime = -1,
+            tag = tag.value.toString(),
+            userId = "gogo7751",
+            deal = true
+        )
     }
 
     fun post(event: Event) {

@@ -140,7 +140,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
-                    android:fontFamily="@font/noto_sans"
+                    android:fontFamily="@font/noto_sans_bold"
                     android:letterSpacing="0.1"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
@@ -171,7 +171,6 @@
                     android:fontFamily="@font/noto_sans_bold"
                     android:letterSpacing="0.1"
                     android:textSize="16dp"
-                    app:timeToDisplayFormat="@{viewModel.event.endTime}"
                     app:layout_constraintStart_toEndOf="@+id/image_detail_auction_clock"
                     app:layout_constraintTop_toTopOf="@+id/text_detail_auction_tag"
                     app:layout_constraintBottom_toBottomOf="@id/text_detail_auction_tag"
@@ -243,7 +242,7 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:id="@+id/button_post"
+            android:id="@+id/button_auction_post"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_marginEnd="16dp"
@@ -255,6 +254,7 @@
             android:text="我要出價"
             android:textColor="@android:color/white"
             android:textSize="18dp"
+            android:onClick="@{() -> viewModel.navigateToAuction(viewModel.event)}"
             app:layout_constraintBottom_toBottomOf="@+id/view_detail_auction_bg"
             app:layout_constraintEnd_toEndOf="@+id/view_detail_auction_bg"
             app:layout_constraintStart_toEndOf="@+id/button_message"
