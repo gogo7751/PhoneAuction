@@ -256,6 +256,7 @@
             android:text="我要購買"
             android:textColor="@android:color/white"
             android:textSize="18dp"
+            android:onClick="@{() -> viewModel.navigateToDirect(viewModel.event)}"
             app:layout_constraintBottom_toBottomOf="@+id/view_detail_direct_bg"
             app:layout_constraintEnd_toEndOf="@+id/view_detail_direct_bg"
             app:layout_constraintStart_toEndOf="@+id/button_message_direct"
@@ -273,6 +274,7 @@
             android:text="對話"
             android:textColor="@android:color/black"
             android:textSize="18dp"
+            android:onClick="@{() -> viewModel.navigateToDetail(viewModel.event)}"
             app:layout_constraintBottom_toBottomOf="@+id/view_detail_direct_bg"
             app:layout_constraintStart_toEndOf="@+id/imageView_detail_direct_collection"
             app:layout_constraintTop_toTopOf="@+id/view_detail_direct_bg" />

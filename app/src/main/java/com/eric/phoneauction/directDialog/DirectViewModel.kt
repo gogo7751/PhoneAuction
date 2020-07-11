@@ -1,4 +1,4 @@
-package com.eric.phoneauction.auctionDialog
+package com.eric.phoneauction.directDialog
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -14,7 +14,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class AuctionViewModel(
+class DirectViewModel(
     val phoneAuctionRepository: PhoneAuctionRepository,
     arguments: Event
 ) : ViewModel() {
@@ -26,22 +26,22 @@ class AuctionViewModel(
     val event: LiveData<Event>
         get() = _event
 
+    val freight = MutableLiveData<Int>()
+
+    val totalPrice = MutableLiveData<Int>()
+
     // Handle leave auction
     private val _leave = MutableLiveData<Boolean>()
 
     val leave: LiveData<Boolean>
         get() = _leave
 
-    val price = MutableLiveData<Int>().apply {
-        value = event.value?.price
-    }
 
-    // Handle navigation to checkoutSuccess
+    // Handle navigation to CheckoutSuccess
     private val _navigateToCheckoutSuccess = MutableLiveData<Event>()
 
     val navigateToCheckoutSuccess: LiveData<Event>
         get() = _navigateToCheckoutSuccess
-
 
     // status: The internal MutableLiveData that stores the status of the most recent request
     private val _status = MutableLiveData<LoadApiStatus>()
@@ -62,6 +62,7 @@ class AuctionViewModel(
         get() = _refreshStatus
 
 
+
     // Create a Coroutine scope using a job to be able to cancel when needed
     private var viewModelJob = Job()
 
@@ -74,6 +75,8 @@ class AuctionViewModel(
         Logger.i("------------------------------------")
         Logger.i("[${this::class.simpleName}]${this}")
         Logger.i("------------------------------------")
+        getFreight()
+        totalPrice.value = freight?.value?.let { _event.value?.price?.plus(it) }
     }
 
     override fun onCleared() {
@@ -81,13 +84,13 @@ class AuctionViewModel(
         viewModelJob.cancel()
     }
 
-    fun postAuction(event: Event, price: Int) {
+    fun postAuction(event: Event) {
 
         coroutineScope.launch {
 
             _status.value = LoadApiStatus.LOADING
 
-            when (val result = phoneAuctionRepository.postAuction(event, price)) {
+            when (val result = phoneAuctionRepository.postDirect(event)) {
                 is com.eric.phoneauction.data.Result.Success -> {
                     _error.value = null
                     _status.value = LoadApiStatus.DONE
@@ -109,26 +112,18 @@ class AuctionViewModel(
     }
 
 
-    fun addMinimalPrice(originPrice: Int) {
-        price.value = originPrice.times(1.01).toInt()
-    }
-
-    fun add100() {
-        price.value = price.value?.plus(100)
-    }
-
-    fun add300() {
-        price.value = price.value?.plus(300)
-    }
-
-    fun add500() {
-        price.value = price.value?.plus(500)
-    }
-
-
     fun navigateToCheckoutSuccess(event: Event) {
         _navigateToCheckoutSuccess.value = event
     }
+
+    fun getFreight() {
+        if (_event.value?.trade == "面交") {
+            freight.value = 0
+        } else {
+            freight.value = 60
+        }
+    }
+
 
 
 
@@ -142,4 +137,6 @@ class AuctionViewModel(
 
 
     fun nothing() {}
+
+
 }

@@ -7,6 +7,7 @@ import app.appworks.school.publisher.network.LoadApiStatus
 import com.eric.phoneauction.PhoneAuctionApplication
 import com.eric.phoneauction.R
 import com.eric.phoneauction.data.Event
+import com.eric.phoneauction.data.UserManager
 import com.eric.phoneauction.data.source.PhoneAuctionRepository
 import com.eric.phoneauction.util.Logger
 import com.google.firebase.storage.StorageMetadata
@@ -95,7 +96,8 @@ class PostViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
             endTime = -1,
             createdTime = -1,
             tag = tag.value.toString(),
-            userId = "gogo7751",
+            userId = UserManager.userId.toString(),
+            buyUser = "",
             deal = true
         )
     }

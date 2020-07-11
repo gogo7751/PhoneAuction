@@ -5,7 +5,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
 import android.provider.MediaStore
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -16,6 +15,7 @@ import android.widget.AdapterView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -36,11 +36,11 @@ class PostFragment : Fragment() {
     private var saveUri: Uri? = null
 
     private companion object {
-        const val PHOTO_FROM_GALLERY_1 = 0
-        const val PHOTO_FROM_GALLERY_2 = 1
-        const val PHOTO_FROM_GALLERY_3 = 2
-        const val PHOTO_FROM_GALLERY_4 = 3
-        const val PHOTO_FROM_GALLERY_5 = 4
+        const val PHOTO_FROM_GALLERY_1 = 1
+        const val PHOTO_FROM_GALLERY_2 = 2
+        const val PHOTO_FROM_GALLERY_3 = 3
+        const val PHOTO_FROM_GALLERY_4 = 4
+        const val PHOTO_FROM_GALLERY_5 = 5
     }
 
     lateinit var binding: PostFragmentBinding
@@ -50,6 +50,9 @@ class PostFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = PostFragmentBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
+
 
         if (savedInstanceState != null) {
             saveUri = Uri.parse(savedInstanceState.getString("saveUri"))
@@ -57,42 +60,24 @@ class PostFragment : Fragment() {
 
         permission()
 
-        binding.lifecycleOwner = viewLifecycleOwner
-        binding.viewModel = viewModel
-
         binding.imagePost1.setOnClickListener {
-            toAlbum1()
-            Handler().postDelayed({
-                uploadImage1()
-            }, 5000)
+            toAlbum(PHOTO_FROM_GALLERY_1)
         }
 
         binding.imagePost2.setOnClickListener {
-            toAlbum2()
-            Handler().postDelayed({
-                uploadImage2()
-            }, 5000)
+            toAlbum(PHOTO_FROM_GALLERY_2)
         }
 
         binding.imagePost3.setOnClickListener {
-            toAlbum3()
-            Handler().postDelayed({
-                uploadImage3()
-            }, 5000)
+            toAlbum(PHOTO_FROM_GALLERY_3)
         }
 
         binding.imagePost4.setOnClickListener {
-            toAlbum4()
-            Handler().postDelayed({
-                uploadImage4()
-            }, 5000)
+            toAlbum(PHOTO_FROM_GALLERY_4)
         }
 
         binding.imagePost5.setOnClickListener {
-            toAlbum5()
-            Handler().postDelayed({
-                uploadImage5()
-            }, 5000)
+            toAlbum(PHOTO_FROM_GALLERY_5)
         }
 
         //送出post
@@ -126,64 +111,63 @@ class PostFragment : Fragment() {
             ) {
                 when (position) {
                     1 -> {
-                        binding.spinnerName.adapter = PostSpinnerAdapter(
-                            PhoneAuctionApplication.instance.resources.getStringArray(R.array.iphone_list)) }
+                        getSpinnerNameString(PhoneAuctionApplication.instance.resources.getStringArray(R.array.iphone_list))
+                    }
                     2 -> {
-                        binding.spinnerName.adapter = PostSpinnerAdapter(
-                            PhoneAuctionApplication.instance.resources.getStringArray(R.array.samsung_list)) }
+                        getSpinnerNameString(PhoneAuctionApplication.instance.resources.getStringArray(R.array.samsung_list))
+                    }
                     3 -> {
-                        binding.spinnerName.adapter = PostSpinnerAdapter(
-                            PhoneAuctionApplication.instance.resources.getStringArray(R.array.sony_list)) }
+                        getSpinnerNameString(PhoneAuctionApplication.instance.resources.getStringArray(R.array.sony_list))
+                    }
                     4 -> {
-                        binding.spinnerName.adapter = PostSpinnerAdapter(
-                            PhoneAuctionApplication.instance.resources.getStringArray(R.array.google_list)) }
+                        getSpinnerNameString(PhoneAuctionApplication.instance.resources.getStringArray(R.array.google_list))
+                    }
                     5 -> {
-                        binding.spinnerName.adapter = PostSpinnerAdapter(
-                            PhoneAuctionApplication.instance.resources.getStringArray(R.array.asus_list)) }
+                        getSpinnerNameString(PhoneAuctionApplication.instance.resources.getStringArray(R.array.asus_list))
+                    }
                     6 -> {
-                        binding.spinnerName.adapter = PostSpinnerAdapter(
-                            PhoneAuctionApplication.instance.resources.getStringArray(R.array.oppo_list)) }
+                        getSpinnerNameString(PhoneAuctionApplication.instance.resources.getStringArray(R.array.oppo_list))
+                    }
                     7 -> {
-                        binding.spinnerName.adapter = PostSpinnerAdapter(
-                            PhoneAuctionApplication.instance.resources.getStringArray(R.array.huawei_list)) }
+                        getSpinnerNameString(PhoneAuctionApplication.instance.resources.getStringArray(R.array.huawei_list))
+                    }
                     8 -> {
-                        binding.spinnerName.adapter = PostSpinnerAdapter(
-                            PhoneAuctionApplication.instance.resources.getStringArray(R.array.mi_list)) }
+                        getSpinnerNameString(PhoneAuctionApplication.instance.resources.getStringArray(R.array.mi_list))
+                    }
                     9 -> {
-                        binding.spinnerName.adapter = PostSpinnerAdapter(
-                            PhoneAuctionApplication.instance.resources.getStringArray(R.array.htc_list)) }
+                        getSpinnerNameString(PhoneAuctionApplication.instance.resources.getStringArray(R.array.htc_list))
+                    }
                     10 -> {
-                        binding.spinnerName.adapter = PostSpinnerAdapter(
-                            PhoneAuctionApplication.instance.resources.getStringArray(R.array.nokia_list)) }
+                        getSpinnerNameString(PhoneAuctionApplication.instance.resources.getStringArray(R.array.nokia_list))
+                    }
                     11 -> {
-                        binding.spinnerName.adapter = PostSpinnerAdapter(
-                            PhoneAuctionApplication.instance.resources.getStringArray(R.array.realme_list)) }
+                        getSpinnerNameString(PhoneAuctionApplication.instance.resources.getStringArray(R.array.realme_list))
+                    }
                     12 -> {
-                        binding.spinnerName.adapter = PostSpinnerAdapter(
-                            PhoneAuctionApplication.instance.resources.getStringArray(R.array.lg_list)) }
+                        getSpinnerNameString(PhoneAuctionApplication.instance.resources.getStringArray(R.array.lg_list))
+                    }
                     13 -> {
-                        binding.spinnerName.adapter = PostSpinnerAdapter(
-                            PhoneAuctionApplication.instance.resources.getStringArray(R.array.sugar_list)) }
+                        getSpinnerNameString(PhoneAuctionApplication.instance.resources.getStringArray(R.array.sugar_list))
+                    }
                     14 -> {
-                        binding.spinnerName.adapter = PostSpinnerAdapter(
-                            PhoneAuctionApplication.instance.resources.getStringArray(R.array.sharp_list)) }
+                        getSpinnerNameString(PhoneAuctionApplication.instance.resources.getStringArray(R.array.sharp_list))
+                    }
                     15 -> {
-                        binding.spinnerName.adapter = PostSpinnerAdapter(
-                            PhoneAuctionApplication.instance.resources.getStringArray(R.array.vivo_list)) }
+                        getSpinnerNameString(PhoneAuctionApplication.instance.resources.getStringArray(R.array.vivo_list))
+                    }
                 }
                 viewModel.brand.value = binding.spinnerBrand.selectedItem.toString()
             }
         }
 
         //選擇名稱
-        binding.spinnerName.adapter = PostSpinnerAdapter(
+        getSpinnerNameString(
             PhoneAuctionApplication.instance.resources.getStringArray(R.array.name_list)
         )
 
         binding.spinnerName.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
-
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long
             ) {
                 viewModel.productName.value = binding.spinnerName.selectedItem.toString()
@@ -256,6 +240,12 @@ class PostFragment : Fragment() {
         return binding.root
     }
 
+    //get spinnerNameString
+    fun getSpinnerNameString(stringArray: Array<String>) {
+        binding.spinnerName.adapter = PostSpinnerAdapter(
+            stringArray)
+    }
+
     //bottom navigation view gone
     override fun onDestroy() {
         super.onDestroy()
@@ -280,6 +270,7 @@ class PostFragment : Fragment() {
                         saveUri = data?.data
                         val bitmap = MediaStore.Images.Media.getBitmap(PhoneAuctionApplication.instance.contentResolver, saveUri)
                         binding.imagePost1.setImageBitmap(bitmap)
+                        uploadImage(viewModel.image1)
                     }
                     Activity.RESULT_CANCELED -> {
                         Log.wtf("getImageResult", resultCode.toString())
@@ -292,6 +283,7 @@ class PostFragment : Fragment() {
                         saveUri = data?.data
                         val bitmap = MediaStore.Images.Media.getBitmap(PhoneAuctionApplication.instance.contentResolver, saveUri)
                         binding.imagePost2.setImageBitmap(bitmap)
+                        uploadImage(viewModel.image2)
                     }
                     Activity.RESULT_CANCELED -> {
                         Log.wtf("getImageResult", resultCode.toString())
@@ -304,6 +296,7 @@ class PostFragment : Fragment() {
                         saveUri = data?.data
                         val bitmap = MediaStore.Images.Media.getBitmap(PhoneAuctionApplication.instance.contentResolver, saveUri)
                         binding.imagePost3.setImageBitmap(bitmap)
+                        uploadImage(viewModel.image3)
                     }
                     Activity.RESULT_CANCELED -> {
                         Log.wtf("getImageResult", resultCode.toString())
@@ -316,6 +309,7 @@ class PostFragment : Fragment() {
                         saveUri = data?.data
                         val bitmap = MediaStore.Images.Media.getBitmap(PhoneAuctionApplication.instance.contentResolver, saveUri)
                         binding.imagePost4.setImageBitmap(bitmap)
+                        uploadImage(viewModel.image4)
                     }
                     Activity.RESULT_CANCELED -> {
                         Log.wtf("getImageResult", resultCode.toString())
@@ -328,6 +322,7 @@ class PostFragment : Fragment() {
                         saveUri = data?.data
                         val bitmap = MediaStore.Images.Media.getBitmap(PhoneAuctionApplication.instance.contentResolver, saveUri)
                         binding.imagePost5.setImageBitmap(bitmap)
+                        uploadImage(viewModel.image5)
                     }
                     Activity.RESULT_CANCELED -> {
                         Log.wtf("getImageResult", resultCode.toString())
@@ -337,34 +332,10 @@ class PostFragment : Fragment() {
         }
     }
 
-    private fun toAlbum1() {
+    private fun toAlbum(photoFromGallery :Int) {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "image/*"
-        startActivityForResult(intent, PHOTO_FROM_GALLERY_1)
-    }
-
-    private fun toAlbum2() {
-        val intent = Intent(Intent.ACTION_GET_CONTENT)
-        intent.type = "image/*"
-        startActivityForResult(intent, PHOTO_FROM_GALLERY_2)
-    }
-
-    private fun toAlbum3() {
-        val intent = Intent(Intent.ACTION_GET_CONTENT)
-        intent.type = "image/*"
-        startActivityForResult(intent, PHOTO_FROM_GALLERY_3)
-    }
-
-    private fun toAlbum4() {
-        val intent = Intent(Intent.ACTION_GET_CONTENT)
-        intent.type = "image/*"
-        startActivityForResult(intent, PHOTO_FROM_GALLERY_4)
-    }
-
-    private fun toAlbum5() {
-        val intent = Intent(Intent.ACTION_GET_CONTENT)
-        intent.type = "image/*"
-        startActivityForResult(intent, PHOTO_FROM_GALLERY_5)
+        startActivityForResult(intent, photoFromGallery)
     }
 
     private fun permission() {
@@ -384,58 +355,15 @@ class PostFragment : Fragment() {
     }
 
 
-    private fun uploadImage1() {
+    private fun uploadImage(image: MutableLiveData<String>) {
         val filename = UUID.randomUUID().toString()
         val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
         ref.putFile(saveUri!!)
             .addOnSuccessListener {
                 ref.downloadUrl.addOnSuccessListener {
-                    viewModel.image1.value = it.toString()
+                    image.value = it.toString()
                 }
             }
     }
 
-    private fun uploadImage2() {
-        val filename = UUID.randomUUID().toString()
-        val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
-        ref.putFile(saveUri!!)
-            .addOnSuccessListener {
-                ref.downloadUrl.addOnSuccessListener {
-                    viewModel.image2.value = it.toString()
-                }
-            }
-    }
-
-    private fun uploadImage3() {
-        val filename = UUID.randomUUID().toString()
-        val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
-        ref.putFile(saveUri!!)
-            .addOnSuccessListener {
-                ref.downloadUrl.addOnSuccessListener {
-                    viewModel.image3.value = it.toString()
-                }
-            }
-    }
-
-    private fun uploadImage4() {
-        val filename = UUID.randomUUID().toString()
-        val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
-        ref.putFile(saveUri!!)
-            .addOnSuccessListener {
-                ref.downloadUrl.addOnSuccessListener {
-                    viewModel.image4.value = it.toString()
-                }
-            }
-    }
-
-    private fun uploadImage5() {
-        val filename = UUID.randomUUID().toString()
-        val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
-        ref.putFile(saveUri!!)
-            .addOnSuccessListener {
-                ref.downloadUrl.addOnSuccessListener {
-                    viewModel.image5.value = it.toString()
-                }
-            }
-    }
 }

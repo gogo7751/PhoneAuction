@@ -7,6 +7,7 @@ import com.eric.phoneauction.data.Event
 import com.eric.phoneauction.data.source.PhoneAuctionRepository
 import com.eric.phoneauction.detailAuctionFragment.DetailAuctionViewModel
 import com.eric.phoneauction.detailDirectFragment.DetailDirectViewModel
+import com.eric.phoneauction.directDialog.DirectViewModel
 
 @Suppress("UNCHECKED_CAST")
 class EventViewModelFactory constructor(
@@ -24,6 +25,9 @@ class EventViewModelFactory constructor(
 
                 isAssignableFrom(AuctionViewModel::class.java) ->
                     AuctionViewModel(phoneAuctionRepository, event)
+
+                isAssignableFrom(DirectViewModel::class.java) ->
+                    DirectViewModel(phoneAuctionRepository, event)
                 else ->
                     throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }

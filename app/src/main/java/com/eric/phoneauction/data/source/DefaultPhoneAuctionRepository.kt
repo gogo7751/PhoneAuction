@@ -3,6 +3,7 @@ package com.eric.phoneauction.data.source
 import androidx.lifecycle.MutableLiveData
 import com.eric.phoneauction.data.Event
 import com.eric.phoneauction.data.Result
+import com.eric.phoneauction.data.User
 
 
 /**
@@ -21,12 +22,8 @@ class DefaultPhoneAuctionRepository(private val remoteDataSource: PhoneAuctionDa
         return remoteDataSource.getLiveEvent()
     }
 
-    override suspend fun post(event: Event): Result<Boolean> {
-        return remoteDataSource.post(event)
-    }
-
-    override suspend fun postAuction(event: Event, price: Int): Result<Boolean> {
-        return remoteDataSource.postAuction(event, price)
+    override suspend fun getUser(): Result<User> {
+        return remoteDataSource.getUser()
     }
 
     override suspend fun getAuction(): Result<List<Event>> {
@@ -37,4 +34,19 @@ class DefaultPhoneAuctionRepository(private val remoteDataSource: PhoneAuctionDa
         return remoteDataSource.getDirect()
     }
 
+    override suspend fun post(event: Event): Result<Boolean> {
+        return remoteDataSource.post(event)
+    }
+
+    override suspend fun postAuction(event: Event, price: Int): Result<Boolean> {
+        return remoteDataSource.postAuction(event, price)
+    }
+
+    override suspend fun postDirect(event: Event): Result<Boolean> {
+        return remoteDataSource.postDirect(event)
+    }
+
+    override suspend fun postUser(user: User): Result<Boolean> {
+        return remoteDataSource.postUser(user)
+    }
 }

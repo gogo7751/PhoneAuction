@@ -97,7 +97,8 @@
     <dialog
         android:id="@+id/auctionDialog"
         android:name="com.eric.phoneauction.auctionDialog.AuctionDialog"
-        android:label="AuctionDialog">
+        android:label="AuctionDialog"
+        tools:layout="@layout/auction_dialog">
     <argument
         android:name="event"
         app:argType="com.eric.phoneauction.data.Event"
@@ -105,7 +106,6 @@
         <action
             android:id="@+id/action_auctionDialog_to_checkSuccessAuctionFragment"
             app:destination="@id/checkSuccessAuctionFragment"
-            app:popUpTo="@id/homeFragment"
             app:popUpToInclusive="true" />
     </dialog>
     <action
@@ -125,6 +125,31 @@
     <fragment
         android:id="@+id/checkSuccessAuctionFragment"
         android:name="com.eric.phoneauction.checkout.CheckSuccessAuctionFragment"
-        android:label="CheckSuccessAuctionFragment" />
+        android:label="CheckSuccessAuctionFragment"
+        tools:layout="@layout/fragment_checkout_success_auction"/>
+    <dialog
+        android:id="@+id/directDialog"
+        android:name="com.eric.phoneauction.directDialog.DirectDialog"
+        android:label="DirectDialog"
+        tools:layout="@layout/dialog_direct_fragment">
+        <argument
+            android:name="event"
+            app:argType="com.eric.phoneauction.data.Event"
+            app:nullable="false"/>
+        <action
+            android:id="@+id/action_directDialog_to_checkoutSuccessDirectFragment"
+            app:destination="@id/checkoutSuccessDirectFragment"
+            app:popUpToInclusive="true" />
+
+    </dialog>
+    <action
+        android:id="@+id/action_global_directDialog"
+        app:destination="@id/directDialog"
+        app:popUpToInclusive="true" />
+    <fragment
+        android:id="@+id/checkoutSuccessDirectFragment"
+        android:name="com.eric.phoneauction.checkout.CheckoutSuccessDirectFragment"
+        android:label="CheckoutSuccessDirectFragment"
+        tools:layout="@layout/fragment_checkout_success_direct"/>
 
 </navigation>
