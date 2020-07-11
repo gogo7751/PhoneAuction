@@ -4,42 +4,53 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="event"
             type="com.eric.phoneauction.data.Event" />
+
         <variable
             name="viewModel"
             type="com.eric.phoneauction.homeFragment.HomeViewModel" />
+
         <variable
             name="countDown"
             type="String" />
-        <variable name="itemPosition" type="Integer"/>
-        <variable name="itemCount" type="Integer"/>
+
+        <variable
+            name="itemPosition"
+            type="Integer" />
+
+        <variable
+            name="itemCount"
+            type="Integer" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:itemPosition="@{itemPosition}"
-        app:itemCount="@{itemCount}">
-
+        app:itemCount="@{itemCount}"
+        app:itemPosition="@{itemPosition}">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/image_home_main"
             android:layout_width="match_parent"
-            android:layout_height="170dp"
+            android:layout_height="155dp"
             app:cardCornerRadius="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
+
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                app:layout_constraintDimensionRatio="5:7"
                 app:imageUrl="@{event.images[0]}"
+                app:layout_constraintDimensionRatio="5:7"
                 tools:src="@tools:sample/backgrounds/scenic" />
+
+
         </com.google.android.material.card.MaterialCardView>
 
         <TextView
@@ -47,11 +58,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:maxLines="2"
-            android:fontFamily="@font/noto_sans"
-            android:text="@{event.brand}"
-            android:letterSpacing="0.15"
             android:ellipsize="end"
+            android:fontFamily="@font/noto_sans"
+            android:letterSpacing="0.15"
+            android:maxLines="2"
+            android:text="@{event.brand}"
             android:textColor="@color/black212121"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/image_home_main"
@@ -61,13 +72,13 @@
             android:id="@+id/text_home_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:maxLines="2"
-            android:textSize="13dp"
-            android:fontFamily="@font/noto_sans"
-            android:text="@{event.productName}"
-            android:letterSpacing="0.15"
             android:ellipsize="end"
+            android:fontFamily="@font/noto_sans"
+            android:letterSpacing="0.15"
+            android:maxLines="2"
+            android:text="@{event.productName}"
             android:textColor="@color/black212121"
+            android:textSize="13dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_home_brand"
             tools:text="iPhone 11" />
@@ -76,14 +87,14 @@
             android:id="@+id/text_home_storage"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
             android:layout_marginStart="5dp"
+            android:ellipsize="end"
             android:fontFamily="@font/noto_sans"
             android:letterSpacing="0.15"
-            android:textSize="13dp"
             android:maxLines="2"
-            android:textColor="@color/black212121"
             android:text="@{event.storage}"
+            android:textColor="@color/black212121"
+            android:textSize="13dp"
             app:layout_constraintStart_toEndOf="@+id/text_home_title"
             app:layout_constraintTop_toTopOf="@+id/text_home_title"
             tools:text="64G" />
@@ -93,35 +104,25 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            app:price="@{event.price}"
+            android:ellipsize="end"
             android:fontFamily="@font/noto_sans_bold"
             android:letterSpacing="0.15"
-            android:ellipsize="end"
             android:textColor="@color/black212121"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_home_title"
+            app:price="@{event.price}"
             tools:text="NT$1200" />
-
-        <ImageView
-            android:id="@+id/image_home_collection"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:background="@drawable/ic_heart"
-            android:alpha="0.7"
-            android:layout_marginTop="12dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/image_home_main" />
 
         <TextView
             android:id="@+id/text_home_time"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:textColor="@color/black212121"
             android:fontFamily="@font/noto_sans_bold"
+            android:text="@{countDown}"
+            android:textColor="@color/black212121"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/text_home_price"
-            android:text="@{countDown}"
             tools:text="15:00:20" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

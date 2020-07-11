@@ -48,6 +48,12 @@ class DetailDirectViewModel(
     val navigateToDetail: LiveData<Event>
         get() = _navigateToDetail
 
+    // Handle navigation to direct
+    private val _navigateToDirect = MutableLiveData<Event>()
+
+    val navigateToDirect: LiveData<Event>
+        get() = _navigateToDirect
+
     // it for gallery circles design
     private val _snapPosition = MutableLiveData<Int>()
 
@@ -195,13 +201,14 @@ class DetailDirectViewModel(
         viewModelJob.cancel()
     }
 
-    fun navigateToAdd2cart(event: Event) {
-        _navigateToAdd2cart.value = event
+    fun navigateToDirect(event: Event) {
+        _navigateToDirect.value = event
     }
 
-    fun onAdd2cartNavigated() {
-        _navigateToAdd2cart.value = null
+    fun onDirectNavigated() {
+        _navigateToDirect.value = null
     }
+
 
     fun navigateToDetail(event: Event) {
         _navigateToDetail.value = event

@@ -200,7 +200,7 @@
                 android:ellipsize="end"
                 android:fontFamily="@font/noto_sans"
                 android:letterSpacing="0.15"
-                android:onClick="@{() -> viewModel.navigateToDetail(viewModel.event)}"
+                android:onClick="@{() -> viewModel.navigateToCheckoutSuccess(viewModel.event)}"
                 android:text="我要出價"
                 android:textColor="@android:color/white"
                 android:textSize="18dp"

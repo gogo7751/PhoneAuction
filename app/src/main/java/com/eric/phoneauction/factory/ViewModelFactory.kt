@@ -7,6 +7,7 @@ import com.eric.phoneauction.checkout.CheckoutSuccessViewModel
 import com.eric.phoneauction.data.source.PhoneAuctionRepository
 import com.eric.phoneauction.homeFragment.HomeViewModel
 import com.eric.phoneauction.postFragment.PostViewModel
+import com.eric.phoneauction.profileFragment.ProfileViewModel
 import java.lang.IllegalArgumentException
 
 @Suppress("UNCHECKED_CAST")
@@ -28,6 +29,9 @@ class ViewModelFactory constructor(
 
                 isAssignableFrom(CheckoutSuccessViewModel::class.java) ->
                     CheckoutSuccessViewModel(phoneAuctionRepository)
+
+                isAssignableFrom(ProfileViewModel::class.java) ->
+                    ProfileViewModel(phoneAuctionRepository)
 
                 else ->
                     throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")

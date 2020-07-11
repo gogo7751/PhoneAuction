@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearSnapHelper
 import com.eric.phoneauction.NavigationDirections
@@ -76,6 +77,15 @@ class DetailDirectFragment : Fragment() {
                 adapter.submitList(it)
             }
         })
+
+        viewModel.navigateToDirect.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                findNavController().navigate(NavigationDirections.actionGlobalDirectDialog(it))
+                viewModel.onDirectNavigated()
+            }
+        })
+
+
 
         viewModel.navigateToDetail.observe(viewLifecycleOwner, Observer {
             it?.let {

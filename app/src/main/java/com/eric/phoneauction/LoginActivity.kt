@@ -10,6 +10,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 import android.content.pm.PackageManager
 import android.util.Base64
 import android.util.Log
+import com.eric.phoneauction.data.UserManager
 import com.eric.phoneauction.util.Logger
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
@@ -18,6 +19,7 @@ import com.facebook.FacebookException
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.google.firebase.auth.FacebookAuthProvider
+import com.google.firebase.firestore.auth.User
 
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
@@ -36,6 +38,8 @@ class LoginActivity : AppCompatActivity() {
             //First step
             facebookLogin()
         }
+
+
 
         callbackManager = CallbackManager.Factory.create()
     }
@@ -85,6 +89,7 @@ class LoginActivity : AppCompatActivity() {
 
             })
     }
+
     fun handleFacebookAccessToken(token : AccessToken?){
         var credential = token?.token?.let { FacebookAuthProvider.getCredential(it) }
         if (credential != null) {
@@ -95,8 +100,14 @@ class LoginActivity : AppCompatActivity() {
                         //Third step
                         //Login
                         moveMainPage(task.result?.user)
+                        val user = com.eric.phoneauction.data.User(
+                            id = task.result?.user?.uid.toString(),
+                            image = task.result?.user?.photoUrl.toString(),
+                            name = task.result?.user?.displayName.toString()
+                        )
+                        UserManager.userId = task.result?.user?.uid.toString()
+                        UserManager.user = user
 
-                        Logger.d("${task.result?.user?.photoUrl}")
                     }else{
                         //Show the error message
                         Toast.makeText(this,task.exception?.message,Toast.LENGTH_LONG).show()

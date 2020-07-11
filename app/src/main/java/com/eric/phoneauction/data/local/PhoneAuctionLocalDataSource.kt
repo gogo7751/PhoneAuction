@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.eric.phoneauction.data.Event
 import com.eric.phoneauction.data.Result
+import com.eric.phoneauction.data.User
 import com.eric.phoneauction.data.source.PhoneAuctionDataSource
 
 /**
@@ -23,6 +24,18 @@ class PhoneAuctionLocalDataSource(val context: Context) :
     }
 
     override suspend fun post(event: Event): Result<Boolean> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun postUser(user: User): Result<Boolean> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getUser(): Result<User> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun postDirect(event: Event): Result<Boolean> {
         TODO("Not yet implemented")
     }
 
