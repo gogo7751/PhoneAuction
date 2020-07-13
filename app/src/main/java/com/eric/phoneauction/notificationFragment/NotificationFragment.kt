@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.eric.phoneauction.R
+import com.eric.phoneauction.databinding.FragmentNotificationBinding
 
 class NotificationFragment : Fragment() {
 
@@ -14,7 +15,15 @@ class NotificationFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_notification, container, false)
+        val binding = FragmentNotificationBinding.inflate(inflater, container, false)
+
+
+
+
+
+
+
+        return binding.root
     }
 
 

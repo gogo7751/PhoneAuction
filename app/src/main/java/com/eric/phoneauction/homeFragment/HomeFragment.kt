@@ -78,12 +78,6 @@ class HomeFragment : Fragment() {
             }
         })
 
-        viewModel.currentTime.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                Logger.d("viewModel.currentTime + $it")
-                Logger.d("viewModel.currentTime + ${it.toDisplayFormat()}")
-            }
-        })
 
         binding.buttonAuction.setOnClickListener {
             viewModel.getAuctionResult()

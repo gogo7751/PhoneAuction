@@ -35,7 +35,7 @@
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:spanCount="2"
                 tools:itemCount="8"
-                tools:listitem="@layout/item_home_gird"></androidx.recyclerview.widget.RecyclerView>
+                tools:listitem="@layout/item_home_gird"/>
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <ProgressBar

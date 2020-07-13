@@ -24,8 +24,7 @@
             name="itemCount"
             type="Integer" />
 
-
-        <import type="android.view.View"/>
+        <import type="android.view.View" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

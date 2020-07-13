@@ -20,9 +20,6 @@ import kotlinx.coroutines.launch
 
 class HomeViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) : ViewModel() {
 
-    var timer: CountDownTimer
-    var currentTime = MutableLiveData<Long>()
-
     private var _events = MutableLiveData<List<Event>>()
 
     val events: LiveData<List<Event>>
@@ -66,11 +63,6 @@ class HomeViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
         get() = _leave
 
 
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
-        timer.cancel()
-    }
 
     init {
         Logger.i("------------------------------------")
@@ -83,46 +75,14 @@ class HomeViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
             getEventsResult()
         }
 
-
-
-
-        timer = object : CountDownTimer(259200000, 1000) {
-            override fun onFinish() {
-            }
-
-            override fun onTick(millisUntilFinished: Long) {
-                _navigateToDetail.value?.endTime = millisUntilFinished / 1000
-            }
-        }
-        timer.start()
-
     }
 
-//    private fun postUser(user: User) {
-//
-//        coroutineScope.launch {
-//
-//            when (val result = phoneAuctionRepository.postUser(user)) {
-//                is com.eric.phoneauction.data.Result.Success -> {
-//                    _error.value = null
-//                    _status.value = LoadApiStatus.DONE
-//                    leave(true)
-//                }
-//                is com.eric.phoneauction.data.Result.Fail -> {
-//                    _error.value = result.error
-//                    _status.value = LoadApiStatus.ERROR
-//                }
-//                is com.eric.phoneauction.data.Result.Error -> {
-//                    _error.value = result.exception.toString()
-//                    _status.value = LoadApiStatus.ERROR
-//                }
-//                else -> {
-//                    _error.value = PhoneAuctionApplication.instance.getString(R.string.you_know_nothing)
-//                    _status.value = LoadApiStatus.ERROR
-//                }
-//            }
-//        }
-//    }
+
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
+    }
+
 
     fun getEventsResult() {
 
