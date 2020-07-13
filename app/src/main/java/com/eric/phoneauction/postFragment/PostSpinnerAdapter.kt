@@ -16,6 +16,7 @@ class PostSpinnerAdapter(private val strings: Array<String>) : BaseAdapter() {
         val binding = ItemPostSpinnerBinding.inflate(LayoutInflater.from(parent?.context), parent, false)
         if (position == 0){
             binding.title = PhoneAuctionApplication.instance.resources.getString(R.string.select_post_spinner)
+            binding.textSpinnerTitle.setTextColor(PhoneAuctionApplication.instance.getColor(R.color.gary757575))
         }else {
             binding.title = strings[position-1]
         }

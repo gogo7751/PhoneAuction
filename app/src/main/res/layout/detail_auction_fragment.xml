@@ -276,15 +276,22 @@
             app:layout_constraintStart_toEndOf="@+id/imageView_detail_auction_collection"
             app:layout_constraintTop_toTopOf="@+id/view_detail_auction_bg" />
 
-        <ImageView
+        <Button
             android:id="@+id/imageView_detail_auction_collection"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
             android:layout_marginStart="16dp"
-            android:src="@drawable/ic_heart"
-            app:layout_constraintBottom_toBottomOf="@+id/view_detail_auction_bg"
-            app:layout_constraintStart_toStartOf="@+id/view_detail_auction_bg"
-            app:layout_constraintTop_toTopOf="@+id/view_detail_auction_bg" />
+            android:background="#00000000"
+            android:drawableTop="@drawable/ic_heart_24px"
+            android:gravity="bottom|center_horizontal"
+            android:fontFamily="@font/noto_sans"
+            android:letterSpacing="0.15"
+            android:text="收藏"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/view_detail_auction_bg"
+            app:layout_constraintBottom_toBottomOf="@id/view_detail_auction_bg"
+            />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

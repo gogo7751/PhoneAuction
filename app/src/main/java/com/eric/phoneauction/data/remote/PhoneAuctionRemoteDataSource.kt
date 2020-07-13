@@ -21,7 +21,7 @@ object PhoneAuctionRemoteDataSource :
     PhoneAuctionDataSource {
 
     private const val PATH_EVENTS = "events"
-    private const val PATH_USER = "user"
+    private const val PATH_USER = "users"
     private const val KEY_CREATED_TIME = "createdTime"
 
     override suspend fun getEvents(): Result<List<Event>> = suspendCoroutine { continuation ->
@@ -59,7 +59,7 @@ object PhoneAuctionRemoteDataSource :
             .get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    var user1 = User()
+                    var user1 = UserManager.user
                     for (document in task.result!!) {
                         val user = com.eric.phoneauction.data.User(
                             id = document.getString("id") as String,
@@ -266,8 +266,7 @@ object PhoneAuctionRemoteDataSource :
                             }
                         }
                 } else {
-                    document
-                        .update("id", user.id)
+                    Logger.d("已是會員")
                 }
             }
     }

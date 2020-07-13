@@ -121,13 +121,22 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/edit_auction_price" />
 
+            <View
+                android:layout_width="76.5dp"
+                android:layout_height="31.5dp"
+                android:background="@drawable/button_price"
+                app:layout_constraintStart_toStartOf="@id/button_auction_minimal"
+                app:layout_constraintEnd_toEndOf="@id/button_auction_minimal"
+                app:layout_constraintTop_toTopOf="@id/button_auction_minimal"
+                app:layout_constraintBottom_toBottomOf="@id/button_auction_minimal"/>
+
             <Button
                 android:id="@+id/button_auction_minimal"
                 android:layout_width="75dp"
                 android:layout_height="30dp"
-                android:background="@drawable/button_price"
                 android:fontFamily="@font/noto_sans"
                 android:letterSpacing="0.15"
+                style="@style/AuctionRippleButton"
                 android:onClick="@{() -> viewModel.addMinimalPrice(Integer.valueOf(viewModel.event.price))}"
                 android:text="最低出價"
                 android:layout_marginBottom="60dp"
@@ -139,11 +148,20 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/text_auction_low" />
 
+            <View
+                android:layout_width="76.5dp"
+                android:layout_height="31.5dp"
+                android:background="@drawable/button_price"
+                app:layout_constraintStart_toStartOf="@id/button_auction_100"
+                app:layout_constraintEnd_toEndOf="@id/button_auction_100"
+                app:layout_constraintTop_toTopOf="@id/button_auction_100"
+                app:layout_constraintBottom_toBottomOf="@id/button_auction_100"/>
+
             <Button
                 android:id="@+id/button_auction_100"
                 android:layout_width="75dp"
                 android:layout_height="30dp"
-                android:background="@drawable/button_bg"
+                style="@style/AuctionRippleButton"
                 android:fontFamily="@font/noto_sans"
                 android:letterSpacing="0.15"
                 android:onClick="@{() -> viewModel.add100()}"
@@ -155,11 +173,20 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/button_auction_minimal" />
 
+            <View
+                android:layout_width="76.5dp"
+                android:layout_height="31.5dp"
+                android:background="@drawable/button_price"
+                app:layout_constraintStart_toStartOf="@id/button_auction_300"
+                app:layout_constraintEnd_toEndOf="@id/button_auction_300"
+                app:layout_constraintTop_toTopOf="@id/button_auction_300"
+                app:layout_constraintBottom_toBottomOf="@id/button_auction_300"/>
+
             <Button
                 android:id="@+id/button_auction_300"
                 android:layout_width="75dp"
                 android:layout_height="30dp"
-                android:background="@drawable/button_bg"
+                style="@style/AuctionRippleButton"
                 android:fontFamily="@font/noto_sans"
                 android:letterSpacing="0.15"
                 android:onClick="@{() -> viewModel.add300()}"
@@ -171,12 +198,20 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/button_auction_100" />
 
+            <View
+                android:layout_width="76.5dp"
+                android:layout_height="31.5dp"
+                android:background="@drawable/button_price"
+                app:layout_constraintStart_toStartOf="@id/button_auction_500"
+                app:layout_constraintEnd_toEndOf="@id/button_auction_500"
+                app:layout_constraintTop_toTopOf="@id/button_auction_500"
+                app:layout_constraintBottom_toBottomOf="@id/button_auction_500"/>
 
             <Button
                 android:id="@+id/button_auction_500"
                 android:layout_width="75dp"
                 android:layout_height="30dp"
-                android:background="@drawable/button_bg"
+                style="@style/AuctionRippleButton"
                 android:fontFamily="@font/noto_sans"
                 android:letterSpacing="0.15"
                 android:onClick="@{() -> viewModel.add500()}"

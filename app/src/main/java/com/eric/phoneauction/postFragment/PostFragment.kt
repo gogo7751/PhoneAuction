@@ -20,6 +20,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.eric.phoneauction.MainViewModel
+import com.eric.phoneauction.NavigationDirections
 import com.eric.phoneauction.PhoneAuctionApplication
 import com.eric.phoneauction.R
 import com.eric.phoneauction.databinding.PostFragmentBinding
@@ -232,7 +233,7 @@ class PostFragment : Fragment() {
 
         //返回上一頁
         binding.imageViewPostBack.setOnClickListener {
-            findNavController().navigateUp()
+            findNavController().navigate(NavigationDirections.actionGlobalHomeFragment())
         }
 
         (activity as AppCompatActivity).bottomNavView.visibility = View.GONE
@@ -365,5 +366,4 @@ class PostFragment : Fragment() {
                 }
             }
     }
-
 }

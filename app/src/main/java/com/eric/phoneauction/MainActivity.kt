@@ -29,10 +29,11 @@ class MainActivity : AppCompatActivity() {
         viewModel
         setupBottomNav()
 
+
         viewModel.user.observe(this, androidx.lifecycle.Observer {
             it?.let {
                 UserManager.user = it
-                Logger.d("123456789${UserManager.userId}")
+                Logger.d("123456789$it")
             }
         })
     }
@@ -67,6 +68,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupBottomNav() {
         binding.bottomNavView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
     }
+
 
 
 
