@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Profile  -->
+    <dimen name="radius_profile_avatar">60dp</dimen>
+
+
     <dimen name="height_detail_gallery">360dp</dimen>
     <dimen name="space_detail_circle">8dp</dimen>
     <dimen name="edge_detail_circle">1px</dimen>

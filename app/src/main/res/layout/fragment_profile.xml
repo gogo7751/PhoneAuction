@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View"/>
+        <import type="android.text.TextUtils"/>
         <variable
             name="viewModel"
             type="com.eric.phoneauction.profileFragment.ProfileViewModel" />
@@ -12,7 +15,116 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_profile_header"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:background="#f6b76a"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/image_profile_avatar"
+                android:layout_width="66dp"
+                android:layout_height="66dp"
+                android:background="@drawable/ic_nav_profile"
+                android:scaleType="centerCrop"
+                app:imageUrl="@{viewModel.user.image}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toStartOf="@+id/text_profile_name"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/text_profile_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/noto_sans"
+                android:letterSpacing="0.15"
+                android:maxLines="1"
+                android:layout_marginStart="10dp"
+                android:text="@{viewModel.user.name}"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:visibility="@{TextUtils.isEmpty(viewModel.user.name) ? View.GONE : View.VISIBLE}"
+                app:layout_constraintBottom_toBottomOf="@id/image_profile_avatar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/image_profile_avatar"
+                app:layout_constraintTop_toTopOf="@id/image_profile_avatar"
+                tools:text="Dato Chang" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/text_profile_service_title"
+            style="@style/ProfileTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:text="我的服務"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout_profile_header" />
+
+        <Button
+            android:id="@+id/button_profile_collection"
+            android:layout_width="80dp"
+            android:layout_height="65dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:background="#00000000"
+            android:drawableTop="@drawable/ic_heart_32px"
+            android:fontFamily="@font/noto_sans"
+            android:gravity="bottom|center_horizontal"
+            android:letterSpacing="0.15"
+            android:text="收藏"
+            app:layout_constraintEnd_toStartOf="@+id/view_profile_line"
+            app:layout_constraintTop_toBottomOf="@+id/text_profile_service_title" />
+
+        <View
+            android:id="@+id/view_profile_line"
+            android:layout_width="1dp"
+            android:layout_height="46dp"
+            android:background="@color/gary757575"
+            app:layout_constraintBottom_toBottomOf="@+id/button_profile_collection"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/button_profile_collection" />
+
+        <Button
+            android:id="@+id/button_profile_wish"
+            android:layout_width="80dp"
+            android:layout_height="65dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:background="#00000000"
+            android:drawableTop="@drawable/ic_star_32px"
+            android:fontFamily="@font/noto_sans"
+            android:gravity="bottom|center_horizontal"
+            android:letterSpacing="0.15"
+            android:text="許願清單"
+            app:layout_constraintStart_toEndOf="@+id/view_profile_line"
+            app:layout_constraintTop_toBottomOf="@+id/text_profile_service_title" />
+
+        <TextView
+            android:id="@+id/text_profile_order_title"
+            style="@style/ProfileTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:text="我的訂單"
+            app:layout_constraintStart_toStartOf="@+id/text_profile_service_title"
+            app:layout_constraintTop_toBottomOf="@+id/button_profile_collection" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
 
 </layout>

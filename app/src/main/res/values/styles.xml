@@ -53,4 +53,28 @@
         <item name="colorButtonNormal">@android:color/white</item>
     </style>
 
+    <style name="ProfileTitle">
+        <item name="android:fontFamily">@font/noto_sans</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textColor">@color/black_3f3a3a</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.15</item>
+    </style>
+
+
+    <style name="AuctionRippleButton" parent="AuctionButton">
+        <item name="android:background">@drawable/button_auction_ripple</item>
+    </style>
+
+    <style name="AuctionButton" parent="Widget.AppCompat.Button.Borderless">
+        <item name="android:layout_width">60dp</item>
+        <item name="android:layout_height">51dp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textColor">@color/black_3f3a3a</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:background">@drawable/button_auction_ripple</item>
+        <item name="android:fontFamily">@font/noto_sans</item>
+    </style>
+
 </resources>

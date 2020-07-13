@@ -124,6 +124,8 @@ dependencies {
     // Firebase Authentication (帳號驗證模組)
     implementation 'com.google.firebase:firebase-auth:19.3.2'
 
+    //circle image
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 
     // Firebase核心
     implementation 'com.google.firebase:firebase-core:17.4.4'

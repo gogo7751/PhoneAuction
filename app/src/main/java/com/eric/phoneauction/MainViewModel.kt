@@ -40,6 +40,11 @@ class MainViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
     val refresh: LiveData<Boolean>
         get() = _refresh
 
+    private val _leave = MutableLiveData<Boolean>()
+
+    val leave: LiveData<Boolean>
+        get() = _leave
+
     // Create a Coroutine scope using a job to be able to cancel when needed
     private var viewModelJob = Job()
 
@@ -59,7 +64,34 @@ class MainViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
         Logger.i("------------------------------------")
         Logger.i("[${this::class.simpleName}]${this}")
         Logger.i("------------------------------------")
+        postUser(UserManager.user)
+
+    }
+
+    private fun postUser(user: User) {
         getUser()
+        coroutineScope.launch {
+
+            when (val result = phoneAuctionRepository.postUser(user)) {
+                is com.eric.phoneauction.data.Result.Success -> {
+                    _error.value = null
+                    _status.value = LoadApiStatus.DONE
+                    leave(true)
+                }
+                is com.eric.phoneauction.data.Result.Fail -> {
+                    _error.value = result.error
+                    _status.value = LoadApiStatus.ERROR
+                }
+                is com.eric.phoneauction.data.Result.Error -> {
+                    _error.value = result.exception.toString()
+                    _status.value = LoadApiStatus.ERROR
+                }
+                else -> {
+                    _error.value = PhoneAuctionApplication.instance.getString(R.string.you_know_nothing)
+                    _status.value = LoadApiStatus.ERROR
+                }
+            }
+        }
     }
 
     private fun getUser() {
@@ -105,6 +137,9 @@ class MainViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
         }
     }
 
+    fun leave(needRefresh: Boolean = false) {
+        _leave.value = needRefresh
+    }
 
 
     fun onRefreshed() {

@@ -11,10 +11,10 @@ object UserManager {
 
     var userId: String?
         get() {
-            return  PhoneAuctionApplication.instance.applicationContext.getSharedPreferences("getToken", Context.MODE_PRIVATE).getString("token", null)
+            return  PhoneAuctionApplication.instance.applicationContext.getSharedPreferences("getUserId", Context.MODE_PRIVATE).getString("userId", null)
         }
         set(a){
-            PhoneAuctionApplication.instance.applicationContext.getSharedPreferences("getToken", Context.MODE_PRIVATE).edit().putString("token", a).apply()
+            PhoneAuctionApplication.instance.applicationContext.getSharedPreferences("getUserId", Context.MODE_PRIVATE).edit().putString("userId", a).apply()
         }
 
 }

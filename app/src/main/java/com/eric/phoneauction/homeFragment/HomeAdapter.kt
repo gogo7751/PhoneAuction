@@ -2,6 +2,7 @@ package com.eric.phoneauction.homeFragment
 
 import android.os.CountDownTimer
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -24,6 +25,10 @@ class HomeAdapter( val onClickListener: OnClickListener, val viewModel: HomeView
             binding.event = event
             binding.viewModel = viewModel
             binding.executePendingBindings()
+
+             if (event.tag == "直購") {
+                 binding.textHomeTime.visibility = View.GONE
+            }
 
             timer = object : CountDownTimer(event.endTime, ONE_SECOND) {
                 override fun onFinish() {
