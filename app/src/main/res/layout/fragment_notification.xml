@@ -28,8 +28,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:spanCount="2"
-            tools:itemCount="8"
             tools:listitem="@layout/item_home_gird"/>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

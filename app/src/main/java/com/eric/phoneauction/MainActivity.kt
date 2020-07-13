@@ -9,6 +9,7 @@ import androidx.navigation.findNavController
 import com.eric.phoneauction.data.UserManager
 import com.eric.phoneauction.databinding.ActivityMainBinding
 import com.eric.phoneauction.ext.getVmFactory
+import com.eric.phoneauction.homeFragment.HomeViewModel
 import com.eric.phoneauction.util.Logger
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.storage.FirebaseStorage
@@ -28,7 +29,8 @@ class MainActivity : AppCompatActivity() {
 
         viewModel
         setupBottomNav()
-
+        viewModel.postUser(UserManager.user)
+        viewModel.getUser()
 
         viewModel.user.observe(this, androidx.lifecycle.Observer {
             it?.let {

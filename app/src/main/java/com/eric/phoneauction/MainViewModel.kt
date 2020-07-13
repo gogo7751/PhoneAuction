@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import app.appworks.school.publisher.network.LoadApiStatus
+import com.eric.phoneauction.data.Event
 import com.eric.phoneauction.data.User
 import com.eric.phoneauction.data.UserManager
 import com.eric.phoneauction.data.source.PhoneAuctionRepository
@@ -21,7 +22,6 @@ class MainViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
 
     val user: LiveData<User>
         get() = _user
-
 
     // status: The internal MutableLiveData that stores the status of the most recent request
     private val _status = MutableLiveData<LoadApiStatus>()
@@ -64,12 +64,11 @@ class MainViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
         Logger.i("------------------------------------")
         Logger.i("[${this::class.simpleName}]${this}")
         Logger.i("------------------------------------")
-        postUser(UserManager.user)
+
 
     }
 
-    private fun postUser(user: User) {
-        getUser()
+    fun postUser(user: User) {
         coroutineScope.launch {
 
             when (val result = phoneAuctionRepository.postUser(user)) {
@@ -94,7 +93,7 @@ class MainViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
         }
     }
 
-    private fun getUser() {
+   fun getUser() {
 
         coroutineScope.launch {
 
@@ -128,8 +127,6 @@ class MainViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
 
         }
     }
-
-
 
     fun refresh() {
         if (!PhoneAuctionApplication.instance.isLiveDataDesign()) {

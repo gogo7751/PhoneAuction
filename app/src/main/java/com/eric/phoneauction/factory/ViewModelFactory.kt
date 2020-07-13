@@ -6,6 +6,7 @@ import com.eric.phoneauction.MainViewModel
 import com.eric.phoneauction.checkout.CheckoutSuccessViewModel
 import com.eric.phoneauction.data.source.PhoneAuctionRepository
 import com.eric.phoneauction.homeFragment.HomeViewModel
+import com.eric.phoneauction.notificationFragment.NotificationViewModel
 import com.eric.phoneauction.postFragment.PostViewModel
 import com.eric.phoneauction.profileFragment.ProfileViewModel
 import java.lang.IllegalArgumentException
@@ -33,6 +34,8 @@ class ViewModelFactory constructor(
                 isAssignableFrom(ProfileViewModel::class.java) ->
                     ProfileViewModel(phoneAuctionRepository)
 
+                isAssignableFrom(NotificationViewModel::class.java) ->
+                    NotificationViewModel(phoneAuctionRepository)
                 else ->
                     throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }

@@ -5,10 +5,6 @@
 
     <data>
         <variable
-            name="event"
-            type="com.eric.phoneauction.data.Event" />
-
-        <variable
             name="notification"
             type="com.eric.phoneauction.data.Notification" />
     </data>
@@ -19,7 +15,11 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -27,8 +27,8 @@
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/image_notification"
-                    android:layout_width="66dp"
-                    android:layout_height="66dp"
+                    android:layout_width="99dp"
+                    android:layout_height="99dp"
                     app:cardCornerRadius="10dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
@@ -39,7 +39,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-
+                        app:imageUrl="@{notification.image}"
                         app:layout_constraintDimensionRatio="5:7"
                         tools:src="@tools:sample/backgrounds/scenic" />
 
@@ -55,6 +55,7 @@
                     android:textStyle="bold"
                     android:letterSpacing="0.15"
                     android:textColor="@color/black212121"
+                    android:text="@{notification.title}"
                     app:layout_constraintStart_toEndOf="@id/image_notification"
                     app:layout_constraintTop_toTopOf="@id/image_notification"
                     tools:text="您的出價被超過囉"/>
@@ -67,6 +68,7 @@
                     android:fontFamily="@font/noto_sans"
                     android:letterSpacing="0.15"
                     android:textColor="@color/gary757575"
+                    android:text="@{notification.brand}"
                     app:layout_constraintStart_toEndOf="@id/image_notification"
                     app:layout_constraintTop_toBottomOf="@id/text_notification_title"
                     app:layout_constraintBottom_toTopOf="@id/text_notification_time"
@@ -79,6 +81,7 @@
                     android:layout_marginStart="3dp"
                     android:fontFamily="@font/noto_sans"
                     android:letterSpacing="0.15"
+                    android:text="@{notification.name}"
                     android:textColor="@color/gary757575"
                     app:layout_constraintStart_toEndOf="@id/text_notification_content_brand"
                     app:layout_constraintTop_toTopOf="@+id/text_notification_content_brand"
@@ -91,6 +94,7 @@
                     android:layout_marginStart="3dp"
                     android:fontFamily="@font/noto_sans"
                     android:letterSpacing="0.15"
+                    android:text="@{notification.storage}"
                     android:textColor="@color/gary757575"
                     app:layout_constraintStart_toEndOf="@id/text_notification_content_name"
                     app:layout_constraintTop_toTopOf="@+id/text_notification_content_name"
@@ -104,6 +108,7 @@
                     android:fontFamily="@font/noto_sans"
                     android:letterSpacing="0.15"
                     android:textSize="12sp"
+                    app:timeToDisplayFormat="@{notification.time}"
                     android:textColor="@color/gary757575"
                     app:layout_constraintStart_toEndOf="@+id/image_notification"
                     app:layout_constraintBottom_toBottomOf="@+id/image_notification"
