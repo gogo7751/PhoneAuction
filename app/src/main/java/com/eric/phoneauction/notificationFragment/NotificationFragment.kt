@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import com.eric.phoneauction.MainViewModel
 
 import com.eric.phoneauction.R
 import com.eric.phoneauction.databinding.FragmentNotificationBinding
@@ -29,7 +31,7 @@ class NotificationFragment : Fragment() {
 
         viewModel.liveNotifications.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it)
-        })
+    })
 
 
 

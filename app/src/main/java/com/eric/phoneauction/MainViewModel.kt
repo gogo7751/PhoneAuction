@@ -3,9 +3,12 @@ package com.eric.phoneauction
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import androidx.navigation.Navigation
 import app.appworks.school.publisher.network.LoadApiStatus
 import com.eric.phoneauction.data.Event
+import com.eric.phoneauction.data.Notification
 import com.eric.phoneauction.data.User
 import com.eric.phoneauction.data.UserManager
 import com.eric.phoneauction.data.source.PhoneAuctionRepository
@@ -28,6 +31,11 @@ class MainViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
 
     val status: LiveData<LoadApiStatus>
         get() = _status
+
+    val notifications = MutableLiveData<List<Notification>>()
+
+    // countInCart: Count number for bottom badge
+    val countInCart: LiveData<Int> = Transformations.map(notifications) { it.size }
 
     // error: The internal MutableLiveData that stores the error of the most recent request
     private val _error = MutableLiveData<String>()
@@ -67,6 +75,7 @@ class MainViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
 
 
     }
+
 
     fun postUser(user: User) {
         coroutineScope.launch {

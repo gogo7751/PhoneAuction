@@ -31,7 +31,7 @@ class NotificationAdapter: androidx.recyclerview.widget.ListAdapter<Notification
     override fun onCreateViewHolder(parent: ViewGroup,
                                     viewType: Int): NotificationViewHolder {
         return NotificationViewHolder(
-            ItemNotificationBinding.inflate(LayoutInflater.from(parent.context))
+            ItemNotificationBinding.inflate(LayoutInflater.from(parent.context), parent,false)
         )
     }
 
