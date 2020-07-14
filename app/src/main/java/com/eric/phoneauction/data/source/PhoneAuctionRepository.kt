@@ -39,4 +39,5 @@ interface PhoneAuctionRepository {
 
     suspend fun postNotification(notification: Notification, buyUser: String): Result<Boolean>
 
+    suspend fun deleteNotification(notificationId: String, user: String): Result<Boolean>
 }

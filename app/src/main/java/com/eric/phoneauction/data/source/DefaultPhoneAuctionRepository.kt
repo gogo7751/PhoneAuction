@@ -59,6 +59,10 @@ class DefaultPhoneAuctionRepository(private val remoteDataSource: PhoneAuctionDa
         return remoteDataSource.postNotification(notification, buyUser)
     }
 
+    override suspend fun deleteNotification(notificationId: String, user: String): Result<Boolean> {
+        return remoteDataSource.deleteNotification(notificationId, user)
+    }
+
     override suspend fun postUser(user: User): Result<Boolean> {
         return remoteDataSource.postUser(user)
     }

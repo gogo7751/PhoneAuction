@@ -358,6 +358,33 @@ object PhoneAuctionRemoteDataSource :
                 }
             }
     }
+
+    override suspend fun deleteNotification(notificationId: String, user: String): Result<Boolean> = suspendCoroutine { continuation ->
+
+        val notifications =
+            UserManager.userId?.let {
+                FirebaseFirestore.getInstance().collection(PATH_USER).document(it).collection(
+                    PATH_NOTIFICATION
+                )
+            }
+        val document = notifications?.document(notificationId)
+
+        document
+            ?.update("visibility", false)
+            ?.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Logger.i("Publish: $notificationId")
+                    continuation.resume(Result.Success(true))
+                } else {
+                    task.exception?.let {
+                        Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
+                        continuation.resume(Result.Error(it))
+                        return@addOnCompleteListener
+                    }
+                    continuation.resume(Result.Fail(PhoneAuctionApplication.instance.getString(R.string.you_know_nothing)))
+                }
+            }
+    }
 }
 
 

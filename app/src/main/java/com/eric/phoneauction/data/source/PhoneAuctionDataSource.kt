@@ -37,4 +37,6 @@ interface PhoneAuctionDataSource {
     suspend fun postDirect(event: Event): Result<Boolean>
 
     suspend fun postNotification(notification: Notification, buyUser: String): Result<Boolean>
+
+    suspend fun deleteNotification(notificationId: String, user: String): Result<Boolean>
 }

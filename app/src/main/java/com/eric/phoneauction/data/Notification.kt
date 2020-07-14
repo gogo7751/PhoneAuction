@@ -12,6 +12,7 @@ data class Notification(
     var name: String = "",
     var image: String = "",
     var storage: String = "",
-    var visibility: Boolean = true
+    var visibility: Boolean = true,
+    var event: Event? = Event()
 ): Parcelable {
 }

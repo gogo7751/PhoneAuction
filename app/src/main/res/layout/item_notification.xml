@@ -18,7 +18,7 @@
             android:layout_height="match_parent"
             android:layout_margin="8dp"
             app:cardCornerRadius="10dp"
-            app:cardElevation="5dp"
+            app:cardElevation="3dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -51,18 +51,20 @@
 
                 <TextView
                     android:id="@+id/text_notification_title"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
+                    android:ellipsize="end"
                     android:fontFamily="@font/noto_sans"
-                    android:textStyle="bold"
                     android:letterSpacing="0.15"
-                    android:textSize="16dp"
-                    android:textColor="@color/black212121"
                     android:text="@{notification.title}"
+                    android:textColor="@color/black212121"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toStartOf="@+id/text_notification_delete"
                     app:layout_constraintStart_toEndOf="@id/image_notification"
                     app:layout_constraintTop_toTopOf="@id/image_notification"
-                    tools:text="您的出價被超過囉"/>
+                    tools:text="您的出價被超過囉" />
 
                 <TextView
                     android:id="@+id/text_notification_content_brand"
@@ -93,16 +95,19 @@
 
                 <TextView
                     android:id="@+id/text_notification_content_storage"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="3dp"
                     android:fontFamily="@font/noto_sans"
                     android:letterSpacing="0.15"
+                    android:singleLine="true"
+                    android:ellipsize="end"
                     android:text="@{notification.storage}"
                     android:textColor="@color/gary757575"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/text_notification_content_name"
                     app:layout_constraintTop_toTopOf="@+id/text_notification_content_name"
-                    tools:text="64G"/>
+                    tools:text="64G" />
 
                 <TextView
                     android:id="@+id/text_notification_time"
@@ -118,14 +123,14 @@
                     app:layout_constraintBottom_toBottomOf="@+id/image_notification"
                     tools:text="2020/7/14 12:00"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="刪除"
+                <ImageView
+                    android:id="@+id/text_notification_delete"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:background="@drawable/ic_close"
                     android:fontFamily="@font/noto_sans"
                     android:letterSpacing="0.15"
                     android:textSize="12sp"
-                    android:layout_marginEnd="16dp"
                     android:textColor="@color/gary757575"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"/>

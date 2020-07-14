@@ -25,8 +25,8 @@
 
             <ImageView
                 android:id="@+id/image_direct_close"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
                 android:background="@drawable/ic_close"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
@@ -43,7 +43,7 @@
                 android:letterSpacing="0.15"
                 android:text="結帳"
                 android:textColor="@color/black212121"
-                android:textSize="22dp"
+                android:textSize="18dp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -69,12 +69,12 @@
                 android:id="@+id/text_direct_brand"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="16dp"
                 android:fontFamily="@font/noto_sans"
                 android:text="@{viewModel.event.brand}"
                 android:textColor="@color/black212121"
                 android:letterSpacing="0.15"
-                android:textSize="18dp"
+                android:textSize="15dp"
                 app:layout_constraintStart_toEndOf="@id/image_direct_product"
                 app:layout_constraintTop_toTopOf="@id/image_direct_product"
                 tools:text="Apple"/>
@@ -84,7 +84,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:textSize="18dp"
+                android:textSize="15dp"
                 android:text="@{viewModel.event.productName}"
                 android:textColor="@color/black212121"
                 android:fontFamily="@font/noto_sans"
@@ -98,7 +98,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:textSize="18dp"
+                android:textSize="15dp"
                 android:text="@{viewModel.event.storage}"
                 android:textColor="@color/black212121"
                 android:fontFamily="@font/noto_sans"
@@ -111,11 +111,11 @@
                 android:id="@+id/text_direct_price_product"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="16dp"
                 app:price="@{viewModel.event.price}"
                 android:textColor="@color/black212121"
                 android:letterSpacing="0.15"
-                android:textSize="18dp"
+                android:textSize="15dp"
                 android:fontFamily="@font/noto_sans_bold"
                 app:layout_constraintStart_toEndOf="@id/image_direct_product"
                 app:layout_constraintBottom_toBottomOf="@id/image_direct_product"
@@ -138,6 +138,7 @@
                 android:text="交易方式"
                 android:fontFamily="@font/noto_sans"
                 android:textColor="@color/black212121"
+                android:textSize="15dp"
                 android:letterSpacing="0.15"
                 android:layout_marginTop="16dp"
                 app:layout_constraintTop_toBottomOf="@+id/view_direct_1"
@@ -150,6 +151,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginTop="16dp"
                 android:letterSpacing="0.15"
+                android:textSize="15dp"
                 android:fontFamily="@font/noto_sans"
                 android:textColor="@color/black212121"
                 android:text="@{viewModel.event.trade}"
@@ -190,6 +192,7 @@
                 android:textColor="@color/black212121"
                 android:letterSpacing="0.15"
                 android:layout_marginTop="16dp"
+                android:textSize="15dp"
                 app:layout_constraintStart_toStartOf="@id/image_direct_product"
                 app:layout_constraintTop_toBottomOf="@id/text_direct_payment_title"/>
 
@@ -201,6 +204,7 @@
                 android:letterSpacing="0.15"
                 android:fontFamily="@font/noto_sans"
                 android:textColor="@color/black212121"
+                android:textSize="15dp"
                 app:layout_constraintEnd_toEndOf="@id/text_direct_trade"
                 app:layout_constraintTop_toTopOf="@id/text_direct_price_title"
                 tools:text="NT$9990"/>
@@ -214,6 +218,7 @@
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/noto_sans"
                 android:textColor="@color/black212121"
+                android:textSize="15dp"
                 app:layout_constraintStart_toStartOf="@id/image_direct_product"
                 app:layout_constraintTop_toBottomOf="@id/text_direct_price_title"/>
 
@@ -225,6 +230,7 @@
                 android:letterSpacing="0.15"
                 android:fontFamily="@font/noto_sans"
                 android:textColor="@color/black212121"
+                android:textSize="15dp"
                 app:layout_constraintEnd_toEndOf="@id/text_direct_trade"
                 app:layout_constraintTop_toTopOf="@id/text_direct_freight_title"
                 tools:text="NT$60"/>
@@ -238,7 +244,7 @@
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/noto_sans_bold"
                 android:textColor="@color/black212121"
-                android:textSize="15dp"
+                android:textSize="18dp"
                 app:layout_constraintStart_toStartOf="@id/image_direct_product"
                 app:layout_constraintTop_toBottomOf="@id/text_direct_freight_title"/>
 

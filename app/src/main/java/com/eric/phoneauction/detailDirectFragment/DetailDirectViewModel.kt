@@ -172,7 +172,6 @@ class DetailDirectViewModel(
 
         timer = object : CountDownTimer(event.value?.endTime!!, HomeAdapter.ONE_SECOND) {
             override fun onFinish() {
-                TODO("Not yet implemented")
             }
 
             override fun onTick(millisUntilFinished: Long) {

@@ -153,8 +153,8 @@
 
                 <ImageView
                     android:id="@+id/image_detail_auction_clock"
-                    android:layout_width="23dp"
-                    android:layout_height="23dp"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
                     android:layout_marginStart="25dp"
                     app:srcCompat="@drawable/ic_clock"
                     app:layout_constraintStart_toEndOf="@+id/text_detail_auction_tag"
@@ -168,7 +168,7 @@
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:layout_marginStart="4dp"
-                    android:fontFamily="@font/noto_sans_bold"
+                    android:fontFamily="@font/noto_sans"
                     android:letterSpacing="0.1"
                     android:textSize="16dp"
                     app:layout_constraintStart_toEndOf="@+id/image_detail_auction_clock"

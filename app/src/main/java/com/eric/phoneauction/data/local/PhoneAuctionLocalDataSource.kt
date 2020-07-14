@@ -52,6 +52,10 @@ class PhoneAuctionLocalDataSource(val context: Context) :
         TODO("Not yet implemented")
     }
 
+    override suspend fun deleteNotification(notificationId: String, user: String): Result<Boolean> {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun postAuction(event: Event, price: Int): Result<Boolean> {
         TODO("Not yet implemented")
     }

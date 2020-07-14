@@ -132,7 +132,7 @@
                     android:id="@+id/view_profile_line2"
                     android:layout_width="0dp"
                     android:layout_height="20dp"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="16dp"
                     android:alpha="0.1"
                     android:background="@color/gary757575"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -144,7 +144,7 @@
                     style="@style/ProfileTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="16dp"
                     android:text="我的訂單"
                     app:layout_constraintStart_toStartOf="@+id/text_profile_service_title"
                     app:layout_constraintTop_toBottomOf="@+id/view_profile_line2" />

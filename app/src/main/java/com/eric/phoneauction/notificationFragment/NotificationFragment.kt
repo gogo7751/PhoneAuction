@@ -13,6 +13,7 @@ import com.eric.phoneauction.MainViewModel
 import com.eric.phoneauction.R
 import com.eric.phoneauction.databinding.FragmentNotificationBinding
 import com.eric.phoneauction.ext.getVmFactory
+import com.eric.phoneauction.util.Logger
 
 class NotificationFragment : Fragment() {
 
@@ -26,7 +27,7 @@ class NotificationFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-        val adapter = NotificationAdapter()
+        val adapter = NotificationAdapter(viewModel)
         binding.recyclerviewNotification.adapter = adapter
 
         viewModel.liveNotifications.observe(viewLifecycleOwner, Observer {

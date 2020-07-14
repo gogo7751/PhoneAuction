@@ -56,6 +56,7 @@ class AuctionDialog : BottomSheetDialogFragment() {
 
 
 
+
         return binding.root
     }
 

@@ -99,7 +99,8 @@ class AuctionViewModel(
                 name = event.value?.productName.toString(),
                 image = event.value?.images?.component1().toString(),
                 storage = event.value?.storage.toString(),
-                visibility = true
+                visibility = true,
+                event = event.value
         )
     }
 

@@ -3,6 +3,7 @@ package com.eric.phoneauction.notificationFragment
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import app.appworks.school.publisher.network.LoadApiStatus
 import com.eric.phoneauction.PhoneAuctionApplication
@@ -26,6 +27,8 @@ class NotificationViewModel(
         get() = _notifications
 
     var liveNotifications = MutableLiveData<List<Notification>>()
+
+
 
 
     // status: The internal MutableLiveData that stores the status of the most recent request
@@ -62,6 +65,33 @@ class NotificationViewModel(
             getLiveNotificationsResult()
         } else {
             getNotificationsResult()
+        }
+    }
+
+    fun deleteNotification(notificationId: String, user: String) {
+
+        coroutineScope.launch {
+
+            _status.value = LoadApiStatus.LOADING
+
+            when (val result = phoneAuctionRepository.deleteNotification(notificationId, user)) {
+                is com.eric.phoneauction.data.Result.Success -> {
+                    _error.value = null
+                    _status.value = LoadApiStatus.DONE
+                }
+                is com.eric.phoneauction.data.Result.Fail -> {
+                    _error.value = result.error
+                    _status.value = LoadApiStatus.ERROR
+                }
+                is com.eric.phoneauction.data.Result.Error -> {
+                    _error.value = result.exception.toString()
+                    _status.value = LoadApiStatus.ERROR
+                }
+                else -> {
+                    _error.value = PhoneAuctionApplication.instance.getString(R.string.you_know_nothing)
+                    _status.value = LoadApiStatus.ERROR
+                }
+            }
         }
     }
 
