@@ -55,6 +55,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
                     android:ellipsize="end"
+                    android:singleLine="true"
                     android:fontFamily="@font/noto_sans"
                     android:letterSpacing="0.15"
                     android:text="@{notification.title}"

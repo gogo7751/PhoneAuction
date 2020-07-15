@@ -1,5 +1,6 @@
 package com.eric.phoneauction.notificationFragment
 
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
@@ -32,8 +33,21 @@ class NotificationAdapter(val viewModel: NotificationViewModel): androidx.recycl
                     Navigation.createNavigateOnClickListener(NavigationDirections.actionGlobalDetailAuctionFragment(notification.event as Event, notification.event?.tag as String)).onClick(binding.imageNotification)
                 } else {
                     Navigation.createNavigateOnClickListener(NavigationDirections.actionGlobalDetailDirectFragment(notification.event as Event, notification.event?.tag as String)).onClick(binding.imageNotification)
-
                 }
+            }
+
+            var flag = true
+            binding.textNotificationTitle.setOnClickListener {
+                if (flag == true ) {
+                    flag = false
+                    binding.textNotificationTitle.isSingleLine = false
+                    binding.textNotificationTitle.ellipsize = null
+                } else {
+                    flag = true
+                    binding.textNotificationTitle.isSingleLine = true
+                    binding.textNotificationTitle.ellipsize = TextUtils.TruncateAt.END
+                }
+
             }
 
             binding.executePendingBindings()

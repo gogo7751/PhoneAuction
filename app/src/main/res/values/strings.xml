@@ -15,6 +15,11 @@
     <string name="auction_success">出價成功</string>
     <string name="direct_success">購買成功</string>
 
+    <!-- 拍賣 -->
+    <string name="auction">我要出價</string>
+    <string name="direct">我要購買</string>
+    <string name="done">已完成交易</string>
+
     <!-- Post -->
     <string name="select_post_spinner">請選擇</string>
 
