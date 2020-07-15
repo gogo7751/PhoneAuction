@@ -74,21 +74,21 @@ class DetailAuctionFragment : Fragment() {
             it?.let {
                 when (it.tag) {
                     "拍賣" -> {
-                        findNavController().navigate(NavigationDirections.actionGlobalDetailAuctionFragment(it, it.tag))
+                        findNavController().navigate(NavigationDirections.actionGlobalDetailAuctionFragment(it))
                         viewModel.onDetailNavigated()
                     }
                     "直購" -> {
-                        findNavController().navigate(NavigationDirections.actionGlobalDetailDirectFragment(it, it.tag))
+                        findNavController().navigate(NavigationDirections.actionGlobalDetailDirectFragment(it))
                         viewModel.onDetailNavigated()
                     }
                 }
             }
         })
 
-
-        viewModel.events.observe(viewLifecycleOwner, Observer {
+        viewModel.navigateToDetailChat.observe(viewLifecycleOwner, Observer {
             it?.let {
-                adapter.submitList(it)
+                findNavController().navigate(NavigationDirections.actionGlobalDetailChatFragment(it))
+                viewModel.onDetailChatNavigated()
             }
         })
 
@@ -96,6 +96,12 @@ class DetailAuctionFragment : Fragment() {
             it?.let {
                 findNavController().navigate(NavigationDirections.actionGlobalAuctionDialog(it))
                 viewModel.onAuctionNavigated()
+            }
+        })
+
+        viewModel.events.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                adapter.submitList(it)
             }
         })
 

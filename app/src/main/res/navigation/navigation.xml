@@ -70,9 +70,6 @@
             android:name="event"
             app:argType="com.eric.phoneauction.data.Event"
             app:nullable="false"/>
-        <argument
-            android:name="tag"
-            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/detailDirectFragment"
@@ -83,9 +80,6 @@
             android:name="event"
             app:argType="com.eric.phoneauction.data.Event"
             app:nullable="false"/>
-        <argument
-            android:name="tag"
-            app:argType="string" />
     </fragment>
     <action
         android:id="@+id/action_global_detailDirectFragment"
@@ -152,5 +146,19 @@
         android:name="com.eric.phoneauction.checkout.CheckoutSuccessDirectFragment"
         android:label="CheckoutSuccessDirectFragment"
         tools:layout="@layout/fragment_checkout_success_direct"/>
+    <fragment
+        android:id="@+id/detailChatFragment"
+        android:name="com.eric.phoneauction.detailChatFragment.DetailChatFragment"
+        android:label="DetailChatFragment"
+        tools:layout="@layout/fragment_detail_chat">
+        <argument
+            android:name="event"
+            app:argType="com.eric.phoneauction.data.Event"
+            app:nullable="false"/>
+    </fragment>
+    <action
+        android:id="@+id/action_global_detailChatFragment"
+        app:destination="@id/detailChatFragment"
+        app:popUpToInclusive="true" />
 
 </navigation>

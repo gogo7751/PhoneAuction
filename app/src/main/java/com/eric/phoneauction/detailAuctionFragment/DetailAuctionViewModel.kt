@@ -55,6 +55,12 @@ class DetailAuctionViewModel(
     val navigateToAuction: LiveData<Event>
         get() = _navigateToAuction
 
+    // Handle navigation to detail chat
+    private val _navigateToDetailChat = MutableLiveData<Event>()
+
+    val navigateToDetailChat: LiveData<Event>
+        get() = _navigateToDetailChat
+
     // it for gallery circles design
     private val _snapPosition = MutableLiveData<Int>()
 
@@ -210,12 +216,19 @@ class DetailAuctionViewModel(
         _navigateToDetail.value = event
     }
 
-    fun leaveDetail() {
-        _leaveDetail.value = true
-    }
-
     fun onDetailNavigated() {
         _navigateToDetail.value = null
     }
 
+    fun navigateToDetailChat(event: Event) {
+        _navigateToDetailChat.value = event
+    }
+
+    fun onDetailChatNavigated() {
+        _navigateToDetailChat.value = null
+    }
+
+    fun leaveDetail() {
+        _leaveDetail.value = true
+    }
 }

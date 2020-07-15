@@ -275,9 +275,9 @@
             android:fontFamily="@font/noto_sans"
             android:letterSpacing="0.15"
             android:text="對話"
-            android:visibility="@{viewModel.event.deal == false ? View.GONE : View.VISIBLE}"
             android:textColor="@android:color/black"
             android:textSize="18dp"
+            android:onClick="@{() -> viewModel.navigateToDetailChat(viewModel.event)}"
             app:layout_constraintBottom_toBottomOf="@+id/view_detail_direct_bg"
             app:layout_constraintStart_toEndOf="@+id/imageView_detail_direct_collection"
             app:layout_constraintTop_toTopOf="@+id/view_detail_direct_bg" />

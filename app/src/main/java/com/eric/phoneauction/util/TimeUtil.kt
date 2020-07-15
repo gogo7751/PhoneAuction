@@ -15,11 +15,4 @@ object TimeUtil {
         return simpleDateFormat.format(Date(time))
     }
 
-    @JvmStatic
-    fun DateToStamp(date: String, locale: Locale): Long {
-        val simpleDateFormat = SimpleDateFormat("HH:mm:ss", locale)
-
-        /// 輸出為毫秒為單位
-        return simpleDateFormat.parse(date).time
-    }
 }

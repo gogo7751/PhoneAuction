@@ -1,5 +1,6 @@
 package com.eric.phoneauction
 
+import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.drawable.ShapeDrawable
@@ -14,6 +15,9 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import app.appworks.school.publisher.network.LoadApiStatus
 import com.bumptech.glide.Glide
+import com.bumptech.glide.Registry
+import com.bumptech.glide.annotation.GlideModule
+import com.bumptech.glide.module.AppGlideModule
 import com.bumptech.glide.request.RequestOptions
 import com.eric.phoneauction.data.Event
 import com.eric.phoneauction.util.TimeUtil
@@ -21,6 +25,9 @@ import com.eric.phoneauction.detailAuctionFragment.DetailCircleAdapter
 import com.eric.phoneauction.detailAuctionFragment.DetailGalleryAdapter
 import com.eric.phoneauction.homeFragment.HomeAdapter
 import com.eric.phoneauction.util.Util
+import com.firebase.ui.storage.images.FirebaseImageLoader
+import com.google.firebase.storage.StorageReference
+import java.io.InputStream
 
 @BindingAdapter("events")
 fun bindRecyclerView(recyclerView: RecyclerView, homeItems: List<Event>?) {

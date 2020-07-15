@@ -272,7 +272,7 @@
             android:letterSpacing="0.15"
             android:text="對話"
             android:textColor="@android:color/black"
-            android:visibility="@{viewModel.event.deal == false ? View.GONE : View.VISIBLE}"
+            android:onClick="@{() -> viewModel.navigateToDetailChat(viewModel.event)}"
             android:textSize="18dp"
             app:layout_constraintBottom_toBottomOf="@+id/view_detail_auction_bg"
             app:layout_constraintStart_toEndOf="@+id/imageView_detail_auction_collection"

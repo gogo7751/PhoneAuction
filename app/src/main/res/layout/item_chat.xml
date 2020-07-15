@@ -4,9 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable
-            name="notification"
-            type="com.eric.phoneauction.data.Notification" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -30,9 +28,9 @@
                 android:padding="8dp">
 
                 <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/image_notification"
-                    android:layout_width="99dp"
-                    android:layout_height="99dp"
+                    android:id="@+id/image_chat"
+                    android:layout_width="88dp"
+                    android:layout_height="88dp"
                     app:cardCornerRadius="10dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -42,7 +40,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        app:imageUrl="@{notification.image}"
+
                         app:layout_constraintDimensionRatio="5:7"
                         tools:src="@tools:sample/backgrounds/scenic" />
 
@@ -50,7 +48,7 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <TextView
-                    android:id="@+id/text_notification_title"
+                    android:id="@+id/text_chat_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
@@ -58,79 +56,62 @@
                     android:singleLine="true"
                     android:fontFamily="@font/noto_sans"
                     android:letterSpacing="0.15"
-                    android:text="@{notification.title}"
+
                     android:textColor="@color/black212121"
                     android:textSize="16dp"
                     android:textStyle="bold"
-                    app:layout_constraintEnd_toStartOf="@+id/text_notification_delete"
-                    app:layout_constraintStart_toEndOf="@id/image_notification"
-                    app:layout_constraintTop_toTopOf="@id/image_notification"
-                    tools:text="您的出價被超過囉" />
+                    app:layout_constraintEnd_toStartOf="@+id/text_chat_delete"
+                    app:layout_constraintStart_toEndOf="@id/image_chat"
+                    app:layout_constraintTop_toTopOf="@id/image_chat"
+                    tools:text="張Ray" />
 
                 <TextView
-                    android:id="@+id/text_notification_content_brand"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:fontFamily="@font/noto_sans"
-                    android:letterSpacing="0.15"
-                    android:textColor="@color/gary757575"
-                    android:text="@{notification.brand}"
-                    app:layout_constraintStart_toEndOf="@id/image_notification"
-                    app:layout_constraintTop_toBottomOf="@id/text_notification_title"
-                    app:layout_constraintBottom_toTopOf="@id/text_notification_time"
-                    tools:text="Apple"/>
-
-                <TextView
-                    android:id="@+id/text_notification_content_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="3dp"
-                    android:fontFamily="@font/noto_sans"
-                    android:letterSpacing="0.15"
-                    android:text="@{notification.name}"
-                    android:textColor="@color/gary757575"
-                    app:layout_constraintStart_toEndOf="@id/text_notification_content_brand"
-                    app:layout_constraintTop_toTopOf="@+id/text_notification_content_brand"
-                    tools:text="iPhone"/>
-
-                <TextView
-                    android:id="@+id/text_notification_content_storage"
+                    android:id="@+id/text_chat_content_brand"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="3dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="12dp"
                     android:fontFamily="@font/noto_sans"
                     android:letterSpacing="0.15"
-                    android:singleLine="true"
-                    android:ellipsize="end"
-                    android:text="@{notification.storage}"
                     android:textColor="@color/gary757575"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/text_notification_content_name"
-                    app:layout_constraintTop_toTopOf="@+id/text_notification_content_name"
-                    tools:text="64G" />
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    app:layout_constraintStart_toEndOf="@id/image_chat"
+                    app:layout_constraintEnd_toStartOf="@id/image_chat_product"
+                    app:layout_constraintTop_toBottomOf="@id/text_chat_title"
+                    app:layout_constraintBottom_toTopOf="@id/text_chat_time"
+                    tools:text="有現貨啦要買就買別囉嗦別凡啦123"/>
 
                 <TextView
-                    android:id="@+id/text_notification_time"
+                    android:id="@+id/text_chat_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
                     android:fontFamily="@font/noto_sans"
                     android:letterSpacing="0.15"
                     android:textSize="12sp"
-                    app:timeToDisplayFormat="@{notification.time}"
+
                     android:textColor="@color/gary757575"
-                    app:layout_constraintStart_toEndOf="@+id/image_notification"
-                    app:layout_constraintBottom_toBottomOf="@+id/image_notification"
+                    app:layout_constraintStart_toEndOf="@+id/image_chat"
+                    app:layout_constraintBottom_toBottomOf="@+id/image_chat"
                     tools:text="2020/7/14 12:00"/>
 
                 <ImageView
-                    android:id="@+id/text_notification_delete"
+                    android:id="@+id/text_chat_delete"
                     android:layout_width="22dp"
                     android:layout_height="22dp"
                     android:background="@drawable/ic_close"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"/>
+
+                <ImageView
+                    android:id="@+id/image_chat_product"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintBottom_toBottomOf="@+id/image_chat"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:src="@tools:sample/backgrounds/scenic" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

@@ -54,18 +54,18 @@ class DetailDirectViewModel(
     val navigateToDirect: LiveData<Event>
         get() = _navigateToDirect
 
+    // Handle navigation to detail chat
+    private val _navigateToDetailChat = MutableLiveData<Event>()
+
+    val navigateToDetailChat: LiveData<Event>
+        get() = _navigateToDetailChat
+
     // it for gallery circles design
     private val _snapPosition = MutableLiveData<Int>()
 
     val snapPosition: LiveData<Int>
         get() = _snapPosition
 
-
-    // Handle navigation to Add2cart
-    private val _navigateToAdd2cart = MutableLiveData<Event>()
-
-    val navigateToAdd2cart: LiveData<Event>
-        get() = _navigateToAdd2cart
 
     // Handle leave detail
     private val _leaveDetail = MutableLiveData<Boolean>()
@@ -213,11 +213,19 @@ class DetailDirectViewModel(
         _navigateToDetail.value = event
     }
 
-    fun leaveDetail() {
-        _leaveDetail.value = true
-    }
-
     fun onDetailNavigated() {
         _navigateToDetail.value = null
+    }
+
+    fun navigateToDetailChat(event: Event) {
+        _navigateToDetailChat.value = event
+    }
+
+    fun onDetailChatNavigated() {
+        _navigateToDetailChat.value = null
+    }
+
+    fun leaveDetail() {
+        _leaveDetail.value = true
     }
 }

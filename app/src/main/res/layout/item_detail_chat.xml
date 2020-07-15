@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <data>
+
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        >
+
+        <TextView
+            android:id="@+id/textview_chat_sent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:paddingEnd="8dp"
+            android:paddingStart="24dp"
+            tools:text="對方傳的訊息中午要吃什麼好餓"
+            android:background="@drawable/shape_bubble_sent"
+            android:textColor="@android:color/black"
+            android:maxWidth="256dp" />
+
+        <TextView
+            android:id="@+id/textview_chat_received"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="24dp"
+            android:layout_gravity="end"
+            tools:text="我傳的訊息隨便啦我都可以不要"
+            android:background="@drawable/shape_bubble_received"
+            android:textColor="@android:color/white"
+            android:maxWidth="256dp" />
+
+    </FrameLayout>
+</layout>

@@ -7,7 +7,6 @@
         <variable
             name="viewModel"
             type="com.eric.phoneauction.chatFragment.ChatViewModel" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -54,7 +53,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/item_notification"/>
+                tools:listitem="@layout/item_chat"/>
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <ProgressBar

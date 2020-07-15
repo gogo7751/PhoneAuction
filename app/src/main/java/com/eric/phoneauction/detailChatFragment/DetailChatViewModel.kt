@@ -1,4 +1,4 @@
-package com.eric.phoneauction.chatFragment
+package com.eric.phoneauction.detailChatFragment
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,11 +11,17 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 
-class ChatViewModel(
-    phoneAuctionRepository: PhoneAuctionRepository
+class DetailChatViewModel(
+    private val phoneAuctionRepository: PhoneAuctionRepository,
+    private val arguments: Event
 ) : ViewModel() {
 
+    private val _event = MutableLiveData<Event>().apply {
+        value = arguments
+    }
 
+    val event: LiveData<Event>
+        get() = _event
 
 
     // status: The internal MutableLiveData that stores the status of the most recent request
@@ -54,6 +60,5 @@ class ChatViewModel(
         super.onCleared()
         viewModelJob.cancel()
     }
-
 
 }

@@ -88,11 +88,11 @@ class DetailDirectFragment : Fragment() {
             it?.let {
                 when (it.tag) {
                     "拍賣" -> {
-                        findNavController().navigate(NavigationDirections.actionGlobalDetailAuctionFragment(it, it.tag))
+                        findNavController().navigate(NavigationDirections.actionGlobalDetailAuctionFragment(it))
                         viewModel.onDetailNavigated()
                     }
                     "直購" -> {
-                        findNavController().navigate(NavigationDirections.actionGlobalDetailDirectFragment(it, it.tag))
+                        findNavController().navigate(NavigationDirections.actionGlobalDetailDirectFragment(it))
                         viewModel.onDetailNavigated()
                     }
                 }
@@ -106,6 +106,12 @@ class DetailDirectFragment : Fragment() {
             }
         })
 
+        viewModel.navigateToDetailChat.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                findNavController().navigate(NavigationDirections.actionGlobalDetailChatFragment(it))
+                viewModel.onDetailChatNavigated()
+            }
+        })
 
         viewModel.countDown.observe(viewLifecycleOwner, Observer {
             it?.let {

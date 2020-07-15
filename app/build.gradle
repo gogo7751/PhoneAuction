@@ -120,6 +120,7 @@ dependencies {
     // Firebase
     implementation 'com.google.firebase:firebase-firestore:21.5.0'
     implementation 'com.google.firebase:firebase-storage:19.1.1'
+    implementation 'com.firebaseui:firebase-ui-storage:4.2.0'
 
     // Firebase Authentication (帳號驗證模組)
     implementation 'com.google.firebase:firebase-auth:19.3.2'
