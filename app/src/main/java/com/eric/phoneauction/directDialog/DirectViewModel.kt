@@ -7,6 +7,7 @@ import app.appworks.school.publisher.network.LoadApiStatus
 import com.eric.phoneauction.PhoneAuctionApplication
 import com.eric.phoneauction.R
 import com.eric.phoneauction.data.Event
+import com.eric.phoneauction.data.Notification
 import com.eric.phoneauction.data.source.PhoneAuctionRepository
 import com.eric.phoneauction.util.Logger
 import kotlinx.coroutines.CoroutineScope
@@ -79,6 +80,21 @@ class DirectViewModel(
         totalPrice.value = freight?.value?.let { _event.value?.price?.plus(it) }
     }
 
+    fun getNotification(): Notification {
+        event.value?.deal = false
+        return Notification(
+            id = "",
+            title = "您的商品已被購買,請盡快進行出貨事宜!",
+            time = -1,
+            brand = event.value?.brand.toString(),
+            name = event.value?.productName.toString(),
+            image = event.value?.images?.component1().toString(),
+            storage = event.value?.storage.toString(),
+            visibility = true,
+            event = event.value
+        )
+    }
+
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
@@ -111,6 +127,32 @@ class DirectViewModel(
         }
     }
 
+    fun postNotification(notification: Notification) {
+
+        coroutineScope.launch {
+
+            _status.value = LoadApiStatus.LOADING
+
+            when (val result = phoneAuctionRepository.postNotification(notification, event.value?.userId.toString())) {
+                is com.eric.phoneauction.data.Result.Success -> {
+                    _error.value = null
+                    _status.value = LoadApiStatus.DONE
+                }
+                is com.eric.phoneauction.data.Result.Fail -> {
+                    _error.value = result.error
+                    _status.value = LoadApiStatus.ERROR
+                }
+                is com.eric.phoneauction.data.Result.Error -> {
+                    _error.value = result.exception.toString()
+                    _status.value = LoadApiStatus.ERROR
+                }
+                else -> {
+                    _error.value = PhoneAuctionApplication.instance.getString(R.string.you_know_nothing)
+                    _status.value = LoadApiStatus.ERROR
+                }
+            }
+        }
+    }
 
     fun navigateToCheckoutSuccess(event: Event) {
         _navigateToCheckoutSuccess.value = event

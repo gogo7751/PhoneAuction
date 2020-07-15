@@ -9,7 +9,9 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.eric.phoneauction.MainViewModel
 import com.eric.phoneauction.NavigationDirections
 import com.eric.phoneauction.PhoneAuctionApplication
 import com.eric.phoneauction.databinding.HomeFragmentBinding
@@ -33,6 +35,8 @@ class HomeFragment : Fragment() {
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
+
+        val mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
 
         val adapter = HomeAdapter(HomeAdapter.OnClickListener{
             viewModel.navigateToDetail(it)
@@ -78,12 +82,6 @@ class HomeFragment : Fragment() {
             }
         })
 
-        viewModel.currentTime.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                Logger.d("viewModel.currentTime + $it")
-                Logger.d("viewModel.currentTime + ${it.toDisplayFormat()}")
-            }
-        })
 
         binding.buttonAuction.setOnClickListener {
             viewModel.getAuctionResult()

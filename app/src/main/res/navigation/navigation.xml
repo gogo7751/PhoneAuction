@@ -33,7 +33,8 @@
         android:id="@+id/notificationFragment"
         android:name="com.eric.phoneauction.notificationFragment.NotificationFragment"
         android:label="notification_fragment"
-        tools:layout="@layout/fragment_notification" />
+        tools:layout="@layout/fragment_notification"/>
+
     <action
         android:id="@+id/action_global_homeFragment"
         app:destination="@id/homeFragment"

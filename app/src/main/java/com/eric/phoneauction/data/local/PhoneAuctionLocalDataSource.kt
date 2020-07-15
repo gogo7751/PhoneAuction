@@ -3,6 +3,7 @@ package com.eric.phoneauction.data.local
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.eric.phoneauction.data.Event
+import com.eric.phoneauction.data.Notification
 import com.eric.phoneauction.data.Result
 import com.eric.phoneauction.data.User
 import com.eric.phoneauction.data.source.PhoneAuctionDataSource
@@ -35,7 +36,23 @@ class PhoneAuctionLocalDataSource(val context: Context) :
         TODO("Not yet implemented")
     }
 
+    override suspend fun getNotification(): Result<List<Notification>> {
+        TODO("Not yet implemented")
+    }
+
+    override fun getLiveNotification(): MutableLiveData<List<Notification>> {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun postDirect(event: Event): Result<Boolean> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun postNotification(notification: Notification, buyUser: String): Result<Boolean> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun deleteNotification(notificationId: String, user: String): Result<Boolean> {
         TODO("Not yet implemented")
     }
 

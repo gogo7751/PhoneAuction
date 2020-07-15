@@ -43,6 +43,7 @@ class DirectDialog : BottomSheetDialogFragment() {
 
         viewModel.navigateToCheckoutSuccess.observe(viewLifecycleOwner, Observer {
             viewModel.postAuction(it)
+            viewModel.postNotification(viewModel.getNotification())
             findNavController().navigate(DirectDialogDirections.actionDirectDialogToCheckoutSuccessDirectFragment())
             viewModel.leave()
         })

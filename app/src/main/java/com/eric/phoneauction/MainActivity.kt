@@ -2,14 +2,22 @@ package com.eric.phoneauction
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.eric.phoneauction.data.UserManager
 import com.eric.phoneauction.databinding.ActivityMainBinding
+import com.eric.phoneauction.databinding.BadgeBottomBinding
 import com.eric.phoneauction.ext.getVmFactory
+import com.eric.phoneauction.homeFragment.HomeViewModel
+import com.eric.phoneauction.notificationFragment.NotificationViewModel
 import com.eric.phoneauction.util.Logger
+import com.google.android.material.bottomnavigation.BottomNavigationItemView
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.storage.FirebaseStorage
 import java.util.*
@@ -28,6 +36,15 @@ class MainActivity : AppCompatActivity() {
 
         viewModel
         setupBottomNav()
+        viewModel.postUser(UserManager.user)
+        viewModel.getUser()
+
+        val notificationViewModel: NotificationViewModel by viewModels { getVmFactory() }
+
+        notificationViewModel.getLiveNotificationsResult()
+        notificationViewModel.liveNotifications.observe(this, androidx.lifecycle.Observer {
+            viewModel.notifications.value = notificationViewModel.liveNotifications.value
+        })
 
 
         viewModel.user.observe(this, androidx.lifecycle.Observer {
@@ -67,6 +84,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupBottomNav() {
         binding.bottomNavView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
+
+        val menuView = binding.bottomNavView.getChildAt(0) as BottomNavigationMenuView
+        val itemView = menuView.getChildAt(3) as BottomNavigationItemView
+        val bindingBadge = BadgeBottomBinding.inflate(LayoutInflater.from(this), itemView, true)
+        bindingBadge.lifecycleOwner = this
+        bindingBadge.viewModel = viewModel
     }
 
 

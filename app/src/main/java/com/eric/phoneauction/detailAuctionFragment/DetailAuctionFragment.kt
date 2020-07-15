@@ -85,6 +85,7 @@ class DetailAuctionFragment : Fragment() {
             }
         })
 
+
         viewModel.events.observe(viewLifecycleOwner, Observer {
             it?.let {
                 adapter.submitList(it)

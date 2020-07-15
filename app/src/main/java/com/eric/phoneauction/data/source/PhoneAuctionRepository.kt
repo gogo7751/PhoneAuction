@@ -3,6 +3,7 @@ package com.eric.phoneauction.data.source
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.eric.phoneauction.data.Event
+import com.eric.phoneauction.data.Notification
 import com.eric.phoneauction.data.Result
 import com.eric.phoneauction.data.User
 
@@ -24,6 +25,10 @@ interface PhoneAuctionRepository {
 
     suspend fun getUser(): Result<User>
 
+    suspend fun getNotification(): Result<List<Notification>>
+
+    fun getLiveNotification(): MutableLiveData<List<Notification>>
+
     suspend fun post(event: Event): Result<Boolean>
 
     suspend fun postUser(user: User): Result<Boolean>
@@ -32,4 +37,7 @@ interface PhoneAuctionRepository {
 
     suspend fun postDirect(event: Event): Result<Boolean>
 
+    suspend fun postNotification(notification: Notification, buyUser: String): Result<Boolean>
+
+    suspend fun deleteNotification(notificationId: String, user: String): Result<Boolean>
 }

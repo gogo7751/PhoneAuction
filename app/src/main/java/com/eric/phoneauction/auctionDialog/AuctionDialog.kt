@@ -9,9 +9,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.eric.phoneauction.data.Notification
 
 import com.eric.phoneauction.databinding.AuctionDialogBinding
 import com.eric.phoneauction.ext.getVmFactory
+import com.eric.phoneauction.util.Logger
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 /**
@@ -45,9 +47,12 @@ class AuctionDialog : BottomSheetDialogFragment() {
 
         viewModel.navigateToCheckoutSuccess.observe(viewLifecycleOwner, Observer {
             viewModel.postAuction(it, viewModel.price.value as Int)
+            viewModel.postNotification(viewModel.getNotification())
             findNavController().navigate(AuctionDialogDirections.actionAuctionDialogToCheckSuccessAuctionFragment())
             viewModel.leave()
         })
+
+
 
 
 

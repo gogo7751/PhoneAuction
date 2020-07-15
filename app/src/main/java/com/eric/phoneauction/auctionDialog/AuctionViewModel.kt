@@ -7,6 +7,7 @@ import app.appworks.school.publisher.network.LoadApiStatus
 import com.eric.phoneauction.PhoneAuctionApplication
 import com.eric.phoneauction.R
 import com.eric.phoneauction.data.Event
+import com.eric.phoneauction.data.Notification
 import com.eric.phoneauction.data.source.PhoneAuctionRepository
 import com.eric.phoneauction.util.Logger
 import kotlinx.coroutines.CoroutineScope
@@ -25,6 +26,13 @@ class AuctionViewModel(
 
     val event: LiveData<Event>
         get() = _event
+
+    val buyUser = MutableLiveData<String>()
+
+    private val _notification = MutableLiveData<Notification>()
+
+    val notification: LiveData<Notification>
+        get() = _notification
 
     // Handle leave auction
     private val _leave = MutableLiveData<Boolean>()
@@ -74,12 +82,55 @@ class AuctionViewModel(
         Logger.i("------------------------------------")
         Logger.i("[${this::class.simpleName}]${this}")
         Logger.i("------------------------------------")
+        buyUser.value = event.value?.buyUser
     }
 
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
     }
+
+    fun getNotification(): Notification{
+        return Notification(
+                id = "",
+                title = "您的出價已被超過!",
+                time = -1,
+                brand = event.value?.brand.toString(),
+                name = event.value?.productName.toString(),
+                image = event.value?.images?.component1().toString(),
+                storage = event.value?.storage.toString(),
+                visibility = true,
+                event = event.value
+        )
+    }
+
+    fun postNotification(notification: Notification) {
+
+        coroutineScope.launch {
+
+            _status.value = LoadApiStatus.LOADING
+
+            when (val result = phoneAuctionRepository.postNotification(notification, buyUser.value.toString())) {
+                is com.eric.phoneauction.data.Result.Success -> {
+                    _error.value = null
+                    _status.value = LoadApiStatus.DONE
+                }
+                is com.eric.phoneauction.data.Result.Fail -> {
+                    _error.value = result.error
+                    _status.value = LoadApiStatus.ERROR
+                }
+                is com.eric.phoneauction.data.Result.Error -> {
+                    _error.value = result.exception.toString()
+                    _status.value = LoadApiStatus.ERROR
+                }
+                else -> {
+                    _error.value = PhoneAuctionApplication.instance.getString(R.string.you_know_nothing)
+                    _status.value = LoadApiStatus.ERROR
+                }
+            }
+        }
+    }
+
 
     fun postAuction(event: Event, price: Int) {
 
