@@ -31,6 +31,7 @@
                 android:id="@+id/recyclerview_home"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:overScrollMode="never"
                 app:events="@{isLiveDataDesign ? viewModel.liveEvents : viewModel.events}"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:spanCount="2"

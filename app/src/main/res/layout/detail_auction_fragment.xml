@@ -31,6 +31,7 @@
                     android:layout_height="0dp"
                     android:orientation="horizontal"
                     app:images="@{viewModel.event.images}"
+                    android:overScrollMode="never"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"

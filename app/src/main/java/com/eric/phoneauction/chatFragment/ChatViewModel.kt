@@ -2,9 +2,13 @@ package com.eric.phoneauction.chatFragment
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import app.appworks.school.publisher.network.LoadApiStatus
+import com.eric.phoneauction.data.ChatRoom
 import com.eric.phoneauction.data.Event
+import com.eric.phoneauction.data.Notification
+import com.eric.phoneauction.data.UserManager
 import com.eric.phoneauction.data.source.PhoneAuctionRepository
 import com.eric.phoneauction.util.Logger
 import kotlinx.coroutines.CoroutineScope
@@ -12,11 +16,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 
 class ChatViewModel(
-    phoneAuctionRepository: PhoneAuctionRepository
+    val phoneAuctionRepository: PhoneAuctionRepository
 ) : ViewModel() {
 
-
-
+    var liveChatRooms = MutableLiveData<List<ChatRoom>>()
 
     // status: The internal MutableLiveData that stores the status of the most recent request
     private val _status = MutableLiveData<LoadApiStatus>()
@@ -47,12 +50,20 @@ class ChatViewModel(
         Logger.i("------------------------------------")
         Logger.i("[${this::class.simpleName}]${this}")
         Logger.i("------------------------------------")
-
+        getLiveChatRoomsResult()
     }
 
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
+    }
+
+
+
+    fun getLiveChatRoomsResult() {
+        liveChatRooms = phoneAuctionRepository.getLiveChatRoom()
+        _status.value = LoadApiStatus.DONE
+        _refreshStatus.value = false
     }
 
 

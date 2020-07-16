@@ -98,6 +98,8 @@ class PostViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
             tag = tag.value.toString(),
             userId = UserManager.userId.toString(),
             buyUser = "",
+            sellerImage = UserManager.user.image,
+            sellerName = UserManager.user.name,
             deal = true
         )
     }

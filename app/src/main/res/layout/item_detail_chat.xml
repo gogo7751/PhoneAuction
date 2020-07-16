@@ -4,6 +4,9 @@
     >
 
     <data>
+        <variable
+            name="message"
+            type="com.eric.phoneauction.data.Message" />
 
     </data>
 

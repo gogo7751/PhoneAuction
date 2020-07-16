@@ -28,12 +28,18 @@ class DetailChatFragment : Fragment() {
         binding.viewModel = viewModel
 
 
+        binding.imageChatDetailSend.setOnClickListener{
+            binding.editChatDetailInput.text.clear()
+        }
 
 
-
-
-
-
+        binding.imageChatDetailSend.setOnClickListener {
+            viewModel.message.value?.let { it1 -> viewModel.document.value?.let { it2 ->
+                viewModel.postMessage(it1,
+                    it2
+                )
+            } }
+        }
 
         return binding.root
     }

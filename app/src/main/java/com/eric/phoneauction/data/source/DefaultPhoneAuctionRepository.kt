@@ -1,10 +1,7 @@
 package com.eric.phoneauction.data.source
 
 import androidx.lifecycle.MutableLiveData
-import com.eric.phoneauction.data.Event
-import com.eric.phoneauction.data.Notification
-import com.eric.phoneauction.data.Result
-import com.eric.phoneauction.data.User
+import com.eric.phoneauction.data.*
 
 
 /**
@@ -43,6 +40,10 @@ class DefaultPhoneAuctionRepository(private val remoteDataSource: PhoneAuctionDa
         return remoteDataSource.getLiveNotification()
     }
 
+    override fun getLiveChatRoom(): MutableLiveData<List<ChatRoom>> {
+        return remoteDataSource.getLiveChatRoom()
+    }
+
     override suspend fun post(event: Event): Result<Boolean> {
         return remoteDataSource.post(event)
     }
@@ -65,5 +66,13 @@ class DefaultPhoneAuctionRepository(private val remoteDataSource: PhoneAuctionDa
 
     override suspend fun postUser(user: User): Result<Boolean> {
         return remoteDataSource.postUser(user)
+    }
+
+    override suspend fun postChatRoom(chatRoom: ChatRoom): Result<Boolean> {
+        return remoteDataSource.postChatRoom(chatRoom)
+    }
+
+    override suspend fun postMessage(message: Message, document: String): Result<Boolean> {
+        return remoteDataSource.postMessage(message, document)
     }
 }

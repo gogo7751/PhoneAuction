@@ -1,11 +1,16 @@
 package com.eric.phoneauction.data
 
 data class ChatRoom(
-    val id: String = "",
-    val text: String = "",
-    val time: Long = -1,
-    val senderImage: String = "",
-    val senderId: String = "",
-    var event: Event? = Event()
+    var id: String = "",
+    var text: String = "",
+    var time: Long = -1,
+    var senderImage: String = "",
+    var senderId: String = "",
+    var senderName: String = "",
+    var receiverId: String = "",
+    var receiverImage: String = "",
+    var receiverName: String = "",
+    var productImage:String = "",
+    var visibility: Boolean = true
 ) {
 }

@@ -7,10 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 
 import com.eric.phoneauction.R
 import com.eric.phoneauction.databinding.FragmentChatBinding
 import com.eric.phoneauction.ext.getVmFactory
+import com.eric.phoneauction.util.Logger
 
 class ChatFragment : Fragment() {
 
@@ -24,6 +26,16 @@ class ChatFragment : Fragment() {
         val binding = FragmentChatBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
+
+        val adapter = ChatAdapter(viewModel)
+        binding.recyclerviewChat.adapter = adapter
+
+        viewModel.liveChatRooms.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                adapter.submitList(it)
+            }
+        })
+
 
 
         return binding.root

@@ -12,7 +12,9 @@ import androidx.recyclerview.widget.RecyclerView
 import app.appworks.school.publisher.network.LoadApiStatus
 import com.eric.phoneauction.PhoneAuctionApplication
 import com.eric.phoneauction.R
+import com.eric.phoneauction.data.ChatRoom
 import com.eric.phoneauction.data.Event
+import com.eric.phoneauction.data.UserManager
 import com.eric.phoneauction.data.source.PhoneAuctionRepository
 import com.eric.phoneauction.homeFragment.HomeAdapter
 import com.eric.phoneauction.util.Logger
@@ -116,6 +118,50 @@ class DetailDirectViewModel(
         Logger.i("------------------------------------")
         getDirectResult()
         getCountdown()
+    }
+
+    fun getChatRoom(): ChatRoom {
+        val list = listOf<String>(event.value?.userId.toString(), com.eric.phoneauction.data.UserManager.user.id)
+        return ChatRoom(
+            id = event.value?.id.toString() + UserManager.userId,
+            text = "查看訊息",
+            time = -1,
+            senderName = UserManager.user.name,
+            senderImage = UserManager.user.image,
+            senderId = UserManager.user.id,
+            receiverId = event.value?.userId.toString(),
+            receiverImage = event.value?.sellerImage.toString(),
+            receiverName = event.value?.sellerName.toString(),
+            productImage = event.value?.images?.component1().toString(),
+            visibility = true
+        )
+    }
+
+    fun postChatRoom(chatRoom: ChatRoom) {
+
+        coroutineScope.launch {
+
+            _status.value = LoadApiStatus.LOADING
+
+            when (val result = phoneAuctionRepository.postChatRoom(chatRoom)) {
+                is com.eric.phoneauction.data.Result.Success -> {
+                    _error.value = null
+                    _status.value = LoadApiStatus.DONE
+                }
+                is com.eric.phoneauction.data.Result.Fail -> {
+                    _error.value = result.error
+                    _status.value = LoadApiStatus.ERROR
+                }
+                is com.eric.phoneauction.data.Result.Error -> {
+                    _error.value = result.exception.toString()
+                    _status.value = LoadApiStatus.ERROR
+                }
+                else -> {
+                    _error.value = PhoneAuctionApplication.instance.getString(R.string.you_know_nothing)
+                    _status.value = LoadApiStatus.ERROR
+                }
+            }
+        }
     }
 
     /**

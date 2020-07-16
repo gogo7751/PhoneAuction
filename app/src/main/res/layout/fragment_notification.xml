@@ -21,6 +21,8 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:background="#f6b76a"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@id/layout_swipe_refresh_notification"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
@@ -55,6 +57,7 @@
             android:id="@+id/recyclerview_notification"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:overScrollMode="never"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/item_notification"/>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

@@ -18,6 +18,8 @@ data class Event(
     var tag: String = "",
     var userId: String = "",
     var buyUser: String = "",
+    var sellerImage: String = "",
+    var sellerName:String = "",
     var deal: Boolean = true
 ): Parcelable
 
