@@ -93,4 +93,8 @@ class PhoneAuctionLocalDataSource(val context: Context) :
     override suspend fun deleteChatRoom(chatRoomId: String): Result<Boolean> {
         TODO("Not yet implemented")
     }
+
+    override suspend fun finishAuction(event: Event): Result<Boolean> {
+        TODO("Not yet implemented")
+    }
 }

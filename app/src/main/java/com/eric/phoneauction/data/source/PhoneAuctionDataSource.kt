@@ -51,4 +51,6 @@ interface PhoneAuctionDataSource {
     suspend fun postMessage(message: Message, document: String): Result<Boolean>
 
     suspend fun deleteChatRoom(chatRoomId: String): Result<Boolean>
+
+    suspend fun finishAuction(event: Event): Result<Boolean>
 }

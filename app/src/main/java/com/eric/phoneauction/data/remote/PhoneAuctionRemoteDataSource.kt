@@ -407,6 +407,31 @@ object PhoneAuctionRemoteDataSource :
 
         }
 
+
+    override suspend fun finishAuction(event: Event): Result<Boolean>  =
+
+        suspendCoroutine { continuation ->
+            val events = FirebaseFirestore.getInstance().collection(PATH_EVENTS)
+
+            val document = events.document(event.id)
+
+            document
+                .update("deal", false)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Logger.i("PhoneAuction: $event")
+                        continuation.resume(Result.Success(true))
+                    } else {
+                        task.exception?.let {
+                            Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
+                            continuation.resume(Result.Error(it))
+                            return@addOnCompleteListener
+                        }
+                        continuation.resume(Result.Fail(PhoneAuctionApplication.instance.getString(R.string.you_know_nothing)))
+                    }
+                }
+        }
+
     override suspend fun postUser(user: User): Result<Boolean> = suspendCoroutine { continuation ->
         val users = FirebaseFirestore.getInstance().collection(PATH_USER)
         val document = UserManager.userId?.let { users.document(it) }
@@ -606,6 +631,7 @@ object PhoneAuctionRemoteDataSource :
                     }
                 }
         }
+
 }
 
 

@@ -1,6 +1,8 @@
 package com.eric.phoneauction.homeFragment
 
+import android.icu.util.Calendar
 import android.os.CountDownTimer
+import android.os.UserManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,8 +10,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.eric.phoneauction.R
 import com.eric.phoneauction.data.Event
+import com.eric.phoneauction.data.Notification
 import com.eric.phoneauction.databinding.ItemHomeGirdBinding
 import com.eric.phoneauction.util.Util
+import java.util.*
 
 class HomeAdapter( val onClickListener: OnClickListener, val viewModel: HomeViewModel ) : androidx.recyclerview.widget.ListAdapter<Event, HomeAdapter.HomeViewHolder>(
     DiffCallback
@@ -30,9 +34,44 @@ class HomeAdapter( val onClickListener: OnClickListener, val viewModel: HomeView
                  binding.textHomeTime.visibility = View.GONE
             }
 
-            timer = object : CountDownTimer(event.endTime!!, ONE_SECOND) {
+            fun getNotification(): Notification {
+                return Notification(
+                    id = "",
+                    title = "恭喜您得標!",
+                    time = -1,
+                    brand = event.brand,
+                    name = event.productName,
+                    image = event.images.component1(),
+                    storage = event.storage,
+                    visibility = true,
+                    event = event.apply { event.deal = false }
+                )
+            }
+
+            fun getNotificationFail(): Notification {
+                return Notification(
+                    id = "",
+                    title = "流標...",
+                    time = -1,
+                    brand = event.brand,
+                    name = event.productName,
+                    image = event.images.component1(),
+                    storage = event.storage,
+                    visibility = true,
+                    event = event.apply { event.deal = false }
+                )
+            }
+
+            val millsTime = event.endTime.minus(event.createdTime)
+
+            timer = object : CountDownTimer(millsTime, ONE_SECOND) {
                 override fun onFinish() {
-                    
+                    viewModel.finishAuction(event)
+                    if (event.buyUser != "") {
+                        viewModel.postNotification(getNotification(), event.buyUser)
+                    } else {
+                        viewModel.postNotification(getNotificationFail(), com.eric.phoneauction.data.UserManager.userId!!)
+                    }
                 }
 
                 override fun onTick(millisUntilFinished: Long) {

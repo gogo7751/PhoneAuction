@@ -92,4 +92,8 @@ class DefaultPhoneAuctionRepository(private val remoteDataSource: PhoneAuctionDa
     override suspend fun deleteChatRoom(chatRoomId: String): Result<Boolean> {
         return remoteDataSource.deleteChatRoom(chatRoomId)
     }
+
+    override suspend fun finishAuction(event: Event): Result<Boolean> {
+        return remoteDataSource.finishAuction(event)
+    }
 }

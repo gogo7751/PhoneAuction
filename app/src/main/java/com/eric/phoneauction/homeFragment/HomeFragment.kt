@@ -64,7 +64,6 @@ class HomeFragment : Fragment() {
         viewModel.liveEvents.observe(viewLifecycleOwner, Observer {
             it?.let {
                 adapter.submitList(it)
-                adapter.notifyDataSetChanged()
             }
         })
 

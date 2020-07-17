@@ -14,6 +14,7 @@ import com.eric.phoneauction.data.Event
 import com.eric.phoneauction.data.Notification
 import com.eric.phoneauction.data.UserManager
 import com.eric.phoneauction.databinding.ItemNotificationBinding
+import com.eric.phoneauction.util.Logger
 
 
 class NotificationAdapter(val viewModel: NotificationViewModel) :

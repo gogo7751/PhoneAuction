@@ -53,4 +53,6 @@ interface PhoneAuctionRepository {
 
     suspend fun deleteChatRoom(chatRoomId: String): Result<Boolean>
 
+    suspend fun finishAuction(event: Event): Result<Boolean>
+
 }
