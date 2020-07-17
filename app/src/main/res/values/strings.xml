@@ -20,6 +20,19 @@
     <string name="direct">我要購買</string>
     <string name="done">已完成交易</string>
 
+    <!-- Sort -->
+    <string name="sort_all">全部</string>
+    <string name="sort_price_upward">價格↑</string>
+    <string name="sort_price_downward">價格↓</string>
+    <string name="sort_time">剩餘時間</string>
+    <string-array name="sort_list">
+        <item>全部</item>
+        <item>價格↑</item>
+        <item>價格↓</item>
+        <item>時間↑</item>
+        <item>時間↓</item>
+    </string-array>
+
     <!-- Post -->
     <string name="select_post_spinner">請選擇</string>
 

@@ -32,6 +32,7 @@ class HomeAdapter( val onClickListener: OnClickListener, val viewModel: HomeView
 
             timer = object : CountDownTimer(event.endTime!!, ONE_SECOND) {
                 override fun onFinish() {
+                    
                 }
 
                 override fun onTick(millisUntilFinished: Long) {

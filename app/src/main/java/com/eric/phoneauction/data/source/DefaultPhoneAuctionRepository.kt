@@ -2,6 +2,7 @@ package com.eric.phoneauction.data.source
 
 import androidx.lifecycle.MutableLiveData
 import com.eric.phoneauction.data.*
+import com.google.firebase.firestore.Query
 
 
 /**
@@ -48,6 +49,14 @@ class DefaultPhoneAuctionRepository(private val remoteDataSource: PhoneAuctionDa
         return remoteDataSource.getLiveMessage(documentId)
     }
 
+    override suspend fun getSortWithTag(tag: String, sort: String, query: Query.Direction): Result<List<Event>> {
+        return remoteDataSource.getSortWithTag(tag, sort, query)
+    }
+
+    override suspend fun getSort(sort: String, query: Query.Direction): Result<List<Event>> {
+        return remoteDataSource.getSort(sort, query)
+    }
+
     override suspend fun post(event: Event): Result<Boolean> {
         return remoteDataSource.post(event)
     }
@@ -78,5 +87,9 @@ class DefaultPhoneAuctionRepository(private val remoteDataSource: PhoneAuctionDa
 
     override suspend fun postMessage(message: Message, document: String): Result<Boolean> {
         return remoteDataSource.postMessage(message, document)
+    }
+
+    override suspend fun deleteChatRoom(chatRoomId: String): Result<Boolean> {
+        return remoteDataSource.deleteChatRoom(chatRoomId)
     }
 }

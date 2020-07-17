@@ -161,6 +161,61 @@ object PhoneAuctionRemoteDataSource :
             }
     }
 
+    override suspend fun getSortWithTag(tag: String, sort: String, query: Query.Direction): Result<List<Event>> = suspendCoroutine { continuation ->
+
+        FirebaseFirestore.getInstance()
+            .collection(PATH_EVENTS)
+            .whereEqualTo("deal", true)
+            .whereEqualTo("tag", tag)
+            .orderBy(sort, query)
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val list = mutableListOf<Event>()
+                    for (document in task.result!!) {
+                        Logger.d(document.id + " => " + document.data)
+                        val event = document.toObject(Event::class.java)
+                        list.add(event)
+                    }
+                    continuation.resume(Result.Success(list))
+                } else {
+                    task.exception?.let {
+                        Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
+                        continuation.resume(Result.Error(it))
+                        return@addOnCompleteListener
+                    }
+                    continuation.resume(Result.Fail(PhoneAuctionApplication.instance.getString(R.string.you_know_nothing)))
+                }
+            }
+    }
+
+    override suspend fun getSort(sort: String, query: Query.Direction): Result<List<Event>> = suspendCoroutine { continuation ->
+
+        FirebaseFirestore.getInstance()
+            .collection(PATH_EVENTS)
+            .whereEqualTo("deal", true)
+            .orderBy(sort, query)
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val list = mutableListOf<Event>()
+                    for (document in task.result!!) {
+                        Logger.d(document.id + " => " + document.data)
+                        val event = document.toObject(Event::class.java)
+                        list.add(event)
+                    }
+                    continuation.resume(Result.Success(list))
+                } else {
+                    task.exception?.let {
+                        Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
+                        continuation.resume(Result.Error(it))
+                        return@addOnCompleteListener
+                    }
+                    continuation.resume(Result.Fail(PhoneAuctionApplication.instance.getString(R.string.you_know_nothing)))
+                }
+            }
+    }
+
     override suspend fun getNotification(): Result<List<Notification>> =
         suspendCoroutine { continuation ->
             UserManager.userId?.let {
@@ -286,7 +341,7 @@ object PhoneAuctionRemoteDataSource :
 
         event.id = document.id
         event.createdTime = Calendar.getInstance().timeInMillis
-        event.endTime = Calendar.getInstance().timeInMillis + 259200
+        event.endTime = Calendar.getInstance().timeInMillis + 50000
 
         document
             .set(event)
@@ -453,6 +508,8 @@ object PhoneAuctionRemoteDataSource :
                 }
         }
 
+
+
     override suspend fun postChatRoom(chatRoom: ChatRoom): Result<Boolean> =
         suspendCoroutine { continuation ->
 
@@ -522,6 +579,30 @@ object PhoneAuctionRemoteDataSource :
                                 )
                             )
                         )
+                    }
+                }
+        }
+
+    override suspend fun deleteChatRoom(chatRoomId: String): Result<Boolean>  =
+        suspendCoroutine { continuation ->
+
+            val chatRooms = FirebaseFirestore.getInstance().collection(PATH_CHAT_ROOM)
+
+            val document = chatRooms.document(chatRoomId)
+
+            document
+                .update("visibility", false)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Logger.i("PhoneAuction: $chatRoomId")
+                        continuation.resume(Result.Success(true))
+                    } else {
+                        task.exception?.let {
+                            Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
+                            continuation.resume(Result.Error(it))
+                            return@addOnCompleteListener
+                        }
+                        continuation.resume(Result.Fail(PhoneAuctionApplication.instance.getString(R.string.you_know_nothing)))
                     }
                 }
         }

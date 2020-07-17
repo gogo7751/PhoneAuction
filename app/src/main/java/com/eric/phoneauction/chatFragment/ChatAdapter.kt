@@ -25,6 +25,11 @@ class ChatAdapter( val onClickListener: OnClickListener, val viewModel:ChatViewM
             chatRoom: ChatRoom, viewModel: ChatViewModel
         ) {
             binding.chatRoom = chatRoom
+
+            binding.textChatDelete.setOnClickListener {
+                viewModel.deleteChatRoom(chatRoom.id)
+            }
+
             binding.executePendingBindings()
         }
     }
