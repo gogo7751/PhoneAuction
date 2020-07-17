@@ -6,8 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.eric.phoneauction.detailChatFragment.DetailChatViewModel" />
-
+            type="com.eric.phoneauction.chatToChatDetailFragment.ChatToDetailChatViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,30 +14,30 @@
         android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_chat_header"
+            android:id="@+id/layout_chatToDetail_header"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:background="#f6b76a"
-            app:layout_constraintBottom_toTopOf="@id/scrollView_chatDetail"
+            app:layout_constraintBottom_toTopOf="@id/scrollView_chatToDetail"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/image_chatDetail_back"
+                android:id="@+id/image_chatToDetail_back"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
                 android:background="@drawable/icons_back"
                 android:scaleType="centerCrop"
                 android:layout_marginStart="16dp"
-                app:layout_constraintEnd_toStartOf="@+id/text_chat_title"
+                app:layout_constraintEnd_toStartOf="@+id/text_chatToDetail_title"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="@+id/text_chat_title"
-                app:layout_constraintTop_toTopOf="@+id/text_chat_title" />
+                app:layout_constraintBottom_toBottomOf="@id/text_chatToDetail_title"
+                app:layout_constraintTop_toTopOf="@id/text_chatToDetail_title" />
 
             <TextView
-                android:id="@+id/text_chat_title"
+                android:id="@+id/text_chatToDetail_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/noto_sans"
@@ -46,9 +45,8 @@
                 android:layout_marginStart="10dp"
                 android:textColor="@color/white"
                 android:textSize="18sp"
-                android:text="@{viewModel.event.sellerName}"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/image_chatDetail_back"
+                app:layout_constraintStart_toEndOf="@+id/image_chatToDetail_back"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.6"
                 tools:text="張Ray" />
@@ -60,28 +58,28 @@
                 android:background="@drawable/ic_nav_profile"
                 android:scaleType="centerCrop"
                 android:layout_marginEnd="16dp"
-                app:imageUrl="@{viewModel.event.images[0]}"
+                app:imageUrl="@{viewModel.chatRoom.productImage}"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="@+id/text_chat_title"
-                app:layout_constraintTop_toTopOf="@+id/text_chat_title" />
+                app:layout_constraintBottom_toBottomOf="@+id/text_chatToDetail_title"
+                app:layout_constraintTop_toTopOf="@+id/text_chatToDetail_title" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ScrollView
-            android:id="@+id/scrollView_chatDetail"
+            android:id="@+id/scrollView_chatToDetail"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@id/edit_chatDetail_input"
+            app:layout_constraintBottom_toTopOf="@id/edit_chatToDetail_input"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layout_chat_header">
+            app:layout_constraintTop_toBottomOf="@id/layout_chatToDetail_header">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerview_chatDetail"
+                        android:id="@+id/recyclerview_chatToDetail"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:overScrollMode="never"
@@ -99,7 +97,7 @@
         </ScrollView>
 
         <EditText
-            android:id="@+id/edit_chatDetail_input"
+            android:id="@+id/edit_chatToDetail_input"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -109,22 +107,22 @@
             android:padding="8dp"
             android:text="@={viewModel.message.text}"
             android:background="@drawable/rect_oval_white"
-            app:layout_constraintStart_toEndOf="@id/fab_chatDetail"
+            app:layout_constraintStart_toEndOf="@id/fab_chatToDetail"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />
 
         <Button
-            android:id="@+id/image_chatDetail_send"
+            android:id="@+id/image_chatToDetail_send"
             android:layout_width="22dp"
             android:layout_height="22dp"
             android:background="@drawable/ic_send_24px"
             android:layout_marginEnd="12dp"
-            app:layout_constraintEnd_toEndOf="@id/edit_chatDetail_input"
-            app:layout_constraintTop_toTopOf="@id/edit_chatDetail_input"
-            app:layout_constraintBottom_toBottomOf="@id/edit_chatDetail_input"/>
+            app:layout_constraintEnd_toEndOf="@id/edit_chatToDetail_input"
+            app:layout_constraintTop_toTopOf="@id/edit_chatToDetail_input"
+            app:layout_constraintBottom_toBottomOf="@id/edit_chatToDetail_input"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_chatDetail"
+            android:id="@+id/fab_chatToDetail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"

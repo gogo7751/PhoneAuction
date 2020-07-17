@@ -1,4 +1,4 @@
-package com.eric.phoneauction.detailChatFragment
+package com.eric.phoneauction.chatToChatDetailFragment
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import app.appworks.school.publisher.network.LoadApiStatus
 import com.eric.phoneauction.PhoneAuctionApplication
 import com.eric.phoneauction.R
+import com.eric.phoneauction.data.ChatRoom
 import com.eric.phoneauction.data.Event
 import com.eric.phoneauction.data.Message
 import com.eric.phoneauction.data.UserManager
@@ -16,17 +17,17 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class DetailChatViewModel(
+class ChatToDetailChatViewModel(
     private val phoneAuctionRepository: PhoneAuctionRepository,
-    private val arguments: Event
+    private val arguments: ChatRoom
 ) : ViewModel() {
 
-    private val _event = MutableLiveData<Event>().apply {
+    private val _chatRoom = MutableLiveData<ChatRoom>().apply {
         value = arguments
     }
 
-    val event: LiveData<Event>
-        get() = _event
+    val chatRoom: LiveData<ChatRoom>
+        get() = _chatRoom
 
     var liveMessages = MutableLiveData<List<Message>>()
 
@@ -35,7 +36,7 @@ class DetailChatViewModel(
     }
 
     val document = MutableLiveData<String>().apply {
-        value = event.value?.id + UserManager.userId
+        value =  chatRoom.value?.id
     }
 
     // status: The internal MutableLiveData that stores the status of the most recent request

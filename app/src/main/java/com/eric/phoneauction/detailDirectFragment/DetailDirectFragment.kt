@@ -68,12 +68,15 @@ class DetailDirectFragment : Fragment() {
 
         // set the initial position to the center of infinite gallery
         viewModel.event.value?.let { event ->
-            event.images.size.times(100).let {
-                binding.recyclerDetailDirect
-                    .scrollToPosition(it)
+            event.images?.size?.times(100).let {
+                if (it != null) {
+                    binding.recyclerDetailDirect
+                        .scrollToPosition(it)
+                }
             }
             viewModel.snapPosition.observe(viewLifecycleOwner, Observer {
-                (binding.recyclerDetailDirectCircles.adapter as DetailCircleAdapter).selectedPosition.value = (it % event.images.size)
+                (binding.recyclerDetailDirectCircles.adapter as DetailCircleAdapter).selectedPosition.value = (it % (event.images?.size
+                    ?: 0))
             })
         }
 
@@ -109,7 +112,7 @@ class DetailDirectFragment : Fragment() {
         viewModel.navigateToDetailChat.observe(viewLifecycleOwner, Observer {
             it?.let {
                 viewModel.postChatRoom(viewModel.getChatRoom())
-                findNavController().navigate(NavigationDirections.actionGlobalDetailChatFragment(it))
+                findNavController().navigate(DetailDirectFragmentDirections.actionDetailDirectFragmentToDetailChatFragment(it))
                 viewModel.onDetailChatNavigated()
             }
         })

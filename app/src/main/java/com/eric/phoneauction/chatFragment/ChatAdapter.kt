@@ -4,15 +4,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.BindingAdapter
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.eric.phoneauction.NavigationDirections
 import com.eric.phoneauction.data.ChatRoom
 import com.eric.phoneauction.data.UserManager
 import com.eric.phoneauction.databinding.ItemChatBinding
 import com.eric.phoneauction.util.Logger
 import kotlinx.android.synthetic.main.item_chat.view.*
 
-class ChatAdapter(val viewModel:ChatViewModel) :
+class ChatAdapter( val onClickListener: OnClickListener, val viewModel:ChatViewModel) :
     androidx.recyclerview.widget.ListAdapter<ChatRoom, ChatAdapter.DetailChatViewHolder>(
         DiffCallback
     ) {
@@ -58,6 +60,14 @@ class ChatAdapter(val viewModel:ChatViewModel) :
             holder.itemView.visibility = View.GONE
             holder.itemView.layoutParams.height = 0
         }
+
+        holder.itemView.setOnClickListener {
+            onClickListener.onClick(chatRoom)
+        }
         holder.bind(chatRoom, viewModel)
+    }
+
+    class OnClickListener(val clickListener: (chatRoom: ChatRoom) -> Unit) {
+        fun onClick(chatRoom: ChatRoom) = clickListener(chatRoom)
     }
 }

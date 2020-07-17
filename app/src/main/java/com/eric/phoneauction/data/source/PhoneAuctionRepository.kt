@@ -28,6 +28,8 @@ interface PhoneAuctionRepository {
 
     fun getLiveChatRoom(): MutableLiveData<List<ChatRoom>>
 
+    fun getLiveMessage(documentId: String): MutableLiveData<List<Message>>
+
     suspend fun post(event: Event): Result<Boolean>
 
     suspend fun postUser(user: User): Result<Boolean>
@@ -43,4 +45,6 @@ interface PhoneAuctionRepository {
     suspend fun postChatRoom(chatRoom: ChatRoom): Result<Boolean>
 
     suspend fun postMessage(message: Message, document: String): Result<Boolean>
+
+
 }

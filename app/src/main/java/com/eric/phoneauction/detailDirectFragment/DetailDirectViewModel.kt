@@ -121,7 +121,6 @@ class DetailDirectViewModel(
     }
 
     fun getChatRoom(): ChatRoom {
-        val list = listOf<String>(event.value?.userId.toString(), com.eric.phoneauction.data.UserManager.user.id)
         return ChatRoom(
             id = event.value?.id.toString() + UserManager.userId,
             text = "查看訊息",
@@ -133,7 +132,8 @@ class DetailDirectViewModel(
             receiverImage = event.value?.sellerImage.toString(),
             receiverName = event.value?.sellerName.toString(),
             productImage = event.value?.images?.component1().toString(),
-            visibility = true
+            visibility = true,
+            event = event.value
         )
     }
 

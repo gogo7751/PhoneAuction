@@ -253,6 +253,33 @@ object PhoneAuctionRemoteDataSource :
         return liveData
     }
 
+    override fun getLiveMessage(documentId: String): MutableLiveData<List<Message>>  {
+        val liveData = MutableLiveData<List<Message>>()
+        FirebaseFirestore.getInstance()
+            .collection(PATH_CHAT_ROOM)
+            .document(documentId)
+            .collection(PATH_MESSAGE)
+            .orderBy("time", Query.Direction.DESCENDING)
+            .addSnapshotListener { snapshot, exception ->
+
+                Logger.i("addSnapshotListener detect")
+
+                exception?.let {
+                    Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
+                }
+
+                val list = mutableListOf<Message>()
+                for (document in snapshot!!) {
+                    Logger.d(document.id + " => " + document.data)
+                    val chatRoom = document.toObject(Message::class.java)
+                    list.add(chatRoom)
+                }
+
+                liveData.value = list
+            }
+        return liveData
+    }
+
     override suspend fun post(event: Event): Result<Boolean> = suspendCoroutine { continuation ->
         val events = FirebaseFirestore.getInstance().collection(PATH_EVENTS)
         val document = events.document()

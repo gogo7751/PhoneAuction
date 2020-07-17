@@ -139,7 +139,8 @@ class DetailAuctionViewModel(
             receiverImage = event.value?.sellerImage.toString(),
             receiverName = event.value?.sellerName.toString(),
             productImage = event.value?.images?.component1().toString(),
-            visibility = true
+            visibility = true,
+            event = event.value
         )
     }
 

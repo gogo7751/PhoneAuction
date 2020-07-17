@@ -31,7 +31,7 @@ class DetailAuctionFragment : Fragment() {
         DetailAuctionFragmentArgs.fromBundle(requireArguments()).event
 
         binding = DetailAuctionFragmentBinding.inflate(inflater, container, false)
-        binding.lifecycleOwner = viewLifecycleOwner
+        binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
         val adapter = HomeAdapter(HomeAdapter.OnClickListener{
@@ -60,13 +60,16 @@ class DetailAuctionFragment : Fragment() {
 
         // set the initial position to the center of infinite gallery
         viewModel.event.value?.let { product ->
-            product.images.size.times(100).let {
-                binding.recyclerDetailAuction
-                    .scrollToPosition(it)
+            product.images?.size?.times(100).let {
+                if (it != null) {
+                    binding.recyclerDetailAuction
+                        .scrollToPosition(it)
+                }
             }
 
             viewModel.snapPosition.observe(viewLifecycleOwner, Observer {
-                (binding.recyclerDetailAuctionCircles.adapter as DetailCircleAdapter).selectedPosition.value = (it % product.images.size)
+                (binding.recyclerDetailAuctionCircles.adapter as DetailCircleAdapter).selectedPosition.value = (it % (product.images?.size
+                    ?: 0))
             })
         }
 
@@ -88,7 +91,7 @@ class DetailAuctionFragment : Fragment() {
         viewModel.navigateToDetailChat.observe(viewLifecycleOwner, Observer {
             it?.let {
                 viewModel.postChatRoom(viewModel.getChatRoom())
-                findNavController().navigate(NavigationDirections.actionGlobalDetailChatFragment(it))
+                findNavController().navigate(DetailAuctionFragmentDirections.actionDetailAuctionFragmentToDetailChatFragment(it))
                 viewModel.onDetailChatNavigated()
             }
         })

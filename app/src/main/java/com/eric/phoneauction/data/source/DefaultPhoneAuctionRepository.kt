@@ -44,6 +44,10 @@ class DefaultPhoneAuctionRepository(private val remoteDataSource: PhoneAuctionDa
         return remoteDataSource.getLiveChatRoom()
     }
 
+    override fun getLiveMessage(documentId: String): MutableLiveData<List<Message>> {
+        return remoteDataSource.getLiveMessage(documentId)
+    }
+
     override suspend fun post(event: Event): Result<Boolean> {
         return remoteDataSource.post(event)
     }

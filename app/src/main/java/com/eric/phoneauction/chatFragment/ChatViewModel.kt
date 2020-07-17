@@ -21,6 +21,12 @@ class ChatViewModel(
 
     var liveChatRooms = MutableLiveData<List<ChatRoom>>()
 
+    // Handle navigation to detail
+    private val _navigateToChatToDetail = MutableLiveData<ChatRoom>()
+
+    val navigateToChatToDetail: LiveData<ChatRoom>
+        get() = _navigateToChatToDetail
+
     // status: The internal MutableLiveData that stores the status of the most recent request
     private val _status = MutableLiveData<LoadApiStatus>()
 
@@ -51,6 +57,7 @@ class ChatViewModel(
         Logger.i("[${this::class.simpleName}]${this}")
         Logger.i("------------------------------------")
         getLiveChatRoomsResult()
+
     }
 
     override fun onCleared() {
@@ -59,11 +66,18 @@ class ChatViewModel(
     }
 
 
-
     fun getLiveChatRoomsResult() {
         liveChatRooms = phoneAuctionRepository.getLiveChatRoom()
         _status.value = LoadApiStatus.DONE
         _refreshStatus.value = false
+    }
+
+    fun navigateToChatToDetail(chatRoom: ChatRoom) {
+        _navigateToChatToDetail.value = chatRoom
+    }
+
+    fun onChatToDetailNavigated() {
+        _navigateToChatToDetail.value = null
     }
 
 

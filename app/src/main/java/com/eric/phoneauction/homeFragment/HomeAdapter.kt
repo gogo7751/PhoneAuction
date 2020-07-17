@@ -30,7 +30,7 @@ class HomeAdapter( val onClickListener: OnClickListener, val viewModel: HomeView
                  binding.textHomeTime.visibility = View.GONE
             }
 
-            timer = object : CountDownTimer(event.endTime, ONE_SECOND) {
+            timer = object : CountDownTimer(event.endTime!!, ONE_SECOND) {
                 override fun onFinish() {
                 }
 
