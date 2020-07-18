@@ -12,6 +12,8 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearSnapHelper
 import com.eric.phoneauction.NavigationDirections
+import com.eric.phoneauction.PhoneAuctionApplication
+import com.eric.phoneauction.R
 import com.eric.phoneauction.databinding.DetailDirectFragmentBinding
 import com.eric.phoneauction.detailAuctionFragment.DetailAuctionFragmentArgs
 import com.eric.phoneauction.detailAuctionFragment.DetailAuctionViewModel
@@ -20,6 +22,7 @@ import com.eric.phoneauction.detailAuctionFragment.DetailGalleryAdapter
 import com.eric.phoneauction.ext.getVmFactory
 import com.eric.phoneauction.homeFragment.HomeAdapter
 import com.eric.phoneauction.homeFragment.HomeViewModel
+import com.eric.phoneauction.util.Logger
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -32,6 +35,9 @@ class DetailDirectFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        DetailDirectFragmentArgs.fromBundle(requireArguments()).event
+
         binding = DetailDirectFragmentBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
@@ -47,6 +53,12 @@ class DetailDirectFragment : Fragment() {
             attachToRecyclerView(binding.recyclerDetailDirect)
         }
 
+        viewModel.leaveDetail.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                if (it) findNavController().navigate(NavigationDirections.actionGlobalHomeFragment())
+            }
+        })
+
         binding.recyclerDetailDirect.setOnScrollChangeListener { _, _, _, _, _ ->
             viewModel.onGalleryScrollChange(
                 binding.recyclerDetailDirect.layoutManager,
@@ -55,26 +67,38 @@ class DetailDirectFragment : Fragment() {
         }
 
         // set the initial position to the center of infinite gallery
-        viewModel.event.value?.let { product ->
-            product.images.size.times(100).let {
-                binding.recyclerDetailDirect
-                    .scrollToPosition(it)
+        viewModel.event.value?.let { event ->
+            event.images?.size?.times(100).let {
+                if (it != null) {
+                    binding.recyclerDetailDirect
+                        .scrollToPosition(it)
+                }
             }
-
             viewModel.snapPosition.observe(viewLifecycleOwner, Observer {
-                (binding.recyclerDetailDirectCircles.adapter as DetailCircleAdapter).selectedPosition.value = (it % product.images.size)
+                (binding.recyclerDetailDirectCircles.adapter as DetailCircleAdapter).selectedPosition.value = (it % (event.images?.size
+                    ?: 0))
             })
         }
 
-        viewModel.leaveDetail.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                if (it) findNavController().navigate(NavigationDirections.actionGlobalHomeFragment())
-            }
-        })
 
         viewModel.events.observe(viewLifecycleOwner, Observer {
             it?.let {
                 adapter.submitList(it)
+            }
+        })
+
+        viewModel.navigateToDetail.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                when (it.tag) {
+                    "拍賣" -> {
+                        findNavController().navigate(NavigationDirections.actionGlobalDetailAuctionFragment(it))
+                        viewModel.onDetailNavigated()
+                    }
+                    "直購" -> {
+                        findNavController().navigate(NavigationDirections.actionGlobalDetailDirectFragment(it))
+                        viewModel.onDetailNavigated()
+                    }
+                }
             }
         })
 
@@ -85,20 +109,11 @@ class DetailDirectFragment : Fragment() {
             }
         })
 
-
-
-        viewModel.navigateToDetail.observe(viewLifecycleOwner, Observer {
+        viewModel.navigateToDetailChat.observe(viewLifecycleOwner, Observer {
             it?.let {
-                when (it.tag) {
-                    "拍賣" -> {
-                        findNavController().navigate(NavigationDirections.actionGlobalDetailAuctionFragment(it, it.tag))
-                        viewModel.onDetailNavigated()
-                    }
-                    "直購" -> {
-                        findNavController().navigate(NavigationDirections.actionGlobalDetailDirectFragment(it, it.tag))
-                        viewModel.onDetailNavigated()
-                    }
-                }
+                viewModel.postChatRoom(viewModel.getChatRoom())
+                findNavController().navigate(DetailDirectFragmentDirections.actionDetailDirectFragmentToDetailChatFragment(it))
+                viewModel.onDetailChatNavigated()
             }
         })
 
@@ -116,7 +131,6 @@ class DetailDirectFragment : Fragment() {
     //bottom navigation view gone
     override fun onDestroy() {
         super.onDestroy()
-        (activity as AppCompatActivity).bottomNavView.visibility = View.VISIBLE
         viewModel.timerStop()
     }
 

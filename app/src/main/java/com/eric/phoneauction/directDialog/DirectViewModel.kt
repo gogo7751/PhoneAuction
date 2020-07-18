@@ -77,7 +77,7 @@ class DirectViewModel(
         Logger.i("[${this::class.simpleName}]${this}")
         Logger.i("------------------------------------")
         getFreight()
-        totalPrice.value = freight?.value?.let { _event.value?.price?.plus(it) }
+        totalPrice.value = freight.value?.let { _event.value?.price?.plus(it) }
     }
 
     fun getNotification(): Notification {

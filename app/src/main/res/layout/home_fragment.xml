@@ -31,6 +31,7 @@
                 android:id="@+id/recyclerview_home"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:overScrollMode="never"
                 app:events="@{isLiveDataDesign ? viewModel.liveEvents : viewModel.events}"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:spanCount="2"
@@ -125,10 +126,21 @@
             android:layout_marginEnd="16dp"
             android:text="直購商品"
             android:textSize="16dp"
-            app:layout_constraintEnd_toStartOf="@+id/button_sort"
+            app:layout_constraintEnd_toStartOf="@+id/spinner_sort"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/button_auction"
             app:layout_constraintTop_toTopOf="@+id/button_auction" />
+
+        <Spinner
+            android:id="@+id/spinner_sort"
+            android:layout_width="77dp"
+            android:layout_height="30dp"
+            android:spinnerMode="dialog"
+            android:background="@drawable/spinner_home_bg"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="@id/button_auction"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/button_auction"/>
 
         <ImageView
             android:id="@+id/button_sort"
@@ -136,6 +148,7 @@
             android:layout_height="25dp"
             android:layout_marginEnd="16dp"
             android:alpha="0.7"
+            android:visibility="gone"
             android:background="@drawable/ic_sort"
             app:layout_constraintBottom_toBottomOf="@id/button_auction"
             app:layout_constraintEnd_toEndOf="parent"

@@ -137,6 +137,11 @@ class NotificationViewModel(
         _refreshStatus.value = false
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
+    }
+
     fun refresh() {
 
         if (PhoneAuctionApplication.instance.isLiveDataDesign()) {

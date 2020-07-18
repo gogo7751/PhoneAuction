@@ -1,5 +1,6 @@
 package com.eric.phoneauction
 
+
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.drawable.ShapeDrawable
@@ -19,6 +20,7 @@ import com.eric.phoneauction.data.Event
 import com.eric.phoneauction.util.TimeUtil
 import com.eric.phoneauction.detailAuctionFragment.DetailCircleAdapter
 import com.eric.phoneauction.detailAuctionFragment.DetailGalleryAdapter
+import com.eric.phoneauction.ext.toDisplayFormat
 import com.eric.phoneauction.homeFragment.HomeAdapter
 import com.eric.phoneauction.util.Util
 
@@ -120,6 +122,12 @@ fun bindPrice(textView: TextView, price: Int?) {
 @BindingAdapter("timeToDisplayFormat")
 fun bindDisplayFormatTime(textView: TextView, time: Long?) {
     textView.text = time?.let { TimeUtil.StampToDate(it) }
+}
+
+
+@BindingAdapter("time")
+fun bindDisplayFormatTimeDetail(textView: TextView, time: Long?) {
+    textView.text = time?.toDisplayFormat()
 }
 
 

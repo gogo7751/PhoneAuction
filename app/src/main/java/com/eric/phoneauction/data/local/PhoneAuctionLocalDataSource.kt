@@ -2,11 +2,9 @@ package com.eric.phoneauction.data.local
 
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
-import com.eric.phoneauction.data.Event
-import com.eric.phoneauction.data.Notification
-import com.eric.phoneauction.data.Result
-import com.eric.phoneauction.data.User
+import com.eric.phoneauction.data.*
 import com.eric.phoneauction.data.source.PhoneAuctionDataSource
+import com.google.firebase.firestore.Query
 
 /**
  * Created by Wayne Chen on 2020-01-15.
@@ -44,6 +42,22 @@ class PhoneAuctionLocalDataSource(val context: Context) :
         TODO("Not yet implemented")
     }
 
+    override fun getLiveChatRoom(): MutableLiveData<List<ChatRoom>> {
+        TODO("Not yet implemented")
+    }
+
+    override fun getLiveMessage(documentId: String): MutableLiveData<List<Message>> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getSortWithTag(tag: String, sort: String, query: Query.Direction): Result<List<Event>> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getSort(sort: String, query: Query.Direction): Result<List<Event>> {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun postDirect(event: Event): Result<Boolean> {
         TODO("Not yet implemented")
     }
@@ -60,6 +74,10 @@ class PhoneAuctionLocalDataSource(val context: Context) :
         TODO("Not yet implemented")
     }
 
+    override suspend fun postChatRoom(chatRoom: ChatRoom): Result<Boolean> {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun getAuction(): Result<List<Event>> {
         TODO("Not yet implemented")
     }
@@ -68,4 +86,15 @@ class PhoneAuctionLocalDataSource(val context: Context) :
         TODO("Not yet implemented")
     }
 
+    override suspend fun postMessage(message: Message, document: String): Result<Boolean> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun deleteChatRoom(chatRoomId: String): Result<Boolean> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun finishAuction(event: Event): Result<Boolean> {
+        TODO("Not yet implemented")
+    }
 }

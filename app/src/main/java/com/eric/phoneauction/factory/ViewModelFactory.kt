@@ -3,8 +3,10 @@ package com.eric.phoneauction.factory
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.eric.phoneauction.MainViewModel
+import com.eric.phoneauction.chatFragment.ChatViewModel
 import com.eric.phoneauction.checkout.CheckoutSuccessViewModel
 import com.eric.phoneauction.data.source.PhoneAuctionRepository
+import com.eric.phoneauction.detailChatFragment.DetailChatViewModel
 import com.eric.phoneauction.homeFragment.HomeViewModel
 import com.eric.phoneauction.notificationFragment.NotificationViewModel
 import com.eric.phoneauction.postFragment.PostViewModel
@@ -36,6 +38,10 @@ class ViewModelFactory constructor(
 
                 isAssignableFrom(NotificationViewModel::class.java) ->
                     NotificationViewModel(phoneAuctionRepository)
+
+                isAssignableFrom(ChatViewModel::class.java) ->
+                    ChatViewModel(phoneAuctionRepository)
+
                 else ->
                     throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }

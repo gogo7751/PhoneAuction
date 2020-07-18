@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.eric.phoneauction.detailChatFragment.DetailChatViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_chat_header"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="#f6b76a"
+            app:layout_constraintBottom_toTopOf="@id/scrollView_chatDetail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/image_chatDetail_back"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:background="@drawable/icons_back"
+                android:scaleType="centerCrop"
+                android:layout_marginStart="16dp"
+                app:layout_constraintEnd_toStartOf="@+id/text_chat_title"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/text_chat_title"
+                app:layout_constraintTop_toTopOf="@+id/text_chat_title" />
+
+            <TextView
+                android:id="@+id/text_chat_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/noto_sans"
+                android:letterSpacing="0.15"
+                android:layout_marginStart="10dp"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:text="@{viewModel.event.sellerName}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/image_chatDetail_back"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.6"
+                tools:text="張Ray" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/circleImageView_product"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:background="@drawable/ic_nav_profile"
+                android:scaleType="centerCrop"
+                android:layout_marginEnd="16dp"
+                app:imageUrl="@{viewModel.event.images[0]}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/text_chat_title"
+                app:layout_constraintTop_toTopOf="@+id/text_chat_title" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ScrollView
+            android:id="@+id/scrollView_chatDetail"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/edit_chatDetail_input"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_chat_header">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerview_chatDetail"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:overScrollMode="never"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:stackFromEnd="true"
+                        app:reverseLayout="true"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:listitem="@layout/item_detail_chat"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
+
+        <EditText
+            android:id="@+id/edit_chatDetail_input"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:hint="輸入訊息"
+            android:padding="8dp"
+            android:text="@={viewModel.message.text}"
+            android:background="@drawable/rect_oval_white"
+            app:layout_constraintStart_toEndOf="@id/fab_chatDetail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <Button
+            android:id="@+id/image_chatDetail_send"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:background="@drawable/ic_send_24px"
+            android:layout_marginEnd="12dp"
+            app:layout_constraintEnd_toEndOf="@id/edit_chatDetail_input"
+            app:layout_constraintTop_toTopOf="@id/edit_chatDetail_input"
+            app:layout_constraintBottom_toBottomOf="@id/edit_chatDetail_input"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_chatDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="16dp"
+            android:tint="@color/black212121"
+            app:srcCompat="@drawable/ic_image_black_24dp"
+            app:fabSize="mini"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

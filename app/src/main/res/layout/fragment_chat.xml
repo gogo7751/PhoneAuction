@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="viewModel"
+            type="com.eric.phoneauction.chatFragment.ChatViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,6 +18,8 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:background="#f6b76a"
+            android:layout_marginBottom="4dp"
+            app:layout_constraintBottom_toTopOf="@id/recyclerview_chat"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
@@ -32,12 +36,26 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                />
+                app:layout_constraintBottom_toBottomOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview_chat"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:overScrollMode="never"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layout_chat_header"
+                tools:listitem="@layout/item_chat"/>
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
 </layout>

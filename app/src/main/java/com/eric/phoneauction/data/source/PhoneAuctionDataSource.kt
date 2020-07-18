@@ -1,10 +1,8 @@
 package com.eric.phoneauction.data.source
 
 import androidx.lifecycle.MutableLiveData
-import com.eric.phoneauction.data.Event
-import com.eric.phoneauction.data.Notification
-import com.eric.phoneauction.data.Result
-import com.eric.phoneauction.data.User
+import com.eric.phoneauction.data.*
+import com.google.firebase.firestore.Query
 
 
 /**
@@ -24,9 +22,17 @@ interface PhoneAuctionDataSource {
 
     suspend fun getDirect(): Result<List<Event>>
 
+    suspend fun getSortWithTag(tag: String, sort: String, query: Query.Direction): Result<List<Event>>
+
+    suspend fun getSort(sort: String, query: Query.Direction): Result<List<Event>>
+
     suspend fun getNotification(): Result<List<Notification>>
 
     fun getLiveNotification(): MutableLiveData<List<Notification>>
+
+    fun getLiveChatRoom(): MutableLiveData<List<ChatRoom>>
+
+    fun getLiveMessage(documentId: String): MutableLiveData<List<Message>>
 
     suspend fun post(event: Event): Result<Boolean>
 
@@ -39,4 +45,12 @@ interface PhoneAuctionDataSource {
     suspend fun postNotification(notification: Notification, buyUser: String): Result<Boolean>
 
     suspend fun deleteNotification(notificationId: String, user: String): Result<Boolean>
+
+    suspend fun postChatRoom(chatRoom: ChatRoom): Result<Boolean>
+
+    suspend fun postMessage(message: Message, document: String): Result<Boolean>
+
+    suspend fun deleteChatRoom(chatRoomId: String): Result<Boolean>
+
+    suspend fun finishAuction(event: Event): Result<Boolean>
 }

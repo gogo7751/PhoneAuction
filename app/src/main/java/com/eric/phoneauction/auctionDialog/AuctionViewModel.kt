@@ -110,7 +110,7 @@ class AuctionViewModel(
 
             _status.value = LoadApiStatus.LOADING
 
-            when (val result = phoneAuctionRepository.postNotification(notification, buyUser.value.toString())) {
+            when (val result = phoneAuctionRepository.postNotification(notification, event.value?.buyUser.toString())) {
                 is com.eric.phoneauction.data.Result.Success -> {
                     _error.value = null
                     _status.value = LoadApiStatus.DONE

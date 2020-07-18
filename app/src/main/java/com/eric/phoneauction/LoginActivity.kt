@@ -39,8 +39,6 @@ class LoginActivity : AppCompatActivity() {
             facebookLogin()
         }
 
-
-
         callbackManager = CallbackManager.Factory.create()
     }
 

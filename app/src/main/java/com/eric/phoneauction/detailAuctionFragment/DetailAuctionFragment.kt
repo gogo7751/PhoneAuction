@@ -31,7 +31,7 @@ class DetailAuctionFragment : Fragment() {
         DetailAuctionFragmentArgs.fromBundle(requireArguments()).event
 
         binding = DetailAuctionFragmentBinding.inflate(inflater, container, false)
-        binding.lifecycleOwner = viewLifecycleOwner
+        binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
         val adapter = HomeAdapter(HomeAdapter.OnClickListener{
@@ -60,13 +60,16 @@ class DetailAuctionFragment : Fragment() {
 
         // set the initial position to the center of infinite gallery
         viewModel.event.value?.let { product ->
-            product.images.size.times(100).let {
-                binding.recyclerDetailAuction
-                    .scrollToPosition(it)
+            product.images?.size?.times(100).let {
+                if (it != null) {
+                    binding.recyclerDetailAuction
+                        .scrollToPosition(it)
+                }
             }
 
             viewModel.snapPosition.observe(viewLifecycleOwner, Observer {
-                (binding.recyclerDetailAuctionCircles.adapter as DetailCircleAdapter).selectedPosition.value = (it % product.images.size)
+                (binding.recyclerDetailAuctionCircles.adapter as DetailCircleAdapter).selectedPosition.value = (it % (product.images?.size
+                    ?: 0))
             })
         }
 
@@ -74,21 +77,22 @@ class DetailAuctionFragment : Fragment() {
             it?.let {
                 when (it.tag) {
                     "拍賣" -> {
-                        findNavController().navigate(NavigationDirections.actionGlobalDetailAuctionFragment(it, it.tag))
+                        findNavController().navigate(NavigationDirections.actionGlobalDetailAuctionFragment(it))
                         viewModel.onDetailNavigated()
                     }
                     "直購" -> {
-                        findNavController().navigate(NavigationDirections.actionGlobalDetailDirectFragment(it, it.tag))
+                        findNavController().navigate(NavigationDirections.actionGlobalDetailDirectFragment(it))
                         viewModel.onDetailNavigated()
                     }
                 }
             }
         })
 
-
-        viewModel.events.observe(viewLifecycleOwner, Observer {
+        viewModel.navigateToDetailChat.observe(viewLifecycleOwner, Observer {
             it?.let {
-                adapter.submitList(it)
+                viewModel.postChatRoom(viewModel.getChatRoom())
+                findNavController().navigate(DetailAuctionFragmentDirections.actionDetailAuctionFragmentToDetailChatFragment(it))
+                viewModel.onDetailChatNavigated()
             }
         })
 
@@ -96,6 +100,12 @@ class DetailAuctionFragment : Fragment() {
             it?.let {
                 findNavController().navigate(NavigationDirections.actionGlobalAuctionDialog(it))
                 viewModel.onAuctionNavigated()
+            }
+        })
+
+        viewModel.events.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                adapter.submitList(it)
             }
         })
 
