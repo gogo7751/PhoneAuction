@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="notification"
-            type="com.eric.phoneauction.data.Notification" />
+            name="event"
+            type="com.eric.phoneauction.data.Event" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,16 +16,16 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginBottom="4dp"
             app:cardCornerRadius="10dp"
             app:cardElevation="2dp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -33,106 +33,114 @@
                 android:padding="8dp">
 
                 <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/image_notification"
-                    android:layout_width="77dp"
-                    android:layout_height="77dp"
+                    android:id="@+id/image_onPost"
+                    android:layout_width="99dp"
+                    android:layout_height="99dp"
                     app:cardCornerRadius="10dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent">
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        app:imageUrl="@{notification.image}"
+                        app:imageUrl="@{event.images[0]}"
                         app:layout_constraintDimensionRatio="5:7"
                         tools:src="@tools:sample/backgrounds/scenic" />
 
                 </com.google.android.material.card.MaterialCardView>
 
-                <TextView
-                    android:id="@+id/text_notification_title"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:fontFamily="@font/noto_sans"
-                    android:letterSpacing="0.15"
-                    android:text="@{notification.title}"
-                    android:textColor="@color/black212121"
-                    android:textSize="16dp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toStartOf="@+id/text_notification_delete"
-                    app:layout_constraintStart_toEndOf="@id/image_notification"
-                    app:layout_constraintTop_toTopOf="@id/image_notification"
-                    tools:text="您的出價被超過囉" />
 
                 <TextView
-                    android:id="@+id/text_notification_content_brand"
+                    android:id="@+id/text_onPost_content_brand"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
                     android:fontFamily="@font/noto_sans"
                     android:letterSpacing="0.15"
+                    android:text="@{event.brand}"
                     android:textColor="@color/gary757575"
-                    android:text="@{notification.brand}"
-                    app:layout_constraintStart_toEndOf="@id/image_notification"
-                    app:layout_constraintTop_toBottomOf="@id/text_notification_title"
-                    app:layout_constraintBottom_toTopOf="@id/text_notification_time"
-                    tools:text="Apple"/>
+                    app:layout_constraintBottom_toTopOf="@id/text_onPost_price"
+                    app:layout_constraintStart_toEndOf="@+id/image_onPost"
+                    app:layout_constraintTop_toBottomOf="@+id/view_onPost_tag"
+                    tools:text="Apple" />
 
                 <TextView
-                    android:id="@+id/text_notification_content_name"
+                    android:id="@+id/text_onPost_content_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="3dp"
                     android:fontFamily="@font/noto_sans"
                     android:letterSpacing="0.15"
-                    android:text="@{notification.name}"
+                    android:text="@{event.productName}"
                     android:textColor="@color/gary757575"
-                    app:layout_constraintStart_toEndOf="@id/text_notification_content_brand"
-                    app:layout_constraintTop_toTopOf="@+id/text_notification_content_brand"
-                    tools:text="iPhone"/>
+                    app:layout_constraintStart_toEndOf="@id/text_onPost_content_brand"
+                    app:layout_constraintTop_toTopOf="@+id/text_onPost_content_brand"
+                    tools:text="iPhone" />
 
                 <TextView
-                    android:id="@+id/text_notification_content_storage"
+                    android:id="@+id/text_onPost_content_storage"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="3dp"
+                    android:ellipsize="end"
                     android:fontFamily="@font/noto_sans"
                     android:letterSpacing="0.15"
                     android:singleLine="true"
-                    android:ellipsize="end"
-                    android:text="@{notification.storage}"
+                    android:text="@{event.storage}"
                     android:textColor="@color/gary757575"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/text_notification_content_name"
-                    app:layout_constraintTop_toTopOf="@+id/text_notification_content_name"
+                    app:layout_constraintStart_toEndOf="@id/text_onPost_content_name"
+                    app:layout_constraintTop_toTopOf="@+id/text_onPost_content_name"
                     tools:text="64G" />
 
                 <TextView
-                    android:id="@+id/text_notification_time"
+                    android:id="@+id/text_onPost_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
                     android:fontFamily="@font/noto_sans"
                     android:letterSpacing="0.15"
-                    android:textSize="12sp"
-                    app:timeToDisplayFormat="@{notification.time}"
                     android:textColor="@color/gary757575"
-                    app:layout_constraintStart_toEndOf="@+id/image_notification"
-                    app:layout_constraintBottom_toBottomOf="@+id/image_notification"
-                    tools:text="2020/7/14 12:00"/>
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/image_onPost"
+                    app:layout_constraintStart_toEndOf="@+id/image_onPost"
+                    app:price="@{event.price}"
+                    tools:text="NT$9999" />
+
+                <View
+                    android:id="@+id/view_onPost_tag"
+                    android:layout_width="38dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="12dp"
+                    android:background="@drawable/button_tag"
+                    app:layout_constraintStart_toEndOf="@id/image_onPost"
+                    app:layout_constraintTop_toTopOf="@id/image_onPost" />
+
+                <TextView
+                    android:id="@+id/text_onPost_tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/noto_sans"
+                    android:letterSpacing="0.1"
+                    android:maxLines="1"
+                    android:text="@{event.tag}"
+                    android:textColor="@color/gary757575"
+                    android:textSize="12dp"
+                    app:layout_constraintBottom_toBottomOf="@id/view_onPost_tag"
+                    app:layout_constraintEnd_toEndOf="@id/view_onPost_tag"
+                    app:layout_constraintStart_toStartOf="@id/view_onPost_tag"
+                    app:layout_constraintTop_toTopOf="@id/view_onPost_tag"
+                    tools:text="拍賣" />
 
                 <ImageView
-                    android:id="@+id/text_notification_delete"
+                    android:id="@+id/text_onPost_delete"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:background="@drawable/ic_close"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

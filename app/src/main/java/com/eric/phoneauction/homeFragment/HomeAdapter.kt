@@ -34,10 +34,10 @@ class HomeAdapter( val onClickListener: OnClickListener, val viewModel: HomeView
                  binding.textHomeTime.visibility = View.GONE
             }
 
-            fun getNotification(): Notification {
+            fun getNotification(title: String): Notification {
                 return Notification(
                     id = "",
-                    title = "恭喜您得標!",
+                    title = title,
                     time = -1,
                     brand = event.brand,
                     name = event.productName,
@@ -48,19 +48,6 @@ class HomeAdapter( val onClickListener: OnClickListener, val viewModel: HomeView
                 )
             }
 
-            fun getNotificationFail(): Notification {
-                return Notification(
-                    id = "",
-                    title = "流標...",
-                    time = -1,
-                    brand = event.brand,
-                    name = event.productName,
-                    image = event.images.component1(),
-                    storage = event.storage,
-                    visibility = true,
-                    event = event.apply { event.deal = false }
-                )
-            }
 
             val millsTime = event.endTime.minus(event.createdTime)
 
@@ -68,9 +55,9 @@ class HomeAdapter( val onClickListener: OnClickListener, val viewModel: HomeView
                 override fun onFinish() {
                     viewModel.finishAuction(event)
                     if (event.buyUser != "") {
-                        viewModel.postNotification(getNotification(), event.buyUser)
+                        viewModel.postNotification(getNotification("恭喜您得標!"), event.buyUser)
                     } else {
-                        viewModel.postNotification(getNotificationFail(), com.eric.phoneauction.data.UserManager.userId!!)
+                        viewModel.postNotification(getNotification("流標..."), com.eric.phoneauction.data.UserManager.userId!!)
                     }
                 }
 

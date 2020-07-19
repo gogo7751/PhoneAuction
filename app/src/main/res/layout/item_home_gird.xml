@@ -28,129 +28,150 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:itemCount="@{itemCount}"
-        app:itemPosition="@{itemPosition}">
+        android:paddingTop="16dp"
+        android:paddingLeft="16dp">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/image_home_main"
             android:layout_width="match_parent"
-            android:layout_height="155dp"
-            app:cardCornerRadius="10dp"
+            android:layout_height="match_parent"
+            app:cardCornerRadius="6dp"
+            app:cardElevation="4dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginEnd="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-
-            <ImageView
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                app:imageUrl="@{event.images[0]}"
-                app:layout_constraintDimensionRatio="5:7"
-                tools:src="@tools:sample/backgrounds/scenic" />
+                android:layout_height="match_parent">
 
+                <ImageView
+                    android:id="@+id/image_product"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:scaleType="centerCrop"
+                    app:imageUrl="@{event.images[0]}"
+                    app:layout_constraintDimensionRatio="5:4"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:src="@tools:sample/backgrounds/scenic" />
+
+                <View
+                    android:id="@+id/view_detail_auction_tag"
+                    android:layout_width="38dp"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="4dp"
+                    android:background="@drawable/button_tag"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/image_product"
+                    />
+
+                <TextView
+                    android:id="@+id/text_detail_auction_tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:textSize="11dp"
+                    android:fontFamily="@font/noto_sans"
+                    android:letterSpacing="0.1"
+                    android:text="@{event.tag}"
+                    app:layout_constraintStart_toStartOf="@+id/view_detail_auction_tag"
+                    app:layout_constraintEnd_toEndOf="@+id/view_detail_auction_tag"
+                    app:layout_constraintTop_toTopOf="@+id/view_detail_auction_tag"
+                    app:layout_constraintBottom_toBottomOf="@+id/view_detail_auction_tag"
+                    tools:text="拍賣" />
+
+                <TextView
+                    android:id="@+id/text_home_brand"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/noto_sans"
+                    android:letterSpacing="0.15"
+                    android:maxLines="2"
+                    android:layout_marginStart="4dp"
+                    android:text="@{event.brand}"
+                    android:textColor="@color/black212121"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/image_product"
+                    tools:text="APPLE" />
+
+                <TextView
+                    android:id="@+id/text_home_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/noto_sans"
+                    android:letterSpacing="0.15"
+                    android:maxLines="2"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginStart="4dp"
+                    android:text="@{event.productName}"
+                    android:textColor="@color/black212121"
+                    android:textSize="13dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_home_brand"
+                    tools:text="iPhone 11" />
+
+                <TextView
+                    android:id="@+id/text_home_storage"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="3dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:fontFamily="@font/noto_sans"
+                    android:letterSpacing="0.15"
+                    android:maxLines="2"
+                    android:text="@{event.storage}"
+                    android:textColor="@color/black212121"
+                    android:textSize="13dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/text_home_title"
+                    app:layout_constraintTop_toTopOf="@+id/text_home_title"
+                    tools:text="64G" />
+
+                <TextView
+                    android:id="@+id/text_home_price"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="4dp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/noto_sans_bold"
+                    android:letterSpacing="0.15"
+                    android:layout_marginStart="4dp"
+                    android:textColor="@color/black212121"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_home_title"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:price="@{event.price}"
+                    tools:text="NT$1200" />
+
+                <TextView
+                    android:id="@+id/text_home_time"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/noto_sans_bold"
+                    android:text="@{countDown}"
+                    android:layout_marginEnd="4dp"
+                    android:textColor="@color/black212121"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/text_home_price"
+                    tools:text="15:00:20" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.card.MaterialCardView>
-
-        <View
-            android:id="@+id/view_detail_auction_tag"
-            android:layout_width="38dp"
-            android:layout_height="20dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/button_tag"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/image_home_main"
-            />
-
-        <TextView
-            android:id="@+id/text_detail_auction_tag"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:maxLines="1"
-            android:textSize="11dp"
-            android:fontFamily="@font/noto_sans"
-            android:letterSpacing="0.1"
-            android:text="@{event.tag}"
-            app:layout_constraintStart_toStartOf="@+id/view_detail_auction_tag"
-            app:layout_constraintEnd_toEndOf="@+id/view_detail_auction_tag"
-            app:layout_constraintTop_toTopOf="@+id/view_detail_auction_tag"
-            app:layout_constraintBottom_toBottomOf="@+id/view_detail_auction_tag"
-            tools:text="拍賣" />
-
-        <TextView
-            android:id="@+id/text_home_brand"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/noto_sans"
-            android:letterSpacing="0.15"
-            android:maxLines="2"
-            android:text="@{event.brand}"
-            android:textColor="@color/black212121"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/image_home_main"
-            tools:text="APPLE" />
-
-        <TextView
-            android:id="@+id/text_home_title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:fontFamily="@font/noto_sans"
-            android:letterSpacing="0.15"
-            android:maxLines="2"
-            android:layout_marginTop="8dp"
-            android:text="@{event.productName}"
-            android:textColor="@color/black212121"
-            android:textSize="13dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_home_brand"
-            tools:text="iPhone 11" />
-
-        <TextView
-            android:id="@+id/text_home_storage"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/noto_sans"
-            android:letterSpacing="0.15"
-            android:maxLines="2"
-            android:text="@{event.storage}"
-            android:textColor="@color/black212121"
-            android:textSize="13dp"
-            app:layout_constraintStart_toEndOf="@+id/text_home_title"
-            app:layout_constraintTop_toTopOf="@+id/text_home_title"
-            tools:text="64G" />
-
-        <TextView
-            android:id="@+id/text_home_price"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/noto_sans_bold"
-            android:letterSpacing="0.15"
-            android:textColor="@color/black212121"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_home_title"
-            app:price="@{event.price}"
-            tools:text="NT$1200" />
-
-        <TextView
-            android:id="@+id/text_home_time"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:fontFamily="@font/noto_sans_bold"
-            android:text="@{countDown}"
-            android:textColor="@color/black212121"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/text_home_price"
-            tools:text="15:00:20" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

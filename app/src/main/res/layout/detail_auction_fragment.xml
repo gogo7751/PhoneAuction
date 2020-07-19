@@ -6,6 +6,7 @@
     <data>
         <variable name="viewModel" type="com.eric.phoneauction.detailAuctionFragment.DetailAuctionViewModel"/>
         <import type="android.view.View"/>
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -270,12 +271,29 @@
             android:layout_height="40dp"
             android:layout_marginStart="16dp"
             android:ellipsize="end"
-            android:background="@drawable/button_bg"
+            android:background="@{viewModel.event.deal == false ? @drawable/button : @drawable/button_bg}"
             android:fontFamily="@font/noto_sans"
             android:letterSpacing="0.15"
             android:text="對話"
-            android:textColor="@android:color/black"
+            android:textColor="@{viewModel.event.deal == false ? @android:color/white : @android:color/black}"
             android:onClick="@{() -> viewModel.navigateToDetailChat(viewModel.event)}"
+            android:textSize="18dp"
+            app:layout_constraintBottom_toBottomOf="@+id/view_detail_auction_bg"
+            app:layout_constraintStart_toEndOf="@+id/imageView_detail_auction_collection"
+            app:layout_constraintTop_toTopOf="@+id/view_detail_auction_bg" />
+
+        <Button
+            android:id="@+id/button_rePost"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="16dp"
+            android:ellipsize="end"
+            android:background="@drawable/button"
+            android:fontFamily="@font/noto_sans"
+            android:letterSpacing="0.1"
+            android:visibility="@{viewModel.event.deal == false &amp;&amp; viewModel.isBuyUser() == true ? View.VISIBLE : View.GONE}"
+            android:text="重新上架"
+            android:textColor="@android:color/white"
             android:textSize="18dp"
             app:layout_constraintBottom_toBottomOf="@+id/view_detail_auction_bg"
             app:layout_constraintStart_toEndOf="@+id/imageView_detail_auction_collection"

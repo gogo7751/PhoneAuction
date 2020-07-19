@@ -80,12 +80,12 @@ object PhoneAuctionRemoteDataSource :
             }
     }
 
-    override fun getLiveEvent(): MutableLiveData<List<Event>> {
+    override fun getLiveEvent(deal: Boolean): MutableLiveData<List<Event>> {
         val liveData = MutableLiveData<List<Event>>()
 
         FirebaseFirestore.getInstance()
             .collection(PATH_EVENTS)
-            .whereEqualTo("deal", true)
+            .whereEqualTo("deal", deal)
             .orderBy(KEY_CREATED_TIME, Query.Direction.DESCENDING)
             .addSnapshotListener { snapshot, exception ->
 
@@ -575,15 +575,23 @@ object PhoneAuctionRemoteDataSource :
                 }
         }
 
+
+
     override suspend fun postMessage(message: Message, document: String): Result<Boolean> =
         suspendCoroutine { continuation ->
 
             val messages =
                 FirebaseFirestore.getInstance().collection(PATH_CHAT_ROOM).document(document)
                     .collection(PATH_MESSAGE)
+            val updateMessages = FirebaseFirestore.getInstance().collection(PATH_CHAT_ROOM).document(document)
             val document = messages.document()
 
+
+
             message.time = Calendar.getInstance().timeInMillis
+
+            updateMessages
+                .update("text", message.text , "time", message.time)
 
             document
                 .set(message)

@@ -5,11 +5,13 @@
 
     <data>
         <variable
-            name="notification"
-            type="com.eric.phoneauction.data.Notification" />
+            name="event"
+            type="com.eric.phoneauction.data.Event" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_profile_all"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -33,9 +35,9 @@
                 android:padding="8dp">
 
                 <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/image_notification"
-                    android:layout_width="77dp"
-                    android:layout_height="77dp"
+                    android:id="@+id/image_onAuction"
+                    android:layout_width="99dp"
+                    android:layout_height="99dp"
                     app:cardCornerRadius="10dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -45,59 +47,44 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        app:imageUrl="@{notification.image}"
+                        app:imageUrl="@{event.images[0]}"
                         app:layout_constraintDimensionRatio="5:7"
                         tools:src="@tools:sample/backgrounds/scenic" />
 
                 </com.google.android.material.card.MaterialCardView>
 
-                <TextView
-                    android:id="@+id/text_notification_title"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:fontFamily="@font/noto_sans"
-                    android:letterSpacing="0.15"
-                    android:text="@{notification.title}"
-                    android:textColor="@color/black212121"
-                    android:textSize="16dp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toStartOf="@+id/text_notification_delete"
-                    app:layout_constraintStart_toEndOf="@id/image_notification"
-                    app:layout_constraintTop_toTopOf="@id/image_notification"
-                    tools:text="您的出價被超過囉" />
+
 
                 <TextView
-                    android:id="@+id/text_notification_content_brand"
+                    android:id="@+id/text_onAuction_content_brand"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
                     android:fontFamily="@font/noto_sans"
                     android:letterSpacing="0.15"
+                    android:textSize="12dp"
                     android:textColor="@color/gary757575"
-                    android:text="@{notification.brand}"
-                    app:layout_constraintStart_toEndOf="@id/image_notification"
-                    app:layout_constraintTop_toBottomOf="@id/text_notification_title"
-                    app:layout_constraintBottom_toTopOf="@id/text_notification_time"
+                    android:text="@{event.brand}"
+                    app:layout_constraintStart_toEndOf="@+id/image_onAuction"
+                    app:layout_constraintTop_toTopOf="@id/image_onAuction"
                     tools:text="Apple"/>
 
                 <TextView
-                    android:id="@+id/text_notification_content_name"
+                    android:id="@+id/text_onAuction_content_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="3dp"
                     android:fontFamily="@font/noto_sans"
                     android:letterSpacing="0.15"
-                    android:text="@{notification.name}"
+                    android:textSize="12dp"
+                    android:text="@{event.productName}"
                     android:textColor="@color/gary757575"
-                    app:layout_constraintStart_toEndOf="@id/text_notification_content_brand"
-                    app:layout_constraintTop_toTopOf="@+id/text_notification_content_brand"
+                    app:layout_constraintStart_toEndOf="@id/text_onAuction_content_brand"
+                    app:layout_constraintTop_toTopOf="@+id/text_onAuction_content_brand"
                     tools:text="iPhone"/>
 
                 <TextView
-                    android:id="@+id/text_notification_content_storage"
+                    android:id="@+id/text_onAuction_content_storage"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="3dp"
@@ -105,29 +92,72 @@
                     android:letterSpacing="0.15"
                     android:singleLine="true"
                     android:ellipsize="end"
-                    android:text="@{notification.storage}"
+                    android:textSize="12dp"
+                    android:text="@{event.storage}"
                     android:textColor="@color/gary757575"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/text_notification_content_name"
-                    app:layout_constraintTop_toTopOf="@+id/text_notification_content_name"
+                    app:layout_constraintStart_toEndOf="@id/text_onAuction_content_name"
+                    app:layout_constraintTop_toTopOf="@+id/text_onAuction_content_name"
                     tools:text="64G" />
 
                 <TextView
-                    android:id="@+id/text_notification_time"
+                    android:id="@+id/text_onAuction_nowPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="目前金額:"
+                    android:textSize="12dp"
+                    android:fontFamily="@font/noto_sans"
+                    android:letterSpacing="0.1"
                     android:layout_marginStart="12dp"
+                    app:layout_constraintStart_toEndOf="@id/image_onAuction"
+                    app:layout_constraintTop_toBottomOf="@id/text_onAuction_content_brand"
+                    app:layout_constraintBottom_toTopOf="@id/text_onAuction_time"
+                    />
+
+                <TextView
+                    android:id="@+id/text_onAuction_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
                     android:fontFamily="@font/noto_sans"
                     android:letterSpacing="0.15"
-                    android:textSize="12sp"
-                    app:timeToDisplayFormat="@{notification.time}"
+                    android:textSize="12dp"
                     android:textColor="@color/gary757575"
-                    app:layout_constraintStart_toEndOf="@+id/image_notification"
-                    app:layout_constraintBottom_toBottomOf="@+id/image_notification"
-                    tools:text="2020/7/14 12:00"/>
+                    app:price="@{event.price}"
+                    app:layout_constraintStart_toEndOf="@+id/text_onAuction_nowPrice"
+                    app:layout_constraintBottom_toBottomOf="@+id/text_onAuction_nowPrice"
+                    tools:text="NT$9999"/>
+
+                <TextView
+                    android:id="@+id/text_onAuction_endTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="結標時間:"
+                    android:textSize="12dp"
+                    android:fontFamily="@font/noto_sans"
+                    android:letterSpacing="0.1"
+                    android:layout_marginStart="12dp"
+                    app:layout_constraintStart_toEndOf="@+id/image_onAuction"
+                    app:layout_constraintBottom_toBottomOf="@+id/image_onAuction"
+                    />
+
+                <TextView
+                    android:id="@+id/text_onAuction_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:layout_marginStart="2dp"
+                    android:fontFamily="@font/noto_sans"
+                    android:letterSpacing="0.1"
+                    android:textSize="12dp"
+                    app:timeToDisplayFormat="@{event.endTime}"
+                    android:textColor="@color/gary757575"
+                    app:layout_constraintStart_toEndOf="@+id/text_onAuction_endTime"
+                    app:layout_constraintBottom_toBottomOf="@+id/image_onAuction"
+                    tools:text="2020/12/12 12:12"/>
 
                 <ImageView
-                    android:id="@+id/text_notification_delete"
+                    android:id="@+id/text_onAuction_delete"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:background="@drawable/ic_close"

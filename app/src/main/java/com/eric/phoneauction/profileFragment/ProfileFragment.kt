@@ -5,11 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 
 import com.eric.phoneauction.R
 import com.eric.phoneauction.databinding.FragmentProfileBinding
 import com.eric.phoneauction.ext.getVmFactory
+import com.google.firebase.firestore.FirebaseFirestore
 
 class ProfileFragment : Fragment() {
 
@@ -24,12 +27,30 @@ class ProfileFragment : Fragment() {
         binding.viewModel = viewModel
 
 
+        binding.buttonProfileRecently.setOnClickListener {
+            Toast.makeText(context, "最近瀏覽 coming soon", Toast.LENGTH_SHORT).show()
+            FirebaseFirestore.getInstance().collection("events").document().update("buyUser", "", "deal", "")
+        }
 
+        binding.buttonProfileQuestion.setOnClickListener {
+            Toast.makeText(context, "問與答 coming soon", Toast.LENGTH_SHORT).show()
+        }
 
+        binding.buttonProfilePolicy.setOnClickListener {
+            Toast.makeText(context, "使用規範 coming soon", Toast.LENGTH_SHORT).show()
+        }
 
+        binding.buttonProfilePurchased.setOnClickListener {
+            findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToPurchasedFragment())
+        }
 
+        binding.buttonProfileBid.setOnClickListener {
+            findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToOnAuctionFragment())
+        }
 
-
+        binding.buttonProfileUpload.setOnClickListener {
+            findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToOnPostFragment())
+        }
 
 
         return binding.root

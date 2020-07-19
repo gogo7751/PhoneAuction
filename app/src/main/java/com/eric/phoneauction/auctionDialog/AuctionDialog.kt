@@ -44,7 +44,11 @@ class AuctionDialog : BottomSheetDialogFragment() {
 
         viewModel.navigateToCheckoutSuccess.observe(viewLifecycleOwner, Observer {
             viewModel.postAuction(it, viewModel.price.value as Int)
-            viewModel.postNotification(viewModel.getNotification())
+            if (viewModel.event.value?.buyUser == "") {
+                null
+            } else {
+                viewModel.postNotification(viewModel.getNotification())
+            }
             findNavController().navigate(AuctionDialogDirections.actionAuctionDialogToCheckSuccessAuctionFragment())
             viewModel.leave()
         })

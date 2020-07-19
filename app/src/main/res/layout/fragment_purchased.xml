@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.eric.phoneauction.purchasedFragment.PurchasedViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_purchased_header"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="#f6b76a"
+            android:layout_marginBottom="4dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/recyclerview_purchased">
+
+            <ImageView
+                android:id="@+id/image_purchased_back"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:background="@drawable/icons_back"
+                android:scaleType="centerCrop"
+                android:layout_marginStart="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/text_purchased_title"
+                app:layout_constraintTop_toTopOf="@id/text_purchased_title" />
+
+            <TextView
+                android:id="@+id/text_purchased_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="已購商品"
+                android:fontFamily="@font/noto_sans"
+                android:letterSpacing="0.15"
+                android:textColor="@color/white"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview_purchased"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:overScrollMode="never"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_purchased_header"
+            tools:listitem="@layout/item_notification"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+</layout>

@@ -18,7 +18,7 @@
     <!-- 拍賣 -->
     <string name="auction">我要出價</string>
     <string name="direct">我要購買</string>
-    <string name="done">已完成交易</string>
+    <string name="done">拍賣已結束</string>
 
     <!-- Sort -->
     <string name="sort_all">全部</string>
