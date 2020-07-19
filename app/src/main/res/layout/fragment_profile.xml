@@ -117,7 +117,7 @@
                     android:id="@+id/button_profile_wish"
                     android:layout_width="80dp"
                     android:layout_height="65dp"
-                    android:layout_marginStart="24dp"
+                    android:layout_marginStart="26dp"
                     android:layout_marginTop="16dp"
                     android:background="#00000000"
                     android:drawableTop="@drawable/ic_star_32px"

@@ -290,7 +290,7 @@
             android:ellipsize="end"
             android:background="@drawable/button"
             android:fontFamily="@font/noto_sans"
-            android:letterSpacing="0.15"
+            android:letterSpacing="0.1"
             android:visibility="@{viewModel.event.deal == false &amp;&amp; viewModel.isBuyUser() == true ? View.VISIBLE : View.GONE}"
             android:text="重新上架"
             android:textColor="@android:color/white"

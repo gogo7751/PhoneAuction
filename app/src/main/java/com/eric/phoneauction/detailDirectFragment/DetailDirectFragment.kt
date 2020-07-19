@@ -55,7 +55,7 @@ class DetailDirectFragment : Fragment() {
 
         viewModel.leaveDetail.observe(viewLifecycleOwner, Observer {
             it?.let {
-                if (it) findNavController().navigate(NavigationDirections.actionGlobalHomeFragment())
+                if (it) findNavController().navigateUp()
             }
         })
 

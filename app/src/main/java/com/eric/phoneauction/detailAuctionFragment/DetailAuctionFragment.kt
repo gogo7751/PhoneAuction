@@ -47,7 +47,7 @@ class DetailAuctionFragment : Fragment() {
 
         viewModel.leaveDetail.observe(viewLifecycleOwner, Observer {
             it?.let {
-                if (it) findNavController().navigate(NavigationDirections.actionGlobalHomeFragment())
+                if (it) findNavController().navigateUp()
             }
         })
 
@@ -68,8 +68,7 @@ class DetailAuctionFragment : Fragment() {
             }
 
             viewModel.snapPosition.observe(viewLifecycleOwner, Observer {
-                (binding.recyclerDetailAuctionCircles.adapter as DetailCircleAdapter).selectedPosition.value = (it % (product.images?.size
-                    ?: 0))
+                (binding.recyclerDetailAuctionCircles.adapter as DetailCircleAdapter).selectedPosition.value = (it % (product.images.size))
             })
         }
 

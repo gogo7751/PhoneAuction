@@ -51,7 +51,6 @@
                 app:imageUrl="@{event.images[0]}"
                 tools:src="@tools:sample/backgrounds/scenic" />
 
-
         </com.google.android.material.card.MaterialCardView>
 
         <View

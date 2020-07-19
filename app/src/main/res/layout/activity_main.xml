@@ -30,10 +30,11 @@
             android:layout_height="56dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:menu="@menu/bottom_nav_menu"
-            app:backgroundTint="@color/colorPrimary"
+
+            app:itemBackground="?selectableItemBackgroundBorderless"
             app:morphCornerRadius="128dp"
             app:morphItemRadius="64dp"
-            app:morphVerticalOffset="8dp"
+            app:morphVerticalOffset="6dp"
             app:itemIconSize="30dp"
             style="@style/BottomNavigationView"
             />
