@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.eric.phoneauction.R
 import com.eric.phoneauction.databinding.FragmentProfileBinding
 import com.eric.phoneauction.ext.getVmFactory
+import com.google.firebase.firestore.FirebaseFirestore
 
 class ProfileFragment : Fragment() {
 
@@ -28,6 +29,7 @@ class ProfileFragment : Fragment() {
 
         binding.buttonProfileRecently.setOnClickListener {
             Toast.makeText(context, "最近瀏覽 coming soon", Toast.LENGTH_SHORT).show()
+            FirebaseFirestore.getInstance().collection("events").document().update("buyUser", "", "deal", "")
         }
 
         binding.buttonProfileQuestion.setOnClickListener {
@@ -41,6 +43,15 @@ class ProfileFragment : Fragment() {
         binding.buttonProfilePurchased.setOnClickListener {
             findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToPurchasedFragment())
         }
+
+        binding.buttonProfileBid.setOnClickListener {
+            findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToOnAuctionFragment())
+        }
+
+        binding.buttonProfileUpload.setOnClickListener {
+            findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToOnPostFragment())
+        }
+
 
         return binding.root
     }

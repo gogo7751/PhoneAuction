@@ -35,7 +35,16 @@
         tools:layout="@layout/fragment_profile" >
         <action
             android:id="@+id/action_profileFragment_to_purchasedFragment"
-            app:destination="@id/purchasedFragment" />
+            app:destination="@id/purchasedFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_profileFragment_to_onAuctionFragment"
+            app:destination="@id/onAuctionFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_profileFragment_to_onPostFragment"
+            app:destination="@id/onPostFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -185,5 +194,13 @@
         android:id="@+id/purchasedFragment"
         android:name="com.eric.phoneauction.purchasedFragment.PurchasedFragment"
         android:label="PurchasedFragment" />
+    <fragment
+        android:id="@+id/onAuctionFragment"
+        android:name="com.eric.phoneauction.onAuctionFragment.OnAuctionFragment"
+        android:label="OnAuctionFragment" />
+    <fragment
+        android:id="@+id/onPostFragment"
+        android:name="com.eric.phoneauction.onPostFragment.OnPostFragment"
+        android:label="OnPostFragment" />
 
 </navigation>

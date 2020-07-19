@@ -10,7 +10,6 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_profile_all"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -34,7 +33,7 @@
                 android:padding="8dp">
 
                 <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/image_purchased"
+                    android:id="@+id/image_onPost"
                     android:layout_width="99dp"
                     android:layout_height="99dp"
                     app:cardCornerRadius="10dp"
@@ -54,7 +53,7 @@
 
 
                 <TextView
-                    android:id="@+id/text_purchased_content_brand"
+                    android:id="@+id/text_onPost_content_brand"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
@@ -62,13 +61,13 @@
                     android:letterSpacing="0.15"
                     android:text="@{event.brand}"
                     android:textColor="@color/gary757575"
-                    app:layout_constraintBottom_toTopOf="@id/text_purchased_price"
-                    app:layout_constraintStart_toEndOf="@+id/image_purchased"
-                    app:layout_constraintTop_toBottomOf="@+id/view_purchased_tag"
+                    app:layout_constraintBottom_toTopOf="@id/text_onPost_price"
+                    app:layout_constraintStart_toEndOf="@+id/image_onPost"
+                    app:layout_constraintTop_toBottomOf="@+id/view_onPost_tag"
                     tools:text="Apple" />
 
                 <TextView
-                    android:id="@+id/text_purchased_content_name"
+                    android:id="@+id/text_onPost_content_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="3dp"
@@ -76,12 +75,12 @@
                     android:letterSpacing="0.15"
                     android:text="@{event.productName}"
                     android:textColor="@color/gary757575"
-                    app:layout_constraintStart_toEndOf="@id/text_purchased_content_brand"
-                    app:layout_constraintTop_toTopOf="@+id/text_purchased_content_brand"
+                    app:layout_constraintStart_toEndOf="@id/text_onPost_content_brand"
+                    app:layout_constraintTop_toTopOf="@+id/text_onPost_content_brand"
                     tools:text="iPhone" />
 
                 <TextView
-                    android:id="@+id/text_purchased_content_storage"
+                    android:id="@+id/text_onPost_content_storage"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="3dp"
@@ -92,12 +91,12 @@
                     android:text="@{event.storage}"
                     android:textColor="@color/gary757575"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/text_purchased_content_name"
-                    app:layout_constraintTop_toTopOf="@+id/text_purchased_content_name"
+                    app:layout_constraintStart_toEndOf="@id/text_onPost_content_name"
+                    app:layout_constraintTop_toTopOf="@+id/text_onPost_content_name"
                     tools:text="64G" />
 
                 <TextView
-                    android:id="@+id/text_purchased_price"
+                    android:id="@+id/text_onPost_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
@@ -105,22 +104,22 @@
                     android:letterSpacing="0.15"
                     android:textColor="@color/gary757575"
                     android:textSize="12sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/image_purchased"
-                    app:layout_constraintStart_toEndOf="@+id/image_purchased"
+                    app:layout_constraintBottom_toBottomOf="@+id/image_onPost"
+                    app:layout_constraintStart_toEndOf="@+id/image_onPost"
                     app:price="@{event.price}"
                     tools:text="NT$9999" />
 
                 <View
-                    android:id="@+id/view_purchased_tag"
+                    android:id="@+id/view_onPost_tag"
                     android:layout_width="38dp"
                     android:layout_height="20dp"
                     android:layout_marginStart="12dp"
                     android:background="@drawable/button_tag"
-                    app:layout_constraintStart_toEndOf="@id/image_purchased"
-                    app:layout_constraintTop_toTopOf="@id/image_purchased" />
+                    app:layout_constraintStart_toEndOf="@id/image_onPost"
+                    app:layout_constraintTop_toTopOf="@id/image_onPost" />
 
                 <TextView
-                    android:id="@+id/text_purchased_tag"
+                    android:id="@+id/text_onPost_tag"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/noto_sans"
@@ -129,14 +128,14 @@
                     android:text="@{event.tag}"
                     android:textColor="@color/gary757575"
                     android:textSize="12dp"
-                    app:layout_constraintBottom_toBottomOf="@id/view_purchased_tag"
-                    app:layout_constraintEnd_toEndOf="@id/view_purchased_tag"
-                    app:layout_constraintStart_toStartOf="@id/view_purchased_tag"
-                    app:layout_constraintTop_toTopOf="@id/view_purchased_tag"
+                    app:layout_constraintBottom_toBottomOf="@id/view_onPost_tag"
+                    app:layout_constraintEnd_toEndOf="@id/view_onPost_tag"
+                    app:layout_constraintStart_toStartOf="@id/view_onPost_tag"
+                    app:layout_constraintTop_toTopOf="@id/view_onPost_tag"
                     tools:text="拍賣" />
 
                 <ImageView
-                    android:id="@+id/text_purchased_delete"
+                    android:id="@+id/text_onPost_delete"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:background="@drawable/ic_close"

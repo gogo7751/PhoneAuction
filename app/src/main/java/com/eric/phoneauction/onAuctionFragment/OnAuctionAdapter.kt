@@ -1,44 +1,41 @@
-package com.eric.phoneauction.purchasedFragment
+package com.eric.phoneauction.onAuctionFragment
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.MutableLiveData
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.eric.phoneauction.NavigationDirections
 import com.eric.phoneauction.data.Event
 import com.eric.phoneauction.data.UserManager
-import com.eric.phoneauction.databinding.ItemPurchasedBinding
-import com.eric.phoneauction.util.Logger
-import kotlinx.android.synthetic.main.item_purchased.view.*
+import com.eric.phoneauction.databinding.ItemOnAuctionBinding
 
-class PurchasedAdapter :
-    androidx.recyclerview.widget.ListAdapter<Event, PurchasedAdapter.PurchasedViewHolder>(
+class OnAuctionAdapter :
+    androidx.recyclerview.widget.ListAdapter<Event, OnAuctionAdapter.OnAuctionViewHolder>(
         DiffCallback
     ) {
 
-    class PurchasedViewHolder(private var binding: ItemPurchasedBinding) :
+    class OnAuctionViewHolder(private var binding: ItemOnAuctionBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(
             event: Event
         ) {
             binding.event = event
 
-            binding.imagePurchased.setOnClickListener {
+            binding.imageOnAuction.setOnClickListener {
                 if (event.tag == "拍賣") {
                     Navigation.createNavigateOnClickListener(
                         NavigationDirections.actionGlobalDetailAuctionFragment(
                             event
                         )
-                    ).onClick(binding.imagePurchased)
+                    ).onClick(binding.imageOnAuction)
                 } else {
                     Navigation.createNavigateOnClickListener(
                         NavigationDirections.actionGlobalDetailDirectFragment(
                             event
                         )
-                    ).onClick(binding.imagePurchased)
+                    ).onClick(binding.imageOnAuction)
                 }
             }
 
@@ -59,13 +56,13 @@ class PurchasedAdapter :
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): PurchasedViewHolder {
-        return PurchasedViewHolder(
-            ItemPurchasedBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+    ): OnAuctionViewHolder {
+        return OnAuctionViewHolder(
+            ItemOnAuctionBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         )
     }
 
-    override fun onBindViewHolder(holder: PurchasedViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: OnAuctionViewHolder, position: Int) {
         val event = getItem(position)
         when (event.buyUser == UserManager.userId) {
             true -> holder.itemView.visibility = View.VISIBLE
