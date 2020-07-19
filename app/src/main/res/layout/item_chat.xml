@@ -17,16 +17,16 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginBottom="4dp"
             app:cardCornerRadius="10dp"
             app:cardElevation="3dp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -38,9 +38,9 @@
                     android:layout_width="77dp"
                     android:layout_height="77dp"
                     app:cardCornerRadius="5dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent">
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
                         android:id="@+id/image_chat_sender"
@@ -60,7 +60,6 @@
                         app:layout_constraintDimensionRatio="5:7"
                         tools:src="@tools:sample/backgrounds/scenic" />
 
-
                 </com.google.android.material.card.MaterialCardView>
 
                 <TextView
@@ -69,9 +68,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
                     android:ellipsize="end"
-                    android:singleLine="true"
                     android:fontFamily="@font/noto_sans"
                     android:letterSpacing="0.15"
+                    android:singleLine="true"
                     android:textColor="@color/black212121"
                     android:textSize="16dp"
                     android:textStyle="bold"
@@ -86,17 +85,17 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
                     android:layout_marginEnd="12dp"
+                    android:ellipsize="end"
                     android:fontFamily="@font/noto_sans"
                     android:letterSpacing="0.15"
-                    android:textColor="@color/gary757575"
-                    android:ellipsize="end"
                     android:maxLines="1"
                     android:text="@{chatRoom.text}"
-                    app:layout_constraintStart_toEndOf="@id/image_chat"
-                    app:layout_constraintEnd_toStartOf="@id/image_chat_product"
-                    app:layout_constraintTop_toBottomOf="@id/text_chat_title"
+                    android:textColor="@color/gary757575"
                     app:layout_constraintBottom_toTopOf="@id/text_chat_time"
-                    tools:text="有現貨啦要買就買別囉嗦別凡啦123"/>
+                    app:layout_constraintEnd_toStartOf="@id/image_chat_product"
+                    app:layout_constraintStart_toEndOf="@id/image_chat"
+                    app:layout_constraintTop_toBottomOf="@id/text_chat_title"
+                    tools:text="有現貨啦要買就買別囉嗦別凡啦123" />
 
                 <TextView
                     android:id="@+id/text_chat_time"
@@ -105,20 +104,20 @@
                     android:layout_marginStart="12dp"
                     android:fontFamily="@font/noto_sans"
                     android:letterSpacing="0.15"
-                    android:textSize="12sp"
-                    app:timeToDisplayFormat="@{chatRoom.time}"
                     android:textColor="@color/gary757575"
-                    app:layout_constraintStart_toEndOf="@+id/image_chat"
+                    android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="@+id/image_chat"
-                    tools:text="2020/7/14 12:00"/>
+                    app:layout_constraintStart_toEndOf="@+id/image_chat"
+                    app:timeToDisplayFormat="@{chatRoom.time}"
+                    tools:text="2020/7/14 12:00" />
 
                 <ImageView
                     android:id="@+id/text_chat_delete"
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
                     android:background="@drawable/ic_close"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/image_chat_product"
@@ -126,15 +125,16 @@
                     android:layout_height="44dp"
                     android:layout_marginTop="11dp"
                     app:cardCornerRadius="5dp"
-                    app:layout_constraintTop_toBottomOf="@id/text_chat_delete"
                     app:layout_constraintBottom_toBottomOf="@+id/image_chat"
-                    app:layout_constraintEnd_toEndOf="parent">
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/text_chat_delete">
+
                     <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:scaleType="centerCrop"
                         app:imageUrl="@{chatRoom.productImage}"
-                        tools:src="@tools:sample/backgrounds/scenic"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        tools:src="@tools:sample/backgrounds/scenic" />
                 </androidx.cardview.widget.CardView>
 
             </androidx.constraintlayout.widget.ConstraintLayout>

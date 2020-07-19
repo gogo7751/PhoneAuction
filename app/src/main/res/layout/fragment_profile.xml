@@ -49,7 +49,7 @@
                     android:maxLines="1"
                     android:text="@{viewModel.user.name}"
                     android:textColor="@color/white"
-                    android:textSize="18sp"
+                    android:textSize="20sp"
                     android:visibility="@{TextUtils.isEmpty(viewModel.user.name) ? View.GONE : View.VISIBLE}"
                     app:layout_constraintBottom_toBottomOf="@id/image_profile_avatar"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -161,7 +161,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/text_profile_order_title" />
 
                 <Button
-                    android:id="@+id/button_profile_ordList"
+                    android:id="@+id/button_profile_purchased"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="#00000000"
@@ -183,7 +183,7 @@
                     android:background="@color/gary757575"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/button_profile_ordList" />
+                    app:layout_constraintTop_toBottomOf="@+id/button_profile_purchased" />
 
                 <Button
                     android:id="@+id/button_profile_bid"

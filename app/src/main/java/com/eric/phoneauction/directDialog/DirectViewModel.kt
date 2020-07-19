@@ -80,11 +80,11 @@ class DirectViewModel(
         totalPrice.value = freight.value?.let { _event.value?.price?.plus(it) }
     }
 
-    fun getNotification(): Notification {
+    fun getNotification(title: String): Notification {
         event.value?.deal = false
         return Notification(
             id = "",
-            title = "您的商品已被購買,請盡快進行出貨事宜!",
+            title = title,
             time = -1,
             brand = event.value?.brand.toString(),
             name = event.value?.productName.toString(),
@@ -127,13 +127,13 @@ class DirectViewModel(
         }
     }
 
-    fun postNotification(notification: Notification) {
+    fun postNotification(notification: Notification, user: String) {
 
         coroutineScope.launch {
 
             _status.value = LoadApiStatus.LOADING
 
-            when (val result = phoneAuctionRepository.postNotification(notification, event.value?.userId.toString())) {
+            when (val result = phoneAuctionRepository.postNotification(notification, user)) {
                 is com.eric.phoneauction.data.Result.Success -> {
                     _error.value = null
                     _status.value = LoadApiStatus.DONE

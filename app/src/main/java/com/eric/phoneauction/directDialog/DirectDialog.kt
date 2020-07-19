@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 
 import com.eric.phoneauction.R
+import com.eric.phoneauction.data.UserManager
 import com.eric.phoneauction.databinding.DialogDirectFragmentBinding
 import com.eric.phoneauction.ext.getVmFactory
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -43,7 +44,8 @@ class DirectDialog : BottomSheetDialogFragment() {
 
         viewModel.navigateToCheckoutSuccess.observe(viewLifecycleOwner, Observer {
             viewModel.postAuction(it)
-            viewModel.postNotification(viewModel.getNotification())
+            viewModel.postNotification(viewModel.getNotification("您的商品已被購買,請盡快進行出貨事宜!"), viewModel.event.value?.userId.toString())
+            viewModel.postNotification(viewModel.getNotification("恭喜您購買成功,請與賣家聯絡並完成付款!"), UserManager.userId as String)
             findNavController().navigate(DirectDialogDirections.actionDirectDialogToCheckoutSuccessDirectFragment())
             viewModel.leave()
         })

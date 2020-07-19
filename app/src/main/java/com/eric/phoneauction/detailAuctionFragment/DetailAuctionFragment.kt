@@ -109,11 +109,19 @@ class DetailAuctionFragment : Fragment() {
             }
         })
 
+        viewModel.event.observe(viewLifecycleOwner, Observer {
+            println("66666${it.endTime}")
+        })
+
         viewModel.countDown.observe(viewLifecycleOwner, Observer {
             it?.let {
                 binding.textDetailAuctionTime.text = it
             }
         })
+
+        binding.buttonRePost.setOnClickListener {
+            findNavController().navigate(NavigationDirections.actionGlobalPostFragment())
+        }
 
         viewModel.timerStart()
         (activity as AppCompatActivity).bottomNavView.visibility = View.GONE

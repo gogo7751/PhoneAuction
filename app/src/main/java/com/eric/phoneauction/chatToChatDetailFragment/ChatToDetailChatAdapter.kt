@@ -21,9 +21,6 @@ class ChatToDetailChatAdapter(val viewModel: ChatToDetailChatViewModel) :
         fun bind(
             message: Message, viewModel: ChatToDetailChatViewModel
         ) {
-//            if (message.id == UserManager.userId) {
-//                binding.imageUrl = viewModel.chatRoom.value?.senderImage as String
-//            }
             binding.message = message
             binding.executePendingBindings()
         }

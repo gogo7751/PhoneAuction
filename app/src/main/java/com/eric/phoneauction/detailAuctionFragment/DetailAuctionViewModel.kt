@@ -15,6 +15,7 @@ import com.eric.phoneauction.PhoneAuctionApplication
 import com.eric.phoneauction.R
 import com.eric.phoneauction.data.ChatRoom
 import com.eric.phoneauction.data.Event
+import com.eric.phoneauction.data.Notification
 import com.eric.phoneauction.data.source.PhoneAuctionRepository
 import com.eric.phoneauction.homeFragment.HomeAdapter
 import com.eric.phoneauction.homeFragment.HomeViewModel
@@ -41,6 +42,10 @@ class DetailAuctionViewModel(
 
     val events: LiveData<List<Event>>
         get() = _events
+
+    val isBuyUser = MutableLiveData<Boolean>().apply {
+        value = arguments.buyUser == ""
+    }
 
     lateinit var timer: CountDownTimer
     val countDown = MutableLiveData<String>()
@@ -223,9 +228,79 @@ class DetailAuctionViewModel(
         }
     }
 
+    fun postNotification(notification: Notification, buyUser: String) {
+
+        coroutineScope.launch {
+
+            _status.value = LoadApiStatus.LOADING
+
+            when (val result = phoneAuctionRepository.postNotification(notification, buyUser)) {
+                is com.eric.phoneauction.data.Result.Success -> {
+                    _error.value = null
+                    _status.value = LoadApiStatus.DONE
+                }
+                is com.eric.phoneauction.data.Result.Fail -> {
+                    _error.value = result.error
+                    _status.value = LoadApiStatus.ERROR
+                }
+                is com.eric.phoneauction.data.Result.Error -> {
+                    _error.value = result.exception.toString()
+                    _status.value = LoadApiStatus.ERROR
+                }
+                else -> {
+                    _error.value = PhoneAuctionApplication.instance.getString(R.string.you_know_nothing)
+                    _status.value = LoadApiStatus.ERROR
+                }
+            }
+        }
+    }
+
+    fun finishAuction(event: Event) {
+
+        coroutineScope.launch {
+
+            _status.value = LoadApiStatus.LOADING
+
+            when (val result = phoneAuctionRepository.finishAuction(event)) {
+                is com.eric.phoneauction.data.Result.Success -> {
+                    _error.value = null
+                    _status.value = LoadApiStatus.DONE
+                }
+                is com.eric.phoneauction.data.Result.Fail -> {
+                    _error.value = result.error
+                    _status.value = LoadApiStatus.ERROR
+                }
+                is com.eric.phoneauction.data.Result.Error -> {
+                    _error.value = result.exception.toString()
+                    _status.value = LoadApiStatus.ERROR
+                }
+                else -> {
+                    _error.value = PhoneAuctionApplication.instance.getString(R.string.you_know_nothing)
+                    _status.value = LoadApiStatus.ERROR
+                }
+            }
+        }
+    }
+
+    fun getNotification(title: String): Notification {
+        return Notification(
+            id = "",
+            title = title,
+            time = -1,
+            brand = event.value?.brand.toString(),
+            name = event.value?.productName.toString(),
+            image = event.value?.images?.component1().toString(),
+            storage = event.value?.storage.toString(),
+            visibility = true,
+            event = event.value.apply { event.value?.deal = false }
+        )
+    }
+
+
+
     fun getCountdown() {
 
-        timer = object : CountDownTimer(event.value?.endTime!!, HomeAdapter.ONE_SECOND) {
+        timer = object : CountDownTimer(arguments.endTime.minus(arguments.createdTime), HomeAdapter.ONE_SECOND) {
             override fun onFinish() {
 
             }

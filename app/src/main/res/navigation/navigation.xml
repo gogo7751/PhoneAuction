@@ -32,7 +32,11 @@
         android:id="@+id/profileFragment"
         android:name="com.eric.phoneauction.profileFragment.ProfileFragment"
         android:label="profile_fragment"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_purchasedFragment"
+            app:destination="@id/purchasedFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/notificationFragment"
@@ -177,5 +181,9 @@
             app:argType="com.eric.phoneauction.data.ChatRoom"
             app:nullable="false"/>
     </fragment>
+    <fragment
+        android:id="@+id/purchasedFragment"
+        android:name="com.eric.phoneauction.purchasedFragment.PurchasedFragment"
+        android:label="PurchasedFragment" />
 
 </navigation>

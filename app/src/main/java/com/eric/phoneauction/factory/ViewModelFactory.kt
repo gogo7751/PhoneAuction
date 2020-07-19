@@ -6,11 +6,11 @@ import com.eric.phoneauction.MainViewModel
 import com.eric.phoneauction.chatFragment.ChatViewModel
 import com.eric.phoneauction.checkout.CheckoutSuccessViewModel
 import com.eric.phoneauction.data.source.PhoneAuctionRepository
-import com.eric.phoneauction.detailChatFragment.DetailChatViewModel
 import com.eric.phoneauction.homeFragment.HomeViewModel
 import com.eric.phoneauction.notificationFragment.NotificationViewModel
 import com.eric.phoneauction.postFragment.PostViewModel
 import com.eric.phoneauction.profileFragment.ProfileViewModel
+import com.eric.phoneauction.purchasedFragment.PurchasedViewModel
 import java.lang.IllegalArgumentException
 
 @Suppress("UNCHECKED_CAST")
@@ -41,6 +41,9 @@ class ViewModelFactory constructor(
 
                 isAssignableFrom(ChatViewModel::class.java) ->
                     ChatViewModel(phoneAuctionRepository)
+
+                isAssignableFrom(PurchasedViewModel::class.java) ->
+                    PurchasedViewModel(phoneAuctionRepository)
 
                 else ->
                     throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")

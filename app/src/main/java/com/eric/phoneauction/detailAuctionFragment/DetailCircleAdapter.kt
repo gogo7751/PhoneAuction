@@ -17,8 +17,6 @@ class DetailCircleAdapter : RecyclerView.Adapter<DetailCircleAdapter.ImageViewHo
 
     class ImageViewHolder(val binding: ItemDetailCircleBinding): RecyclerView.ViewHolder(binding.root) {
 
-        var isSelected = MutableLiveData<Boolean>()
-
         fun bind(context: Context, selectedPosition: MutableLiveData<Int>) {
 
             selectedPosition.observe(context as MainActivity, Observer {

@@ -18,7 +18,7 @@ class PhoneAuctionLocalDataSource(val context: Context) :
         TODO("Not yet implemented")
     }
 
-    override fun getLiveEvent(): MutableLiveData<List<Event>> {
+    override fun getLiveEvent(deal: Boolean): MutableLiveData<List<Event>> {
         TODO("Not yet implemented")
     }
 
