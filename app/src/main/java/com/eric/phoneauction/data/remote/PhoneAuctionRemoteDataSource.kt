@@ -22,6 +22,7 @@ object PhoneAuctionRemoteDataSource :
     private const val PATH_CHAT_ROOM = "chatRooms"
     private const val PATH_MESSAGE = "messages"
     private const val KEY_CREATED_TIME = "createdTime"
+    private const val PATH_COLLECTION = "collections"
 
     override suspend fun getEvents(): Result<List<Event>> = suspendCoroutine { continuation ->
         FirebaseFirestore.getInstance()
@@ -341,7 +342,7 @@ object PhoneAuctionRemoteDataSource :
 
         event.id = document.id
         event.createdTime = Calendar.getInstance().timeInMillis
-        event.endTime = Calendar.getInstance().timeInMillis + 50000
+        event.endTime = Calendar.getInstance().timeInMillis + 60000
 
         document
             .set(event)
@@ -484,9 +485,10 @@ object PhoneAuctionRemoteDataSource :
             )
         val document = notifications.document()
 
+
+        notification.event?.buyUser = UserManager.userId.toString()
         notification.id = document.id
         notification.time = Calendar.getInstance().timeInMillis
-
 
         document
             .set(notification)
@@ -640,6 +642,36 @@ object PhoneAuctionRemoteDataSource :
                 }
         }
 
+    override suspend fun postCollection(event: Event, user: User): Result<Boolean> =
+        suspendCoroutine { continuation ->
+
+//            val collections =
+//                FirebaseFirestore.getInstance().collection(PATH_USER).document(user.id)
+//                    .collection(PATH_COLLECTION)
+//            val document = collections.document()
+//
+//            document
+//                .set(message)
+//                .addOnCompleteListener { task ->
+//                    if (task.isSuccessful) {
+//                        Logger.i("PhoneAuction: $message")
+//                        continuation.resume(Result.Success(true))
+//                    } else {
+//                        task.exception?.let {
+//                            Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
+//                            continuation.resume(Result.Error(it))
+//                            return@addOnCompleteListener
+//                        }
+//                        continuation.resume(
+//                            Result.Fail(
+//                                PhoneAuctionApplication.instance.getString(
+//                                    R.string.you_know_nothing
+//                                )
+//                            )
+//                        )
+//                    }
+//                }
+        }
 }
 
 

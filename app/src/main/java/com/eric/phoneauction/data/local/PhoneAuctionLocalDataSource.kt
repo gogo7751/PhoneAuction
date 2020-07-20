@@ -97,4 +97,11 @@ class PhoneAuctionLocalDataSource(val context: Context) :
     override suspend fun finishAuction(event: Event): Result<Boolean> {
         TODO("Not yet implemented")
     }
+
+    override suspend fun postCollection(
+        event: Event,
+        user: User
+    ): Result<Boolean> {
+        TODO("Not yet implemented")
+    }
 }

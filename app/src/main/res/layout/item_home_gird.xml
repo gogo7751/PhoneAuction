@@ -147,7 +147,7 @@
                     android:layout_marginBottom="4dp"
                     android:ellipsize="end"
                     android:fontFamily="@font/noto_sans_bold"
-                    android:letterSpacing="0.15"
+                    android:letterSpacing="0.1"
                     android:layout_marginStart="4dp"
                     android:textColor="@color/black212121"
                     app:layout_constraintStart_toStartOf="parent"

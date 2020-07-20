@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 
@@ -13,6 +14,7 @@ import com.eric.phoneauction.R
 import com.eric.phoneauction.databinding.FragmentProfileBinding
 import com.eric.phoneauction.ext.getVmFactory
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.android.synthetic.main.activity_main.*
 
 class ProfileFragment : Fragment() {
 
@@ -52,7 +54,7 @@ class ProfileFragment : Fragment() {
             findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToOnPostFragment())
         }
 
-
+        (activity as AppCompatActivity).bottomNavView.visibility = View.VISIBLE
         return binding.root
     }
 

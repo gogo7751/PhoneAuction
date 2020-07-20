@@ -35,10 +35,8 @@ class HomeViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
     val isDirect = MutableLiveData<Boolean>()
 
 
-    // Handle navigation to detail
-    private val _navigateToDetail = MutableLiveData<Event>()
-    val navigateToDetail: LiveData<Event>
-        get() = _navigateToDetail
+    val navigateToDetail = MutableLiveData<Event>()
+
 
     // status: The internal MutableLiveData that stores the status of the most recent request
     private val _status = MutableLiveData<LoadApiStatus>()
@@ -75,6 +73,7 @@ class HomeViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
         Logger.i("------------------------------------")
         Logger.i("[${this::class.simpleName}]${this}")
         Logger.i("------------------------------------")
+
 
         if (PhoneAuctionApplication.instance.isLiveDataDesign()) {
             getLiveEventsResult()
@@ -352,10 +351,10 @@ class HomeViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
     }
 
     fun navigateToDetail(event: Event) {
-        _navigateToDetail.value = event
+        navigateToDetail.value = event
     }
 
     fun onDetailNavigated() {
-        _navigateToDetail.value = null
+        navigateToDetail.value = null
     }
 }

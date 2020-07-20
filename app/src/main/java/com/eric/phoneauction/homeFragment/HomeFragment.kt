@@ -60,7 +60,6 @@ class HomeFragment : Fragment() {
             viewModel.refresh()
         }
 
-
         viewModel.liveEvents.observe(viewLifecycleOwner, Observer {
             it?.let {
                 adapter.submitList(it)

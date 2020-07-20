@@ -8,6 +8,7 @@ import com.eric.phoneauction.PhoneAuctionApplication
 import com.eric.phoneauction.R
 import com.eric.phoneauction.data.Event
 import com.eric.phoneauction.data.Notification
+import com.eric.phoneauction.data.UserManager
 import com.eric.phoneauction.data.source.PhoneAuctionRepository
 import com.eric.phoneauction.util.Logger
 import kotlinx.coroutines.CoroutineScope
@@ -27,7 +28,7 @@ class AuctionViewModel(
     val event: LiveData<Event>
         get() = _event
 
-    val buyUser = MutableLiveData<String>()
+    var buyUser = MutableLiveData<String>()
 
     private val _notification = MutableLiveData<Notification>()
 
@@ -90,10 +91,10 @@ class AuctionViewModel(
         viewModelJob.cancel()
     }
 
-    fun getNotification(): Notification{
+    fun getNotification(title: String): Notification{
         return Notification(
                 id = "",
-                title = "您的出價已被超過!",
+                title = title,
                 time = -1,
                 brand = event.value?.brand.toString(),
                 name = event.value?.productName.toString(),
@@ -104,13 +105,13 @@ class AuctionViewModel(
         )
     }
 
-    fun postNotification(notification: Notification) {
+    fun postNotification(notification: Notification, user: String) {
 
         coroutineScope.launch {
 
             _status.value = LoadApiStatus.LOADING
 
-            when (val result = phoneAuctionRepository.postNotification(notification, event.value?.buyUser.toString())) {
+            when (val result = phoneAuctionRepository.postNotification(notification, user)) {
                 is com.eric.phoneauction.data.Result.Success -> {
                     _error.value = null
                     _status.value = LoadApiStatus.DONE

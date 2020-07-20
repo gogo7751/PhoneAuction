@@ -55,4 +55,6 @@ interface PhoneAuctionRepository {
 
     suspend fun finishAuction(event: Event): Result<Boolean>
 
+    suspend fun postCollection(event: Event, user: User): Result<Boolean>
+
 }

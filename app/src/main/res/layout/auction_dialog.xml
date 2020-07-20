@@ -59,9 +59,9 @@
                 android:id="@+id/text_auction_your_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:fontFamily="@font/noto_sans"
                 android:letterSpacing="0.15"
+                android:layout_marginTop="6dp"
                 android:maxLines="1"
                 android:text="你的出價金額"
                 android:textColor="@color/black212121"
@@ -69,7 +69,7 @@
                 app:layout_constraintBottom_toTopOf="@id/edit_auction_price"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_auction_title"
+                app:layout_constraintTop_toBottomOf="@+id/text_auction_title"
                 app:layout_constraintVertical_chainStyle="spread_inside" />
 
 
@@ -113,13 +113,15 @@
                 android:fontFamily="@font/noto_sans"
                 android:letterSpacing="0.15"
                 android:maxLines="1"
+                android:layout_marginBottom="6dp"
                 android:text="低於目前出價金額"
                 android:textColor="@color/red_d0021b"
                 android:textSize="14sp"
                 android:visibility="@{Integer.valueOf(viewModel.event.price) > viewModel.price ? View.VISIBLE : View.INVISIBLE}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/edit_auction_price" />
+                app:layout_constraintTop_toBottomOf="@id/edit_auction_price"
+                app:layout_constraintBottom_toTopOf="@id/button_auction_300"/>
 
             <View
                 android:layout_width="76.5dp"
@@ -139,7 +141,7 @@
                 style="@style/AuctionRippleButton"
                 android:onClick="@{() -> viewModel.addMinimalPrice(Integer.valueOf(viewModel.event.price))}"
                 android:text="最低出價"
-                android:layout_marginBottom="60dp"
+                android:layout_marginBottom="50dp"
                 android:textColor="@color/black212121"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@+id/button_auction_post"
@@ -149,13 +151,14 @@
                 app:layout_constraintTop_toBottomOf="@id/text_auction_low" />
 
             <View
+                android:id="@+id/view"
                 android:layout_width="76.5dp"
                 android:layout_height="31.5dp"
                 android:background="@drawable/button_price"
-                app:layout_constraintStart_toStartOf="@id/button_auction_100"
+                app:layout_constraintBottom_toBottomOf="@id/button_auction_100"
                 app:layout_constraintEnd_toEndOf="@id/button_auction_100"
-                app:layout_constraintTop_toTopOf="@id/button_auction_100"
-                app:layout_constraintBottom_toBottomOf="@id/button_auction_100"/>
+                app:layout_constraintStart_toStartOf="@id/button_auction_100"
+                app:layout_constraintTop_toTopOf="@id/button_auction_100" />
 
             <Button
                 android:id="@+id/button_auction_100"

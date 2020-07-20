@@ -96,4 +96,8 @@ class DefaultPhoneAuctionRepository(private val remoteDataSource: PhoneAuctionDa
     override suspend fun finishAuction(event: Event): Result<Boolean> {
         return remoteDataSource.finishAuction(event)
     }
+
+    override suspend fun postCollection(event: Event, user: User): Result<Boolean> {
+        return  remoteDataSource.postCollection(event, user)
+    }
 }
