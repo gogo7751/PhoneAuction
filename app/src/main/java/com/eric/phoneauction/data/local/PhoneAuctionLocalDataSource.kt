@@ -3,6 +3,7 @@ package com.eric.phoneauction.data.local
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.eric.phoneauction.data.*
+import com.eric.phoneauction.data.Collection
 import com.eric.phoneauction.data.source.PhoneAuctionDataSource
 import com.google.firebase.firestore.Query
 
@@ -98,10 +99,11 @@ class PhoneAuctionLocalDataSource(val context: Context) :
         TODO("Not yet implemented")
     }
 
-    override suspend fun postCollection(
-        event: Event,
-        user: User
-    ): Result<Boolean> {
+    override suspend fun postCollection(collection: Collection, user: User): Result<Boolean> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getCollection(id: String): Result<Collection> {
         TODO("Not yet implemented")
     }
 }

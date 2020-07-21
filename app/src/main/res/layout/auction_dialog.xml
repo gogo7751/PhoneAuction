@@ -28,14 +28,16 @@
                 android:id="@+id/text_auction_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/noto_sans"
                 android:letterSpacing="0.15"
                 android:maxLines="1"
-                android:text="目前出價的金額"
+                android:text="目前金額"
                 android:textColor="@color/gary757575"
                 android:textSize="14sp"
+                app:layout_constraintEnd_toStartOf="@+id/text_auction_price"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -43,14 +45,16 @@
                 android:id="@+id/text_auction_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="3dp"
                 android:fontFamily="@font/noto_sans"
                 android:letterSpacing="0.15"
                 android:maxLines="1"
                 android:textColor="@color/gary757575"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@id/text_auction_title"
+                android:layout_marginStart="5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/text_auction_title"
                 app:layout_constraintTop_toTopOf="@id/text_auction_title"
                 app:price="@{viewModel.event.price}"
                 tools:text="NT$3,990" />
@@ -61,16 +65,15 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/noto_sans"
                 android:letterSpacing="0.15"
-                android:layout_marginTop="6dp"
                 android:maxLines="1"
                 android:text="你的出價金額"
+                android:layout_marginTop="12dp"
                 android:textColor="@color/black212121"
                 android:textSize="14sp"
-                app:layout_constraintBottom_toTopOf="@id/edit_auction_price"
+                app:layout_constraintTop_toBottomOf="@id/text_auction_title"
+                app:layout_constraintBottom_toTopOf="@id/text_auction_nt"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_auction_title"
-                app:layout_constraintVertical_chainStyle="spread_inside" />
+                app:layout_constraintStart_toStartOf="parent" />
 
 
             <TextView
@@ -113,35 +116,33 @@
                 android:fontFamily="@font/noto_sans"
                 android:letterSpacing="0.15"
                 android:maxLines="1"
-                android:layout_marginBottom="6dp"
                 android:text="低於目前出價金額"
                 android:textColor="@color/red_d0021b"
                 android:textSize="14sp"
                 android:visibility="@{Integer.valueOf(viewModel.event.price) > viewModel.price ? View.VISIBLE : View.INVISIBLE}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/edit_auction_price"
-                app:layout_constraintBottom_toTopOf="@id/button_auction_300"/>
+                app:layout_constraintTop_toBottomOf="@id/text_auction_nt" />
 
             <View
                 android:layout_width="76.5dp"
                 android:layout_height="31.5dp"
                 android:background="@drawable/button_price"
-                app:layout_constraintStart_toStartOf="@id/button_auction_minimal"
+                app:layout_constraintBottom_toBottomOf="@id/button_auction_minimal"
                 app:layout_constraintEnd_toEndOf="@id/button_auction_minimal"
-                app:layout_constraintTop_toTopOf="@id/button_auction_minimal"
-                app:layout_constraintBottom_toBottomOf="@id/button_auction_minimal"/>
+                app:layout_constraintStart_toStartOf="@id/button_auction_minimal"
+                app:layout_constraintTop_toTopOf="@id/button_auction_minimal" />
 
             <Button
                 android:id="@+id/button_auction_minimal"
+                style="@style/AuctionRippleButton"
                 android:layout_width="75dp"
                 android:layout_height="30dp"
+                android:layout_marginBottom="50dp"
                 android:fontFamily="@font/noto_sans"
                 android:letterSpacing="0.15"
-                style="@style/AuctionRippleButton"
                 android:onClick="@{() -> viewModel.addMinimalPrice(Integer.valueOf(viewModel.event.price))}"
                 android:text="最低出價"
-                android:layout_marginBottom="50dp"
                 android:textColor="@color/black212121"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@+id/button_auction_post"
@@ -162,9 +163,9 @@
 
             <Button
                 android:id="@+id/button_auction_100"
+                style="@style/AuctionRippleButton"
                 android:layout_width="75dp"
                 android:layout_height="30dp"
-                style="@style/AuctionRippleButton"
                 android:fontFamily="@font/noto_sans"
                 android:letterSpacing="0.15"
                 android:onClick="@{() -> viewModel.add100()}"
@@ -180,16 +181,16 @@
                 android:layout_width="76.5dp"
                 android:layout_height="31.5dp"
                 android:background="@drawable/button_price"
-                app:layout_constraintStart_toStartOf="@id/button_auction_300"
+                app:layout_constraintBottom_toBottomOf="@id/button_auction_300"
                 app:layout_constraintEnd_toEndOf="@id/button_auction_300"
-                app:layout_constraintTop_toTopOf="@id/button_auction_300"
-                app:layout_constraintBottom_toBottomOf="@id/button_auction_300"/>
+                app:layout_constraintStart_toStartOf="@id/button_auction_300"
+                app:layout_constraintTop_toTopOf="@id/button_auction_300" />
 
             <Button
                 android:id="@+id/button_auction_300"
+                style="@style/AuctionRippleButton"
                 android:layout_width="75dp"
                 android:layout_height="30dp"
-                style="@style/AuctionRippleButton"
                 android:fontFamily="@font/noto_sans"
                 android:letterSpacing="0.15"
                 android:onClick="@{() -> viewModel.add300()}"
@@ -205,16 +206,16 @@
                 android:layout_width="76.5dp"
                 android:layout_height="31.5dp"
                 android:background="@drawable/button_price"
-                app:layout_constraintStart_toStartOf="@id/button_auction_500"
+                app:layout_constraintBottom_toBottomOf="@id/button_auction_500"
                 app:layout_constraintEnd_toEndOf="@id/button_auction_500"
-                app:layout_constraintTop_toTopOf="@id/button_auction_500"
-                app:layout_constraintBottom_toBottomOf="@id/button_auction_500"/>
+                app:layout_constraintStart_toStartOf="@id/button_auction_500"
+                app:layout_constraintTop_toTopOf="@id/button_auction_500" />
 
             <Button
                 android:id="@+id/button_auction_500"
+                style="@style/AuctionRippleButton"
                 android:layout_width="75dp"
                 android:layout_height="30dp"
-                style="@style/AuctionRippleButton"
                 android:fontFamily="@font/noto_sans"
                 android:letterSpacing="0.15"
                 android:onClick="@{() -> viewModel.add500()}"

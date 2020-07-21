@@ -2,6 +2,7 @@ package com.eric.phoneauction.data.source
 
 import androidx.lifecycle.MutableLiveData
 import com.eric.phoneauction.data.*
+import com.eric.phoneauction.data.Collection
 import com.google.firebase.firestore.Query
 
 
@@ -97,7 +98,11 @@ class DefaultPhoneAuctionRepository(private val remoteDataSource: PhoneAuctionDa
         return remoteDataSource.finishAuction(event)
     }
 
-    override suspend fun postCollection(event: Event, user: User): Result<Boolean> {
-        return  remoteDataSource.postCollection(event, user)
+    override suspend fun postCollection(collection: Collection, user: User): Result<Boolean> {
+        return  remoteDataSource.postCollection(collection, user)
+    }
+
+    override suspend fun getCollection(id: String): Result<Collection> {
+        return remoteDataSource.getCollection(id)
     }
 }

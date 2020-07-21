@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.eric.phoneauction.PhoneAuctionApplication
 import com.eric.phoneauction.R
 import com.eric.phoneauction.data.*
+import com.eric.phoneauction.data.Collection
 import com.eric.phoneauction.data.source.PhoneAuctionDataSource
 import com.eric.phoneauction.util.Logger
 import com.google.firebase.firestore.FirebaseFirestore
@@ -342,7 +343,7 @@ object PhoneAuctionRemoteDataSource :
 
         event.id = document.id
         event.createdTime = Calendar.getInstance().timeInMillis
-        event.endTime = Calendar.getInstance().timeInMillis + 60000
+        event.endTime = Calendar.getInstance().timeInMillis + 10000
 
         document
             .set(event)
@@ -588,8 +589,6 @@ object PhoneAuctionRemoteDataSource :
             val updateMessages = FirebaseFirestore.getInstance().collection(PATH_CHAT_ROOM).document(document)
             val document = messages.document()
 
-
-
             message.time = Calendar.getInstance().timeInMillis
 
             updateMessages
@@ -642,36 +641,70 @@ object PhoneAuctionRemoteDataSource :
                 }
         }
 
-    override suspend fun postCollection(event: Event, user: User): Result<Boolean> =
+    override suspend fun postCollection(collection: Collection, user: User): Result<Boolean> =
         suspendCoroutine { continuation ->
 
-//            val collections =
-//                FirebaseFirestore.getInstance().collection(PATH_USER).document(user.id)
-//                    .collection(PATH_COLLECTION)
-//            val document = collections.document()
-//
-//            document
-//                .set(message)
-//                .addOnCompleteListener { task ->
-//                    if (task.isSuccessful) {
-//                        Logger.i("PhoneAuction: $message")
-//                        continuation.resume(Result.Success(true))
-//                    } else {
-//                        task.exception?.let {
-//                            Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
-//                            continuation.resume(Result.Error(it))
-//                            return@addOnCompleteListener
-//                        }
-//                        continuation.resume(
-//                            Result.Fail(
-//                                PhoneAuctionApplication.instance.getString(
-//                                    R.string.you_know_nothing
-//                                )
-//                            )
-//                        )
-//                    }
-//                }
+            val collections =
+                FirebaseFirestore.getInstance().collection(PATH_USER).document(user.id)
+                    .collection(PATH_COLLECTION)
+            val document = collection.event?.id?.let { collections.document(it) }
+
+            collection.id = document?.id.toString()
+
+            document
+                ?.set(collection)
+                ?.addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Logger.i("PhoneAuction: $collection")
+                        continuation.resume(Result.Success(true))
+                    } else {
+                        task.exception?.let {
+                            Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
+                            continuation.resume(Result.Error(it))
+                            return@addOnCompleteListener
+                        }
+                        continuation.resume(
+                            Result.Fail(
+                                PhoneAuctionApplication.instance.getString(
+                                    R.string.you_know_nothing
+                                )
+                            )
+                        )
+                    }
+                }
         }
+
+    override suspend fun getCollection(id: String): Result<Collection> = suspendCoroutine { continuation ->
+        UserManager.userId?.let {
+            FirebaseFirestore.getInstance()
+                .collection(PATH_USER)
+                .document(it)
+                .collection(PATH_COLLECTION)
+                .whereEqualTo("id", id)
+                .whereEqualTo("visibility", true)
+                .get()
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        var getCollection = Collection()
+                        for (document in task.result!!) {
+                            Logger.d(document.id + " => " + document.data)
+
+                            val collection = document.toObject(Collection::class.java)
+                            getCollection = collection
+                        }
+                        continuation.resume(Result.Success(getCollection))
+                    } else {
+                        task.exception?.let {
+
+                            Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
+                            continuation.resume(Result.Error(it))
+                            return@addOnCompleteListener
+                        }
+                        continuation.resume(Result.Fail(PhoneAuctionApplication.instance.getString(R.string.you_know_nothing)))
+                    }
+                }
+        }
+    }
 }
 
 

@@ -3,6 +3,7 @@ package com.eric.phoneauction.data.source
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.eric.phoneauction.data.*
+import com.eric.phoneauction.data.Collection
 import com.google.firebase.firestore.Query
 
 
@@ -55,6 +56,7 @@ interface PhoneAuctionRepository {
 
     suspend fun finishAuction(event: Event): Result<Boolean>
 
-    suspend fun postCollection(event: Event, user: User): Result<Boolean>
+    suspend fun postCollection(collection: Collection, user: User): Result<Boolean>
 
+    suspend fun getCollection(id: String): Result<Collection>
 }

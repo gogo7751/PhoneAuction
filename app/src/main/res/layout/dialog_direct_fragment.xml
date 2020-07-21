@@ -44,7 +44,6 @@
                 android:text="結帳"
                 android:textColor="@color/black212121"
                 android:textSize="18dp"
-                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -112,13 +111,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                app:price="@{viewModel.event.price}"
-                android:textColor="@color/black212121"
-                android:letterSpacing="0.15"
-                android:textSize="15dp"
+                android:layout_marginTop="12dp"
                 android:fontFamily="@font/noto_sans_bold"
+                android:letterSpacing="0.15"
+                android:textColor="@color/black212121"
+                android:textSize="15dp"
                 app:layout_constraintStart_toEndOf="@id/image_direct_product"
-                app:layout_constraintBottom_toBottomOf="@id/image_direct_product"
+                app:layout_constraintTop_toBottomOf="@+id/text_direct_brand"
+                app:price="@{viewModel.event.price}"
                 tools:text="NT$9990" />
 
             <View
@@ -176,7 +176,7 @@
                 android:layout_height="wrap_content"
                 android:text="付款詳情"
                 android:letterSpacing="0.15"
-                android:fontFamily="@font/noto_sans_bold"
+                android:fontFamily="@font/noto_sans"
                 android:textSize="18dp"
                 android:textColor="@color/black212121"
                 android:layout_marginTop="16dp"
@@ -242,9 +242,9 @@
                 android:text="您將支付"
                 android:letterSpacing="0.15"
                 android:layout_marginTop="8dp"
-                android:fontFamily="@font/noto_sans_bold"
+                android:fontFamily="@font/noto_sans"
                 android:textColor="@color/black212121"
-                android:textSize="18dp"
+                android:textSize="15dp"
                 app:layout_constraintStart_toStartOf="@id/image_direct_product"
                 app:layout_constraintTop_toBottomOf="@id/text_direct_freight_title"/>
 

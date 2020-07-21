@@ -5,16 +5,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearSnapHelper
 import com.eric.phoneauction.NavigationDirections
+import com.eric.phoneauction.data.UserManager
 import com.eric.phoneauction.databinding.DetailAuctionFragmentBinding
 import com.eric.phoneauction.ext.getVmFactory
 import com.eric.phoneauction.homeFragment.HomeAdapter
 import com.eric.phoneauction.homeFragment.HomeViewModel
+import com.eric.phoneauction.util.Logger
 import kotlinx.android.synthetic.main.activity_main.*
 
 class DetailAuctionFragment : Fragment() {
@@ -108,9 +111,6 @@ class DetailAuctionFragment : Fragment() {
             }
         })
 
-        viewModel.event.observe(viewLifecycleOwner, Observer {
-            println("66666${it.endTime}")
-        })
 
         viewModel.countDown.observe(viewLifecycleOwner, Observer {
             it?.let {
@@ -120,6 +120,15 @@ class DetailAuctionFragment : Fragment() {
 
         binding.buttonRePost.setOnClickListener {
             findNavController().navigate(NavigationDirections.actionGlobalPostFragment())
+        }
+
+        binding.imageViewDetailAuctionCollection.setOnClickListener {
+            if (viewModel.collection.value?.id == viewModel.event.value?.id) {
+                Toast.makeText(context, "已移除收藏", Toast.LENGTH_SHORT).show()
+            } else{
+                viewModel.postCollection(viewModel.addCollection(true), UserManager.user)
+                Toast.makeText(context, "已加入收藏", Toast.LENGTH_SHORT).show()
+            }
         }
 
         viewModel.timerStart()

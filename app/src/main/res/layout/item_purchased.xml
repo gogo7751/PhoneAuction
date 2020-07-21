@@ -58,11 +58,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
+                    android:layout_marginTop="6dp"
                     android:fontFamily="@font/noto_sans"
                     android:letterSpacing="0.15"
                     android:text="@{event.brand}"
                     android:textColor="@color/gary757575"
-                    app:layout_constraintBottom_toTopOf="@id/text_purchased_price"
                     app:layout_constraintStart_toEndOf="@+id/image_purchased"
                     app:layout_constraintTop_toBottomOf="@+id/view_purchased_tag"
                     tools:text="Apple" />
@@ -101,12 +101,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
+                    android:layout_marginTop="4dp"
                     android:fontFamily="@font/noto_sans"
                     android:letterSpacing="0.15"
                     android:textColor="@color/gary757575"
                     android:textSize="12sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/image_purchased"
                     app:layout_constraintStart_toEndOf="@+id/image_purchased"
+                    app:layout_constraintTop_toBottomOf="@+id/text_purchased_content_brand"
                     app:price="@{event.price}"
                     tools:text="NT$9999" />
 
