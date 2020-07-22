@@ -46,13 +46,13 @@ class MessageDialog : AppCompatDialogFragment() {
 
     private fun init() {
         when (messageType) {
-            MessageType.AUCTION_SUCCESS -> {
+            MessageType.COLLECTION_SUCCESS -> {
                 iconRes = PhoneAuctionApplication.instance.getDrawable(R.drawable.ic_success)
-                message = getString(R.string.auction_success)
+                message = getString(R.string.collection_success)
             }
-            MessageType.DIRECT_SUCCESS -> {
+            MessageType.UN_COLLECTION_SUCCESS -> {
                 iconRes = PhoneAuctionApplication.instance.getDrawable(R.drawable.ic_success)
-                message = getString(R.string.direct_success)
+                message = getString(R.string.un_collection_success)
             }
             MessageType.MESSAGE -> {
                 iconRes = PhoneAuctionApplication.instance.getDrawable(R.drawable.ic_launcher_foreground)
@@ -65,9 +65,9 @@ class MessageDialog : AppCompatDialogFragment() {
     }
 
     enum class MessageType(val value: Message) {
-        AUCTION_SUCCESS(Message()),
+        COLLECTION_SUCCESS(Message()),
         LOGIN_FAIL(Message()),
-        DIRECT_SUCCESS(Message()),
+        UN_COLLECTION_SUCCESS(Message()),
         MESSAGE(Message())
     }
 

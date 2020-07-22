@@ -45,6 +45,9 @@
             android:id="@+id/action_profileFragment_to_onPostFragment"
             app:destination="@id/onPostFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_profileFragment_to_collectionFragment"
+            app:destination="@id/collectionFragment" />
     </fragment>
 
     <fragment
@@ -184,7 +187,8 @@
     <fragment
         android:id="@+id/chatToDetailChatFragment"
         android:name="com.eric.phoneauction.chatToChatDetailFragment.ChatToDetailChatFragment"
-        android:label="ChatToDetailChatFragment" >
+        android:label="ChatToDetailChatFragment"
+        tools:layout="@layout/fragment_chat_to_detail_chat">
         <argument
             android:name="chatRoom"
             app:argType="com.eric.phoneauction.data.ChatRoom"
@@ -193,14 +197,22 @@
     <fragment
         android:id="@+id/purchasedFragment"
         android:name="com.eric.phoneauction.purchasedFragment.PurchasedFragment"
-        android:label="PurchasedFragment" />
+        android:label="PurchasedFragment"
+        tools:layout="@layout/fragment_purchased"/>
     <fragment
         android:id="@+id/onAuctionFragment"
         android:name="com.eric.phoneauction.onAuctionFragment.OnAuctionFragment"
-        android:label="OnAuctionFragment" />
+        android:label="OnAuctionFragment"
+        tools:layout="@layout/fragment_on_auction"/>
     <fragment
         android:id="@+id/onPostFragment"
         android:name="com.eric.phoneauction.onPostFragment.OnPostFragment"
-        android:label="OnPostFragment" />
+        android:label="OnPostFragment"
+        tools:layout="@layout/fragment_on_post"/>
+    <fragment
+        android:id="@+id/collectionFragment"
+        android:name="com.eric.phoneauction.collectionFragment.CollectionFragment"
+        android:label="CollectionFragment"
+        tools:layout="@layout/fragment_collection"/>
 
 </navigation>

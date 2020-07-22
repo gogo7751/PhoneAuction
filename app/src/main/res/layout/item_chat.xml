@@ -89,12 +89,12 @@
                     android:fontFamily="@font/noto_sans"
                     android:letterSpacing="0.15"
                     android:maxLines="1"
+                    android:layout_marginTop="4dp"
                     android:text="@{chatRoom.text}"
                     android:textColor="@color/gary757575"
-                    app:layout_constraintBottom_toTopOf="@id/text_chat_time"
                     app:layout_constraintEnd_toStartOf="@id/image_chat_product"
                     app:layout_constraintStart_toEndOf="@id/image_chat"
-                    app:layout_constraintTop_toBottomOf="@id/text_chat_title"
+                    app:layout_constraintTop_toBottomOf="@+id/text_chat_title"
                     tools:text="有現貨啦要買就買別囉嗦別凡啦123" />
 
                 <TextView

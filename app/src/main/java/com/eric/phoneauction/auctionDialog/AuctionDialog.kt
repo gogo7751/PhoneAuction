@@ -2,6 +2,7 @@ package com.eric.phoneauction.auctionDialog
 
 import android.graphics.Paint
 import android.os.Bundle
+import android.os.Handler
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -43,12 +44,14 @@ class AuctionDialog : BottomSheetDialogFragment() {
 
 
         viewModel.navigateToCheckoutSuccess.observe(viewLifecycleOwner, Observer {
-            viewModel.postAuction(it, viewModel.price.value as Int)
+
             if (viewModel.event.value?.buyUser == "") {
                 null
             } else {
-                viewModel.postNotification(viewModel.getNotification())
+                viewModel.postNotification(viewModel.getNotification("您的出價已被超過!"), it.buyUser)
             }
+            viewModel.postAuction(it, viewModel.price.value as Int)
+            viewModel.postNotification(viewModel.getNotification("您的商品有人出價"), viewModel.event.value!!.userId)
             findNavController().navigate(AuctionDialogDirections.actionAuctionDialogToCheckSuccessAuctionFragment())
             viewModel.leave()
         })

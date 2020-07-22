@@ -5,22 +5,30 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearSnapHelper
 import com.eric.phoneauction.NavigationDirections
+import com.eric.phoneauction.data.UserManager
 import com.eric.phoneauction.databinding.DetailAuctionFragmentBinding
+import com.eric.phoneauction.dialog.MessageDialog
 import com.eric.phoneauction.ext.getVmFactory
 import com.eric.phoneauction.homeFragment.HomeAdapter
 import com.eric.phoneauction.homeFragment.HomeViewModel
+import com.eric.phoneauction.util.Logger
 import kotlinx.android.synthetic.main.activity_main.*
 
 class DetailAuctionFragment : Fragment() {
 
     lateinit var binding: DetailAuctionFragmentBinding
-    private val viewModel by viewModels<DetailAuctionViewModel> { getVmFactory(DetailAuctionFragmentArgs.fromBundle(requireArguments()).event) }
+    private val viewModel by viewModels<DetailAuctionViewModel> {
+        getVmFactory(
+            DetailAuctionFragmentArgs.fromBundle(requireArguments()).event
+        )
+    }
     private val homeViewModel by viewModels<HomeViewModel> { getVmFactory() }
 
     override fun onCreateView(
@@ -34,9 +42,10 @@ class DetailAuctionFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-        val adapter = HomeAdapter(HomeAdapter.OnClickListener{
+        val adapter = HomeAdapter(HomeAdapter.OnClickListener {
             viewModel.navigateToDetail(it)
         }, homeViewModel)
+        adapter.setHasStableIds(true)
         binding.recyclerDetailAuctionAlsoLike.adapter = adapter
         binding.recyclerDetailAuction.adapter = DetailGalleryAdapter()
         binding.recyclerDetailAuctionCircles.adapter = DetailCircleAdapter()
@@ -68,7 +77,8 @@ class DetailAuctionFragment : Fragment() {
             }
 
             viewModel.snapPosition.observe(viewLifecycleOwner, Observer {
-                (binding.recyclerDetailAuctionCircles.adapter as DetailCircleAdapter).selectedPosition.value = (it % (product.images.size))
+                (binding.recyclerDetailAuctionCircles.adapter as DetailCircleAdapter).selectedPosition.value =
+                    (it % (product.images.size))
             })
         }
 
@@ -76,11 +86,19 @@ class DetailAuctionFragment : Fragment() {
             it?.let {
                 when (it.tag) {
                     "拍賣" -> {
-                        findNavController().navigate(NavigationDirections.actionGlobalDetailAuctionFragment(it))
+                        findNavController().navigate(
+                            NavigationDirections.actionGlobalDetailAuctionFragment(
+                                it
+                            )
+                        )
                         viewModel.onDetailNavigated()
                     }
                     "直購" -> {
-                        findNavController().navigate(NavigationDirections.actionGlobalDetailDirectFragment(it))
+                        findNavController().navigate(
+                            NavigationDirections.actionGlobalDetailDirectFragment(
+                                it
+                            )
+                        )
                         viewModel.onDetailNavigated()
                     }
                 }
@@ -90,7 +108,11 @@ class DetailAuctionFragment : Fragment() {
         viewModel.navigateToDetailChat.observe(viewLifecycleOwner, Observer {
             it?.let {
                 viewModel.postChatRoom(viewModel.getChatRoom())
-                findNavController().navigate(DetailAuctionFragmentDirections.actionDetailAuctionFragmentToDetailChatFragment(it))
+                findNavController().navigate(
+                    DetailAuctionFragmentDirections.actionDetailAuctionFragmentToDetailChatFragment(
+                        it
+                    )
+                )
                 viewModel.onDetailChatNavigated()
             }
         })
@@ -108,9 +130,6 @@ class DetailAuctionFragment : Fragment() {
             }
         })
 
-        viewModel.event.observe(viewLifecycleOwner, Observer {
-            println("66666${it.endTime}")
-        })
 
         viewModel.countDown.observe(viewLifecycleOwner, Observer {
             it?.let {
@@ -120,6 +139,20 @@ class DetailAuctionFragment : Fragment() {
 
         binding.buttonRePost.setOnClickListener {
             findNavController().navigate(NavigationDirections.actionGlobalPostFragment())
+        }
+
+        binding.imageViewDetailAuctionCollection.setOnClickListener {
+            viewModel.postCollection(viewModel.addCollection(true), UserManager.user)
+            binding.imageViewDetailAuctionCollection.visibility = View.GONE
+            binding.imageViewDetailAuctionCollectioned.visibility = View.VISIBLE
+            findNavController().navigate(NavigationDirections.navigateToMessageDialog(MessageDialog.MessageType.COLLECTION_SUCCESS))
+        }
+
+        binding.imageViewDetailAuctionCollectioned.setOnClickListener {
+            viewModel.postCollection(viewModel.addCollection(false), UserManager.user)
+            binding.imageViewDetailAuctionCollection.visibility = View.VISIBLE
+            binding.imageViewDetailAuctionCollectioned.visibility = View.GONE
+            findNavController().navigate(NavigationDirections.navigateToMessageDialog(MessageDialog.MessageType.UN_COLLECTION_SUCCESS))
         }
 
         viewModel.timerStart()

@@ -12,6 +12,7 @@ import com.eric.phoneauction.R
 import com.eric.phoneauction.data.Event
 import com.eric.phoneauction.data.Notification
 import com.eric.phoneauction.databinding.ItemHomeGirdBinding
+import com.eric.phoneauction.util.Logger
 import com.eric.phoneauction.util.Util
 import java.util.*
 
@@ -51,13 +52,17 @@ class HomeAdapter( val onClickListener: OnClickListener, val viewModel: HomeView
 
             val millsTime = event.endTime.minus(event.createdTime)
 
+
             timer = object : CountDownTimer(millsTime, ONE_SECOND) {
                 override fun onFinish() {
                     viewModel.finishAuction(event)
                     if (event.buyUser != "") {
                         viewModel.postNotification(getNotification("恭喜您得標!"), event.buyUser)
+                        viewModel.postNotification(getNotification("拍賣完成,請與買家聯絡完成出貨!"), event.userId)
+                    } else if (event.tag != "拍賣"){
+                        viewModel.postNotification(getNotification("商品已過期"), event.userId)
                     } else {
-                        viewModel.postNotification(getNotification("流標..."), com.eric.phoneauction.data.UserManager.userId!!)
+                        viewModel.postNotification(getNotification("流標"), event.userId)
                     }
                 }
 

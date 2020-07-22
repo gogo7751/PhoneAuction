@@ -42,6 +42,7 @@ class HomeFragment : Fragment() {
         val adapter = HomeAdapter(HomeAdapter.OnClickListener{
             viewModel.navigateToDetail(it)
         }, viewModel)
+        adapter.setHasStableIds(true)
         binding.recyclerviewHome.adapter = adapter
 
         viewModel.events.observe(viewLifecycleOwner, Observer {
@@ -59,7 +60,6 @@ class HomeFragment : Fragment() {
         binding.layoutSwipeRefreshHome.setOnRefreshListener {
             viewModel.refresh()
         }
-
 
         viewModel.liveEvents.observe(viewLifecycleOwner, Observer {
             it?.let {

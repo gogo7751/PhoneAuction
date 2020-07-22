@@ -30,6 +30,7 @@ class OnPostFragment : Fragment() {
         binding.viewModel = viewModel
 
         val adapter = OnPostAdapter()
+        adapter.setHasStableIds(true)
         binding.recyclerviewOnPost.adapter = adapter
 
         viewModel.liveEvents.observe(viewLifecycleOwner, Observer {

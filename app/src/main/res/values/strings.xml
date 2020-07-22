@@ -12,8 +12,8 @@
     <string name="seconds">\u0020</string>
 
     <!-- 出價 -->
-    <string name="auction_success">出價成功</string>
-    <string name="direct_success">購買成功</string>
+    <string name="collection_success">加入成功</string>
+    <string name="un_collection_success">移除成功</string>
 
     <!-- 拍賣 -->
     <string name="auction">我要出價</string>

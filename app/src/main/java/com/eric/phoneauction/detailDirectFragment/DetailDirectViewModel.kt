@@ -12,9 +12,8 @@ import androidx.recyclerview.widget.RecyclerView
 import app.appworks.school.publisher.network.LoadApiStatus
 import com.eric.phoneauction.PhoneAuctionApplication
 import com.eric.phoneauction.R
-import com.eric.phoneauction.data.ChatRoom
-import com.eric.phoneauction.data.Event
-import com.eric.phoneauction.data.UserManager
+import com.eric.phoneauction.data.*
+import com.eric.phoneauction.data.Collection
 import com.eric.phoneauction.data.source.PhoneAuctionRepository
 import com.eric.phoneauction.homeFragment.HomeAdapter
 import com.eric.phoneauction.util.Logger
@@ -35,6 +34,8 @@ class DetailDirectViewModel(
 
     val event: LiveData<Event>
         get() = _event
+
+    var collection = MutableLiveData<Collection>()
 
     private var _events = MutableLiveData<List<Event>>()
 
@@ -118,7 +119,80 @@ class DetailDirectViewModel(
         Logger.i("------------------------------------")
         getDirectResult()
         getCountdown()
+        getCollectionResult()
     }
+
+    private fun getCollectionResult() {
+
+        coroutineScope.launch {
+
+            _status.value = LoadApiStatus.LOADING
+
+            val result = phoneAuctionRepository.getCollection(arguments.id)
+
+            collection.value = when (result) {
+                is com.eric.phoneauction.data.Result.Success -> {
+                    _error.value = null
+                    _status.value = LoadApiStatus.DONE
+                    result.data
+                }
+                is com.eric.phoneauction.data.Result.Fail -> {
+                    Log.d("Result","fail")
+                    _error.value = result.error
+                    _status.value = LoadApiStatus.ERROR
+                    null
+                }
+                is com.eric.phoneauction.data.Result.Error -> {
+                    Log.d("Result","error")
+                    _error.value = result.exception.toString()
+                    _status.value = LoadApiStatus.ERROR
+                    null
+                }
+                else -> {
+                    _error.value = PhoneAuctionApplication.instance.getString(R.string.you_know_nothing)
+                    _status.value = LoadApiStatus.ERROR
+                    null
+                }
+            }
+            _refreshStatus.value = false
+        }
+    }
+
+
+    fun addCollection(boolean: Boolean) : Collection {
+        return Collection(
+            id = "",
+            visibility = boolean,
+            event = arguments
+        )
+    }
+
+    fun postCollection(collection: Collection, user: User) {
+        coroutineScope.launch {
+
+            _status.value = LoadApiStatus.LOADING
+
+            when (val result = phoneAuctionRepository.postCollection(collection, user)) {
+                is com.eric.phoneauction.data.Result.Success -> {
+                    _error.value = null
+                    _status.value = LoadApiStatus.DONE
+                }
+                is com.eric.phoneauction.data.Result.Fail -> {
+                    _error.value = result.error
+                    _status.value = LoadApiStatus.ERROR
+                }
+                is com.eric.phoneauction.data.Result.Error -> {
+                    _error.value = result.exception.toString()
+                    _status.value = LoadApiStatus.ERROR
+                }
+                else -> {
+                    _error.value = PhoneAuctionApplication.instance.getString(R.string.you_know_nothing)
+                    _status.value = LoadApiStatus.ERROR
+                }
+            }
+        }
+    }
+
 
     fun getChatRoom(): ChatRoom {
         return ChatRoom(

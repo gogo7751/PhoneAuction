@@ -35,6 +35,7 @@ class ChatToDetailChatFragment : Fragment() {
         binding.viewModel = viewModel
 
         val adapter = ChatToDetailChatAdapter(viewModel)
+        adapter.setHasStableIds(true)
         binding.recyclerviewChatToDetail.adapter = adapter
 
         viewModel.liveMessages.observe(viewLifecycleOwner, Observer {

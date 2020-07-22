@@ -28,6 +28,7 @@ class PurchasedFragment : Fragment() {
         binding.viewModel = viewModel
 
         val adapter = PurchasedAdapter()
+        adapter.setHasStableIds(true)
         binding.recyclerviewPurchased.adapter = adapter
 
         viewModel.liveEvents.observe(viewLifecycleOwner, Observer {

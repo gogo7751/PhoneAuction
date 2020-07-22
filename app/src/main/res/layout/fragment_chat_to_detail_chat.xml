@@ -18,7 +18,6 @@
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:background="#f6b76a"
-            app:layout_constraintBottom_toTopOf="@id/scrollView_chatToDetail"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -65,36 +64,19 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <ScrollView
-            android:id="@+id/scrollView_chatToDetail"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview_chatToDetail"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:overScrollMode="never"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/layout_chatToDetail_header"
             app:layout_constraintBottom_toTopOf="@id/edit_chatToDetail_input"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layout_chatToDetail_header">
+            app:reverseLayout="true"
+            tools:listitem="@layout/item_detail_chat" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerview_chatToDetail"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:overScrollMode="never"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        app:stackFromEnd="true"
-                        app:reverseLayout="true"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:listitem="@layout/item_detail_chat"/>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </ScrollView>
 
         <EditText
             android:id="@+id/edit_chatToDetail_input"

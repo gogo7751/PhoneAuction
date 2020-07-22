@@ -58,10 +58,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
                     android:fontFamily="@font/noto_sans"
+                    android:layout_marginTop="6dp"
                     android:letterSpacing="0.15"
                     android:text="@{event.brand}"
                     android:textColor="@color/gary757575"
-                    app:layout_constraintBottom_toTopOf="@id/text_onPost_price"
                     app:layout_constraintStart_toEndOf="@+id/image_onPost"
                     app:layout_constraintTop_toBottomOf="@+id/view_onPost_tag"
                     tools:text="Apple" />
@@ -104,8 +104,9 @@
                     android:letterSpacing="0.15"
                     android:textColor="@color/gary757575"
                     android:textSize="12sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/image_onPost"
+                    android:layout_marginTop="6dp"
                     app:layout_constraintStart_toEndOf="@+id/image_onPost"
+                    app:layout_constraintTop_toBottomOf="@+id/text_onPost_content_brand"
                     app:price="@{event.price}"
                     tools:text="NT$9999" />
 
