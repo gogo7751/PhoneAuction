@@ -105,4 +105,12 @@ class DefaultPhoneAuctionRepository(private val remoteDataSource: PhoneAuctionDa
     override suspend fun getCollection(id: String): Result<Collection> {
         return remoteDataSource.getCollection(id)
     }
+
+    override suspend fun getAllCollection(): Result<List<Collection>> {
+        return remoteDataSource.getAllCollection()
+    }
+
+    override fun getAllLiveCollection(): MutableLiveData<List<Collection>> {
+        return remoteDataSource.getAllLiveCollection()
+    }
 }

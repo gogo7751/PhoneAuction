@@ -54,6 +54,10 @@ class ProfileFragment : Fragment() {
             findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToOnPostFragment())
         }
 
+        binding.buttonProfileCollection.setOnClickListener {
+            findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToCollectionFragment())
+        }
+
         (activity as AppCompatActivity).bottomNavView.visibility = View.VISIBLE
         return binding.root
     }

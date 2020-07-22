@@ -33,6 +33,7 @@ class DetailChatFragment : Fragment() {
         binding.viewModel = viewModel
 
         val adapter = DetailChatAdapter(viewModel)
+        adapter.setHasStableIds(true)
         binding.recyclerviewChatDetail.adapter = adapter
 
         viewModel.liveMessages.observe(viewLifecycleOwner, Observer {

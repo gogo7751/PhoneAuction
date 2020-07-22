@@ -58,4 +58,8 @@ interface PhoneAuctionDataSource {
     suspend fun postCollection(collection: Collection, user: User): Result<Boolean>
 
     suspend fun getCollection(id: String): Result<Collection>
+
+    suspend fun getAllCollection(): Result<List<Collection>>
+
+    fun getAllLiveCollection(): MutableLiveData<List<Collection>>
 }

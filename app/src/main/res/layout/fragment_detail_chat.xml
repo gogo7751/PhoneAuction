@@ -86,7 +86,6 @@
                         android:layout_height="match_parent"
                         android:overScrollMode="never"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        app:stackFromEnd="true"
                         app:reverseLayout="true"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"

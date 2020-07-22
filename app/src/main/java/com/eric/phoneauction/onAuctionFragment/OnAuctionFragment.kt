@@ -29,6 +29,7 @@ class OnAuctionFragment : Fragment() {
         binding.viewModel = viewModel
 
         val adapter = OnAuctionAdapter()
+        adapter.setHasStableIds(true)
         binding.recyclerviewOnAuction.adapter = adapter
 
         viewModel.events.observe(viewLifecycleOwner, Observer {

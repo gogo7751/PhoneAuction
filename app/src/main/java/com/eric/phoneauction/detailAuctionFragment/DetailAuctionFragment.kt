@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearSnapHelper
 import com.eric.phoneauction.NavigationDirections
 import com.eric.phoneauction.data.UserManager
 import com.eric.phoneauction.databinding.DetailAuctionFragmentBinding
+import com.eric.phoneauction.dialog.MessageDialog
 import com.eric.phoneauction.ext.getVmFactory
 import com.eric.phoneauction.homeFragment.HomeAdapter
 import com.eric.phoneauction.homeFragment.HomeViewModel
@@ -23,7 +24,11 @@ import kotlinx.android.synthetic.main.activity_main.*
 class DetailAuctionFragment : Fragment() {
 
     lateinit var binding: DetailAuctionFragmentBinding
-    private val viewModel by viewModels<DetailAuctionViewModel> { getVmFactory(DetailAuctionFragmentArgs.fromBundle(requireArguments()).event) }
+    private val viewModel by viewModels<DetailAuctionViewModel> {
+        getVmFactory(
+            DetailAuctionFragmentArgs.fromBundle(requireArguments()).event
+        )
+    }
     private val homeViewModel by viewModels<HomeViewModel> { getVmFactory() }
 
     override fun onCreateView(
@@ -37,9 +42,10 @@ class DetailAuctionFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-        val adapter = HomeAdapter(HomeAdapter.OnClickListener{
+        val adapter = HomeAdapter(HomeAdapter.OnClickListener {
             viewModel.navigateToDetail(it)
         }, homeViewModel)
+        adapter.setHasStableIds(true)
         binding.recyclerDetailAuctionAlsoLike.adapter = adapter
         binding.recyclerDetailAuction.adapter = DetailGalleryAdapter()
         binding.recyclerDetailAuctionCircles.adapter = DetailCircleAdapter()
@@ -71,7 +77,8 @@ class DetailAuctionFragment : Fragment() {
             }
 
             viewModel.snapPosition.observe(viewLifecycleOwner, Observer {
-                (binding.recyclerDetailAuctionCircles.adapter as DetailCircleAdapter).selectedPosition.value = (it % (product.images.size))
+                (binding.recyclerDetailAuctionCircles.adapter as DetailCircleAdapter).selectedPosition.value =
+                    (it % (product.images.size))
             })
         }
 
@@ -79,11 +86,19 @@ class DetailAuctionFragment : Fragment() {
             it?.let {
                 when (it.tag) {
                     "拍賣" -> {
-                        findNavController().navigate(NavigationDirections.actionGlobalDetailAuctionFragment(it))
+                        findNavController().navigate(
+                            NavigationDirections.actionGlobalDetailAuctionFragment(
+                                it
+                            )
+                        )
                         viewModel.onDetailNavigated()
                     }
                     "直購" -> {
-                        findNavController().navigate(NavigationDirections.actionGlobalDetailDirectFragment(it))
+                        findNavController().navigate(
+                            NavigationDirections.actionGlobalDetailDirectFragment(
+                                it
+                            )
+                        )
                         viewModel.onDetailNavigated()
                     }
                 }
@@ -93,7 +108,11 @@ class DetailAuctionFragment : Fragment() {
         viewModel.navigateToDetailChat.observe(viewLifecycleOwner, Observer {
             it?.let {
                 viewModel.postChatRoom(viewModel.getChatRoom())
-                findNavController().navigate(DetailAuctionFragmentDirections.actionDetailAuctionFragmentToDetailChatFragment(it))
+                findNavController().navigate(
+                    DetailAuctionFragmentDirections.actionDetailAuctionFragmentToDetailChatFragment(
+                        it
+                    )
+                )
                 viewModel.onDetailChatNavigated()
             }
         })
@@ -123,12 +142,17 @@ class DetailAuctionFragment : Fragment() {
         }
 
         binding.imageViewDetailAuctionCollection.setOnClickListener {
-            if (viewModel.collection.value?.id == viewModel.event.value?.id) {
-                Toast.makeText(context, "已移除收藏", Toast.LENGTH_SHORT).show()
-            } else{
-                viewModel.postCollection(viewModel.addCollection(true), UserManager.user)
-                Toast.makeText(context, "已加入收藏", Toast.LENGTH_SHORT).show()
-            }
+            viewModel.postCollection(viewModel.addCollection(true), UserManager.user)
+            binding.imageViewDetailAuctionCollection.visibility = View.GONE
+            binding.imageViewDetailAuctionCollectioned.visibility = View.VISIBLE
+            findNavController().navigate(NavigationDirections.navigateToMessageDialog(MessageDialog.MessageType.COLLECTION_SUCCESS))
+        }
+
+        binding.imageViewDetailAuctionCollectioned.setOnClickListener {
+            viewModel.postCollection(viewModel.addCollection(false), UserManager.user)
+            binding.imageViewDetailAuctionCollection.visibility = View.VISIBLE
+            binding.imageViewDetailAuctionCollectioned.visibility = View.GONE
+            findNavController().navigate(NavigationDirections.navigateToMessageDialog(MessageDialog.MessageType.UN_COLLECTION_SUCCESS))
         }
 
         viewModel.timerStart()

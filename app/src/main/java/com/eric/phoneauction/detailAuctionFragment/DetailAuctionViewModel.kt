@@ -37,6 +37,7 @@ class DetailAuctionViewModel(
     val event: LiveData<Event>
         get() = _event
 
+
     private var _events = MutableLiveData<List<Event>>()
 
     val events: LiveData<List<Event>>

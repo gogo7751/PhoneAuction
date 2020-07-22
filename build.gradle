@@ -30,6 +30,7 @@ buildscript {
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$version_navigation"
         classpath "com.google.gms:google-services:$version_gms"
         classpath "org.jetbrains.kotlin:kotlin-allopen:$version_kotlin"
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.2.0'
     }
 }
 

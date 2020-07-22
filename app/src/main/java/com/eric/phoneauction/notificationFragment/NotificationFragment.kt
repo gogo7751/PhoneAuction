@@ -30,6 +30,7 @@ class NotificationFragment : Fragment() {
         binding.viewModel = viewModel
 
         val adapter = NotificationAdapter(viewModel)
+        adapter.setHasStableIds(true)
         binding.recyclerviewNotification.adapter = adapter
 
         viewModel.liveNotifications.observe(viewLifecycleOwner, Observer {

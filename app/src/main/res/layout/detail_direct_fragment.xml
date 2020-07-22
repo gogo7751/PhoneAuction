@@ -311,12 +311,12 @@
             android:id="@+id/image_detail_direct_message"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="56dp"
             android:src="@drawable/ic_message"
             android:onClick="@{() -> viewModel.navigateToDetailChat(viewModel.event)}"
             android:visibility="@{viewModel.event.deal == false ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="@+id/view_detail_direct_bg"
-            app:layout_constraintStart_toEndOf="@+id/imageView_detail_direct_collection"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/view_detail_direct_bg"
             />
 
@@ -327,7 +327,20 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:src="@drawable/ic_heart_128px"
-            android:visibility="@{viewModel.event.deal == false ? View.GONE : View.VISIBLE}"
+            android:visibility="@{viewModel.event.deal == false || viewModel.collection.visibility == true ? View.GONE : View.VISIBLE}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/view_detail_direct_bg"
+            app:layout_constraintBottom_toBottomOf="@id/view_detail_direct_bg"
+            />
+
+        <ImageView
+            android:id="@+id/imageView_detail_direct_collectioned"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/baseline_favorite_black_48"
+            android:visibility="@{viewModel.event.deal == false || viewModel.collection.visibility == false ? View.GONE : View.VISIBLE}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/view_detail_direct_bg"
             app:layout_constraintBottom_toBottomOf="@id/view_detail_direct_bg"

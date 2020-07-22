@@ -106,4 +106,12 @@ class PhoneAuctionLocalDataSource(val context: Context) :
     override suspend fun getCollection(id: String): Result<Collection> {
         TODO("Not yet implemented")
     }
+
+    override suspend fun getAllCollection(): Result<List<Collection>> {
+        TODO("Not yet implemented")
+    }
+
+    override fun getAllLiveCollection(): MutableLiveData<List<Collection>> {
+        TODO("Not yet implemented")
+    }
 }

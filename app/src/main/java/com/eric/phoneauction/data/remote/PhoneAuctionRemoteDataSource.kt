@@ -705,6 +705,67 @@ object PhoneAuctionRemoteDataSource :
                 }
         }
     }
+
+    override suspend fun getAllCollection(): Result<List<Collection>> = suspendCoroutine { continuation ->
+        UserManager.userId?.let {
+            FirebaseFirestore.getInstance()
+                .collection(PATH_USER)
+                .document(it)
+                .collection(PATH_COLLECTION)
+                .whereEqualTo("visibility", true)
+                .get()
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        var list = mutableListOf<Collection>()
+                        for (document in task.result!!) {
+                            Logger.d(document.id + " => " + document.data)
+
+                            val collection = document.toObject(Collection::class.java)
+                            list.add(collection)
+                        }
+                        continuation.resume(Result.Success(list))
+                    } else {
+                        task.exception?.let {
+
+                            Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
+                            continuation.resume(Result.Error(it))
+                            return@addOnCompleteListener
+                        }
+                        continuation.resume(Result.Fail(PhoneAuctionApplication.instance.getString(R.string.you_know_nothing)))
+                    }
+                }
+        }
+    }
+
+    override fun getAllLiveCollection(): MutableLiveData<List<Collection>> {
+        val liveData = MutableLiveData<List<Collection>>()
+
+        UserManager.userId?.let {
+            FirebaseFirestore.getInstance()
+                .collection(PATH_USER)
+                .document(it)
+                .collection(PATH_COLLECTION)
+                .whereEqualTo("visibility", true)
+                .addSnapshotListener { snapshot, exception ->
+
+                    Logger.i("addSnapshotListener detect")
+
+                    exception?.let {
+                        Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
+                    }
+
+                    val list = mutableListOf<Collection>()
+                    for (document in snapshot!!) {
+                        Logger.d(document.id + " => " + document.data)
+                        val collection = document.toObject(Collection::class.java)
+                        list.add(collection)
+                    }
+
+                    liveData.value = list
+                }
+        }
+        return liveData
+    }
 }
 
 
