@@ -10,7 +10,7 @@
 
         <variable
             name="viewModel"
-            type="com.eric.phoneauction.homeFragment.HomeViewModel" />
+            type="com.eric.phoneauction.searchFragment.SearchViewModel" />
 
         <variable
             name="countDown"
@@ -26,7 +26,7 @@
         android:paddingLeft="16dp">
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/image_home_main"
+            android:id="@+id/image_search_main"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:cardCornerRadius="6dp"
@@ -81,7 +81,7 @@
                     tools:text="拍賣" />
 
                 <TextView
-                    android:id="@+id/text_home_brand"
+                    android:id="@+id/text_search_brand"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -97,7 +97,7 @@
                     tools:text="APPLE" />
 
                 <TextView
-                    android:id="@+id/text_home_title"
+                    android:id="@+id/text_search_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
@@ -110,11 +110,11 @@
                     android:textColor="@color/black212121"
                     android:textSize="13dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/text_home_brand"
+                    app:layout_constraintTop_toBottomOf="@+id/text_search_brand"
                     tools:text="iPhone 11" />
 
                 <TextView
-                    android:id="@+id/text_home_storage"
+                    android:id="@+id/text_search_storage"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="3dp"
@@ -127,12 +127,12 @@
                     android:textColor="@color/black212121"
                     android:textSize="13dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/text_home_title"
-                    app:layout_constraintTop_toTopOf="@+id/text_home_title"
+                    app:layout_constraintStart_toEndOf="@+id/text_search_title"
+                    app:layout_constraintTop_toTopOf="@+id/text_search_title"
                     tools:text="64G" />
 
                 <TextView
-                    android:id="@+id/text_home_price"
+                    android:id="@+id/text_search_price"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
@@ -143,13 +143,13 @@
                     android:layout_marginStart="4dp"
                     android:textColor="@color/black212121"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/text_home_title"
+                    app:layout_constraintTop_toBottomOf="@+id/text_search_title"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:price="@{event.price}"
                     tools:text="NT$1200" />
 
                 <TextView
-                    android:id="@+id/text_home_time"
+                    android:id="@+id/text_search_time"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
@@ -158,7 +158,7 @@
                     android:layout_marginEnd="4dp"
                     android:textColor="@color/black212121"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/text_home_price"
+                    app:layout_constraintTop_toTopOf="@+id/text_search_price"
                     tools:text="15:00:20" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

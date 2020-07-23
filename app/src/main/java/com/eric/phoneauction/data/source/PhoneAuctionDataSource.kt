@@ -62,4 +62,7 @@ interface PhoneAuctionDataSource {
     suspend fun getAllCollection(): Result<List<Collection>>
 
     fun getAllLiveCollection(): MutableLiveData<List<Collection>>
+
+    fun getLiveSearch(field: String, searchKey: String): MutableLiveData<List<Event>>
+
 }

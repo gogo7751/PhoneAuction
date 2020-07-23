@@ -113,4 +113,9 @@ class DefaultPhoneAuctionRepository(private val remoteDataSource: PhoneAuctionDa
     override fun getAllLiveCollection(): MutableLiveData<List<Collection>> {
         return remoteDataSource.getAllLiveCollection()
     }
+
+    override fun getLiveSearch(field: String, searchKey: String): MutableLiveData<List<Event>> {
+        return remoteDataSource.getLiveSearch(field, searchKey)
+    }
+
 }

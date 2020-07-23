@@ -9,7 +9,11 @@
         android:id="@+id/homeFragment"
         android:name="com.eric.phoneauction.homeFragment.HomeFragment"
         android:label="home_fragment"
-        tools:layout="@layout/home_fragment" />
+        tools:layout="@layout/home_fragment" >
+        <action
+            android:id="@+id/action_homeFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/chatFragment"
@@ -214,5 +218,15 @@
         android:name="com.eric.phoneauction.collectionFragment.CollectionFragment"
         android:label="CollectionFragment"
         tools:layout="@layout/fragment_collection"/>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.eric.phoneauction.searchFragment.SearchFragment"
+        android:label="SearchFragment"
+        >
+        <argument
+            android:name="search"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment><action android:id="@+id/action_global_searchFragment" app:destination="@id/searchFragment"/>
 
 </navigation>

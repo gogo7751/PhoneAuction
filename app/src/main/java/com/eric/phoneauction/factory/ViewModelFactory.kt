@@ -14,6 +14,7 @@ import com.eric.phoneauction.onPostFragment.OnPostViewModel
 import com.eric.phoneauction.postFragment.PostViewModel
 import com.eric.phoneauction.profileFragment.ProfileViewModel
 import com.eric.phoneauction.purchasedFragment.PurchasedViewModel
+import com.eric.phoneauction.searchFragment.SearchViewModel
 import java.lang.IllegalArgumentException
 
 @Suppress("UNCHECKED_CAST")

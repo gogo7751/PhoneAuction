@@ -64,4 +64,6 @@ interface PhoneAuctionRepository {
 
     fun getAllLiveCollection(): MutableLiveData<List<Collection>>
 
+    fun getLiveSearch(field: String, searchKey: String): MutableLiveData<List<Event>>
+
 }

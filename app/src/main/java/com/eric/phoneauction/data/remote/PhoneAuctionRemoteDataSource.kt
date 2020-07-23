@@ -8,8 +8,10 @@ import com.eric.phoneauction.data.*
 import com.eric.phoneauction.data.Collection
 import com.eric.phoneauction.data.source.PhoneAuctionDataSource
 import com.eric.phoneauction.util.Logger
+import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import java.util.logging.Handler
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
@@ -343,7 +345,7 @@ object PhoneAuctionRemoteDataSource :
 
         event.id = document.id
         event.createdTime = Calendar.getInstance().timeInMillis
-        event.endTime = Calendar.getInstance().timeInMillis + 10000
+        event.endTime = Calendar.getInstance().timeInMillis + 10000000000
 
         document
             .set(event)
@@ -766,6 +768,36 @@ object PhoneAuctionRemoteDataSource :
         }
         return liveData
     }
+
+    override fun getLiveSearch(field: String, searchKey: String): MutableLiveData<List<Event>> {
+        val liveData = MutableLiveData<List<Event>>()
+
+        FirebaseFirestore.getInstance()
+            .collection(PATH_EVENTS)
+            .whereEqualTo("deal", true)
+            .orderBy(field)
+            .startAt(searchKey)
+            .endAt(searchKey+"\uf8ff")
+            .addSnapshotListener { snapshot, exception ->
+
+                Logger.i("addSnapshotListener detect")
+
+                exception?.let {
+                    Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
+                }
+
+                val list = mutableListOf<Event>()
+                for (document in snapshot!!) {
+                    Logger.d(document.id + " => " + document.data)
+                    val event = document.toObject(Event::class.java)
+                    list.add(event)
+                }
+
+                liveData.value = list
+            }
+        return liveData
+    }
+
 }
 
 

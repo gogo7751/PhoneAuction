@@ -6,6 +6,7 @@ import com.eric.phoneauction.data.ChatRoom
 import com.eric.phoneauction.data.Event
 import com.eric.phoneauction.factory.ChatViewModelFactory
 import com.eric.phoneauction.factory.EventViewModelFactory
+import com.eric.phoneauction.factory.SearchViewModelFactory
 import com.eric.phoneauction.factory.ViewModelFactory
 
 /**
@@ -27,5 +28,10 @@ fun Fragment.getVmFactory(event: Event): EventViewModelFactory {
 fun Fragment.getVmFactory(chatRoom: ChatRoom): ChatViewModelFactory {
     val repository = (requireContext().applicationContext as PhoneAuctionApplication).repository
     return ChatViewModelFactory(repository, chatRoom)
+}
+
+fun Fragment.getVmFactory(search: String?): SearchViewModelFactory {
+    val repository = (requireContext().applicationContext as PhoneAuctionApplication).repository
+    return SearchViewModelFactory(repository, search as String)
 }
 
