@@ -798,6 +798,35 @@ object PhoneAuctionRemoteDataSource :
         return liveData
     }
 
+    override suspend fun getAveragePrice(brand: String, productName: String, storage: String, deal: Boolean): Result<List<Event>> = suspendCoroutine { continuation ->
+        FirebaseFirestore.getInstance()
+            .collection(PATH_EVENTS)
+            .whereEqualTo("brand", brand)
+            .whereEqualTo("productName", productName)
+            .whereEqualTo("storage", storage)
+            .whereEqualTo("deal", deal)
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val list = mutableListOf<Event>()
+                    for (document in task.result!!) {
+                        Logger.d(document.id + " => " + document.data)
+
+                        val event = document.toObject(Event::class.java)
+                        list.add(event)
+                    }
+                    continuation.resume(Result.Success(list))
+                } else {
+                    task.exception?.let {
+
+                        Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
+                        continuation.resume(Result.Error(it))
+                        return@addOnCompleteListener
+                    }
+                    continuation.resume(Result.Fail(PhoneAuctionApplication.instance.getString(R.string.you_know_nothing)))
+                }
+            }
+    }
 }
 
 

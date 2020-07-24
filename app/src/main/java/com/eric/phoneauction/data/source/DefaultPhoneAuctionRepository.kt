@@ -118,4 +118,8 @@ class DefaultPhoneAuctionRepository(private val remoteDataSource: PhoneAuctionDa
         return remoteDataSource.getLiveSearch(field, searchKey)
     }
 
+    override suspend fun getAveragePrice(brand: String, productName: String, storage: String, deal: Boolean
+    ): Result<List<Event>> {
+        return remoteDataSource.getAveragePrice(brand, productName, storage, deal)
+    }
 }

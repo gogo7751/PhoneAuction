@@ -15,6 +15,7 @@ import com.eric.phoneauction.NavigationDirections
 import com.eric.phoneauction.data.UserManager
 import com.eric.phoneauction.databinding.DetailAuctionFragmentBinding
 import com.eric.phoneauction.dialog.MessageDialog
+import com.eric.phoneauction.dialog.NoteDialog
 import com.eric.phoneauction.ext.getVmFactory
 import com.eric.phoneauction.homeFragment.HomeAdapter
 import com.eric.phoneauction.homeFragment.HomeViewModel
@@ -155,10 +156,23 @@ class DetailAuctionFragment : Fragment() {
             findNavController().navigate(NavigationDirections.navigateToMessageDialog(MessageDialog.MessageType.UN_COLLECTION_SUCCESS))
         }
 
+        //最近商品成交價
+        viewModel.averageEvents.observe(viewLifecycleOwner, Observer { list ->
+            list?.let { event ->
+                viewModel.averagePrice.value = event.map { it.price }.average().toInt()
+            }
+        })
+
+        binding.imageAuctionQuestion.setOnClickListener {
+            findNavController().navigate(NavigationDirections.actionGlobalNoteDialog(NoteDialog.MessageType.AVERAGE_PRICE))
+        }
+
         viewModel.timerStart()
         (activity as AppCompatActivity).bottomNavView.visibility = View.GONE
         return binding.root
     }
+
+
 
     //bottom navigation view gone
     override fun onDestroy() {

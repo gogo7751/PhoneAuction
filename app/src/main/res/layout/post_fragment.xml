@@ -390,18 +390,46 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text_post_name_auction" />
 
+                <ImageView
+                    android:id="@+id/image_post_question"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_marginTop="3dp"
+                    android:alpha="0.7"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/ic_questionmark"
+                    app:layout_constraintStart_toStartOf="@+id/text_post_name_auction"
+                    app:layout_constraintTop_toBottomOf="@+id/edit_post_auction"
+                    />
+
+                <TextView
+                    android:id="@+id/text_post_average"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:letterSpacing="0.15"
+                    android:fontFamily="@font/noto_sans"
+                    android:textColor="@color/black_3f3a3a"
+                    android:layout_marginStart="4dp"
+                    android:visibility="gone"
+                    app:average_price="@{viewModel.averagePrice}"
+                    app:layout_constraintTop_toTopOf="@+id/image_post_question"
+                    app:layout_constraintBottom_toBottomOf="@+id/image_post_question"
+                    app:layout_constraintStart_toEndOf="@+id/image_post_question"
+                    tools:text="近期成交價 NT$6990"
+                    />
+
                 <TextView
                     android:id="@+id/text_post_trade"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="8dp"
                     android:fontFamily="@font/noto_sans_bold"
                     android:letterSpacing="0.15"
                     android:text="交易方式"
                     android:textColor="@color/alpha_black"
                     android:textSize="20dp"
                     app:layout_constraintStart_toStartOf="@+id/text_post_name_auction"
-                    app:layout_constraintTop_toBottomOf="@+id/edit_post_auction" />
+                    app:layout_constraintTop_toBottomOf="@+id/image_post_question" />
 
                 <Spinner
                     android:id="@+id/spinner_trade"

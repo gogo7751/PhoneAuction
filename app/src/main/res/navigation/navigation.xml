@@ -228,5 +228,14 @@
             app:argType="string"
             app:nullable="true" />
     </fragment><action android:id="@+id/action_global_searchFragment" app:destination="@id/searchFragment"/>
+    <dialog
+        android:id="@+id/noteDialog"
+        android:name="com.eric.phoneauction.dialog.NoteDialog"
+        android:label="NoteDialog">
+        <argument android:name="messageTypeKey"
+            app:argType="com.eric.phoneauction.dialog.NoteDialog$MessageType"
+            app:nullable="false"/>
+    </dialog>
+    <action android:id="@+id/action_global_noteDialog" app:destination="@id/noteDialog" />
 
 </navigation>

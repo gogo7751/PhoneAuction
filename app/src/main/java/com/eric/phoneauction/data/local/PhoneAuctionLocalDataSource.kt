@@ -119,4 +119,8 @@ class PhoneAuctionLocalDataSource(val context: Context) :
         TODO("Not yet implemented")
     }
 
+    override suspend fun getAveragePrice(brand: String, productName: String, storage: String, deal: Boolean
+    ): Result<List<Event>> {
+        TODO("Not yet implemented")
+    }
 }

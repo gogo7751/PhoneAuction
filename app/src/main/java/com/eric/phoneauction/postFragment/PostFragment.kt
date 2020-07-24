@@ -24,7 +24,9 @@ import com.eric.phoneauction.NavigationDirections
 import com.eric.phoneauction.PhoneAuctionApplication
 import com.eric.phoneauction.R
 import com.eric.phoneauction.databinding.PostFragmentBinding
+import com.eric.phoneauction.dialog.NoteDialog
 import com.eric.phoneauction.ext.getVmFactory
+import com.eric.phoneauction.util.Logger
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
@@ -51,7 +53,7 @@ class PostFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = PostFragmentBinding.inflate(inflater, container, false)
-        binding.lifecycleOwner = viewLifecycleOwner
+        binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
 
@@ -205,15 +207,34 @@ class PostFragment : Fragment() {
                     1 -> {
                         binding.editPostDirect.visibility = View.VISIBLE
                         binding.editPostAuction.visibility = View.GONE
+                        binding.imagePostQuestion.visibility = View.VISIBLE
+                        binding.textPostAverage.visibility = View.VISIBLE
                     }
                     2 -> {
                         binding.editPostDirect.visibility = View.GONE
                         binding.editPostAuction.visibility = View.VISIBLE
+                        binding.imagePostQuestion.visibility = View.VISIBLE
+                        binding.textPostAverage.visibility = View.VISIBLE
                     }
                 }
                 viewModel.tag.value = binding.spinnerTag.selectedItem.toString()
+                viewModel.getAveragePriceResult(viewModel.brand.value.toString(), viewModel.productName.value.toString(), viewModel.storage.value.toString(), false)
             }
         }
+
+
+        //最近商品成交價
+        viewModel.events.observe(viewLifecycleOwner, Observer { list ->
+            list?.let { event ->
+                 viewModel.averagePrice.value = event.map { it.price }.average().toInt()
+            }
+        })
+
+        binding.imagePostQuestion.setOnClickListener {
+            findNavController().navigate(NavigationDirections.actionGlobalNoteDialog(NoteDialog.MessageType.AVERAGE_PRICE))
+        }
+
+
 
         //選擇容量
         binding.spinnerStorage.adapter = PostSpinnerAdapter(

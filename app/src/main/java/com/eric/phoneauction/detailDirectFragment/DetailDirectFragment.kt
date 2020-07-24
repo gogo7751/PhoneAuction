@@ -22,6 +22,7 @@ import com.eric.phoneauction.detailAuctionFragment.DetailAuctionViewModel
 import com.eric.phoneauction.detailAuctionFragment.DetailCircleAdapter
 import com.eric.phoneauction.detailAuctionFragment.DetailGalleryAdapter
 import com.eric.phoneauction.dialog.MessageDialog
+import com.eric.phoneauction.dialog.NoteDialog
 import com.eric.phoneauction.ext.getVmFactory
 import com.eric.phoneauction.homeFragment.HomeAdapter
 import com.eric.phoneauction.homeFragment.HomeViewModel
@@ -140,6 +141,17 @@ class DetailDirectFragment : Fragment() {
             binding.imageViewDetailDirectCollection.visibility = View.VISIBLE
             binding.imageViewDetailDirectCollectioned.visibility = View.GONE
             findNavController().navigate(NavigationDirections.navigateToMessageDialog(MessageDialog.MessageType.UN_COLLECTION_SUCCESS))
+        }
+
+        //最近商品成交價
+        viewModel.averageEvents.observe(viewLifecycleOwner, Observer { list ->
+            list?.let { event ->
+                viewModel.averagePrice.value = event.map { it.price }.average().toInt()
+            }
+        })
+
+        binding.imageDirectQuestion.setOnClickListener {
+            findNavController().navigate(NavigationDirections.actionGlobalNoteDialog(NoteDialog.MessageType.AVERAGE_PRICE))
         }
 
         viewModel.timerStart()

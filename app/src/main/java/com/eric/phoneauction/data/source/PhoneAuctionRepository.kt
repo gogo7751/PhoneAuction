@@ -66,4 +66,6 @@ interface PhoneAuctionRepository {
 
     fun getLiveSearch(field: String, searchKey: String): MutableLiveData<List<Event>>
 
+    suspend fun getAveragePrice(brand: String, productName: String, storage: String, deal: Boolean): Result<List<Event>>
+
 }

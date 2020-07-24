@@ -15,6 +15,9 @@
     <string name="collection_success">加入成功</string>
     <string name="un_collection_success">移除成功</string>
 
+    <!-- note -->
+    <string name="note_average_price">近三個月平均交易價\n僅供參考</string>
+
     <!-- 拍賣 -->
     <string name="auction">我要出價</string>
     <string name="direct">我要購買</string>
@@ -38,6 +41,7 @@
 
     <!-- General -->
     <string name="nt_dollars_">NT$%d</string>
+    <string name="average_price">此商品近期成交價 NT$%d</string>
 
     <!-- Brand -->
     <string-array name="brand_list">
