@@ -51,7 +51,6 @@ class DetailAuctionViewModel(
 
     var collection = MutableLiveData<Collection>()
 
-
     val isBuyUser = MutableLiveData<Boolean>().apply {
         value = arguments.buyUser == arguments.userId
     }

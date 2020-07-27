@@ -109,11 +109,7 @@ class DetailAuctionFragment : Fragment() {
         viewModel.navigateToDetailChat.observe(viewLifecycleOwner, Observer {
             it?.let {
                 viewModel.postChatRoom(viewModel.getChatRoom())
-                findNavController().navigate(
-                    DetailAuctionFragmentDirections.actionDetailAuctionFragmentToDetailChatFragment(
-                        it
-                    )
-                )
+                findNavController().navigate(DetailAuctionFragmentDirections.actionDetailAuctionFragmentToDetailChatFragment(it))
                 viewModel.onDetailChatNavigated()
             }
         })

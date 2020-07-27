@@ -17,6 +17,7 @@
 
     <!-- note -->
     <string name="note_average_price">近三個月平均交易價\n僅供參考</string>
+    <string name="note_wish">當新上架的商品與您的清單相符時\n您會收到通知</string>
 
     <!-- 拍賣 -->
     <string name="auction">我要出價</string>

@@ -53,12 +53,17 @@ class NoteDialog : AppCompatDialogFragment() {
                 iconRes = PhoneAuctionApplication.instance.getDrawable(R.drawable.ic_questionmark)
                 message = getString(R.string.un_collection_success)
             }
+            MessageType.WISH -> {
+                iconRes = PhoneAuctionApplication.instance.getDrawable(R.drawable.ic_questionmark_white)
+                message = getString(R.string.note_wish)
+            }
         }
     }
 
     enum class MessageType(val value: MessageDialog.Message) {
         AVERAGE_PRICE(MessageDialog.Message()),
-        NO_AVERAGE_PRICE(MessageDialog.Message())
+        NO_AVERAGE_PRICE(MessageDialog.Message()),
+        WISH(MessageDialog.Message())
     }
 
     interface IMessage {

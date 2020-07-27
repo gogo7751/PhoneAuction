@@ -39,11 +39,6 @@ class NotificationFragment : Fragment() {
 
 
 
-        binding.layoutSwipeRefreshNotification.setOnRefreshListener {
-            viewModel.refresh()
-        }
-
-
         (activity as AppCompatActivity).bottomNavView.visibility = View.VISIBLE
         return binding.root
     }

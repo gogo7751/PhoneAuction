@@ -67,4 +67,11 @@ interface PhoneAuctionDataSource {
 
     suspend fun getAveragePrice(brand: String, productName: String, storage: String, deal: Boolean): Result<List<Event>>
 
+    suspend fun postWishList(wishList: WishList): Result<Boolean>
+
+    suspend fun updateWishList(id: String): Result<Boolean>
+
+    fun getWishList(): MutableLiveData<List<WishList>>
+
+    suspend fun getWishListFromPost(brand: String, productName: String, storage: String, visibility: Boolean): Result<WishList>
 }

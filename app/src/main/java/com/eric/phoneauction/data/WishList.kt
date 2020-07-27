@@ -1,10 +1,11 @@
 package com.eric.phoneauction.data
 
 data class WishList(
-    val id: String = "",
-    val brand: String = "",
-    val productName: String = "",
-    val storage: String = "",
-    val userId: String = ""
+    var id: String = "",
+    var brand: String = "",
+    var productName: String = "",
+    var storage: String = "",
+    var userId: String = "",
+    val visibility: Boolean = true
 ) {
 }

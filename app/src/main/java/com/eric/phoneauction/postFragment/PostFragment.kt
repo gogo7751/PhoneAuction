@@ -86,7 +86,13 @@ class PostFragment : Fragment() {
         //送出post
         binding.buttonPost.setOnClickListener {
             viewModel.post(viewModel.getEvent())
+            viewModel.getWishListFromPost(viewModel.brand.value.toString(), viewModel.productName.value.toString(), viewModel.storage.value.toString())
         }
+
+        viewModel.wishList.observe(viewLifecycleOwner, Observer {
+            Logger.d("99998888${it.userId}")
+            viewModel.postNotification(viewModel.getNotification("符合您心願清單的商品上架囉"), it.userId)
+        })
 
         viewModel.leave.observe(viewLifecycleOwner, Observer {
             it?.let { needRefresh ->

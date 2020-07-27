@@ -122,4 +122,21 @@ class DefaultPhoneAuctionRepository(private val remoteDataSource: PhoneAuctionDa
     ): Result<List<Event>> {
         return remoteDataSource.getAveragePrice(brand, productName, storage, deal)
     }
+
+    override suspend fun postWishList(wishList: WishList): Result<Boolean> {
+        return remoteDataSource.postWishList(wishList)
+    }
+
+    override suspend fun updateWishList(id: String): Result<Boolean> {
+        return remoteDataSource.updateWishList(id)
+    }
+
+    override fun getWishList(): MutableLiveData<List<WishList>> {
+        return remoteDataSource.getWishList()
+    }
+
+    override suspend fun getWishListFromPost(brand: String, productName: String, storage: String, visibility: Boolean
+    ): Result<WishList> {
+        return remoteDataSource.getWishListFromPost(brand, productName, storage, visibility)
+    }
 }

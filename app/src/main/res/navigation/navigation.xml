@@ -52,6 +52,9 @@
         <action
             android:id="@+id/action_profileFragment_to_collectionFragment"
             app:destination="@id/collectionFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_wishListFragment"
+            app:destination="@id/wishListFragment" />
     </fragment>
 
     <fragment
@@ -237,5 +240,9 @@
             app:nullable="false"/>
     </dialog>
     <action android:id="@+id/action_global_noteDialog" app:destination="@id/noteDialog" />
+    <fragment
+        android:id="@+id/wishListFragment"
+        android:name="com.eric.phoneauction.wishListFragment.WishListFragment"
+        android:label="WishListFragment" />
 
 </navigation>

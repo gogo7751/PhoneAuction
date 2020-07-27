@@ -40,6 +40,10 @@ class DetailDirectViewModel(
     val averageEvents: LiveData<List<Event>>
         get() = _averageEvents
 
+    val isBuyUser = MutableLiveData<Boolean>().apply {
+        value = arguments.buyUser == arguments.userId
+    }
+
     var averagePrice = MutableLiveData<Int>()
 
     var collection = MutableLiveData<Collection>()

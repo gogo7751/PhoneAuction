@@ -333,6 +333,25 @@
             app:layout_constraintBottom_toBottomOf="@+id/view_detail_direct_bg"
             app:layout_constraintTop_toTopOf="@+id/view_detail_direct_bg" />
 
+        <Button
+            android:id="@+id/button_rePost"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:ellipsize="end"
+            android:background="@drawable/button"
+            android:fontFamily="@font/noto_sans"
+            android:letterSpacing="0.1"
+            android:visibility="@{viewModel.event.deal == false &amp;&amp; viewModel.isBuyUser() == true ? View.VISIBLE : View.GONE}"
+            android:text="重新上架"
+            android:textColor="@android:color/white"
+            android:textSize="18dp"
+            app:layout_constraintEnd_toStartOf="@id/button_direct_done"
+            app:layout_constraintBottom_toBottomOf="@id/button_direct_done"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/button_direct_done" />
+
         <ImageView
             android:id="@+id/image_detail_direct_message"
             android:layout_width="24dp"

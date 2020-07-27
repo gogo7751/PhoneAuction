@@ -26,6 +26,7 @@ object PhoneAuctionRemoteDataSource :
     private const val PATH_MESSAGE = "messages"
     private const val KEY_CREATED_TIME = "createdTime"
     private const val PATH_COLLECTION = "collections"
+    private const val PATH_WISH_LIST = "wishLists"
 
     override suspend fun getEvents(): Result<List<Event>> = suspendCoroutine { continuation ->
         FirebaseFirestore.getInstance()
@@ -345,7 +346,7 @@ object PhoneAuctionRemoteDataSource :
 
         event.id = document.id
         event.createdTime = Calendar.getInstance().timeInMillis
-        event.endTime = Calendar.getInstance().timeInMillis + 10000000000
+        event.endTime = Calendar.getInstance().timeInMillis + 259200000
 
         document
             .set(event)
@@ -814,6 +815,108 @@ object PhoneAuctionRemoteDataSource :
 
                         val event = document.toObject(Event::class.java)
                         list.add(event)
+                    }
+                    continuation.resume(Result.Success(list))
+                } else {
+                    task.exception?.let {
+
+                        Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
+                        continuation.resume(Result.Error(it))
+                        return@addOnCompleteListener
+                    }
+                    continuation.resume(Result.Fail(PhoneAuctionApplication.instance.getString(R.string.you_know_nothing)))
+                }
+            }
+    }
+
+    override suspend fun postWishList(wishList: WishList): Result<Boolean>  = suspendCoroutine { continuation ->
+        val wishLists = FirebaseFirestore.getInstance().collection(PATH_WISH_LIST)
+        val document = wishLists.document()
+
+        wishList.id = document.id
+
+        document
+            .set(wishList)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Logger.i("PhoneAuction: $wishList")
+                    continuation.resume(Result.Success(true))
+                } else {
+                    task.exception?.let {
+                        Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
+                        continuation.resume(Result.Error(it))
+                        return@addOnCompleteListener
+                    }
+                    continuation.resume(Result.Fail(PhoneAuctionApplication.instance.getString(R.string.you_know_nothing)))
+                }
+            }
+    }
+
+    override suspend fun updateWishList(id: String): Result<Boolean> = suspendCoroutine { continuation ->
+        val wishLists = FirebaseFirestore.getInstance().collection(PATH_WISH_LIST)
+        val document = wishLists.document(id)
+
+        document
+            .update("visibility", false)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Logger.i("PhoneAuction: $id")
+                    continuation.resume(Result.Success(true))
+                } else {
+                    task.exception?.let {
+                        Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
+                        continuation.resume(Result.Error(it))
+                        return@addOnCompleteListener
+                    }
+                    continuation.resume(Result.Fail(PhoneAuctionApplication.instance.getString(R.string.you_know_nothing)))
+                }
+            }
+    }
+
+    override fun getWishList(): MutableLiveData<List<WishList>> {
+        val liveData = MutableLiveData<List<WishList>>()
+
+        FirebaseFirestore.getInstance()
+            .collection(PATH_WISH_LIST)
+            .whereEqualTo("userId", UserManager.userId)
+            .whereEqualTo("visibility", true)
+            .addSnapshotListener { snapshot, exception ->
+
+                Logger.i("addSnapshotListener detect")
+
+                exception?.let {
+                    Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
+                }
+
+                val list = mutableListOf<WishList>()
+                for (document in snapshot!!) {
+                    Logger.d(document.id + " => " + document.data)
+                    val wishList = document.toObject(WishList::class.java)
+                    list.add(wishList)
+                }
+
+                liveData.value = list
+            }
+        return liveData
+    }
+
+    override suspend fun getWishListFromPost(brand: String, productName: String, storage: String, visibility: Boolean):
+            Result<WishList> = suspendCoroutine { continuation ->
+        FirebaseFirestore.getInstance()
+            .collection(PATH_WISH_LIST)
+            .whereEqualTo("brand", brand)
+            .whereEqualTo("productName", productName)
+            .whereEqualTo("storage", storage)
+            .whereEqualTo("visibility", visibility)
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    var list = WishList()
+                    for (document in task.result!!) {
+                        Logger.d(document.id + " => " + document.data)
+
+                        val wishList = document.toObject(WishList::class.java)
+                        list = wishList
                     }
                     continuation.resume(Result.Success(list))
                 } else {

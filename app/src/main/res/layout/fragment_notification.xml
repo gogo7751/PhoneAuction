@@ -7,6 +7,7 @@
         <variable
             name="viewModel"
             type="com.eric.phoneauction.notificationFragment.NotificationViewModel" />
+        <import type="android.view.View"/>
     </data>
 
 
@@ -20,7 +21,7 @@
             android:layout_height="60dp"
             android:background="#f6b76a"
             android:layout_marginBottom="4dp"
-            app:layout_constraintBottom_toTopOf="@id/layout_swipe_refresh_notification"
+            app:layout_constraintBottom_toTopOf="@id/recyclerview_notification"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
@@ -42,23 +43,17 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/layout_swipe_refresh_notification"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout_notification_header">
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview_notification"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:overScrollMode="never"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_notification_header"
             tools:listitem="@layout/item_notification"/>
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <ProgressBar
         android:layout_width="wrap_content"

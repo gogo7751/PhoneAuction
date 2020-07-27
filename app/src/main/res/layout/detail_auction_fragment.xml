@@ -375,8 +375,7 @@
             android:visibility="@{viewModel.event.deal == false || viewModel.collection.visibility == true ? View.GONE : View.VISIBLE}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/view_detail_auction_bg"
-            app:layout_constraintBottom_toBottomOf="@id/view_detail_auction_bg"
-            />
+            app:layout_constraintBottom_toBottomOf="@id/view_detail_auction_bg" />
 
         <ImageView
             android:id="@+id/imageView_detail_auction_collectioned"

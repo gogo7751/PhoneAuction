@@ -8,13 +8,16 @@ import app.appworks.school.publisher.network.LoadApiStatus
 import com.eric.phoneauction.PhoneAuctionApplication
 import com.eric.phoneauction.R
 import com.eric.phoneauction.data.Event
+import com.eric.phoneauction.data.Notification
 import com.eric.phoneauction.data.UserManager
+import com.eric.phoneauction.data.WishList
 import com.eric.phoneauction.data.source.PhoneAuctionRepository
 import com.eric.phoneauction.util.Logger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.util.*
 
 class PostViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) : ViewModel() {
 
@@ -22,6 +25,8 @@ class PostViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
 
     val events: LiveData<List<Event>>
         get() = _events
+
+    var wishList = MutableLiveData<WishList>()
 
     var averagePrice = MutableLiveData<Int>()
 
@@ -84,6 +89,83 @@ class PostViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
         Logger.i("------------------------------------")
     }
 
+    fun getWishListFromPost(brand: String, productName: String, storage: String) {
+
+        coroutineScope.launch {
+
+            _status.value = LoadApiStatus.LOADING
+
+            val result = phoneAuctionRepository.getWishListFromPost(brand, productName, storage, true)
+
+            wishList.value = when (result) {
+                is com.eric.phoneauction.data.Result.Success -> {
+                    _error.value = null
+                    _status.value = LoadApiStatus.DONE
+                    result.data
+                }
+                is com.eric.phoneauction.data.Result.Fail -> {
+                    Log.d("Result","fail")
+                    _error.value = result.error
+                    _status.value = LoadApiStatus.ERROR
+                    null
+                }
+                is com.eric.phoneauction.data.Result.Error -> {
+                    Log.d("Result","error")
+                    _error.value = result.exception.toString()
+                    _status.value = LoadApiStatus.ERROR
+                    null
+                }
+                else -> {
+                    _error.value = PhoneAuctionApplication.instance.getString(R.string.you_know_nothing)
+                    _status.value = LoadApiStatus.ERROR
+                    null
+                }
+            }
+            _refreshStatus.value = false
+        }
+    }
+
+    fun getNotification(title: String): Notification {
+        return Notification(
+            id = "",
+            title = title,
+            time = -1,
+            brand = brand.value.toString(),
+            name = productName.value.toString(),
+            image = image1.value.toString(),
+            storage = storage.value.toString(),
+            visibility = true,
+            event = getEvent()
+        )
+    }
+
+    fun postNotification(notification: Notification, buyUser: String) {
+
+        coroutineScope.launch {
+
+            _status.value = LoadApiStatus.LOADING
+
+            when (val result = phoneAuctionRepository.postNotification(notification, buyUser)) {
+                is com.eric.phoneauction.data.Result.Success -> {
+                    _error.value = null
+                    _status.value = LoadApiStatus.DONE
+                }
+                is com.eric.phoneauction.data.Result.Fail -> {
+                    _error.value = result.error
+                    _status.value = LoadApiStatus.ERROR
+                }
+                is com.eric.phoneauction.data.Result.Error -> {
+                    _error.value = result.exception.toString()
+                    _status.value = LoadApiStatus.ERROR
+                }
+                else -> {
+                    _error.value = PhoneAuctionApplication.instance.getString(R.string.you_know_nothing)
+                    _status.value = LoadApiStatus.ERROR
+                }
+            }
+        }
+    }
+
     fun getAveragePriceResult(brand: String, productName: String, storage: String, deal: Boolean) {
 
         coroutineScope.launch {
@@ -137,8 +219,8 @@ class PostViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
             images = images,
             trade = trade.value.toString(),
             description = description.value.toString(),
-            endTime = -1,
-            createdTime = -1,
+            endTime = Calendar.getInstance().timeInMillis + 259200000,
+            createdTime = Calendar.getInstance().timeInMillis,
             tag = tag.value.toString(),
             userId = UserManager.userId.toString(),
             buyUser = "",
