@@ -55,9 +55,8 @@
                 android:id="@+id/image_wish_list_question"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
-                android:alpha="0.7"
-                app:srcCompat="@drawable/ic_questionmark"
-                android:layout_marginStart="8dp"
+                app:srcCompat="@drawable/ic_question_mark_white"
+                android:layout_marginStart="6dp"
                 app:layout_constraintStart_toEndOf="@id/text_wish_list_title"
                 app:layout_constraintTop_toTopOf="@id/text_wish_list_title"
                 app:layout_constraintBottom_toBottomOf="@id/text_wish_list_title"/>

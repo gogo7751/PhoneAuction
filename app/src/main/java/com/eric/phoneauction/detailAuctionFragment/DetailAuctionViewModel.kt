@@ -1,6 +1,7 @@
 package com.eric.phoneauction.detailAuctionFragment
 
 import android.graphics.Rect
+import android.icu.util.Calendar
 import android.os.CountDownTimer
 import android.os.UserManager
 import android.util.Log
@@ -414,7 +415,7 @@ class DetailAuctionViewModel(
     }
 
     fun getCountdown() {
-        timer = object : CountDownTimer(arguments.endTime.minus(arguments.createdTime), HomeAdapter.ONE_SECOND) {
+        timer = object : CountDownTimer(arguments.endTime.minus(Calendar.getInstance().timeInMillis), HomeAdapter.ONE_SECOND) {
             override fun onFinish() {
 
             }

@@ -20,6 +20,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.storage.FirebaseStorage
+import com.tbuonomo.morphbottomnavigation.MorphBottomNavigationView
 import java.util.*
 
 
@@ -84,7 +85,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupBottomNav() {
         binding.bottomNavView.itemBackground = null
+
         binding.bottomNavView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
+
         val menuView = binding.bottomNavView.getChildAt(0) as BottomNavigationMenuView
         val itemView = menuView.getChildAt(3) as BottomNavigationItemView
         val bindingBadge = BadgeBottomBinding.inflate(LayoutInflater.from(this), itemView, true)

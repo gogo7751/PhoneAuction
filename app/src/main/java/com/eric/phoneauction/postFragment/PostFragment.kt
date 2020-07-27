@@ -7,10 +7,12 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.AdapterView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -26,6 +28,7 @@ import com.eric.phoneauction.R
 import com.eric.phoneauction.databinding.PostFragmentBinding
 import com.eric.phoneauction.dialog.NoteDialog
 import com.eric.phoneauction.ext.getVmFactory
+import com.eric.phoneauction.ext.hideKeyboard
 import com.eric.phoneauction.util.Logger
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_main.*
@@ -106,6 +109,27 @@ class PostFragment : Fragment() {
             }
         })
 
+
+        binding.editPostDescription.setOnEditorActionListener { v, actionId, event ->
+            if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+                binding.editPostDescription.hideKeyboard()
+            }
+            return@setOnEditorActionListener false
+        }
+
+        binding.editPostAuction.setOnEditorActionListener { v, actionId, event ->
+            if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+                binding.editPostAuction.hideKeyboard()
+            }
+            return@setOnEditorActionListener false
+        }
+
+        binding.editPostDirect.setOnEditorActionListener { v, actionId, event ->
+            if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+                binding.editPostDirect.hideKeyboard()
+            }
+            return@setOnEditorActionListener false
+        }
 
         //選擇品牌
         binding.spinnerBrand.adapter = PostSpinnerAdapter(
