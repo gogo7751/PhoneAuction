@@ -20,6 +20,7 @@ import com.eric.phoneauction.PhoneAuctionApplication
 import com.eric.phoneauction.R
 import com.eric.phoneauction.databinding.HomeFragmentBinding
 import com.eric.phoneauction.ext.getVmFactory
+import com.eric.phoneauction.ext.hideKeyboard
 import com.eric.phoneauction.ext.toDisplayFormat
 import com.eric.phoneauction.util.Logger
 import com.google.firebase.firestore.Query
@@ -84,7 +85,8 @@ class HomeFragment : Fragment() {
         )
 
         binding.editSearch.setOnEditorActionListener { v, actionId, event ->
-            if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+            if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE) ) {
+                binding.editSearch.hideKeyboard()
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSearchFragment(v.text.toString()))
             }
             return@setOnEditorActionListener false

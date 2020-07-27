@@ -11,6 +11,7 @@ import android.view.animation.AnimationUtils
 import android.view.inputmethod.EditorInfo
 import android.widget.AdapterView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isEmpty
 import androidx.core.view.isNotEmpty
 import androidx.fragment.app.viewModels
@@ -26,8 +27,10 @@ import com.eric.phoneauction.dialog.MessageDialog
 import com.eric.phoneauction.dialog.NoteDialog
 import com.eric.phoneauction.dialog.NoteDialogDirections
 import com.eric.phoneauction.ext.getVmFactory
+import com.eric.phoneauction.ext.hideKeyboard
 import com.eric.phoneauction.postFragment.PostSpinnerAdapter
 import com.eric.phoneauction.util.Logger
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_search.*
 
 /**
@@ -79,6 +82,7 @@ class SearchFragment : Fragment() {
 
         binding.editSearch.setOnEditorActionListener { v, actionId, event ->
             if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+                binding.editSearch.hideKeyboard()
                 findNavController().navigate(NavigationDirections.actionGlobalSearchFragment(v.text.toString()))
             }
             return@setOnEditorActionListener false
@@ -193,7 +197,7 @@ class SearchFragment : Fragment() {
             }
         }
 
-
+        (activity as AppCompatActivity).bottomNavView.visibility = View.GONE
         return binding.root
     }
 

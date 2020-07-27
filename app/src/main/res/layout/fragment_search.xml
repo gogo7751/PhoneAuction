@@ -71,6 +71,7 @@
                 android:fontFamily="@font/noto_sans"
                 android:hint="搜尋 Phone 拍賣"
                 android:maxLines="1"
+                android:imeOptions="actionDone"
                 android:text="@={viewModel.editSearch}"
                 app:layout_constraintBottom_toBottomOf="@id/image_search_bg"
                 app:layout_constraintEnd_toEndOf="@+id/image_search_bg"
@@ -176,7 +177,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="28dp"
                     android:fontFamily="@font/noto_sans"
                     android:letterSpacing="0.15"
                     android:text="品牌"
@@ -190,16 +191,17 @@
                     android:id="@+id/spinner_brand"
                     android:layout_width="0dp"
                     android:layout_height="40dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="8dp"
                     android:layout_marginEnd="16dp"
                     android:background="@drawable/spinner_bg"
                     android:letterSpacing="0.15"
                     android:spinnerMode="dialog"
                     android:visibility="@{viewModel.isVisibility == false ? View.INVISIBLE : View.VISIBLE}"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/text_post_brand_title" />
+                    app:layout_constraintStart_toEndOf="@id/text_post_brand_title"
+                    app:layout_constraintTop_toTopOf="@+id/text_post_brand_title"
+                    app:layout_constraintBottom_toBottomOf="@id/text_post_brand_title"
+                    />
 
                 <TextView
                     android:id="@+id/text_post_name_title"
@@ -217,20 +219,20 @@
 
                 <Spinner
                     android:id="@+id/spinner_name"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="40dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="8dp"
                     android:layout_marginEnd="16dp"
                     android:background="@drawable/spinner_bg"
                     android:letterSpacing="0.15"
                     android:visibility="@{viewModel.isVisibility == false ? View.INVISIBLE : View.VISIBLE}"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/text_post_name_title" />
+                    app:layout_constraintStart_toEndOf="@id/text_post_name_title"
+                    app:layout_constraintTop_toTopOf="@+id/text_post_name_title"
+                    app:layout_constraintBottom_toBottomOf="@id/text_post_name_title" />
 
                 <TextView
-                    android:id="@+id/text_post_name_storage"
+                    android:id="@+id/text_post_storage_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
@@ -245,17 +247,17 @@
 
                 <Spinner
                     android:id="@+id/spinner_storage"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="40dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="8dp"
                     android:layout_marginEnd="16dp"
                     android:background="@drawable/spinner_bg"
                     android:letterSpacing="0.15"
                     android:visibility="@{viewModel.isVisibility == false ? View.INVISIBLE : View.VISIBLE}"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/text_post_name_storage" />
+                    app:layout_constraintStart_toEndOf="@id/text_post_storage_title"
+                    app:layout_constraintTop_toTopOf="@+id/text_post_storage_title"
+                    app:layout_constraintBottom_toBottomOf="@id/text_post_storage_title"/>
 
                 <Button
                     android:id="@+id/button_post"

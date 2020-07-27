@@ -1,8 +1,7 @@
 package com.eric.phoneauction.ext
 
 import android.app.Activity
-import android.view.Gravity
-import android.widget.Toast
+import android.view.View
 import com.eric.phoneauction.PhoneAuctionApplication
 import com.eric.phoneauction.factory.ViewModelFactory
 
