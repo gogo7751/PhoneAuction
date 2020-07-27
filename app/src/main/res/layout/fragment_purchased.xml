@@ -53,6 +53,20 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <TextView
+            android:id="@+id/text_noContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="沒有購買紀錄"
+            android:letterSpacing="0.15"
+            android:alpha="0.8"
+            android:textColor="@color/gary757575"
+            tools:visibility="gone" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview_purchased"
             android:layout_width="match_parent"
@@ -64,6 +78,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layout_purchased_header"
             tools:listitem="@layout/item_notification"/>
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

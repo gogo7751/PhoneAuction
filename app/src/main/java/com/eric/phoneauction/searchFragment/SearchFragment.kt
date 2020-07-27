@@ -103,7 +103,7 @@ class SearchFragment : Fragment() {
         binding.buttonPost.setOnClickListener {
             viewModel.wishList.value?.let { it1 -> viewModel.postWishList(it1) }
             findNavController().navigate(NavigationDirections.navigateToMessageDialog(MessageDialog.MessageType.COLLECTION_SUCCESS))
-
+            Handler().postDelayed({findNavController().navigate(NavigationDirections.actionGlobalHomeFragment())},2500)
         }
 
         //選擇品牌

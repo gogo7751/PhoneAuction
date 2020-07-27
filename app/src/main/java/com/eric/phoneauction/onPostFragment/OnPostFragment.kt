@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 
 import com.eric.phoneauction.R
+import com.eric.phoneauction.data.UserManager
 import com.eric.phoneauction.databinding.FragmentOnAuctionBinding
 import com.eric.phoneauction.databinding.FragmentOnPostBinding
 import com.eric.phoneauction.ext.getVmFactory
@@ -29,7 +30,7 @@ class OnPostFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-        val adapter = OnPostAdapter()
+        val adapter = OnPostAdapter(viewModel)
         adapter.setHasStableIds(true)
         binding.recyclerviewOnPost.adapter = adapter
 
@@ -37,6 +38,10 @@ class OnPostFragment : Fragment() {
             it?.let {
                 adapter.submitList(it)
             }
+        })
+
+        viewModel.isEmpty.observe(viewLifecycleOwner, Observer {
+            binding.textNoContent.visibility = View.GONE
         })
 
         binding.imageOnPostBack.setOnClickListener {

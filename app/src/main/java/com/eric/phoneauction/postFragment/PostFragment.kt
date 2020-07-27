@@ -93,8 +93,11 @@ class PostFragment : Fragment() {
         }
 
         viewModel.wishList.observe(viewLifecycleOwner, Observer {
-            Logger.d("99998888${it.userId}")
-            viewModel.postNotification(viewModel.getNotification("符合您心願清單的商品上架囉"), it.userId)
+            if (it.userId.isEmpty()){
+                Logger.d("778899")
+            } else {
+                viewModel.postNotification(viewModel.getNotification("符合您許願清單的商品上架囉"), it.userId)
+            }
         })
 
         viewModel.leave.observe(viewLifecycleOwner, Observer {

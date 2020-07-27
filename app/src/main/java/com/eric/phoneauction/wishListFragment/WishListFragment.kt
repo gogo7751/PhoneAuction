@@ -36,7 +36,12 @@ class WishListFragment : Fragment() {
         binding.recyclerviewWishList.adapter = adapter
 
         viewModel.wishLists.observe(viewLifecycleOwner, Observer {
-            adapter.submitList(it)
+            if (it.isEmpty()) {
+                binding.textNoContent.visibility = View.VISIBLE
+            } else {
+                binding.textNoContent.visibility = View.GONE
+                adapter.submitList(it)
+            }
         })
 
         binding.imageWishListBack.setOnClickListener {

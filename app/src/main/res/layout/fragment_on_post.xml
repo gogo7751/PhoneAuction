@@ -65,5 +65,18 @@
             app:layout_constraintTop_toBottomOf="@id/layout_onPost_header"
             tools:listitem="@layout/item_on_post"/>
 
+        <TextView
+            android:id="@+id/text_noContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="沒有刊登中商品"
+            android:letterSpacing="0.15"
+            android:alpha="0.8"
+            android:textColor="@color/gary757575" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

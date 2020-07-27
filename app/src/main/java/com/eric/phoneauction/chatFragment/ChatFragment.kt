@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.eric.phoneauction.NavigationDirections
 
 import com.eric.phoneauction.R
+import com.eric.phoneauction.data.UserManager
 import com.eric.phoneauction.databinding.FragmentChatBinding
 import com.eric.phoneauction.detailChatFragment.DetailChatViewModel
 import com.eric.phoneauction.ext.getVmFactory
@@ -40,9 +41,12 @@ class ChatFragment : Fragment() {
         adapter.setHasStableIds(true)
         binding.recyclerviewChat.adapter = adapter
 
-        viewModel.liveChatRooms.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                adapter.submitList(it)
+        viewModel.liveChatRooms.observe(viewLifecycleOwner, Observer { chatRoom ->
+            adapter.submitList(chatRoom)
+            if (chatRoom.map { it.senderId }.equals(UserManager.userId) || chatRoom.map { it.receiverId }.equals(UserManager.userId) ) {
+                binding.textNoContent.visibility = View.GONE
+            } else {
+                binding.textNoContent.visibility = View.VISIBLE
             }
         })
 

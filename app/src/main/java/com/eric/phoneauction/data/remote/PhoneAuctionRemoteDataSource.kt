@@ -1,6 +1,8 @@
 package com.eric.phoneauction.data.remote
 
 import android.icu.util.Calendar
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import com.eric.phoneauction.PhoneAuctionApplication
 import com.eric.phoneauction.R
@@ -478,15 +480,14 @@ object PhoneAuctionRemoteDataSource :
             }
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override suspend fun postNotification(
         notification: Notification,
         buyUser: String
     ): Result<Boolean> = suspendCoroutine { continuation ->
 
         val notifications =
-            FirebaseFirestore.getInstance().collection(PATH_USER).document(buyUser).collection(
-                PATH_NOTIFICATION
-            )
+            FirebaseFirestore.getInstance().collection(PATH_USER).document(buyUser).collection(PATH_NOTIFICATION)
         val document = notifications.document()
 
 
@@ -777,8 +778,8 @@ object PhoneAuctionRemoteDataSource :
             .collection(PATH_EVENTS)
             .whereEqualTo("deal", true)
             .orderBy(field)
-            .startAt(searchKey)
-            .endAt(searchKey+"\uf8ff")
+            .startAt(searchKey.toUpperCase())
+            .endAt(searchKey.toLowerCase()+"\uf8ff")
             .addSnapshotListener { snapshot, exception ->
 
                 Logger.i("addSnapshotListener detect")
