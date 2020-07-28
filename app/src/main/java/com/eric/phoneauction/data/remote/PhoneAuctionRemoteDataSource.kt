@@ -342,11 +342,11 @@ object PhoneAuctionRemoteDataSource :
         return liveData
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override suspend fun post(event: Event): Result<Boolean> = suspendCoroutine { continuation ->
         val events = FirebaseFirestore.getInstance().collection(PATH_EVENTS)
-        val document = events.document()
+        val document = events.document(event.id)
 
-        event.id = document.id
         event.createdTime = Calendar.getInstance().timeInMillis
         event.endTime = Calendar.getInstance().timeInMillis + 259200000
 
@@ -542,6 +542,7 @@ object PhoneAuctionRemoteDataSource :
 
 
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override suspend fun postChatRoom(chatRoom: ChatRoom): Result<Boolean> =
         suspendCoroutine { continuation ->
 
@@ -584,6 +585,7 @@ object PhoneAuctionRemoteDataSource :
 
 
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override suspend fun postMessage(message: Message, document: String): Result<Boolean> =
         suspendCoroutine { continuation ->
 
@@ -653,7 +655,7 @@ object PhoneAuctionRemoteDataSource :
                     .collection(PATH_COLLECTION)
             val document = collection.event?.id?.let { collections.document(it) }
 
-            collection.id = document?.id.toString()
+            collection.id = collection.event?.id.toString()
 
             document
                 ?.set(collection)

@@ -11,8 +11,10 @@ import com.eric.phoneauction.data.Event
 import com.eric.phoneauction.data.Notification
 import com.eric.phoneauction.data.UserManager
 import com.eric.phoneauction.data.WishList
+import com.eric.phoneauction.data.remote.PhoneAuctionRemoteDataSource
 import com.eric.phoneauction.data.source.PhoneAuctionRepository
 import com.eric.phoneauction.util.Logger
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -210,8 +212,11 @@ class PostViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
             image4.value.toString(),
             image5.value.toString()
         )
+
+        val events = FirebaseFirestore.getInstance().collection("events")
+        val document = events.document()
         return Event(
-            id = "",
+            id = document.id,
             productName = productName.value.toString(),
             storage = storage.value.toString(),
             brand = brand.value.toString(),

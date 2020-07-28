@@ -33,14 +33,16 @@ class WishListFragment : Fragment() {
         binding.viewModel = viewModel
 
         val adapter = WishListAdapter(viewModel)
+        adapter.setHasStableIds(true)
+        adapter.notifyDataSetChanged()
         binding.recyclerviewWishList.adapter = adapter
 
         viewModel.wishLists.observe(viewLifecycleOwner, Observer {
+            adapter.submitList(it)
             if (it.isEmpty()) {
                 binding.textNoContent.visibility = View.VISIBLE
             } else {
                 binding.textNoContent.visibility = View.GONE
-                adapter.submitList(it)
             }
         })
 

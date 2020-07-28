@@ -43,17 +43,16 @@ class ChatFragment : Fragment() {
 
         viewModel.liveChatRooms.observe(viewLifecycleOwner, Observer { chatRoom ->
             adapter.submitList(chatRoom)
-            if (chatRoom.map { it.senderId }.equals(UserManager.userId) || chatRoom.map { it.receiverId }.equals(UserManager.userId) ) {
-                binding.textNoContent.visibility = View.GONE
-            } else {
-                binding.textNoContent.visibility = View.VISIBLE
-            }
         })
 
         viewModel.navigateToChatToDetail.observe(viewLifecycleOwner, Observer {
             it?.let {
                 findNavController().navigate(ChatFragmentDirections.actionChatFragmentToChatToDetailChatFragment(it))
             }
+        })
+
+        viewModel.isEmpty.observe(viewLifecycleOwner, Observer {
+            binding.textNoContent.visibility = View.GONE
         })
 
         (activity as AppCompatActivity).bottomNavView.visibility = View.VISIBLE

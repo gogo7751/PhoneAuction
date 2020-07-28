@@ -182,9 +182,9 @@
 
                 <ImageView
                     android:id="@+id/image_detail_auction_clock"
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
-                    android:layout_marginStart="16dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="20dp"
                     android:visibility="@{viewModel.event.deal == false ? View.GONE : View.VISIBLE}"
                     app:layout_constraintBottom_toBottomOf="@+id/text_detail_auction_time"
                     app:layout_constraintStart_toEndOf="@+id/text_detail_auction_tag"
@@ -195,7 +195,7 @@
                     android:id="@+id/text_detail_auction_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
+                    android:layout_marginStart="8dp"
                     android:fontFamily="@font/noto_sans"
                     android:letterSpacing="0.1"
                     android:maxLines="1"

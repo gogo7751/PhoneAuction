@@ -41,8 +41,8 @@
     <string name="select_post_spinner">請選擇</string>
 
     <!-- General -->
-    <string name="nt_dollars_">NT$%d</string>
-    <string name="average_price">此商品近期成交價 NT$%d</string>
+    <string name="nt_dollars_">NT$ %d</string>
+    <string name="average_price">此商品近期成交價 NT$ %d</string>
 
     <!-- Brand -->
     <string-array name="brand_list">

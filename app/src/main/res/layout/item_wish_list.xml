@@ -37,13 +37,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
-                    android:layout_marginTop="6dp"
                     android:fontFamily="@font/noto_sans"
                     android:letterSpacing="0.15"
                     android:text="@{wishList.brand}"
-                    android:textColor="@color/gary757575"
-                    app:layout_constraintStart_toEndOf="@+id/image_wish_list"
-                    app:layout_constraintTop_toBottomOf="@+id/view_wish_list_tag"
+                    android:textColor="@color/black212121"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     tools:text="Apple" />
 
                 <TextView
@@ -54,7 +54,7 @@
                     android:fontFamily="@font/noto_sans"
                     android:letterSpacing="0.15"
                     android:text="@{wishList.productName}"
-                    android:textColor="@color/gary757575"
+                    android:textColor="@color/black212121"
                     app:layout_constraintStart_toEndOf="@id/text_wish_list_content_brand"
                     app:layout_constraintTop_toTopOf="@+id/text_wish_list_content_brand"
                     tools:text="iPhone" />
@@ -69,7 +69,7 @@
                     android:letterSpacing="0.15"
                     android:singleLine="true"
                     android:text="@{wishList.storage}"
-                    android:textColor="@color/gary757575"
+                    android:textColor="@color/black212121"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/text_wish_list_content_name"
                     app:layout_constraintTop_toTopOf="@+id/text_wish_list_content_name"
@@ -81,6 +81,7 @@
                     android:layout_width="18dp"
                     android:layout_height="18dp"
                     android:background="@drawable/ic_close"
+                    android:alpha="0.7"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/text_wish_list_content_brand"
                     app:layout_constraintBottom_toBottomOf="@id/text_wish_list_content_brand"/>
