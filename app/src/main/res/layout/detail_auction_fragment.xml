@@ -155,10 +155,36 @@
                     tools:text="NT$11,000" />
 
                 <ImageView
-                    android:id="@+id/image_detail_auction_clock"
+                    android:id="@+id/image_auction_question"
                     android:layout_width="22dp"
                     android:layout_height="22dp"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="3dp"
+                    android:alpha="0.7"
+                    app:srcCompat="@drawable/ic_questionmark"
+                    app:layout_constraintStart_toStartOf="@+id/text_detail_auction_price"
+                    app:layout_constraintTop_toBottomOf="@+id/text_detail_auction_price"
+                    />
+
+                <TextView
+                    android:id="@+id/text_post_average"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:letterSpacing="0.15"
+                    android:fontFamily="@font/noto_sans"
+                    android:textColor="@color/black_3f3a3a"
+                    android:layout_marginStart="4dp"
+                    app:average_price="@{viewModel.averagePrice}"
+                    app:layout_constraintTop_toTopOf="@+id/image_auction_question"
+                    app:layout_constraintBottom_toBottomOf="@+id/image_auction_question"
+                    app:layout_constraintStart_toEndOf="@+id/image_auction_question"
+                    tools:text="近期成交價 NT$6990"
+                    />
+
+                <ImageView
+                    android:id="@+id/image_detail_auction_clock"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="20dp"
                     android:visibility="@{viewModel.event.deal == false ? View.GONE : View.VISIBLE}"
                     app:layout_constraintBottom_toBottomOf="@+id/text_detail_auction_time"
                     app:layout_constraintStart_toEndOf="@+id/text_detail_auction_tag"
@@ -169,7 +195,7 @@
                     android:id="@+id/text_detail_auction_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
+                    android:layout_marginStart="8dp"
                     android:fontFamily="@font/noto_sans"
                     android:letterSpacing="0.1"
                     android:maxLines="1"
@@ -191,7 +217,7 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginStart="16dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/text_detail_auction_price"
+                    app:layout_constraintTop_toBottomOf="@+id/image_auction_question"
                     tools:text="gogo7751" />
 
                 <TextView
@@ -349,8 +375,7 @@
             android:visibility="@{viewModel.event.deal == false || viewModel.collection.visibility == true ? View.GONE : View.VISIBLE}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/view_detail_auction_bg"
-            app:layout_constraintBottom_toBottomOf="@id/view_detail_auction_bg"
-            />
+            app:layout_constraintBottom_toBottomOf="@id/view_detail_auction_bg" />
 
         <ImageView
             android:id="@+id/imageView_detail_auction_collectioned"

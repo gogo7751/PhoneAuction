@@ -24,6 +24,8 @@ class ChatViewModel(
 
     var liveChatRooms = MutableLiveData<List<ChatRoom>>()
 
+    var isEmpty = MutableLiveData<Boolean>()
+
     // Handle navigation to detail
     private val _navigateToChatToDetail = MutableLiveData<ChatRoom>()
 

@@ -14,6 +14,7 @@ import com.eric.phoneauction.onPostFragment.OnPostViewModel
 import com.eric.phoneauction.postFragment.PostViewModel
 import com.eric.phoneauction.profileFragment.ProfileViewModel
 import com.eric.phoneauction.purchasedFragment.PurchasedViewModel
+import com.eric.phoneauction.wishListFragment.WishListViewModel
 import java.lang.IllegalArgumentException
 
 @Suppress("UNCHECKED_CAST")
@@ -56,6 +57,9 @@ class ViewModelFactory constructor(
 
                 isAssignableFrom(CollectionViewModel::class.java) ->
                     CollectionViewModel(phoneAuctionRepository)
+
+                isAssignableFrom(WishListViewModel::class.java) ->
+                    WishListViewModel(phoneAuctionRepository)
 
                 else ->
                     throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")

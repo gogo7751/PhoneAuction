@@ -36,7 +36,12 @@ class CollectionFragment : Fragment() {
 
         viewModel.liveCollections.observe(viewLifecycleOwner, Observer {
             it?.let {
-                adapter.submitList(it)
+                if (it.isEmpty()) {
+                    binding.textNoContent.visibility = View.VISIBLE
+                } else {
+                    binding.textNoContent.visibility = View.GONE
+                    adapter.submitList(it)
+                }
             }
         })
 

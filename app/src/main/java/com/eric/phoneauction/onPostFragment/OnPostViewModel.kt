@@ -15,6 +15,8 @@ class OnPostViewModel(val phoneAuctionRepository: PhoneAuctionRepository) : View
 
     var liveEvents = MutableLiveData<List<Event>>()
 
+    var isEmpty = MutableLiveData<Boolean>()
+
     // status: The internal MutableLiveData that stores the status of the most recent request
     private val _status = MutableLiveData<LoadApiStatus>()
 

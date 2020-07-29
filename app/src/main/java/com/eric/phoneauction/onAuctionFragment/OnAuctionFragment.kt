@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 
 import com.eric.phoneauction.R
+import com.eric.phoneauction.data.UserManager
 import com.eric.phoneauction.databinding.FragmentOnAuctionBinding
 import com.eric.phoneauction.ext.getVmFactory
 
@@ -34,7 +35,12 @@ class OnAuctionFragment : Fragment() {
 
         viewModel.events.observe(viewLifecycleOwner, Observer {
             it?.let {
-                adapter.submitList(it)
+                if (it.map { it.buyUser }.equals(UserManager.userId)) {
+                    binding.textNoContent.visibility = View.GONE
+                    adapter.submitList(it)
+                } else {
+                    binding.textNoContent.visibility = View.VISIBLE
+                }
             }
         })
 

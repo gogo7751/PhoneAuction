@@ -13,21 +13,20 @@
         android:layout_height="match_parent">
 
         <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/lottie_login"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
+            android:id="@+id/lottie_login2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:layout_alignParentEnd="true"
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
-            app:lottie_rawRes="@raw/login"
-            app:lottie_speed="0.8"
+            app:lottie_rawRes="@raw/ic_login2"
+            app:lottie_speed="0.7"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/constraint_login_down"
-/>
+            app:layout_constraintBottom_toTopOf="@id/constraint_login_down" />
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/lottie_login_title"
@@ -36,10 +35,10 @@
             app:lottie_rawRes="@raw/welcome"
             app:lottie_autoPlay="true"
             app:lottie_loop="false"
-            android:layout_marginTop="240dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/lottie_login"
+            app:layout_constraintStart_toStartOf="@+id/lottie_login2"
+            app:layout_constraintEnd_toEndOf="@+id/lottie_login2"
+            app:layout_constraintTop_toTopOf="@id/lottie_login2"
+            app:layout_constraintBottom_toBottomOf="@+id/lottie_login2"
             />
 
 

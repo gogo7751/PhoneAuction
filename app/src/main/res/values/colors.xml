@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#f6b76a</color>
     <color name="colorAccent">#f6b76a</color>
     <color name="translucent_80">#cc000000</color>
+    <color name="translucent_30">#cc000000</color>
 
     <!-- Black Series -->
     <color name="black">#000000</color>
@@ -28,5 +29,6 @@
 
     <!-- Orange Series -->
     <color name="orange_8b572a">#8b572a</color>
+    
 
 </resources>

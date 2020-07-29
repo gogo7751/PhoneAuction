@@ -23,6 +23,10 @@
         <item name="android:windowBackground">@color/translucent_80</item>
     </style>
 
+    <style name="NoteDialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
     <style name="ProgressTheme" parent="Widget.AppCompat.ProgressBar">
         <item name="colorAccent">@color/black</item>
     </style>
@@ -41,12 +45,6 @@
     <style name="TextAppearance.BottomNavigation.Overline" parent="TextAppearance.MaterialComponents.Overline">
         <item name="android:textSize">8sp</item>
     </style>
-
-    <!--Grid -->
-    <dimen name="space_outside_horizontal_catalog_item">16dp</dimen>
-    <dimen name="space_inside_horizontal_catalog_item">8dp</dimen>
-    <dimen name="space_outside_vertical_catalog_item">24dp</dimen>
-    <dimen name="space_inside_vertical_catalog_item">12dp</dimen>
 
     <style name="ButtonStyle" parent="Widget.AppCompat.Button.Colored">
         <item name="colorButtonNormal">@android:color/white</item>

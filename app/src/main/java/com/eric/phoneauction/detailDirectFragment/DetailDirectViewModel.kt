@@ -35,6 +35,17 @@ class DetailDirectViewModel(
     val event: LiveData<Event>
         get() = _event
 
+    private var _averageEvents = MutableLiveData<List<Event>>()
+
+    val averageEvents: LiveData<List<Event>>
+        get() = _averageEvents
+
+    val isBuyUser = MutableLiveData<Boolean>().apply {
+        value = arguments.buyUser == arguments.userId
+    }
+
+    var averagePrice = MutableLiveData<Int>()
+
     var collection = MutableLiveData<Collection>()
 
     private var _events = MutableLiveData<List<Event>>()
@@ -120,6 +131,43 @@ class DetailDirectViewModel(
         getDirectResult()
         getCountdown()
         getCollectionResult()
+        getAveragePriceResult(event.value?.brand.toString(), event.value?.productName.toString(), event.value?.storage.toString(), false)
+    }
+
+    fun getAveragePriceResult(brand: String, productName: String, storage: String, deal: Boolean) {
+
+        coroutineScope.launch {
+
+            _status.value = LoadApiStatus.LOADING
+
+            val result = phoneAuctionRepository.getAveragePrice(brand, productName, storage, deal)
+
+            _averageEvents.value = when (result) {
+                is com.eric.phoneauction.data.Result.Success -> {
+                    _error.value = null
+                    _status.value = LoadApiStatus.DONE
+                    result.data
+                }
+                is com.eric.phoneauction.data.Result.Fail -> {
+                    Log.d("Result","fail")
+                    _error.value = result.error
+                    _status.value = LoadApiStatus.ERROR
+                    null
+                }
+                is com.eric.phoneauction.data.Result.Error -> {
+                    Log.d("Result","error")
+                    _error.value = result.exception.toString()
+                    _status.value = LoadApiStatus.ERROR
+                    null
+                }
+                else -> {
+                    _error.value = PhoneAuctionApplication.instance.getString(R.string.you_know_nothing)
+                    _status.value = LoadApiStatus.ERROR
+                    null
+                }
+            }
+            _refreshStatus.value = false
+        }
     }
 
     private fun getCollectionResult() {

@@ -1,6 +1,7 @@
 package com.eric.phoneauction.notificationFragment
 
 import android.os.Bundle
+import android.os.Handler
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -35,13 +36,13 @@ class NotificationFragment : Fragment() {
 
         viewModel.liveNotifications.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it)
+            if (it.isEmpty()) {
+                binding.textNoContent.visibility = View.VISIBLE
+            } else {
+                binding.textNoContent.visibility = View.GONE
+            }
     })
 
-
-
-        binding.layoutSwipeRefreshNotification.setOnRefreshListener {
-            viewModel.refresh()
-        }
 
 
         (activity as AppCompatActivity).bottomNavView.visibility = View.VISIBLE

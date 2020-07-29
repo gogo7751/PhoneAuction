@@ -8,8 +8,11 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_login.*
 import android.content.pm.PackageManager
+import android.os.Handler
 import android.util.Base64
 import android.util.Log
+import android.view.View
+import com.airbnb.lottie.LottieAnimationView
 import com.eric.phoneauction.data.UserManager
 import com.eric.phoneauction.util.Logger
 import com.facebook.AccessToken
@@ -40,12 +43,14 @@ class LoginActivity : AppCompatActivity() {
         }
 
         callbackManager = CallbackManager.Factory.create()
+//        Handler().postDelayed({lottie_login_title.visibility = View.GONE},4000)
     }
 
     override fun onStart() {
         super.onStart()
         moveMainPage(auth?.currentUser)
     }
+
 
 
 

@@ -12,7 +12,7 @@ import com.eric.phoneauction.data.UserManager
 import com.eric.phoneauction.databinding.ItemOnAuctionBinding
 import com.eric.phoneauction.databinding.ItemOnPostBinding
 
-class OnPostAdapter :
+class OnPostAdapter(val viewModel: OnPostViewModel) :
     androidx.recyclerview.widget.ListAdapter<Event, OnPostAdapter.OnPostViewHolder>(
         DiffCallback
     ) {
@@ -20,7 +20,7 @@ class OnPostAdapter :
     class OnPostViewHolder(private var binding: ItemOnPostBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(
-            event: Event
+            event: Event, viewModel: OnPostViewModel
         ) {
             binding.event = event
 
@@ -66,13 +66,16 @@ class OnPostAdapter :
     override fun onBindViewHolder(holder: OnPostViewHolder, position: Int) {
         val event = getItem(position)
         when (event.userId == UserManager.userId) {
-            true -> holder.itemView.visibility = View.VISIBLE
+            true -> {
+                holder.itemView.visibility = View.VISIBLE
+                viewModel.isEmpty.value = false
+            }
             false -> {
                 holder.itemView.visibility = View.GONE
                 holder.itemView.layoutParams.height = 0
             }
         }
-        holder.bind(event)
+        holder.bind(event, viewModel)
     }
 
 }

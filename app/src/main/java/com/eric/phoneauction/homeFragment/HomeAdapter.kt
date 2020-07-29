@@ -50,7 +50,7 @@ class HomeAdapter( val onClickListener: OnClickListener, val viewModel: HomeView
             }
 
 
-            val millsTime = event.endTime.minus(event.createdTime)
+            val millsTime = event.endTime.minus(Calendar.getInstance().timeInMillis)
 
 
             timer = object : CountDownTimer(millsTime, ONE_SECOND) {

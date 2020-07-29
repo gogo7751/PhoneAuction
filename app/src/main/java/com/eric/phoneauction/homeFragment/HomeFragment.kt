@@ -2,10 +2,12 @@ package com.eric.phoneauction.homeFragment
 
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.AdapterView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
@@ -18,6 +20,7 @@ import com.eric.phoneauction.PhoneAuctionApplication
 import com.eric.phoneauction.R
 import com.eric.phoneauction.databinding.HomeFragmentBinding
 import com.eric.phoneauction.ext.getVmFactory
+import com.eric.phoneauction.ext.hideKeyboard
 import com.eric.phoneauction.ext.toDisplayFormat
 import com.eric.phoneauction.util.Logger
 import com.google.firebase.firestore.Query
@@ -45,11 +48,6 @@ class HomeFragment : Fragment() {
         adapter.setHasStableIds(true)
         binding.recyclerviewHome.adapter = adapter
 
-        viewModel.events.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                Log.d("events", "$it")
-            }
-        })
 
         viewModel.refreshStatus.observe(viewLifecycleOwner, Observer {
             it?.let {
@@ -85,6 +83,14 @@ class HomeFragment : Fragment() {
         binding.spinnerSort.adapter = HomeSpinnerAdapter(
             PhoneAuctionApplication.instance.resources.getStringArray(R.array.sort_list)
         )
+
+        binding.editSearch.setOnEditorActionListener { v, actionId, event ->
+            if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE) ) {
+                binding.editSearch.hideKeyboard()
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSearchFragment(v.text.toString()))
+            }
+            return@setOnEditorActionListener false
+        }
 
         binding.spinnerSort.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -159,6 +165,9 @@ class HomeFragment : Fragment() {
             viewModel.getDirectResult()
         }
 
+        binding.imageHomeClear.setOnClickListener {
+            binding.editSearch.text.clear()
+        }
 
 
         (activity as AppCompatActivity).bottomNavView.visibility = View.VISIBLE

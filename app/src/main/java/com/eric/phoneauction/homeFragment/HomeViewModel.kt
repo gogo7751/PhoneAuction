@@ -34,8 +34,12 @@ class HomeViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
 
     val isDirect = MutableLiveData<Boolean>()
 
+    val editSearch = MutableLiveData<String>()
 
-    val navigateToDetail = MutableLiveData<Event>()
+    private val _navigateToDetail = MutableLiveData<Event>()
+
+    val navigateToDetail: LiveData<Event>
+        get() = _navigateToDetail
 
 
     // status: The internal MutableLiveData that stores the status of the most recent request
@@ -351,10 +355,10 @@ class HomeViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
     }
 
     fun navigateToDetail(event: Event) {
-        navigateToDetail.value = event
+        _navigateToDetail.value = event
     }
 
     fun onDetailNavigated() {
-        navigateToDetail.value = null
+        _navigateToDetail.value = null
     }
 }

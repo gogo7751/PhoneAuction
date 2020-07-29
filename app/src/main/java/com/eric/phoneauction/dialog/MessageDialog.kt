@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.DialogFragment
+import androidx.navigation.fragment.findNavController
 import com.eric.phoneauction.PhoneAuctionApplication
 import com.eric.phoneauction.R
 import com.eric.phoneauction.databinding.DialogMessageBinding
@@ -42,6 +43,7 @@ class MessageDialog : AppCompatDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         Handler().postDelayed({ this.dismiss() }, 2000)
+
     }
 
     private fun init() {

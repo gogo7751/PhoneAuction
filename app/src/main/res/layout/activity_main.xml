@@ -26,18 +26,18 @@
 
         <com.tbuonomo.morphbottomnavigation.MorphBottomNavigationView
             android:id="@+id/bottomNavView"
+            style="@style/BottomNavigationView"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:menu="@menu/bottom_nav_menu"
+            android:layout_height="wrap_content"
 
-            app:itemBackground="?selectableItemBackgroundBorderless"
+            app:itemIconSize="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:menu="@menu/bottom_nav_menu"
             app:morphCornerRadius="128dp"
             app:morphItemRadius="64dp"
-            app:morphVerticalOffset="6dp"
-            app:itemIconSize="30dp"
-            style="@style/BottomNavigationView"
-            />
+            app:morphVerticalOffset="6dp" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

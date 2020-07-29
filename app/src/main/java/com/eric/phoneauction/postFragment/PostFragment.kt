@@ -7,10 +7,12 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.AdapterView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -24,7 +26,10 @@ import com.eric.phoneauction.NavigationDirections
 import com.eric.phoneauction.PhoneAuctionApplication
 import com.eric.phoneauction.R
 import com.eric.phoneauction.databinding.PostFragmentBinding
+import com.eric.phoneauction.dialog.NoteDialog
 import com.eric.phoneauction.ext.getVmFactory
+import com.eric.phoneauction.ext.hideKeyboard
+import com.eric.phoneauction.util.Logger
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
@@ -51,7 +56,7 @@ class PostFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = PostFragmentBinding.inflate(inflater, container, false)
-        binding.lifecycleOwner = viewLifecycleOwner
+        binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
 
@@ -81,10 +86,14 @@ class PostFragment : Fragment() {
             toAlbum(PHOTO_FROM_GALLERY_5)
         }
 
-        //送出post
-        binding.buttonPost.setOnClickListener {
-            viewModel.post(viewModel.getEvent())
-        }
+
+        viewModel.wishList.observe(viewLifecycleOwner, Observer {
+            if (it.userId.isEmpty()){
+                Logger.d("")
+            } else {
+                viewModel.postNotification(viewModel.getNotification("符合您許願清單的商品上架囉"), it.userId)
+            }
+        })
 
         viewModel.leave.observe(viewLifecycleOwner, Observer {
             it?.let { needRefresh ->
@@ -98,6 +107,27 @@ class PostFragment : Fragment() {
             }
         })
 
+
+        binding.editPostDescription.setOnEditorActionListener { v, actionId, event ->
+            if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+                binding.editPostDescription.hideKeyboard()
+            }
+            return@setOnEditorActionListener false
+        }
+
+        binding.editPostAuction.setOnEditorActionListener { v, actionId, event ->
+            if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+                binding.editPostAuction.hideKeyboard()
+            }
+            return@setOnEditorActionListener false
+        }
+
+        binding.editPostDirect.setOnEditorActionListener { v, actionId, event ->
+            if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+                binding.editPostDirect.hideKeyboard()
+            }
+            return@setOnEditorActionListener false
+        }
 
         //選擇品牌
         binding.spinnerBrand.adapter = PostSpinnerAdapter(
@@ -191,6 +221,10 @@ class PostFragment : Fragment() {
             }
         }
 
+       viewModel.brand.observe(viewLifecycleOwner, Observer {
+           Logger.d("99887766$it")
+       })
+
         //選擇拍賣方式
         binding.spinnerTag.adapter = PostSpinnerAdapter(
             PhoneAuctionApplication.instance.resources.getStringArray(R.array.tag_list)
@@ -205,15 +239,34 @@ class PostFragment : Fragment() {
                     1 -> {
                         binding.editPostDirect.visibility = View.VISIBLE
                         binding.editPostAuction.visibility = View.GONE
+                        binding.imagePostQuestion.visibility = View.VISIBLE
+                        binding.textPostAverage.visibility = View.VISIBLE
                     }
                     2 -> {
                         binding.editPostDirect.visibility = View.GONE
                         binding.editPostAuction.visibility = View.VISIBLE
+                        binding.imagePostQuestion.visibility = View.VISIBLE
+                        binding.textPostAverage.visibility = View.VISIBLE
                     }
                 }
                 viewModel.tag.value = binding.spinnerTag.selectedItem.toString()
+                viewModel.getAveragePriceResult(viewModel.brand.value.toString(), viewModel.productName.value.toString(), viewModel.storage.value.toString(), false)
             }
         }
+
+
+        //最近商品成交價
+        viewModel.events.observe(viewLifecycleOwner, Observer { list ->
+            list?.let { event ->
+                 viewModel.averagePrice.value = event.map { it.price }.average().toInt()
+            }
+        })
+
+        binding.imagePostQuestion.setOnClickListener {
+            findNavController().navigate(NavigationDirections.actionGlobalNoteDialog(NoteDialog.MessageType.AVERAGE_PRICE))
+        }
+
+
 
         //選擇容量
         binding.spinnerStorage.adapter = PostSpinnerAdapter(

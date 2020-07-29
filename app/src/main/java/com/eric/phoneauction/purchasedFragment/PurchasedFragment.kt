@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.eric.phoneauction.R
+import com.eric.phoneauction.data.UserManager
 import com.eric.phoneauction.databinding.FragmentPurchasedBinding
 import com.eric.phoneauction.ext.getVmFactory
 
@@ -31,9 +32,13 @@ class PurchasedFragment : Fragment() {
         adapter.setHasStableIds(true)
         binding.recyclerviewPurchased.adapter = adapter
 
-        viewModel.liveEvents.observe(viewLifecycleOwner, Observer {
-            adapter.submitList(it)
-
+        viewModel.liveEvents.observe(viewLifecycleOwner, Observer { event ->
+            adapter.submitList(event)
+            if (event.map { it.buyUser }.equals(UserManager.userId)) {
+                binding.textNoContent.visibility = View.GONE
+            } else {
+                binding.textNoContent.visibility = View.VISIBLE
+            }
         })
 
         binding.imagePurchasedBack.setOnClickListener {

@@ -9,7 +9,11 @@
         android:id="@+id/homeFragment"
         android:name="com.eric.phoneauction.homeFragment.HomeFragment"
         android:label="home_fragment"
-        tools:layout="@layout/home_fragment" />
+        tools:layout="@layout/home_fragment" >
+        <action
+            android:id="@+id/action_homeFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/chatFragment"
@@ -48,6 +52,9 @@
         <action
             android:id="@+id/action_profileFragment_to_collectionFragment"
             app:destination="@id/collectionFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_wishListFragment"
+            app:destination="@id/wishListFragment" />
     </fragment>
 
     <fragment
@@ -214,5 +221,28 @@
         android:name="com.eric.phoneauction.collectionFragment.CollectionFragment"
         android:label="CollectionFragment"
         tools:layout="@layout/fragment_collection"/>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.eric.phoneauction.searchFragment.SearchFragment"
+        android:label="SearchFragment"
+        >
+        <argument
+            android:name="search"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment><action android:id="@+id/action_global_searchFragment" app:destination="@id/searchFragment"/>
+    <dialog
+        android:id="@+id/noteDialog"
+        android:name="com.eric.phoneauction.dialog.NoteDialog"
+        android:label="NoteDialog">
+        <argument android:name="messageTypeKey"
+            app:argType="com.eric.phoneauction.dialog.NoteDialog$MessageType"
+            app:nullable="false"/>
+    </dialog>
+    <action android:id="@+id/action_global_noteDialog" app:destination="@id/noteDialog" />
+    <fragment
+        android:id="@+id/wishListFragment"
+        android:name="com.eric.phoneauction.wishListFragment.WishListFragment"
+        android:label="WishListFragment" />
 
 </navigation>

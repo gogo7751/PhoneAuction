@@ -2,7 +2,9 @@ package com.eric.phoneauction
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.LayoutInflater
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -20,9 +22,12 @@ import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.storage.FirebaseStorage
+import com.tbuonomo.morphbottomnavigation.MorphBottomNavigationView
 import java.util.*
+import kotlin.system.exitProcess
 
 
+@Suppress("DEPRECATED_IDENTITY_EQUALS")
 class MainActivity : AppCompatActivity() {
 
 
@@ -53,6 +58,29 @@ class MainActivity : AppCompatActivity() {
                 Logger.d("123456789$it")
             }
         })
+
+
+
+    }
+
+
+    var exitTime:Long = 0
+    override fun onKeyDown(keyCode:Int, event: KeyEvent):Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() === KeyEvent.ACTION_DOWN)
+        {
+            if ((System.currentTimeMillis() - exitTime) > 3000)
+            {
+                Toast.makeText(applicationContext, "再按一次退出程式", Toast.LENGTH_SHORT).show()
+                exitTime = System.currentTimeMillis()
+            }
+            else
+            {
+                finish()
+                exitProcess(0)
+            }
+            return true
+        }
+        return super.onKeyDown(keyCode, event)
     }
 
 
@@ -84,7 +112,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupBottomNav() {
         binding.bottomNavView.itemBackground = null
+
         binding.bottomNavView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
+
         val menuView = binding.bottomNavView.getChildAt(0) as BottomNavigationMenuView
         val itemView = menuView.getChildAt(3) as BottomNavigationItemView
         val bindingBadge = BadgeBottomBinding.inflate(LayoutInflater.from(this), itemView, true)

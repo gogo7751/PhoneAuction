@@ -65,5 +65,19 @@
             app:layout_constraintTop_toBottomOf="@id/layout_onAuction_header"
             tools:listitem="@layout/item_on_auction"/>
 
+        <TextView
+            android:id="@+id/text_noContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="沒有競標中商品"
+            android:letterSpacing="0.15"
+            android:alpha="0.8"
+            android:textColor="@color/gary757575"
+            tools:visibility="gone" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

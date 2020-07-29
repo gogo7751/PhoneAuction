@@ -114,4 +114,30 @@ class PhoneAuctionLocalDataSource(val context: Context) :
     override fun getAllLiveCollection(): MutableLiveData<List<Collection>> {
         TODO("Not yet implemented")
     }
+
+    override fun getLiveSearch(field: String, searchKey: String): MutableLiveData<List<Event>> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getAveragePrice(brand: String, productName: String, storage: String, deal: Boolean
+    ): Result<List<Event>> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun postWishList(wishList: WishList): Result<Boolean> {
+        TODO("Not yet implemented")
+    }
+
+    override fun getWishList(): MutableLiveData<List<WishList>> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateWishList(id: String): Result<Boolean> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getWishListFromPost(brand: String, productName: String, storage: String, visibility: Boolean
+    ): Result<WishList> {
+        TODO("Not yet implemented")
+    }
 }

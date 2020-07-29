@@ -1,11 +1,13 @@
 package com.eric.phoneauction.detailDirectFragment
 
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -22,6 +24,7 @@ import com.eric.phoneauction.detailAuctionFragment.DetailAuctionViewModel
 import com.eric.phoneauction.detailAuctionFragment.DetailCircleAdapter
 import com.eric.phoneauction.detailAuctionFragment.DetailGalleryAdapter
 import com.eric.phoneauction.dialog.MessageDialog
+import com.eric.phoneauction.dialog.NoteDialog
 import com.eric.phoneauction.ext.getVmFactory
 import com.eric.phoneauction.homeFragment.HomeAdapter
 import com.eric.phoneauction.homeFragment.HomeViewModel
@@ -34,6 +37,7 @@ class DetailDirectFragment : Fragment() {
     private val viewModel by viewModels<DetailDirectViewModel> { getVmFactory(DetailDirectFragmentArgs.fromBundle(requireArguments()).event) }
     private val homeViewModel by viewModels<HomeViewModel> { getVmFactory() }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -72,11 +76,9 @@ class DetailDirectFragment : Fragment() {
 
         // set the initial position to the center of infinite gallery
         viewModel.event.value?.let { event ->
-            event.images?.size?.times(100).let {
-                if (it != null) {
-                    binding.recyclerDetailDirect
-                        .scrollToPosition(it)
-                }
+            event.images.size.times(100).let {
+                binding.recyclerDetailDirect
+                    .scrollToPosition(it)
             }
             viewModel.snapPosition.observe(viewLifecycleOwner, Observer {
                 (binding.recyclerDetailDirectCircles.adapter as DetailCircleAdapter).selectedPosition.value = (it % (event.images?.size
@@ -140,6 +142,17 @@ class DetailDirectFragment : Fragment() {
             binding.imageViewDetailDirectCollection.visibility = View.VISIBLE
             binding.imageViewDetailDirectCollectioned.visibility = View.GONE
             findNavController().navigate(NavigationDirections.navigateToMessageDialog(MessageDialog.MessageType.UN_COLLECTION_SUCCESS))
+        }
+
+        //最近商品成交價
+        viewModel.averageEvents.observe(viewLifecycleOwner, Observer { list ->
+            list?.let { event ->
+                viewModel.averagePrice.value = event.map { it.price }.average().toInt()
+            }
+        })
+
+        binding.imageDirectQuestion.setOnClickListener {
+            findNavController().navigate(NavigationDirections.actionGlobalNoteDialog(NoteDialog.MessageType.AVERAGE_PRICE))
         }
 
         viewModel.timerStart()

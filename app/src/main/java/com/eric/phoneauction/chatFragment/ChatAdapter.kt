@@ -58,9 +58,11 @@ class ChatAdapter( val onClickListener: OnClickListener, val viewModel:ChatViewM
         if (UserManager.userId == chatRoom.senderId) {
             holder.itemView.text_chat_title.text = chatRoom.receiverName
             holder.itemView.image_chat_sender.visibility = View.GONE
+            viewModel.isEmpty.value = true
         }else if (UserManager.userId == chatRoom.receiverId) {
             holder.itemView.text_chat_title.text = chatRoom.senderName
             holder.itemView.image_chat_receiver.visibility = View.GONE
+            viewModel.isEmpty.value = true
         } else {
             holder.itemView.visibility = View.GONE
             holder.itemView.layoutParams.height = 0
