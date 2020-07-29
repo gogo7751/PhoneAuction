@@ -1,11 +1,13 @@
 package com.eric.phoneauction.detailDirectFragment
 
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -35,6 +37,7 @@ class DetailDirectFragment : Fragment() {
     private val viewModel by viewModels<DetailDirectViewModel> { getVmFactory(DetailDirectFragmentArgs.fromBundle(requireArguments()).event) }
     private val homeViewModel by viewModels<HomeViewModel> { getVmFactory() }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -73,11 +76,9 @@ class DetailDirectFragment : Fragment() {
 
         // set the initial position to the center of infinite gallery
         viewModel.event.value?.let { event ->
-            event.images?.size?.times(100).let {
-                if (it != null) {
-                    binding.recyclerDetailDirect
-                        .scrollToPosition(it)
-                }
+            event.images.size.times(100).let {
+                binding.recyclerDetailDirect
+                    .scrollToPosition(it)
             }
             viewModel.snapPosition.observe(viewLifecycleOwner, Observer {
                 (binding.recyclerDetailDirectCircles.adapter as DetailCircleAdapter).selectedPosition.value = (it % (event.images?.size

@@ -86,11 +86,6 @@ class PostFragment : Fragment() {
             toAlbum(PHOTO_FROM_GALLERY_5)
         }
 
-        //送出post
-        binding.buttonPost.setOnClickListener {
-            viewModel.post(viewModel.getEvent())
-            viewModel.getWishListFromPost(viewModel.brand.value.toString(), viewModel.productName.value.toString(), viewModel.storage.value.toString())
-        }
 
         viewModel.wishList.observe(viewLifecycleOwner, Observer {
             if (it.userId.isEmpty()){
@@ -225,6 +220,10 @@ class PostFragment : Fragment() {
                 viewModel.trade.value = binding.spinnerTrade.selectedItem.toString()
             }
         }
+
+       viewModel.brand.observe(viewLifecycleOwner, Observer {
+           Logger.d("99887766$it")
+       })
 
         //選擇拍賣方式
         binding.spinnerTag.adapter = PostSpinnerAdapter(

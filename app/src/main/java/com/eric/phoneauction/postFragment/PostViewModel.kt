@@ -28,6 +28,12 @@ class PostViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
     val events: LiveData<List<Event>>
         get() = _events
 
+    // Handle the error for post
+    private val _invalidPost = MutableLiveData<Int>()
+
+    val invalidPost: LiveData<Int>
+        get() = _invalidPost
+
     var wishList = MutableLiveData<WishList>()
 
     var averagePrice = MutableLiveData<Int>()
@@ -205,13 +211,12 @@ class PostViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
     }
 
     fun getEvent(): Event {
-        val images = listOf(
-            image1.value.toString(),
-            image2.value.toString(),
-            image3.value.toString(),
-            image4.value.toString(),
-            image5.value.toString()
-        )
+        val images = mutableListOf<String>()
+        if (image1.value != null) { images.add(image1.value.toString()) }
+        if (image2.value != null) { images.add(image2.value.toString()) }
+        if (image3.value != null) { images.add(image3.value.toString()) }
+        if (image4.value != null) { images.add(image4.value.toString()) }
+        if (image5.value != null) { images.add(image5.value.toString()) }
 
         val events = FirebaseFirestore.getInstance().collection("events")
         val document = events.document()
@@ -233,6 +238,23 @@ class PostViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
             sellerName = UserManager.user.name,
             deal = true
         )
+    }
+
+    fun preparePost() {
+        when {
+            brand.value == "0" -> _invalidPost.value = INVALID_FORMAT_BRAND_EMPTY
+            productName.value == "0" -> _invalidPost.value = INVALID_FORMAT_PRODUCT_NAME_EMPTY
+            storage.value == "0" -> _invalidPost.value = INVALID_FORMAT_STORAGE_EMPTY
+            description.value.isNullOrEmpty() -> _invalidPost.value = INVALID_FORMAT_DESCRIPTION_EMPTY
+            tag.value.isNullOrEmpty() -> _invalidPost.value = INVALID_FORMAT_TAG_EMPTY
+            price.value.isNullOrEmpty() -> _invalidPost.value = INVALID_FORMAT_PRICE_EMPTY
+            image1.value.isNullOrEmpty() -> _invalidPost.value = INVALID_FORMAT_IMAGE_EMPTY
+            trade.value.isNullOrEmpty() -> _invalidPost.value = INVALID_FORMAT_TRADE_EMPTY
+            else -> {
+                post(getEvent())
+                getWishListFromPost(brand.value.toString(), productName.value.toString(), storage.value.toString())
+            }
+        }
     }
 
     fun post(event: Event) {
@@ -270,4 +292,19 @@ class PostViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
     fun onLeft() {
         _leave.value = null
     }
+
+    companion object {
+
+        const val INVALID_FORMAT_IMAGE_EMPTY        = 11
+        const val INVALID_FORMAT_BRAND_EMPTY        = 12
+        const val INVALID_FORMAT_PRODUCT_NAME_EMPTY = 13
+        const val INVALID_FORMAT_STORAGE_EMPTY      = 14
+        const val INVALID_FORMAT_PRICE_EMPTY        = 15
+        const val INVALID_FORMAT_TAG_EMPTY          = 16
+        const val INVALID_FORMAT_TRADE_EMPTY        = 17
+        const val INVALID_FORMAT_DESCRIPTION_EMPTY  = 18
+        const val NO_ONE_KNOWS                      = 21
+
+    }
 }
+
