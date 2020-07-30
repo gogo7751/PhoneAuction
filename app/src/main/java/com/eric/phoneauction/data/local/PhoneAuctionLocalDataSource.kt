@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.eric.phoneauction.data.*
 import com.eric.phoneauction.data.Collection
 import com.eric.phoneauction.data.source.PhoneAuctionDataSource
+import com.facebook.AccessToken
 import com.google.firebase.firestore.Query
 
 /**
@@ -138,6 +139,10 @@ class PhoneAuctionLocalDataSource(val context: Context) :
 
     override suspend fun getWishListFromPost(brand: String, productName: String, storage: String, visibility: Boolean
     ): Result<WishList> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun handleFacebookAccessToken(token: AccessToken?): Result<Boolean> {
         TODO("Not yet implemented")
     }
 }

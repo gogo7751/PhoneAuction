@@ -1,18 +1,31 @@
 package com.eric.phoneauction.data.remote
 
+import android.content.Context
+import android.content.Intent
 import android.icu.util.Calendar
 import android.os.Build
+import android.view.View
+import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.MutableLiveData
+import com.eric.phoneauction.LoginActivity
+import com.eric.phoneauction.MainActivity
 import com.eric.phoneauction.PhoneAuctionApplication
 import com.eric.phoneauction.R
 import com.eric.phoneauction.data.*
 import com.eric.phoneauction.data.Collection
 import com.eric.phoneauction.data.source.PhoneAuctionDataSource
 import com.eric.phoneauction.util.Logger
+import com.facebook.AccessToken
+import com.google.firebase.auth.FacebookAuthProvider
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import kotlinx.android.synthetic.main.activity_main.*
 import java.util.logging.Handler
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -855,27 +868,6 @@ object PhoneAuctionRemoteDataSource :
             }
     }
 
-    override suspend fun updateWishList(id: String): Result<Boolean> = suspendCoroutine { continuation ->
-        val wishLists = FirebaseFirestore.getInstance().collection(PATH_WISH_LIST)
-        val document = wishLists.document(id)
-
-        document
-            .update("visibility", false)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    Logger.i("PhoneAuction: $id")
-                    continuation.resume(Result.Success(true))
-                } else {
-                    task.exception?.let {
-                        Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
-                        continuation.resume(Result.Error(it))
-                        return@addOnCompleteListener
-                    }
-                    continuation.resume(Result.Fail(PhoneAuctionApplication.instance.getString(R.string.you_know_nothing)))
-                }
-            }
-    }
-
     override fun getWishList(): MutableLiveData<List<WishList>> {
         val liveData = MutableLiveData<List<WishList>>()
 
@@ -925,6 +917,57 @@ object PhoneAuctionRemoteDataSource :
                 } else {
                     task.exception?.let {
 
+                        Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
+                        continuation.resume(Result.Error(it))
+                        return@addOnCompleteListener
+                    }
+                    continuation.resume(Result.Fail(PhoneAuctionApplication.instance.getString(R.string.you_know_nothing)))
+                }
+            }
+    }
+
+    override suspend fun handleFacebookAccessToken(token: AccessToken?): Result<Boolean> = suspendCoroutine { continuation ->
+        val auth = FirebaseAuth.getInstance()
+        val credential = token?.token?.let { FacebookAuthProvider.getCredential(it) }
+        Logger.d("${token!!.token}")
+        if (credential != null) {
+            auth?.signInWithCredential(credential)
+                ?.addOnCompleteListener {
+                        task ->
+                    if(task.isSuccessful){
+                        val user = User(
+                            id = task.result?.user?.uid.toString(),
+                            image = task.result?.user?.photoUrl.toString(),
+                            name = task.result?.user?.displayName.toString()
+                        )
+                        UserManager.userId = task.result?.user?.uid.toString()
+                        UserManager.user = user
+                        continuation.resume(Result.Success(true))
+                    }else{
+                        task.exception?.let {
+
+                            Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
+                            continuation.resume(Result.Error(it))
+                            return@addOnCompleteListener
+                        }
+                        continuation.resume(Result.Fail(PhoneAuctionApplication.instance.getString(R.string.you_know_nothing)))
+                    }
+                }
+        }
+    }
+
+    override suspend fun updateWishList(id: String): Result<Boolean> = suspendCoroutine { continuation ->
+        val wishLists = FirebaseFirestore.getInstance().collection(PATH_WISH_LIST)
+        val document = wishLists.document(id)
+
+        document
+            .update("visibility", false)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Logger.i("PhoneAuction: $id")
+                    continuation.resume(Result.Success(true))
+                } else {
+                    task.exception?.let {
                         Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
                         continuation.resume(Result.Error(it))
                         return@addOnCompleteListener

@@ -2,6 +2,7 @@ package com.eric.phoneauction.factory
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.eric.phoneauction.LoginViewModel
 import com.eric.phoneauction.MainViewModel
 import com.eric.phoneauction.chatFragment.ChatViewModel
 import com.eric.phoneauction.checkout.CheckoutSuccessViewModel
@@ -33,6 +34,9 @@ class ViewModelFactory constructor(
 
                 isAssignableFrom(MainViewModel::class.java) ->
                     MainViewModel(phoneAuctionRepository)
+
+                isAssignableFrom(LoginViewModel::class.java) ->
+                    LoginViewModel(phoneAuctionRepository)
 
                 isAssignableFrom(CheckoutSuccessViewModel::class.java) ->
                     CheckoutSuccessViewModel(phoneAuctionRepository)
