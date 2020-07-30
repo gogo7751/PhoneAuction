@@ -6,21 +6,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearSnapHelper
 import com.eric.phoneauction.NavigationDirections
-import com.eric.phoneauction.PhoneAuctionApplication
-import com.eric.phoneauction.R
 import com.eric.phoneauction.data.UserManager
-import com.eric.phoneauction.databinding.DetailDirectFragmentBinding
-import com.eric.phoneauction.detailAuctionFragment.DetailAuctionFragmentArgs
-import com.eric.phoneauction.detailAuctionFragment.DetailAuctionViewModel
+import com.eric.phoneauction.databinding.FragmentDetailDirectBinding
 import com.eric.phoneauction.detailAuctionFragment.DetailCircleAdapter
 import com.eric.phoneauction.detailAuctionFragment.DetailGalleryAdapter
 import com.eric.phoneauction.dialog.MessageDialog
@@ -28,12 +22,11 @@ import com.eric.phoneauction.dialog.NoteDialog
 import com.eric.phoneauction.ext.getVmFactory
 import com.eric.phoneauction.homeFragment.HomeAdapter
 import com.eric.phoneauction.homeFragment.HomeViewModel
-import com.eric.phoneauction.util.Logger
 import kotlinx.android.synthetic.main.activity_main.*
 
 
 class DetailDirectFragment : Fragment() {
-    lateinit var binding: DetailDirectFragmentBinding
+    lateinit var binding: FragmentDetailDirectBinding
     private val viewModel by viewModels<DetailDirectViewModel> { getVmFactory(DetailDirectFragmentArgs.fromBundle(requireArguments()).event) }
     private val homeViewModel by viewModels<HomeViewModel> { getVmFactory() }
 
@@ -45,7 +38,7 @@ class DetailDirectFragment : Fragment() {
 
         DetailDirectFragmentArgs.fromBundle(requireArguments()).event
 
-        binding = DetailDirectFragmentBinding.inflate(inflater, container, false)
+        binding = FragmentDetailDirectBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 

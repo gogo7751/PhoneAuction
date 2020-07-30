@@ -214,9 +214,6 @@
             app:layout_constraintTop_toTopOf="@+id/button_auction"
             app:layout_constraintVertical_bias="0.0" />
 
-
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
