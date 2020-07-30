@@ -1,5 +1,7 @@
 package com.eric.phoneauction.profileFragment
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -37,12 +39,13 @@ class ProfileFragment : Fragment() {
         }
 
         binding.buttonProfileQuestion.setOnClickListener {
-            Toast.makeText(context, "問與答 coming soon", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "使用說明 coming soon", Toast.LENGTH_SHORT).show()
         }
 
         binding.buttonProfilePolicy.setOnClickListener {
-            Toast.makeText(context, "使用規範 coming soon", Toast.LENGTH_SHORT).show()
-            addData()
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse("https://docs.google.com/document/d/1fS0I6PN980hEX1K5jTg5cjInUaPvNTub05IfiJVsXok/edit?usp=sharing")
+            startActivity(intent)
         }
 
         binding.buttonProfilePurchased.setOnClickListener {

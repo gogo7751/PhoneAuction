@@ -25,7 +25,7 @@ import com.eric.phoneauction.MainViewModel
 import com.eric.phoneauction.NavigationDirections
 import com.eric.phoneauction.PhoneAuctionApplication
 import com.eric.phoneauction.R
-import com.eric.phoneauction.databinding.PostFragmentBinding
+import com.eric.phoneauction.databinding.FragmentPostBinding
 import com.eric.phoneauction.dialog.NoteDialog
 import com.eric.phoneauction.ext.getVmFactory
 import com.eric.phoneauction.ext.hideKeyboard
@@ -49,13 +49,13 @@ class PostFragment : Fragment() {
         const val PHOTO_FROM_GALLERY_5 = 5
     }
 
-    lateinit var binding: PostFragmentBinding
+    lateinit var binding: FragmentPostBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = PostFragmentBinding.inflate(inflater, container, false)
+        binding = FragmentPostBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 

@@ -1,11 +1,13 @@
 package com.eric.phoneauction.homeFragment
 
 import android.icu.util.Calendar
+import android.os.Build
 import android.os.CountDownTimer
 import android.os.UserManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.eric.phoneauction.R
@@ -26,6 +28,7 @@ class HomeAdapter( val onClickListener: OnClickListener, val viewModel: HomeView
         lateinit var timer: CountDownTimer
 
 
+        @RequiresApi(Build.VERSION_CODES.N)
         fun bind(event: Event, viewModel: HomeViewModel) {
             binding.event = event
             binding.viewModel = viewModel
@@ -107,6 +110,7 @@ class HomeAdapter( val onClickListener: OnClickListener, val viewModel: HomeView
         )
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onBindViewHolder(holder: HomeViewHolder, position: Int) {
         val event = getItem(position)
         holder.itemView.setOnClickListener {
