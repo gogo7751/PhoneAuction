@@ -7,7 +7,6 @@
         <variable
             name="message"
             type="com.eric.phoneauction.data.Message" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -95,6 +94,46 @@
             app:layout_constraintEnd_toStartOf="@id/textview_chatToDetail_received"
             app:layout_constraintBottom_toBottomOf="@id/textview_chatToDetail_received"
             tools:text="09:23" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/image_chatToDetail_send"
+            android:layout_width="220dp"
+            android:layout_height="220dp"
+            app:cardCornerRadius="6dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/image_chatToDetail_sender"
+            app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="220dp"
+            android:layout_height="220dp"
+            android:scaleType="centerCrop"
+            app:imageUrl="@{message.image}" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/image_chatToDetail_received"
+            android:layout_width="220dp"
+            android:layout_height="220dp"
+            app:cardCornerRadius="6dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+        <ImageView
+            android:layout_width="220dp"
+            android:layout_height="220dp"
+            android:scaleType="centerCrop"
+            app:imageUrl="@{message.image}" />
+        </com.google.android.material.card.MaterialCardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

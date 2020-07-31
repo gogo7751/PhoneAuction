@@ -29,6 +29,8 @@ class ChatToDetailChatViewModel(
     val chatRoom: LiveData<ChatRoom>
         get() = _chatRoom
 
+    var image = MutableLiveData<String>()
+
     var liveMessages = MutableLiveData<List<Message>>()
 
     val message = MutableLiveData<Message>().apply {

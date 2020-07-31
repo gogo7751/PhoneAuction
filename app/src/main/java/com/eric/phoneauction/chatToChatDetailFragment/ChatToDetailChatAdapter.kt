@@ -47,20 +47,53 @@ class ChatToDetailChatAdapter(val viewModel: ChatToDetailChatViewModel) :
 
     override fun onBindViewHolder(holder: DetailChatViewHolder, position: Int) {
         val message = getItem(position)
+        //右邊的訊息
         if (message.id == UserManager.userId) {
-            holder.itemView.textview_chatToDetail_received.visibility = View.VISIBLE
-            holder.itemView.text_chatToDetail_receivedTime.visibility =View.VISIBLE
-            holder.itemView.text_chatToDetail_sentTime.visibility = View.GONE
-            holder.itemView.textview_chatToDetail_sent.visibility = View.GONE
-            holder.itemView.image_chatToDetail_sender.visibility = View.GONE
-
+            //訊息是空的不顯示
+            if (message.text.isNullOrEmpty()){
+                holder.itemView.textview_chatToDetail_received.visibility = View.GONE
+                holder.itemView.text_chatToDetail_receivedTime.visibility =View.GONE
+                holder.itemView.text_chatToDetail_sentTime.visibility = View.GONE
+                holder.itemView.textview_chatToDetail_sent.visibility = View.GONE
+                holder.itemView.image_chatToDetail_sender.visibility = View.GONE
+            } else {
+                holder.itemView.textview_chatToDetail_received.visibility = View.VISIBLE
+                holder.itemView.text_chatToDetail_receivedTime.visibility =View.VISIBLE
+                holder.itemView.text_chatToDetail_sentTime.visibility = View.GONE
+                holder.itemView.textview_chatToDetail_sent.visibility = View.GONE
+                holder.itemView.image_chatToDetail_sender.visibility = View.GONE
+            }
+            //圖片是空的不顯示
+            if (message.image.isNullOrEmpty()){
+                holder.itemView.image_chatToDetail_send.visibility = View.GONE
+                holder.itemView.image_chatToDetail_received.visibility = View.GONE
+            } else {
+                holder.itemView.image_chatToDetail_send.visibility = View.GONE
+                holder.itemView.image_chatToDetail_received.visibility = View.VISIBLE
+            }
+        //左邊的訊息
         } else {
-            holder.itemView.textview_chatToDetail_received.visibility = View.GONE
-            holder.itemView.text_chatToDetail_sentTime.visibility = View.VISIBLE
-            holder.itemView.text_chatToDetail_receivedTime.visibility =View.GONE
-            holder.itemView.textview_chatToDetail_sent.visibility = View.VISIBLE
-            holder.itemView.image_chatToDetail_sender.visibility = View.VISIBLE
-
+            //訊息是空的不顯示
+            if (message.text.isNullOrEmpty()){
+                holder.itemView.textview_chatToDetail_received.visibility = View.GONE
+                holder.itemView.text_chatToDetail_receivedTime.visibility =View.GONE
+                holder.itemView.text_chatToDetail_sentTime.visibility = View.GONE
+                holder.itemView.textview_chatToDetail_sent.visibility = View.GONE
+            } else {
+                holder.itemView.textview_chatToDetail_received.visibility = View.GONE
+                holder.itemView.text_chatToDetail_sentTime.visibility = View.VISIBLE
+                holder.itemView.text_chatToDetail_receivedTime.visibility = View.GONE
+                holder.itemView.image_chatToDetail_received.visibility = View.GONE
+                holder.itemView.textview_chatToDetail_sent.visibility = View.VISIBLE
+            }
+            //圖片是空的不顯示
+            if (message.image.isNullOrEmpty()){
+                holder.itemView.image_chatToDetail_send.visibility = View.GONE
+                holder.itemView.image_chatToDetail_received.visibility = View.GONE
+            } else {
+                holder.itemView.image_chatToDetail_send.visibility = View.VISIBLE
+                holder.itemView.image_chatToDetail_received.visibility = View.GONE
+            }
         }
         holder.bind(message, viewModel)
     }

@@ -88,7 +88,7 @@ class PostFragment : Fragment() {
 
 
         viewModel.wishList.observe(viewLifecycleOwner, Observer {
-            if (it.userId.isEmpty()){
+            if (it.userId.isEmpty()) {
                 Logger.d("")
             } else {
                 viewModel.postNotification(viewModel.getNotification("符合您許願清單的商品上架囉"), it.userId)
@@ -134,57 +134,118 @@ class PostFragment : Fragment() {
             PhoneAuctionApplication.instance.resources.getStringArray(R.array.brand_list)
         )
 
-        binding.spinnerBrand.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+        binding.spinnerBrand.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
 
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long
+            override fun onItemSelected(
+                parent: AdapterView<*>?, view: View?, position: Int, id: Long
             ) {
                 when (position) {
                     1 -> {
-                        getSpinnerNameString(PhoneAuctionApplication.instance.resources.getStringArray(R.array.iphone_list))
+                        getSpinnerNameString(
+                            PhoneAuctionApplication.instance.resources.getStringArray(
+                                R.array.iphone_list
+                            )
+                        )
                     }
                     2 -> {
-                        getSpinnerNameString(PhoneAuctionApplication.instance.resources.getStringArray(R.array.samsung_list))
+                        getSpinnerNameString(
+                            PhoneAuctionApplication.instance.resources.getStringArray(
+                                R.array.samsung_list
+                            )
+                        )
                     }
                     3 -> {
-                        getSpinnerNameString(PhoneAuctionApplication.instance.resources.getStringArray(R.array.sony_list))
+                        getSpinnerNameString(
+                            PhoneAuctionApplication.instance.resources.getStringArray(
+                                R.array.sony_list
+                            )
+                        )
                     }
                     4 -> {
-                        getSpinnerNameString(PhoneAuctionApplication.instance.resources.getStringArray(R.array.google_list))
+                        getSpinnerNameString(
+                            PhoneAuctionApplication.instance.resources.getStringArray(
+                                R.array.google_list
+                            )
+                        )
                     }
                     5 -> {
-                        getSpinnerNameString(PhoneAuctionApplication.instance.resources.getStringArray(R.array.asus_list))
+                        getSpinnerNameString(
+                            PhoneAuctionApplication.instance.resources.getStringArray(
+                                R.array.asus_list
+                            )
+                        )
                     }
                     6 -> {
-                        getSpinnerNameString(PhoneAuctionApplication.instance.resources.getStringArray(R.array.oppo_list))
+                        getSpinnerNameString(
+                            PhoneAuctionApplication.instance.resources.getStringArray(
+                                R.array.oppo_list
+                            )
+                        )
                     }
                     7 -> {
-                        getSpinnerNameString(PhoneAuctionApplication.instance.resources.getStringArray(R.array.huawei_list))
+                        getSpinnerNameString(
+                            PhoneAuctionApplication.instance.resources.getStringArray(
+                                R.array.huawei_list
+                            )
+                        )
                     }
                     8 -> {
-                        getSpinnerNameString(PhoneAuctionApplication.instance.resources.getStringArray(R.array.mi_list))
+                        getSpinnerNameString(
+                            PhoneAuctionApplication.instance.resources.getStringArray(
+                                R.array.mi_list
+                            )
+                        )
                     }
                     9 -> {
-                        getSpinnerNameString(PhoneAuctionApplication.instance.resources.getStringArray(R.array.htc_list))
+                        getSpinnerNameString(
+                            PhoneAuctionApplication.instance.resources.getStringArray(
+                                R.array.htc_list
+                            )
+                        )
                     }
                     10 -> {
-                        getSpinnerNameString(PhoneAuctionApplication.instance.resources.getStringArray(R.array.nokia_list))
+                        getSpinnerNameString(
+                            PhoneAuctionApplication.instance.resources.getStringArray(
+                                R.array.nokia_list
+                            )
+                        )
                     }
                     11 -> {
-                        getSpinnerNameString(PhoneAuctionApplication.instance.resources.getStringArray(R.array.realme_list))
+                        getSpinnerNameString(
+                            PhoneAuctionApplication.instance.resources.getStringArray(
+                                R.array.realme_list
+                            )
+                        )
                     }
                     12 -> {
-                        getSpinnerNameString(PhoneAuctionApplication.instance.resources.getStringArray(R.array.lg_list))
+                        getSpinnerNameString(
+                            PhoneAuctionApplication.instance.resources.getStringArray(
+                                R.array.lg_list
+                            )
+                        )
                     }
                     13 -> {
-                        getSpinnerNameString(PhoneAuctionApplication.instance.resources.getStringArray(R.array.sugar_list))
+                        getSpinnerNameString(
+                            PhoneAuctionApplication.instance.resources.getStringArray(
+                                R.array.sugar_list
+                            )
+                        )
                     }
                     14 -> {
-                        getSpinnerNameString(PhoneAuctionApplication.instance.resources.getStringArray(R.array.sharp_list))
+                        getSpinnerNameString(
+                            PhoneAuctionApplication.instance.resources.getStringArray(
+                                R.array.sharp_list
+                            )
+                        )
                     }
                     15 -> {
-                        getSpinnerNameString(PhoneAuctionApplication.instance.resources.getStringArray(R.array.vivo_list))
+                        getSpinnerNameString(
+                            PhoneAuctionApplication.instance.resources.getStringArray(
+                                R.array.vivo_list
+                            )
+                        )
                     }
                 }
                 viewModel.brand.value = binding.spinnerBrand.selectedItem.toString()
@@ -196,10 +257,12 @@ class PostFragment : Fragment() {
             PhoneAuctionApplication.instance.resources.getStringArray(R.array.name_list)
         )
 
-        binding.spinnerName.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+        binding.spinnerName.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?, view: View?, position: Int, id: Long
             ) {
                 viewModel.productName.value = binding.spinnerName.selectedItem.toString()
             }
@@ -211,29 +274,31 @@ class PostFragment : Fragment() {
             PhoneAuctionApplication.instance.resources.getStringArray(R.array.trade_list)
         )
 
-        binding.spinnerTrade.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+        binding.spinnerTrade.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
 
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long
+            override fun onItemSelected(
+                parent: AdapterView<*>?, view: View?, position: Int, id: Long
             ) {
                 viewModel.trade.value = binding.spinnerTrade.selectedItem.toString()
             }
         }
 
-       viewModel.brand.observe(viewLifecycleOwner, Observer {
-           Logger.d("99887766$it")
-       })
+        viewModel.brand.observe(viewLifecycleOwner, Observer {
+            Logger.d("99887766$it")
+        })
 
         //選擇拍賣方式
         binding.spinnerTag.adapter = PostSpinnerAdapter(
             PhoneAuctionApplication.instance.resources.getStringArray(R.array.tag_list)
         )
-        binding.spinnerTag.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+        binding.spinnerTag.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
 
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long
+            override fun onItemSelected(
+                parent: AdapterView<*>?, view: View?, position: Int, id: Long
             ) {
                 when (position) {
                     1 -> {
@@ -250,7 +315,12 @@ class PostFragment : Fragment() {
                     }
                 }
                 viewModel.tag.value = binding.spinnerTag.selectedItem.toString()
-                viewModel.getAveragePriceResult(viewModel.brand.value.toString(), viewModel.productName.value.toString(), viewModel.storage.value.toString(), false)
+                viewModel.getAveragePriceResult(
+                    viewModel.brand.value.toString(),
+                    viewModel.productName.value.toString(),
+                    viewModel.storage.value.toString(),
+                    false
+                )
             }
         }
 
@@ -258,7 +328,7 @@ class PostFragment : Fragment() {
         //最近商品成交價
         viewModel.events.observe(viewLifecycleOwner, Observer { list ->
             list?.let { event ->
-                 viewModel.averagePrice.value = event.map { it.price }.average().toInt()
+                viewModel.averagePrice.value = event.map { it.price }.average().toInt()
             }
         })
 
@@ -267,21 +337,22 @@ class PostFragment : Fragment() {
         }
 
 
-
         //選擇容量
         binding.spinnerStorage.adapter = PostSpinnerAdapter(
             PhoneAuctionApplication.instance.resources.getStringArray(R.array.storage_list)
         )
 
-        binding.spinnerStorage.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-            }
+        binding.spinnerStorage.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                }
 
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long
-            ) {
-                viewModel.storage.value = binding.spinnerStorage.selectedItem.toString()
+                override fun onItemSelected(
+                    parent: AdapterView<*>?, view: View?, position: Int, id: Long
+                ) {
+                    viewModel.storage.value = binding.spinnerStorage.selectedItem.toString()
+                }
             }
-        }
 
 
         //返回上一頁
@@ -297,7 +368,8 @@ class PostFragment : Fragment() {
     //get spinnerNameString
     fun getSpinnerNameString(stringArray: Array<String>) {
         binding.spinnerName.adapter = PostSpinnerAdapter(
-            stringArray)
+            stringArray
+        )
     }
 
     //bottom navigation view gone
@@ -309,7 +381,7 @@ class PostFragment : Fragment() {
     //上傳圖片
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        if(saveUri != null){
+        if (saveUri != null) {
             val uriString = saveUri.toString()
             outState.putString("saveUri", uriString)
         }
@@ -322,7 +394,10 @@ class PostFragment : Fragment() {
                 when (resultCode) {
                     Activity.RESULT_OK -> {
                         saveUri = data?.data
-                        val bitmap = MediaStore.Images.Media.getBitmap(PhoneAuctionApplication.instance.contentResolver, saveUri)
+                        val bitmap = MediaStore.Images.Media.getBitmap(
+                            PhoneAuctionApplication.instance.contentResolver,
+                            saveUri
+                        )
                         binding.imagePost1.setImageBitmap(bitmap)
                         uploadImage(viewModel.image1)
                     }
@@ -335,7 +410,10 @@ class PostFragment : Fragment() {
                 when (resultCode) {
                     Activity.RESULT_OK -> {
                         saveUri = data?.data
-                        val bitmap = MediaStore.Images.Media.getBitmap(PhoneAuctionApplication.instance.contentResolver, saveUri)
+                        val bitmap = MediaStore.Images.Media.getBitmap(
+                            PhoneAuctionApplication.instance.contentResolver,
+                            saveUri
+                        )
                         binding.imagePost2.setImageBitmap(bitmap)
                         uploadImage(viewModel.image2)
                     }
@@ -348,7 +426,10 @@ class PostFragment : Fragment() {
                 when (resultCode) {
                     Activity.RESULT_OK -> {
                         saveUri = data?.data
-                        val bitmap = MediaStore.Images.Media.getBitmap(PhoneAuctionApplication.instance.contentResolver, saveUri)
+                        val bitmap = MediaStore.Images.Media.getBitmap(
+                            PhoneAuctionApplication.instance.contentResolver,
+                            saveUri
+                        )
                         binding.imagePost3.setImageBitmap(bitmap)
                         uploadImage(viewModel.image3)
                     }
@@ -361,7 +442,10 @@ class PostFragment : Fragment() {
                 when (resultCode) {
                     Activity.RESULT_OK -> {
                         saveUri = data?.data
-                        val bitmap = MediaStore.Images.Media.getBitmap(PhoneAuctionApplication.instance.contentResolver, saveUri)
+                        val bitmap = MediaStore.Images.Media.getBitmap(
+                            PhoneAuctionApplication.instance.contentResolver,
+                            saveUri
+                        )
                         binding.imagePost4.setImageBitmap(bitmap)
                         uploadImage(viewModel.image4)
                     }
@@ -374,7 +458,10 @@ class PostFragment : Fragment() {
                 when (resultCode) {
                     Activity.RESULT_OK -> {
                         saveUri = data?.data
-                        val bitmap = MediaStore.Images.Media.getBitmap(PhoneAuctionApplication.instance.contentResolver, saveUri)
+                        val bitmap = MediaStore.Images.Media.getBitmap(
+                            PhoneAuctionApplication.instance.contentResolver,
+                            saveUri
+                        )
                         binding.imagePost5.setImageBitmap(bitmap)
                         uploadImage(viewModel.image5)
                     }
@@ -386,18 +473,26 @@ class PostFragment : Fragment() {
         }
     }
 
-    private fun toAlbum(photoFromGallery :Int) {
+    private fun toAlbum(photoFromGallery: Int) {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "image/*"
         startActivityForResult(intent, photoFromGallery)
     }
 
     private fun permission() {
-        val permissionList = arrayListOf(android.Manifest.permission.CAMERA, android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.READ_EXTERNAL_STORAGE)
+        val permissionList = arrayListOf(
+            android.Manifest.permission.CAMERA,
+            android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            android.Manifest.permission.READ_EXTERNAL_STORAGE
+        )
         var size = permissionList.size
         var i = 0
         while (i < size) {
-            if (ActivityCompat.checkSelfPermission(PhoneAuctionApplication.instance.applicationContext, permissionList[i]) == PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.checkSelfPermission(
+                    PhoneAuctionApplication.instance.applicationContext,
+                    permissionList[i]
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
                 permissionList.removeAt(i)
                 i -= 1
                 size -= 1
@@ -405,18 +500,24 @@ class PostFragment : Fragment() {
             i += 1
         }
         val array = arrayOfNulls<String>(permissionList.size)
-        if (permissionList.isNotEmpty()) ActivityCompat.requestPermissions((activity as AppCompatActivity), permissionList.toArray(array), 0)
+        if (permissionList.isNotEmpty()) ActivityCompat.requestPermissions(
+            (activity as AppCompatActivity),
+            permissionList.toArray(array),
+            0
+        )
     }
 
 
     private fun uploadImage(image: MutableLiveData<String>) {
         val filename = UUID.randomUUID().toString()
         val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
-        ref.putFile(saveUri!!)
-            .addOnSuccessListener {
-                ref.downloadUrl.addOnSuccessListener {
-                    image.value = it.toString()
+        saveUri?.let { uri ->
+            ref.putFile(uri)
+                .addOnSuccessListener {
+                    ref.downloadUrl.addOnSuccessListener {
+                        image.value = it.toString()
+                    }
                 }
-            }
+        }
     }
 }
