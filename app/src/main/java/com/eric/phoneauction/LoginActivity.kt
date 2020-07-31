@@ -12,25 +12,18 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import app.appworks.school.publisher.network.LoadApiStatus
-import com.eric.phoneauction.data.UserManager
 import com.eric.phoneauction.databinding.ActivityLoginBinding
 import com.eric.phoneauction.ext.getVmFactory
 import com.eric.phoneauction.util.Logger.d
-import com.eric.phoneauction.util.Logger.v
-import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
-import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_login.*
-import java.security.MessageDigest
-import java.security.NoSuchAlgorithmException
 import java.util.*
-import java.util.logging.Logger
 
 @Suppress("DEPRECATION")
 class LoginActivity : AppCompatActivity() {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable
@@ -9,159 +9,158 @@
             type="com.eric.phoneauction.data.Message" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/image_chatToDetail_sender"
-            android:layout_width="53dp"
-            android:layout_height="53dp"
-            android:scaleType="centerCrop"
-            android:layout_marginTop="6dp"
-            android:layout_marginStart="6dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:imageUrl="@{message.senderImage}"
-            tools:src="@tools:sample/backgrounds/scenic"
-            />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/image_chatToDetail_sender"
+                android:layout_width="53dp"
+                android:layout_height="53dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="6dp"
+                android:scaleType="centerCrop"
+                app:imageUrl="@{message.senderImage}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@tools:sample/backgrounds/scenic" />
 
-        <TextView
-            android:id="@+id/textview_chatToDetail_sent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
-            android:paddingEnd="8dp"
-            android:paddingStart="24dp"
-            android:layout_marginBottom="15dp"
-            android:layout_marginStart="5dp"
-            tools:text="對方傳的訊息中午要吃什麼好餓"
-            android:text="@{message.text}"
-            android:background="@drawable/shape_bubble_sent"
-            android:textColor="@android:color/black"
-            android:maxWidth="216dp"
-            app:layout_constraintStart_toEndOf="@id/image_chatToDetail_sender"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            />
+            <TextView
+                android:id="@+id/textview_chatToDetail_sent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/shape_bubble_sent"
+                android:maxWidth="216dp"
+                android:paddingStart="24dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="8dp"
+                android:paddingBottom="8dp"
+                android:text="@{message.text}"
+                android:textColor="@android:color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/image_chatToDetail_sender"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="對方傳的訊息中午要吃什麼好餓" />
 
-        <TextView
-            android:id="@+id/text_chatToDetail_sentTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/gary757575"
-            android:layout_marginStart="3dp"
-            android:alpha="0.7"
-            app:time="@{message.time}"
-            android:layout_marginBottom="3dp"
-            android:textSize="13sp"
-            app:layout_constraintStart_toEndOf="@id/textview_chatToDetail_sent"
-            app:layout_constraintBottom_toBottomOf="@id/textview_chatToDetail_sent"
-            tools:text="09:23"/>
+            <TextView
+                android:id="@+id/text_chatToDetail_sentTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_marginBottom="3dp"
+                android:alpha="0.7"
+                android:textColor="@color/gary757575"
+                android:textSize="13sp"
+                app:layout_constraintBottom_toBottomOf="@id/textview_chatToDetail_sent"
+                app:layout_constraintStart_toEndOf="@id/textview_chatToDetail_sent"
+                app:time="@{message.time}"
+                tools:text="09:23" />
 
-        <TextView
-            android:id="@+id/textview_chatToDetail_received"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
-            android:paddingStart="8dp"
-            android:paddingEnd="24dp"
-            android:layout_marginBottom="10dp"
-            android:text="@{message.text}"
-            tools:text="我傳的訊息隨便啦我都可以不要"
-            android:background="@drawable/shape_bubble_received"
-            android:textColor="@android:color/white"
-            android:maxWidth="226dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            <TextView
+                android:id="@+id/textview_chatToDetail_received"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/shape_bubble_received"
+                android:maxWidth="226dp"
+                android:paddingStart="8dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="24dp"
+                android:paddingBottom="8dp"
+                android:text="@{message.text}"
+                android:textColor="@android:color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="我傳的訊息隨便啦我都可以不要" />
 
-        <TextView
-            android:id="@+id/text_chatToDetail_receivedTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/gary757575"
-            app:time="@{message.time}"
-            android:alpha="0.7"
-            android:textSize="13sp"
-            android:layout_marginEnd="3dp"
-            android:layout_marginBottom="3dp"
-            app:layout_constraintEnd_toStartOf="@id/textview_chatToDetail_received"
-            app:layout_constraintBottom_toBottomOf="@id/textview_chatToDetail_received"
-            tools:text="09:23" />
+            <TextView
+                android:id="@+id/text_chatToDetail_receivedTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="3dp"
+                android:layout_marginBottom="3dp"
+                android:alpha="0.7"
+                android:textColor="@color/gary757575"
+                android:textSize="13sp"
+                app:layout_constraintBottom_toBottomOf="@id/textview_chatToDetail_received"
+                app:layout_constraintEnd_toStartOf="@id/textview_chatToDetail_received"
+                app:time="@{message.time}"
+                tools:text="09:23" />
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/image_chatToDetail_send"
-            android:layout_width="220dp"
-            android:layout_height="220dp"
-            app:cardCornerRadius="6dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginBottom="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/image_chatToDetail_sender"
-            app:layout_constraintTop_toTopOf="parent">
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardView_chatToDetail_send"
+                android:layout_width="220dp"
+                android:layout_height="220dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="10dp"
+                app:cardCornerRadius="6dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/image_chatToDetail_sender"
+                app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:layout_width="220dp"
-            android:layout_height="220dp"
-            android:scaleType="centerCrop"
-            app:imageUrl="@{message.image}" />
+                <ImageView
+                    android:layout_width="220dp"
+                    android:layout_height="220dp"
+                    android:scaleType="centerCrop"
+                    app:imageUrl="@{message.image}" />
 
-        </com.google.android.material.card.MaterialCardView>
+            </com.google.android.material.card.MaterialCardView>
 
-        <TextView
-            android:id="@+id/image_chatToDetail_sentTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/gary757575"
-            android:layout_marginStart="3dp"
-            android:alpha="0.7"
-            app:time="@{message.time}"
-            android:layout_marginBottom="3dp"
-            android:textSize="13sp"
-            app:layout_constraintStart_toEndOf="@id/image_chatToDetail_send"
-            app:layout_constraintBottom_toBottomOf="@id/image_chatToDetail_send"
-            tools:text="09:23"/>
+            <TextView
+                android:id="@+id/image_chatToDetail_sentTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_marginBottom="3dp"
+                android:alpha="0.7"
+                android:textColor="@color/gary757575"
+                android:textSize="13sp"
+                app:layout_constraintBottom_toBottomOf="@id/cardView_chatToDetail_send"
+                app:layout_constraintStart_toEndOf="@id/cardView_chatToDetail_send"
+                app:time="@{message.time}"
+                tools:text="09:23" />
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/image_chatToDetail_received"
-            android:layout_width="220dp"
-            android:layout_height="220dp"
-            app:cardCornerRadius="6dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardView_chatToDetail_received"
+                android:layout_width="220dp"
+                android:layout_height="220dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="10dp"
+                app:cardCornerRadius="6dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:layout_width="220dp"
-            android:layout_height="220dp"
-            android:scaleType="centerCrop"
-            app:imageUrl="@{message.image}" />
-        </com.google.android.material.card.MaterialCardView>
+                <ImageView
+                    android:layout_width="220dp"
+                    android:layout_height="220dp"
+                    android:scaleType="centerCrop"
+                    app:imageUrl="@{message.image}" />
+            </com.google.android.material.card.MaterialCardView>
 
-        <TextView
-            android:id="@+id/image_chatToDetail_receivedTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/gary757575"
-            app:time="@{message.time}"
-            android:alpha="0.7"
-            android:textSize="13sp"
-            android:layout_marginEnd="3dp"
-            android:layout_marginBottom="3dp"
-            app:layout_constraintEnd_toStartOf="@id/image_chatToDetail_received"
-            app:layout_constraintBottom_toBottomOf="@id/image_chatToDetail_received"
-            tools:text="09:23" />
+            <TextView
+                android:id="@+id/image_chatToDetail_receivedTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="3dp"
+                android:layout_marginBottom="3dp"
+                android:alpha="0.7"
+                android:textColor="@color/gary757575"
+                android:textSize="13sp"
+                app:layout_constraintBottom_toBottomOf="@id/cardView_chatToDetail_received"
+                app:layout_constraintEnd_toStartOf="@id/cardView_chatToDetail_received"
+                app:time="@{message.time}"
+                tools:text="09:23" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-</layout>
+    </layout>

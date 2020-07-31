@@ -3,8 +3,10 @@ package com.eric.phoneauction.detailChatFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.eric.phoneauction.NavigationDirections
 import com.eric.phoneauction.data.Message
 import com.eric.phoneauction.data.UserManager
 import com.eric.phoneauction.databinding.ItemDetailChatBinding
@@ -23,6 +25,24 @@ class DetailChatAdapter(val viewModel: DetailChatViewModel) :
             message: Message, viewModel: DetailChatViewModel
         ) {
             binding.message = message
+
+            binding.imageChatReceived.setOnClickListener {
+                Navigation.createNavigateOnClickListener(
+                    NavigationDirections.actionGlobalImageDialog(
+                        message.image as String
+                    )
+                ).onClick(binding.imageChatReceived)
+            }
+
+            binding.imageChatSend.setOnClickListener {
+                Navigation.createNavigateOnClickListener(
+                    NavigationDirections.actionGlobalImageDialog(
+                        message.image as String
+                    )
+                ).onClick(binding.imageChatReceived)
+            }
+
+
             binding.executePendingBindings()
         }
     }

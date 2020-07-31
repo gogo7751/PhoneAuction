@@ -285,10 +285,6 @@ class PostFragment : Fragment() {
             }
         }
 
-        viewModel.brand.observe(viewLifecycleOwner, Observer {
-            Logger.d("99887766$it")
-        })
-
         //選擇拍賣方式
         binding.spinnerTag.adapter = PostSpinnerAdapter(
             PhoneAuctionApplication.instance.resources.getStringArray(R.array.tag_list)
@@ -402,7 +398,7 @@ class PostFragment : Fragment() {
                         uploadImage(viewModel.image1)
                     }
                     Activity.RESULT_CANCELED -> {
-                        Log.wtf("getImageResult", resultCode.toString())
+                        Logger.d(resultCode.toString())
                     }
                 }
             }

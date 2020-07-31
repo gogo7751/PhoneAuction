@@ -39,7 +39,7 @@
                     android:id="@+id/imageView_post_back"
                     android:layout_width="44dp"
                     android:layout_height="44dp"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="10dp"
                     android:layout_marginTop="16dp"
                     android:src="@drawable/icons_back"
                     app:layout_constraintStart_toStartOf="parent"
@@ -50,12 +50,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
+                    android:layout_marginStart="16dp"
                     android:fontFamily="@font/noto_sans_bold"
                     android:letterSpacing="0.15"
                     android:text="新增商品照片"
                     android:textColor="@{viewModel.invalidPost != null ? (TextUtils.isEmpty(viewModel.image1) ? @color/red_d0021b : @color/alpha_black) : @color/alpha_black}"
                     android:textSize="20dp"
-                    app:layout_constraintStart_toStartOf="@id/imageView_post_back"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/imageView_post_back" />
 
                 <ImageView
