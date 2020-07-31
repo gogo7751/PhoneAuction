@@ -28,6 +28,8 @@ class DetailChatViewModel(
     val event: LiveData<Event>
         get() = _event
 
+    var image = MutableLiveData<String>()
+
     var liveMessages = MutableLiveData<List<Message>>()
 
     val message = MutableLiveData<Message>().apply {

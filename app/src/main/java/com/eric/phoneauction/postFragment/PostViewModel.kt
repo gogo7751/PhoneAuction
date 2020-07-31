@@ -112,13 +112,13 @@ class PostViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
                     result.data
                 }
                 is com.eric.phoneauction.data.Result.Fail -> {
-                    Log.d("Result","fail")
+                    Logger.d("fail")
                     _error.value = result.error
                     _status.value = LoadApiStatus.ERROR
                     null
                 }
                 is com.eric.phoneauction.data.Result.Error -> {
-                    Log.d("Result","error")
+                    Logger.d("error")
                     _error.value = result.exception.toString()
                     _status.value = LoadApiStatus.ERROR
                     null
@@ -189,13 +189,13 @@ class PostViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
                     result.data
                 }
                 is com.eric.phoneauction.data.Result.Fail -> {
-                    Log.d("Result","fail")
+                    Logger.d("fail")
                     _error.value = result.error
                     _status.value = LoadApiStatus.ERROR
                     null
                 }
                 is com.eric.phoneauction.data.Result.Error -> {
-                    Log.d("Result","error")
+                    Logger.d("error")
                     _error.value = result.exception.toString()
                     _status.value = LoadApiStatus.ERROR
                     null

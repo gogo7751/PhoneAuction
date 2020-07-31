@@ -51,16 +51,12 @@ class MainActivity : AppCompatActivity() {
             viewModel.notifications.value = notificationViewModel.liveNotifications.value
         })
 
-
         viewModel.user.observe(this, androidx.lifecycle.Observer {
             it?.let {
                 UserManager.user = it
                 Logger.d("123456789$it")
             }
         })
-
-
-
     }
 
 

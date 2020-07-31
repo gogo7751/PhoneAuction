@@ -1,45 +1,21 @@
-package com.eric.phoneauction.chatToChatDetailFragment
+package com.eric.phoneauction
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import app.appworks.school.publisher.network.LoadApiStatus
-import com.eric.phoneauction.PhoneAuctionApplication
-import com.eric.phoneauction.R
-import com.eric.phoneauction.data.ChatRoom
-import com.eric.phoneauction.data.Event
-import com.eric.phoneauction.data.Message
-import com.eric.phoneauction.data.UserManager
 import com.eric.phoneauction.data.source.PhoneAuctionRepository
 import com.eric.phoneauction.util.Logger
+import com.facebook.AccessToken
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class ChatToDetailChatViewModel(
-    private val phoneAuctionRepository: PhoneAuctionRepository,
-    private val arguments: ChatRoom
-) : ViewModel() {
+class LoginViewModel(val phoneAuctionRepository: PhoneAuctionRepository) : ViewModel() {
 
-    private val _chatRoom = MutableLiveData<ChatRoom>().apply {
-        value = arguments
-    }
-
-    val chatRoom: LiveData<ChatRoom>
-        get() = _chatRoom
-
-    var image = MutableLiveData<String>()
-
-    var liveMessages = MutableLiveData<List<Message>>()
-
-    val message = MutableLiveData<Message>().apply {
-        value = Message()
-    }
-
-    val document = MutableLiveData<String>().apply {
-        value =  chatRoom.value?.id
-    }
 
     // status: The internal MutableLiveData that stores the status of the most recent request
     private val _status = MutableLiveData<LoadApiStatus>()
@@ -70,25 +46,21 @@ class ChatToDetailChatViewModel(
         Logger.i("------------------------------------")
         Logger.i("[${this::class.simpleName}]${this}")
         Logger.i("------------------------------------")
-        message.value?.senderImage = UserManager.user.image
-        message.value?.id = UserManager.userId.toString()
-        getLiveMessagesResult()
-    }
-
-    fun getLiveMessagesResult() {
-        liveMessages = phoneAuctionRepository.getLiveMessage(document.value.toString())
-        _status.value = LoadApiStatus.DONE
-        _refreshStatus.value = false
     }
 
 
-    fun postMessage(message: Message, document: String) {
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
+    }
+
+    fun handleFacebookAccessToken(token : AccessToken?) {
 
         coroutineScope.launch {
 
             _status.value = LoadApiStatus.LOADING
 
-            when (val result = phoneAuctionRepository.postMessage(message, document)) {
+            when (val result = phoneAuctionRepository.handleFacebookAccessToken(token)) {
                 is com.eric.phoneauction.data.Result.Success -> {
                     _error.value = null
                     _status.value = LoadApiStatus.DONE
@@ -107,11 +79,7 @@ class ChatToDetailChatViewModel(
                 }
             }
         }
-    }
 
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
     }
 
 }

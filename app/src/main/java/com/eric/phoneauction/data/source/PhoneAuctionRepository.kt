@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.eric.phoneauction.data.*
 import com.eric.phoneauction.data.Collection
+import com.facebook.AccessToken
 import com.google.firebase.firestore.Query
 
 
@@ -75,4 +76,6 @@ interface PhoneAuctionRepository {
     fun getWishList(): MutableLiveData<List<WishList>>
 
     suspend fun getWishListFromPost(brand: String, productName: String, storage: String, visibility: Boolean): Result<WishList>
+
+    suspend fun handleFacebookAccessToken(token : AccessToken?): Result<Boolean>
 }

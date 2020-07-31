@@ -27,7 +27,6 @@
             tools:src="@tools:sample/backgrounds/scenic"
             />
 
-
         <TextView
             android:id="@+id/textview_chat_sent"
             android:layout_width="wrap_content"
@@ -36,6 +35,8 @@
             android:paddingBottom="8dp"
             android:paddingEnd="8dp"
             android:paddingStart="24dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="15dp"
             android:layout_marginStart="5dp"
             tools:text="對方傳的訊息中午要吃什麼好餓"
             android:text="@{message.text}"
@@ -55,6 +56,7 @@
             android:alpha="0.7"
             app:time="@{message.time}"
             android:layout_marginBottom="3dp"
+            android:textSize="13sp"
             app:layout_constraintStart_toEndOf="@id/textview_chat_sent"
             app:layout_constraintBottom_toBottomOf="@id/textview_chat_sent"
             tools:text="09:23"/>
@@ -85,11 +87,81 @@
             android:textColor="@color/gary757575"
             app:time="@{message.time}"
             android:alpha="0.7"
+            android:textSize="13sp"
             android:layout_marginEnd="3dp"
             android:layout_marginBottom="3dp"
             app:layout_constraintEnd_toStartOf="@id/textview_chat_received"
             app:layout_constraintBottom_toBottomOf="@id/textview_chat_received"
             tools:text="09:23" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/image_chat_send"
+            android:layout_width="220dp"
+            android:layout_height="220dp"
+            app:cardCornerRadius="6dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/image_chat_sender"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="220dp"
+                android:layout_height="220dp"
+                android:scaleType="centerCrop"
+                app:imageUrl="@{message.image}" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/image_chat_sentTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/gary757575"
+            android:layout_marginStart="3dp"
+            android:alpha="0.7"
+            app:time="@{message.time}"
+            android:layout_marginBottom="3dp"
+            android:textSize="13sp"
+            app:layout_constraintStart_toEndOf="@id/image_chat_send"
+            app:layout_constraintBottom_toBottomOf="@id/image_chat_send"
+            tools:text="09:23"/>
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/image_chat_received"
+            android:layout_width="220dp"
+            android:layout_height="220dp"
+            app:cardCornerRadius="6dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <ImageView
+                android:layout_width="220dp"
+                android:layout_height="220dp"
+                android:scaleType="centerCrop"
+                app:imageUrl="@{message.image}" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/image_chat_receivedTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/gary757575"
+            app:time="@{message.time}"
+            android:alpha="0.7"
+            android:textSize="13sp"
+            android:layout_marginEnd="3dp"
+            android:layout_marginBottom="3dp"
+            app:layout_constraintEnd_toStartOf="@id/image_chat_received"
+            app:layout_constraintBottom_toBottomOf="@id/image_chat_received"
+            tools:text="09:23" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

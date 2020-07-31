@@ -244,5 +244,15 @@
         android:id="@+id/wishListFragment"
         android:name="com.eric.phoneauction.wishListFragment.WishListFragment"
         android:label="WishListFragment" />
+    <dialog
+        android:id="@+id/imageDialog"
+        android:name="com.eric.phoneauction.dialog.ImageDialog"
+        android:label="ImageDialog" >
+        <argument android:name="messageTypeKey"
+            app:argType="string"
+            app:nullable="false"/>
+    </dialog>
+
+    <action android:id="@+id/action_global_imageDialog" app:destination="@id/imageDialog" />
 
 </navigation>

@@ -3,7 +3,6 @@ package com.eric.phoneauction.purchasedFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.MutableLiveData
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -11,8 +10,7 @@ import com.eric.phoneauction.NavigationDirections
 import com.eric.phoneauction.data.Event
 import com.eric.phoneauction.data.UserManager
 import com.eric.phoneauction.databinding.ItemPurchasedBinding
-import com.eric.phoneauction.util.Logger
-import kotlinx.android.synthetic.main.item_purchased.view.*
+
 
 class PurchasedAdapter :
     androidx.recyclerview.widget.ListAdapter<Event, PurchasedAdapter.PurchasedViewHolder>(
