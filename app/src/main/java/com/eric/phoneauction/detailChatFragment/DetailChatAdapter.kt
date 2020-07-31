@@ -68,9 +68,13 @@ class DetailChatAdapter(val viewModel: DetailChatViewModel) :
             if (message.image.isNullOrEmpty()){
                 holder.itemView.image_chat_send.visibility = View.GONE
                 holder.itemView.image_chat_received.visibility = View.GONE
+                holder.itemView.image_chat_receivedTime.visibility = View.GONE
+                holder.itemView.image_chat_sentTime.visibility = View.GONE
             } else {
                 holder.itemView.image_chat_send.visibility = View.GONE
                 holder.itemView.image_chat_received.visibility = View.VISIBLE
+                holder.itemView.image_chat_receivedTime.visibility = View.VISIBLE
+                holder.itemView.image_chat_sentTime.visibility = View.GONE
             }
 
         //左邊的訊息
@@ -94,9 +98,13 @@ class DetailChatAdapter(val viewModel: DetailChatViewModel) :
             if (message.image.isNullOrEmpty()){
                 holder.itemView.image_chat_send.visibility = View.GONE
                 holder.itemView.image_chat_received.visibility = View.GONE
+                holder.itemView.image_chat_receivedTime.visibility = View.GONE
+                holder.itemView.image_chat_sentTime.visibility = View.GONE
             } else {
                 holder.itemView.image_chat_send.visibility = View.VISIBLE
                 holder.itemView.image_chat_received.visibility = View.GONE
+                holder.itemView.image_chat_receivedTime.visibility = View.GONE
+                holder.itemView.image_chat_sentTime.visibility = View.VISIBLE
             }
 
         }

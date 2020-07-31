@@ -105,7 +105,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
             android:hint="輸入訊息"
-            android:padding="8dp"
+            android:padding="16dp"
             android:text="@={viewModel.message.text}"
             android:background="@drawable/rect_oval_white"
             app:layout_constraintStart_toEndOf="@id/fab_chatDetail"
@@ -127,12 +127,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginBottom="16dp"
             android:tint="@color/black212121"
             app:srcCompat="@drawable/ic_image_black_24dp"
             app:fabSize="mini"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintTop_toTopOf="@id/edit_chatDetail_input"
+            app:layout_constraintBottom_toBottomOf="@id/edit_chatDetail_input"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

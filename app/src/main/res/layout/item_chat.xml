@@ -80,7 +80,7 @@
                     tools:text="張Ray" />
 
                 <TextView
-                    android:id="@+id/text_chat_content_brand"
+                    android:id="@+id/text_chat_content"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
@@ -90,7 +90,6 @@
                     android:letterSpacing="0.15"
                     android:maxLines="1"
                     android:layout_marginTop="4dp"
-                    android:text="@{chatRoom.text}"
                     android:textColor="@color/gary757575"
                     app:layout_constraintEnd_toStartOf="@id/image_chat_product"
                     app:layout_constraintStart_toEndOf="@id/image_chat"
