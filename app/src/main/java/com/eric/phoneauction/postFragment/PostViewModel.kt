@@ -28,6 +28,12 @@ class PostViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
     val events: LiveData<List<Event>>
         get() = _events
 
+    private val eventsCollection = FirebaseFirestore.getInstance().collection("events")
+    val document = eventsCollection.document()
+
+    var id: String
+
+
     // Handle the error for post
     private val _invalidPost = MutableLiveData<Int>()
 
@@ -95,6 +101,7 @@ class PostViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
         Logger.i("------------------------------------")
         Logger.i("[${this::class.simpleName}]${this}")
         Logger.i("------------------------------------")
+        id = document.id
     }
 
     fun getWishListFromPost(brand: String, productName: String, storage: String) {
@@ -218,10 +225,9 @@ class PostViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
         if (image4.value != null) { images.add(image4.value.toString()) }
         if (image5.value != null) { images.add(image5.value.toString()) }
 
-        val events = FirebaseFirestore.getInstance().collection("events")
-        val document = events.document()
+
         return Event(
-            id = document.id,
+            id = id,
             productName = productName.value.toString(),
             storage = storage.value.toString(),
             brand = brand.value.toString(),

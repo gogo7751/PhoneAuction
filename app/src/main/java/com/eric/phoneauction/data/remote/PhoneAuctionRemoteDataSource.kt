@@ -360,9 +360,6 @@ object PhoneAuctionRemoteDataSource :
         val events = FirebaseFirestore.getInstance().collection(PATH_EVENTS)
         val document = events.document(event.id)
 
-        event.createdTime = Calendar.getInstance().timeInMillis
-        event.endTime = Calendar.getInstance().timeInMillis + 259200000
-
         document
             .set(event)
             .addOnCompleteListener { task ->
@@ -504,7 +501,7 @@ object PhoneAuctionRemoteDataSource :
         val document = notifications.document()
 
 
-        notification.event?.buyUser = UserManager.userId.toString()
+//        notification.event?.buyUser = UserManager.userId.toString()
         notification.id = document.id
         notification.time = Calendar.getInstance().timeInMillis
 

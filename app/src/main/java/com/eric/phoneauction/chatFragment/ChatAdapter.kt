@@ -83,4 +83,8 @@ class ChatAdapter( val onClickListener: OnClickListener, val viewModel:ChatViewM
     class OnClickListener(val clickListener: (chatRoom: ChatRoom) -> Unit) {
         fun onClick(chatRoom: ChatRoom) = clickListener(chatRoom)
     }
+
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
 }

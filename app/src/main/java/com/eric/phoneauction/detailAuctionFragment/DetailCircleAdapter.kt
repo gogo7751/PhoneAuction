@@ -51,4 +51,5 @@ class DetailCircleAdapter : RecyclerView.Adapter<DetailCircleAdapter.ImageViewHo
         this.count = count
         notifyDataSetChanged()
     }
+
 }

@@ -146,4 +146,7 @@ class SearchAdapter( val onClickListener: OnClickListener, val viewModel: Search
         }
     }
 
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
 }

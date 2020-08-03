@@ -29,9 +29,6 @@ class CheckoutSuccessViewModel(phoneAuctionRepository: PhoneAuctionRepository): 
         Logger.i("------------------------------------")
         Logger.i("[${this::class.simpleName}]${this}")
         Logger.i("------------------------------------")
-
-//        createCoupons(arguments.id, arguments.birthday, arguments.member)
-
     }
 
     fun navigateToHome() {

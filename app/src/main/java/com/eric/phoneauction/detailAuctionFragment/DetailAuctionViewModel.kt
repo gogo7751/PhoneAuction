@@ -53,7 +53,7 @@ class DetailAuctionViewModel(
     var collection = MutableLiveData<Collection>()
 
     val isBuyUser = MutableLiveData<Boolean>().apply {
-        value = arguments.buyUser == arguments.userId
+        value = arguments.buyUser.isNullOrEmpty()
     }
 
     lateinit var timer: CountDownTimer

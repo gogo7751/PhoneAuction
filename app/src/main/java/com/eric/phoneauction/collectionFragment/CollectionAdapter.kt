@@ -74,4 +74,7 @@ class CollectionAdapter(val viewModel: CollectionViewModel) :
         holder.bind(collection, viewModel)
     }
 
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
 }

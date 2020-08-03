@@ -96,4 +96,8 @@ class NotificationAdapter(val viewModel: NotificationViewModel) :
         holder.bind(notification, viewModel)
     }
 
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
 }

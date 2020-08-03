@@ -41,7 +41,7 @@ class DetailDirectViewModel(
         get() = _averageEvents
 
     val isBuyUser = MutableLiveData<Boolean>().apply {
-        value = arguments.buyUser == arguments.userId
+        value = arguments.buyUser.isNullOrEmpty()
     }
 
     var averagePrice = MutableLiveData<Int>()

@@ -40,6 +40,7 @@ class ProfileFragment : Fragment() {
 
         binding.buttonProfileQuestion.setOnClickListener {
             Toast.makeText(context, "使用說明 coming soon", Toast.LENGTH_SHORT).show()
+            addData()
         }
 
         binding.buttonProfilePolicy.setOnClickListener {
@@ -80,19 +81,19 @@ fun addData() {
     val document = events.document()
     val event = Event(
         id = document.id,
-        productName = "Xperia 1 II",
+        productName = "Xperia 1",
         storage = "64G",
         brand = "Sony",
-        price = 9000,
-        images = listOf("https://firebasestorage.googleapis.com/v0/b/phoneauction-e97b4.appspot.com/o/images%2Fe4cbde0d-d106-43ef-826d-45e8a709e240?alt=media&token=43098544-a4bd-4039-9547-18ea6db24213"),
+        price = 8000,
+        images = listOf("https://firebasestorage.googleapis.com/v0/b/phoneauction-e97b4.appspot.com/o/images%2F890f8339-6795-4c41-9063-1797a7374904?alt=media&token=c6c381bd-a9d1-494b-970d-1a15cac7ee6a"),
         trade = "面交",
-        description = "無聊",
+        description = "9成新,功能正常外觀良好",
         endTime = Calendar.getInstance().timeInMillis + 259200000,
         createdTime = Calendar.getInstance().timeInMillis,
         tag = "拍賣",
         userId = "II9r5OGlAFfCGowS7EpRQIrdLr32",
         buyUser = "",
-        sellerName = "Lin",
+        sellerName = "Dato Chang",
         sellerImage = "https://graph.facebook.com/10157422827030994/picture",
         deal = true
     )

@@ -101,7 +101,7 @@ class AuctionViewModel(
                 image = event.value?.images?.component1().toString(),
                 storage = event.value?.storage.toString(),
                 visibility = true,
-                event = event.value
+                event = event.value.apply { event.value?.price = price.value as Int }
         )
     }
 

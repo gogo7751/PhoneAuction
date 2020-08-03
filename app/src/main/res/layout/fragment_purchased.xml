@@ -64,6 +64,7 @@
             android:text="沒有購買紀錄"
             android:letterSpacing="0.15"
             android:alpha="0.8"
+            android:visibility="gone"
             android:textColor="@color/gary757575"
             tools:visibility="gone" />
 

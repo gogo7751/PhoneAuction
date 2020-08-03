@@ -71,7 +71,7 @@ class DetailChatAdapter(val viewModel: DetailChatViewModel) :
         //右邊的訊息
         if (message.id == UserManager.userId) {
             //訊息是空的不顯示
-            if (message.text.isNullOrEmpty()){
+            if (message.text.isNullOrEmpty()) {
                 holder.itemView.textview_chat_received.visibility = View.GONE
                 holder.itemView.text_chat_receivedTime.visibility = View.GONE
                 holder.itemView.text_chat_sentTime.visibility = View.GONE
@@ -85,7 +85,7 @@ class DetailChatAdapter(val viewModel: DetailChatViewModel) :
                 holder.itemView.image_chat_sender.visibility = View.GONE
             }
             //圖片是空的不顯示
-            if (message.image.isNullOrEmpty()){
+            if (message.image.isNullOrEmpty()) {
                 holder.itemView.image_chat_send.visibility = View.GONE
                 holder.itemView.image_chat_received.visibility = View.GONE
                 holder.itemView.image_chat_receivedTime.visibility = View.GONE
@@ -97,10 +97,10 @@ class DetailChatAdapter(val viewModel: DetailChatViewModel) :
                 holder.itemView.image_chat_sentTime.visibility = View.GONE
             }
 
-        //左邊的訊息
+            //左邊的訊息
         } else {
             //訊息是空的不顯示
-            if (message.text.isNullOrEmpty()){
+            if (message.text.isNullOrEmpty()) {
                 holder.itemView.textview_chat_received.visibility = View.GONE
                 holder.itemView.text_chat_receivedTime.visibility = View.GONE
                 holder.itemView.text_chat_sentTime.visibility = View.GONE
@@ -115,7 +115,7 @@ class DetailChatAdapter(val viewModel: DetailChatViewModel) :
             }
 
             //圖片是空的不顯示
-            if (message.image.isNullOrEmpty()){
+            if (message.image.isNullOrEmpty()) {
                 holder.itemView.image_chat_send.visibility = View.GONE
                 holder.itemView.image_chat_received.visibility = View.GONE
                 holder.itemView.image_chat_receivedTime.visibility = View.GONE
@@ -130,4 +130,5 @@ class DetailChatAdapter(val viewModel: DetailChatViewModel) :
         }
         holder.bind(message, viewModel)
     }
+
 }

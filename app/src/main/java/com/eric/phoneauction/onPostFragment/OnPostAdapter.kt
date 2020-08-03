@@ -78,4 +78,8 @@ class OnPostAdapter(val viewModel: OnPostViewModel) :
         holder.bind(event, viewModel)
     }
 
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
 }

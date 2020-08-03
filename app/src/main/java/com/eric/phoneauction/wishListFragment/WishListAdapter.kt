@@ -49,4 +49,8 @@ class WishListAdapter(val viewModel: WishListViewModel) :
         holder.bind(wishList, viewModel)
     }
 
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
 }

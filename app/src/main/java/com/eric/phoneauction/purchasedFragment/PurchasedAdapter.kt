@@ -75,4 +75,8 @@ class PurchasedAdapter :
         holder.bind(event)
     }
 
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
 }
