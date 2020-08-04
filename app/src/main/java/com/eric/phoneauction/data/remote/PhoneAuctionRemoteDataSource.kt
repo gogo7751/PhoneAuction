@@ -46,7 +46,7 @@ object PhoneAuctionRemoteDataSource :
     override suspend fun getEvents(): Result<List<Event>> = suspendCoroutine { continuation ->
         FirebaseFirestore.getInstance()
             .collection(PATH_EVENTS)
-            .whereEqualTo("deal", true)
+            .whereEqualTo("dealDone", true)
             .orderBy(KEY_CREATED_TIME, Query.Direction.DESCENDING)
             .get()
             .addOnCompleteListener { task ->
@@ -100,12 +100,12 @@ object PhoneAuctionRemoteDataSource :
             }
     }
 
-    override fun getLiveEvent(deal: Boolean): MutableLiveData<List<Event>> {
+    override fun getLiveEvent(isDealDone: Boolean): MutableLiveData<List<Event>> {
         val liveData = MutableLiveData<List<Event>>()
 
         FirebaseFirestore.getInstance()
             .collection(PATH_EVENTS)
-            .whereEqualTo("deal", deal)
+            .whereEqualTo("dealDone", isDealDone)
             .orderBy(KEY_CREATED_TIME, Query.Direction.DESCENDING)
             .addSnapshotListener { snapshot, exception ->
 
@@ -131,7 +131,7 @@ object PhoneAuctionRemoteDataSource :
         FirebaseFirestore.getInstance()
             .collection(PATH_EVENTS)
             .whereEqualTo("tag", "拍賣")
-            .whereEqualTo("deal", true)
+            .whereEqualTo("dealDone", true)
             .get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -159,7 +159,7 @@ object PhoneAuctionRemoteDataSource :
         FirebaseFirestore.getInstance()
             .collection(PATH_EVENTS)
             .whereEqualTo("tag", "直購")
-            .whereEqualTo("deal", true)
+            .whereEqualTo("dealDone", true)
             .get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -185,7 +185,7 @@ object PhoneAuctionRemoteDataSource :
 
         FirebaseFirestore.getInstance()
             .collection(PATH_EVENTS)
-            .whereEqualTo("deal", true)
+            .whereEqualTo("dealDone", true)
             .whereEqualTo("tag", tag)
             .orderBy(sort, query)
             .get()
@@ -213,7 +213,7 @@ object PhoneAuctionRemoteDataSource :
 
         FirebaseFirestore.getInstance()
             .collection(PATH_EVENTS)
-            .whereEqualTo("deal", true)
+            .whereEqualTo("dealDone", true)
             .orderBy(sort, query)
             .get()
             .addOnCompleteListener { task ->
@@ -383,7 +383,7 @@ object PhoneAuctionRemoteDataSource :
 
             events
                 .document(event.id)
-                .update("price", price, "buyUser", UserManager.userId)
+                .update("price", price, "buyerId", UserManager.userId)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         Logger.i("PhoneAuction: $event")
@@ -405,7 +405,7 @@ object PhoneAuctionRemoteDataSource :
             val events = FirebaseFirestore.getInstance().collection(PATH_EVENTS).document(event.id)
 
             events
-                .update("deal", false, "buyUser", UserManager.userId)
+                .update("dealDone", false, "buyerId", UserManager.userId)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         Logger.i("PhoneAuction: $event")
@@ -433,7 +433,7 @@ object PhoneAuctionRemoteDataSource :
             val document = events.document(event.id)
 
             document
-                .update("deal", false)
+                .update("dealDone", false)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         Logger.i("PhoneAuction: $event")
@@ -493,15 +493,15 @@ object PhoneAuctionRemoteDataSource :
     @RequiresApi(Build.VERSION_CODES.N)
     override suspend fun postNotification(
         notification: Notification,
-        buyUser: String
+        buyerId: String
     ): Result<Boolean> = suspendCoroutine { continuation ->
 
         val notifications =
-            FirebaseFirestore.getInstance().collection(PATH_USER).document(buyUser).collection(PATH_NOTIFICATION)
+            FirebaseFirestore.getInstance().collection(PATH_USER).document(buyerId).collection(PATH_NOTIFICATION)
         val document = notifications.document()
 
 
-//        notification.event?.buyUser = UserManager.userId.toString()
+//        notification.event?.buyerId = UserManager.userId.toString()
         notification.id = document.id
         notification.time = Calendar.getInstance().timeInMillis
 
@@ -788,7 +788,7 @@ object PhoneAuctionRemoteDataSource :
 
         FirebaseFirestore.getInstance()
             .collection(PATH_EVENTS)
-            .whereEqualTo("deal", true)
+            .whereEqualTo("dealDone", true)
             .orderBy(field)
             .startAt(searchKey.toUpperCase())
             .endAt(searchKey.toLowerCase()+"\uf8ff")
@@ -812,13 +812,13 @@ object PhoneAuctionRemoteDataSource :
         return liveData
     }
 
-    override suspend fun getAveragePrice(brand: String, productName: String, storage: String, deal: Boolean): Result<List<Event>> = suspendCoroutine { continuation ->
+    override suspend fun getAveragePrice(brand: String, productName: String, storage: String, isDealDone: Boolean): Result<List<Event>> = suspendCoroutine { continuation ->
         FirebaseFirestore.getInstance()
             .collection(PATH_EVENTS)
             .whereEqualTo("brand", brand)
             .whereEqualTo("productName", productName)
             .whereEqualTo("storage", storage)
-            .whereEqualTo("deal", deal)
+            .whereEqualTo("dealDone", isDealDone)
             .get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -928,8 +928,8 @@ object PhoneAuctionRemoteDataSource :
         val credential = token?.token?.let { FacebookAuthProvider.getCredential(it) }
         Logger.d("${token!!.token}")
         if (credential != null) {
-            auth?.signInWithCredential(credential)
-                ?.addOnCompleteListener {
+            auth.signInWithCredential(credential)
+                .addOnCompleteListener {
                         task ->
                     if(task.isSuccessful){
                         val user = User(

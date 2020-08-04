@@ -108,21 +108,21 @@ class PostFragment : Fragment() {
         })
 
 
-        binding.editPostDescription.setOnEditorActionListener { v, actionId, event ->
+        binding.editPostDescription.setOnEditorActionListener { _, actionId, event ->
             if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
                 binding.editPostDescription.hideKeyboard()
             }
             return@setOnEditorActionListener false
         }
 
-        binding.editPostAuction.setOnEditorActionListener { v, actionId, event ->
+        binding.editPostAuction.setOnEditorActionListener { _, actionId, event ->
             if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
                 binding.editPostAuction.hideKeyboard()
             }
             return@setOnEditorActionListener false
         }
 
-        binding.editPostDirect.setOnEditorActionListener { v, actionId, event ->
+        binding.editPostDirect.setOnEditorActionListener { _, actionId, event ->
             if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
                 binding.editPostDirect.hideKeyboard()
             }

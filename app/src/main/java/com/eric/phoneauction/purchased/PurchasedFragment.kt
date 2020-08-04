@@ -33,7 +33,7 @@ class PurchasedFragment : Fragment() {
 
         viewModel.liveEvents.observe(viewLifecycleOwner, Observer { event ->
             adapter.submitList(event)
-            if (event.map { it.buyUser }.equals(UserManager.userId)) {
+            if (event.map { it.buyerId }.equals(UserManager.userId)) {
                 binding.textNoContent.visibility = View.GONE
             } else {
                 binding.textNoContent.visibility = View.VISIBLE

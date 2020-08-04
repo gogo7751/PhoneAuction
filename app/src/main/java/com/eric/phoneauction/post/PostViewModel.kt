@@ -152,13 +152,13 @@ class PostViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
         )
     }
 
-    fun postNotification(notification: Notification, buyUser: String) {
+    fun postNotification(notification: Notification, buyerId: String) {
 
         coroutineScope.launch {
 
             _status.value = LoadApiStatus.LOADING
 
-            when (val result = phoneAuctionRepository.postNotification(notification, buyUser)) {
+            when (val result = phoneAuctionRepository.postNotification(notification, buyerId)) {
                 is com.eric.phoneauction.data.Result.Success -> {
                     _error.value = null
                     _status.value = LoadApiStatus.DONE
@@ -179,13 +179,13 @@ class PostViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
         }
     }
 
-    fun getAveragePriceResult(brand: String, productName: String, storage: String, deal: Boolean) {
+    fun getAveragePriceResult(brand: String, productName: String, storage: String, isDealDone: Boolean) {
 
         coroutineScope.launch {
 
             _status.value = LoadApiStatus.LOADING
 
-            val result = phoneAuctionRepository.getAveragePrice(brand, productName, storage, deal)
+            val result = phoneAuctionRepository.getAveragePrice(brand, productName, storage, isDealDone)
 
             _events.value = when (result) {
                 is com.eric.phoneauction.data.Result.Success -> {
@@ -215,14 +215,13 @@ class PostViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
         }
     }
 
-    fun getEvent(): Event {
+    private fun getEvent(): Event {
         val images = mutableListOf<String>()
         if (image1.value != null) { images.add(image1.value.toString()) }
         if (image2.value != null) { images.add(image2.value.toString()) }
         if (image3.value != null) { images.add(image3.value.toString()) }
         if (image4.value != null) { images.add(image4.value.toString()) }
         if (image5.value != null) { images.add(image5.value.toString()) }
-
 
         return Event(
             id = id,
@@ -236,11 +235,11 @@ class PostViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
             endTime = Calendar.getInstance().timeInMillis + 259200000,
             createdTime = Calendar.getInstance().timeInMillis,
             tag = tag.value.toString(),
-            userId = UserManager.userId.toString(),
-            buyUser = "",
+            sellerId = UserManager.userId.toString(),
+            buyerId = "",
             sellerImage = UserManager.user.image,
             sellerName = UserManager.user.name,
-            deal = true
+            isDealDone = true
         )
     }
 

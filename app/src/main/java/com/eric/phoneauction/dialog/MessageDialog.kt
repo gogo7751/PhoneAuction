@@ -14,7 +14,7 @@ import com.eric.phoneauction.R
 import com.eric.phoneauction.databinding.DialogMessageBinding
 
 /**
- * Created by Wayne Chen in Jul. 2019.
+ * Created by Eric Chang in Jul. 2020.
  */
 class MessageDialog : AppCompatDialogFragment() {
 

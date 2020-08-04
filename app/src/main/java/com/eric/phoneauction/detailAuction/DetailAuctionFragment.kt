@@ -71,7 +71,7 @@ class DetailAuctionFragment : Fragment() {
 
         // set the initial position to the center of infinite gallery
         viewModel.event.value?.let { product ->
-            product.images?.size?.times(100).let {
+            product.images.size.times(100).let {
                 if (it != null) {
                     binding.recyclerDetailAuction
                         .scrollToPosition(it)

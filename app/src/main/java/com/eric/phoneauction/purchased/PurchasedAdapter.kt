@@ -65,7 +65,7 @@ class PurchasedAdapter :
 
     override fun onBindViewHolder(holder: PurchasedViewHolder, position: Int) {
         val event = getItem(position)
-        when (event.buyUser == UserManager.userId) {
+        when (event.buyerId == UserManager.userId) {
             true -> holder.itemView.visibility = View.VISIBLE
             false -> {
                 holder.itemView.visibility = View.GONE

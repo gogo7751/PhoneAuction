@@ -8,7 +8,7 @@ import com.google.firebase.firestore.Query
 
 
 /**
- * Created by Wayne Chen on 2020-01-15.
+ * Created by Eric Chang in Jul. 2020.
  *
  * Main entry point for accessing Publisher sources.
  */
@@ -16,7 +16,7 @@ interface PhoneAuctionDataSource {
 
     suspend fun getEvents(): Result<List<Event>>
 
-    fun getLiveEvent(deal: Boolean): MutableLiveData<List<Event>>
+    fun getLiveEvent(isDealDone: Boolean): MutableLiveData<List<Event>>
 
     suspend fun getUser(): Result<User>
 
@@ -44,7 +44,7 @@ interface PhoneAuctionDataSource {
 
     suspend fun postDirect(event: Event): Result<Boolean>
 
-    suspend fun postNotification(notification: Notification, buyUser: String): Result<Boolean>
+    suspend fun postNotification(notification: Notification, buyerId: String): Result<Boolean>
 
     suspend fun deleteNotification(notificationId: String, user: String): Result<Boolean>
 
@@ -66,7 +66,7 @@ interface PhoneAuctionDataSource {
 
     fun getLiveSearch(field: String, searchKey: String): MutableLiveData<List<Event>>
 
-    suspend fun getAveragePrice(brand: String, productName: String, storage: String, deal: Boolean): Result<List<Event>>
+    suspend fun getAveragePrice(brand: String, productName: String, storage: String, isDealDone: Boolean): Result<List<Event>>
 
     suspend fun postWishList(wishList: WishList): Result<Boolean>
 

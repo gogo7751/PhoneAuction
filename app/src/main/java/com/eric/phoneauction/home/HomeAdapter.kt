@@ -45,7 +45,7 @@ class HomeAdapter( val onClickListener: OnClickListener, val viewModel: HomeView
                     image = event.images.component1(),
                     storage = event.storage,
                     visibility = true,
-                    event = event.apply { event.deal = false }
+                    event = event.apply { event.isDealDone = false }
                 )
             }
 
@@ -56,13 +56,13 @@ class HomeAdapter( val onClickListener: OnClickListener, val viewModel: HomeView
             timer = object : CountDownTimer(millsTime, ONE_SECOND) {
                 override fun onFinish() {
                     viewModel.finishAuction(event)
-                    if (event.buyUser != "") {
-                        viewModel.postNotification(getNotification("恭喜您得標!"), event.buyUser)
-                        viewModel.postNotification(getNotification("拍賣完成,請與買家聯絡完成出貨!"), event.userId)
+                    if (event.buyerId != "") {
+                        viewModel.postNotification(getNotification("恭喜您得標!"), event.buyerId)
+                        viewModel.postNotification(getNotification("拍賣完成,請與買家聯絡完成出貨!"), event.sellerId)
                     } else if (event.tag != "拍賣"){
-                        viewModel.postNotification(getNotification("商品已過期"), event.userId)
+                        viewModel.postNotification(getNotification("商品已過期"), event.sellerId)
                     } else {
-                        viewModel.postNotification(getNotification("流標"), event.userId)
+                        viewModel.postNotification(getNotification("流標"), event.sellerId)
                     }
                 }
 

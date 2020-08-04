@@ -89,13 +89,13 @@ class HomeViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
         viewModelJob.cancel()
     }
 
-    fun postNotification(notification: Notification, buyUser: String) {
+    fun postNotification(notification: Notification, buyerId: String) {
 
         coroutineScope.launch {
 
             _status.value = LoadApiStatus.LOADING
 
-            when (val result = phoneAuctionRepository.postNotification(notification, buyUser)) {
+            when (val result = phoneAuctionRepository.postNotification(notification, buyerId)) {
                 is com.eric.phoneauction.data.Result.Success -> {
                     _error.value = null
                     _status.value = LoadApiStatus.DONE

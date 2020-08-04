@@ -9,7 +9,7 @@ import com.facebook.AccessToken
 import com.google.firebase.firestore.Query
 
 /**
- * Created by Wayne Chen on 2020-01-15.
+ * Created by Eric Chang in Jul. 2020.
  *
  * Concrete implementation of a Publisher source as a db.
  */
@@ -20,7 +20,7 @@ class PhoneAuctionLocalDataSource(val context: Context) :
         TODO("Not yet implemented")
     }
 
-    override fun getLiveEvent(deal: Boolean): MutableLiveData<List<Event>> {
+    override fun getLiveEvent(isDealDone: Boolean): MutableLiveData<List<Event>> {
         TODO("Not yet implemented")
     }
 
@@ -64,7 +64,7 @@ class PhoneAuctionLocalDataSource(val context: Context) :
         TODO("Not yet implemented")
     }
 
-    override suspend fun postNotification(notification: Notification, buyUser: String): Result<Boolean> {
+    override suspend fun postNotification(notification: Notification, buyerId: String): Result<Boolean> {
         TODO("Not yet implemented")
     }
 
@@ -120,7 +120,7 @@ class PhoneAuctionLocalDataSource(val context: Context) :
         TODO("Not yet implemented")
     }
 
-    override suspend fun getAveragePrice(brand: String, productName: String, storage: String, deal: Boolean
+    override suspend fun getAveragePrice(brand: String, productName: String, storage: String, isDealDone: Boolean
     ): Result<List<Event>> {
         TODO("Not yet implemented")
     }

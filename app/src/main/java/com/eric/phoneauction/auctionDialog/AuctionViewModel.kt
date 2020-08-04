@@ -8,7 +8,6 @@ import com.eric.phoneauction.PhoneAuctionApplication
 import com.eric.phoneauction.R
 import com.eric.phoneauction.data.Event
 import com.eric.phoneauction.data.Notification
-import com.eric.phoneauction.data.UserManager
 import com.eric.phoneauction.data.source.PhoneAuctionRepository
 import com.eric.phoneauction.util.Logger
 import kotlinx.coroutines.CoroutineScope
@@ -28,7 +27,7 @@ class AuctionViewModel(
     val event: LiveData<Event>
         get() = _event
 
-    var buyUser = MutableLiveData<String>()
+    var buyerId = MutableLiveData<String>()
 
     private val _notification = MutableLiveData<Notification>()
 
@@ -81,7 +80,7 @@ class AuctionViewModel(
         Logger.i("------------------------------------")
         Logger.i("[${this::class.simpleName}]${this}")
         Logger.i("------------------------------------")
-        buyUser.value = event.value?.buyUser
+        buyerId.value = event.value?.buyerId
     }
 
     override fun onCleared() {

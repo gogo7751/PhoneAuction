@@ -8,7 +8,7 @@ import com.google.firebase.firestore.Query
 
 
 /**
- * Created by Wayne Chen on 2020-01-15.
+ * Created by Eric Chang in Jul. 2020.
  *
  * Concrete implementation to load Publisher sources.
  */
@@ -19,8 +19,8 @@ class DefaultPhoneAuctionRepository(private val remoteDataSource: PhoneAuctionDa
         return remoteDataSource.getEvents()
     }
 
-    override fun getLiveEvent(deal: Boolean): MutableLiveData<List<Event>> {
-        return remoteDataSource.getLiveEvent(deal)
+    override fun getLiveEvent(isDealDone: Boolean): MutableLiveData<List<Event>> {
+        return remoteDataSource.getLiveEvent(isDealDone)
     }
 
     override suspend fun getUser(): Result<User> {
@@ -71,8 +71,8 @@ class DefaultPhoneAuctionRepository(private val remoteDataSource: PhoneAuctionDa
         return remoteDataSource.postDirect(event)
     }
 
-    override suspend fun postNotification(notification: Notification, buyUser: String): Result<Boolean> {
-        return remoteDataSource.postNotification(notification, buyUser)
+    override suspend fun postNotification(notification: Notification, buyerId: String): Result<Boolean> {
+        return remoteDataSource.postNotification(notification, buyerId)
     }
 
     override suspend fun deleteNotification(notificationId: String, user: String): Result<Boolean> {
@@ -119,9 +119,9 @@ class DefaultPhoneAuctionRepository(private val remoteDataSource: PhoneAuctionDa
         return remoteDataSource.getLiveSearch(field, searchKey)
     }
 
-    override suspend fun getAveragePrice(brand: String, productName: String, storage: String, deal: Boolean
+    override suspend fun getAveragePrice(brand: String, productName: String, storage: String, isDealDone: Boolean
     ): Result<List<Event>> {
-        return remoteDataSource.getAveragePrice(brand, productName, storage, deal)
+        return remoteDataSource.getAveragePrice(brand, productName, storage, isDealDone)
     }
 
     override suspend fun postWishList(wishList: WishList): Result<Boolean> {

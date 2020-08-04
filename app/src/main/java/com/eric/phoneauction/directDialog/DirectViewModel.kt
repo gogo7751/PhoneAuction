@@ -81,7 +81,7 @@ class DirectViewModel(
     }
 
     fun getNotification(title: String): Notification {
-        event.value?.deal = false
+        event.value?.isDealDone = false
         return Notification(
             id = "",
             title = title,
@@ -91,7 +91,7 @@ class DirectViewModel(
             image = event.value?.images?.component1().toString(),
             storage = event.value?.storage.toString(),
             visibility = true,
-            event = event.value.apply { event.value?.deal = false }
+            event = event.value.apply { event.value?.isDealDone = false }
         )
     }
 

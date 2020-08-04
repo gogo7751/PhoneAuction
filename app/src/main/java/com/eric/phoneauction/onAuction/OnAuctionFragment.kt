@@ -34,7 +34,7 @@ class OnAuctionFragment : Fragment() {
 
         viewModel.events.observe(viewLifecycleOwner, Observer {
             it?.let {
-                if (it.map { it.buyUser }.equals(UserManager.userId)) {
+                if (it.map { it.buyerId }.equals(UserManager.userId)) {
                     binding.textNoContent.visibility = View.GONE
                     adapter.submitList(it)
                 } else {

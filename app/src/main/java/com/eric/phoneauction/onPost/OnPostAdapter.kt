@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.eric.phoneauction.NavigationDirections
 import com.eric.phoneauction.data.Event
 import com.eric.phoneauction.data.UserManager
-import com.eric.phoneauction.databinding.ItemOnAuctionBinding
 import com.eric.phoneauction.databinding.ItemOnPostBinding
 
 class OnPostAdapter(val viewModel: OnPostViewModel) :
@@ -65,7 +64,7 @@ class OnPostAdapter(val viewModel: OnPostViewModel) :
 
     override fun onBindViewHolder(holder: OnPostViewHolder, position: Int) {
         val event = getItem(position)
-        when (event.userId == UserManager.userId) {
+        when (event.sellerId == UserManager.userId) {
             true -> {
                 holder.itemView.visibility = View.VISIBLE
                 viewModel.isEmpty.value = false

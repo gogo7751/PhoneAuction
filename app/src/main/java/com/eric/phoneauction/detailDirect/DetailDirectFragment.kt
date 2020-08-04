@@ -74,8 +74,7 @@ class DetailDirectFragment : Fragment() {
                     .scrollToPosition(it)
             }
             viewModel.snapPosition.observe(viewLifecycleOwner, Observer {
-                (binding.recyclerDetailDirectCircles.adapter as DetailCircleAdapter).selectedPosition.value = (it % (event.images?.size
-                    ?: 0))
+                (binding.recyclerDetailDirectCircles.adapter as DetailCircleAdapter).selectedPosition.value = (it % (event.images.size))
             })
         }
 

@@ -16,10 +16,10 @@ data class Event(
     var endTime: Long = -1,
     var createdTime: Long = -1,
     var tag: String = "",
-    var userId: String = "",
-    var buyUser: String = "",
+    var sellerId: String = "",
+    var buyerId: String = "",
     var sellerImage: String = "",
     var sellerName:String = "",
-    var deal: Boolean = true
+    var isDealDone: Boolean = true
 ): Parcelable
 

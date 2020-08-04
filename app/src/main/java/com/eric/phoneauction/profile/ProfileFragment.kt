@@ -34,7 +34,6 @@ class ProfileFragment : Fragment() {
 
         binding.buttonProfileRecently.setOnClickListener {
             Toast.makeText(context, "最近瀏覽 coming soon", Toast.LENGTH_SHORT).show()
-            FirebaseFirestore.getInstance().collection("events").document().update("buyUser", "", "deal", "")
         }
 
         binding.buttonProfileQuestion.setOnClickListener {
@@ -90,11 +89,11 @@ fun addData() {
         endTime = Calendar.getInstance().timeInMillis + 259200000,
         createdTime = Calendar.getInstance().timeInMillis,
         tag = "拍賣",
-        userId = "II9r5OGlAFfCGowS7EpRQIrdLr32",
-        buyUser = "",
+        sellerId = "II9r5OGlAFfCGowS7EpRQIrdLr32",
+        buyerId = "",
         sellerName = "Dato Chang",
         sellerImage = "https://graph.facebook.com/10157422827030994/picture",
-        deal = true
+        isDealDone = true
     )
     document.set(event)
 }

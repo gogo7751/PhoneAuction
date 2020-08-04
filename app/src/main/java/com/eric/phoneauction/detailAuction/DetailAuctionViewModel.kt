@@ -2,9 +2,11 @@ package com.eric.phoneauction.detailAuction
 
 import android.graphics.Rect
 import android.icu.util.Calendar
+import android.os.Build
 import android.os.CountDownTimer
 import android.util.Log
 import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -50,8 +52,8 @@ class DetailAuctionViewModel(
 
     var collection = MutableLiveData<Collection>()
 
-    val isBuyUser = MutableLiveData<Boolean>().apply {
-        value = arguments.buyUser.isNullOrEmpty()
+    val isBuyerId = MutableLiveData<Boolean>().apply {
+        value = arguments.buyerId.isNullOrEmpty()
     }
 
     lateinit var timer: CountDownTimer
@@ -135,13 +137,13 @@ class DetailAuctionViewModel(
         getAveragePriceResult(event.value?.brand.toString(), event.value?.productName.toString(), event.value?.storage.toString(), false)
     }
 
-    fun getAveragePriceResult(brand: String, productName: String, storage: String, deal: Boolean) {
+    fun getAveragePriceResult(brand: String, productName: String, storage: String, isDealDone: Boolean) {
 
         coroutineScope.launch {
 
             _status.value = LoadApiStatus.LOADING
 
-            val result = phoneAuctionRepository.getAveragePrice(brand, productName, storage, deal)
+            val result = phoneAuctionRepository.getAveragePrice(brand, productName, storage, isDealDone)
 
             _averageEvents.value = when (result) {
                 is com.eric.phoneauction.data.Result.Success -> {
@@ -248,7 +250,7 @@ class DetailAuctionViewModel(
     }
 
     fun getChatRoom(): ChatRoom{
-        val list = listOf<String>(event.value?.userId.toString(), com.eric.phoneauction.data.UserManager.user.id)
+        val list = listOf<String>(event.value?.sellerId.toString(), com.eric.phoneauction.data.UserManager.user.id)
         return ChatRoom(
             id = event.value?.id.toString() + com.eric.phoneauction.data.UserManager.userId,
             text = "查看訊息",
@@ -256,7 +258,7 @@ class DetailAuctionViewModel(
             senderName = com.eric.phoneauction.data.UserManager.user.name,
             senderImage = com.eric.phoneauction.data.UserManager.user.image,
             senderId = com.eric.phoneauction.data.UserManager.user.id,
-            receiverId = event.value?.userId.toString(),
+            receiverId = event.value?.sellerId.toString(),
             receiverImage = event.value?.sellerImage.toString(),
             receiverName = event.value?.sellerName.toString(),
             productImage = event.value?.images?.component1().toString(),
@@ -344,13 +346,13 @@ class DetailAuctionViewModel(
         }
     }
 
-    fun postNotification(notification: Notification, buyUser: String) {
+    fun postNotification(notification: Notification, buyerId: String) {
 
         coroutineScope.launch {
 
             _status.value = LoadApiStatus.LOADING
 
-            when (val result = phoneAuctionRepository.postNotification(notification, buyUser)) {
+            when (val result = phoneAuctionRepository.postNotification(notification, buyerId)) {
                 is com.eric.phoneauction.data.Result.Success -> {
                     _error.value = null
                     _status.value = LoadApiStatus.DONE
@@ -408,12 +410,13 @@ class DetailAuctionViewModel(
             image = event.value?.images?.component1().toString(),
             storage = event.value?.storage.toString(),
             visibility = true,
-            event = event.value.apply { event.value?.deal = false }
+            event = event.value.apply { event.value?.isDealDone = false }
         )
     }
 
     fun getCountdown() {
-        timer = object : CountDownTimer(arguments.endTime.minus(Calendar.getInstance().timeInMillis), HomeAdapter.ONE_SECOND) {
+        timer = @RequiresApi(Build.VERSION_CODES.N)
+        object : CountDownTimer(arguments.endTime.minus(Calendar.getInstance().timeInMillis), HomeAdapter.ONE_SECOND) {
             override fun onFinish() {
 
             }

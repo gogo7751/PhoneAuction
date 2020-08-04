@@ -40,8 +40,8 @@ class DetailDirectViewModel(
     val averageEvents: LiveData<List<Event>>
         get() = _averageEvents
 
-    val isBuyUser = MutableLiveData<Boolean>().apply {
-        value = arguments.buyUser.isNullOrEmpty()
+    val isBuyerId = MutableLiveData<Boolean>().apply {
+        value = arguments.buyerId.isNullOrEmpty()
     }
 
     var averagePrice = MutableLiveData<Int>()
@@ -134,13 +134,13 @@ class DetailDirectViewModel(
         getAveragePriceResult(event.value?.brand.toString(), event.value?.productName.toString(), event.value?.storage.toString(), false)
     }
 
-    fun getAveragePriceResult(brand: String, productName: String, storage: String, deal: Boolean) {
+    fun getAveragePriceResult(brand: String, productName: String, storage: String, isDealDone: Boolean) {
 
         coroutineScope.launch {
 
             _status.value = LoadApiStatus.LOADING
 
-            val result = phoneAuctionRepository.getAveragePrice(brand, productName, storage, deal)
+            val result = phoneAuctionRepository.getAveragePrice(brand, productName, storage, isDealDone)
 
             _averageEvents.value = when (result) {
                 is com.eric.phoneauction.data.Result.Success -> {
@@ -250,7 +250,7 @@ class DetailDirectViewModel(
             senderName = UserManager.user.name,
             senderImage = UserManager.user.image,
             senderId = UserManager.user.id,
-            receiverId = event.value?.userId.toString(),
+            receiverId = event.value?.sellerId.toString(),
             receiverImage = event.value?.sellerImage.toString(),
             receiverName = event.value?.sellerName.toString(),
             productImage = event.value?.images?.component1().toString(),

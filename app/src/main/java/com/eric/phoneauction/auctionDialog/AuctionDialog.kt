@@ -48,13 +48,13 @@ class AuctionDialog : BottomSheetDialogFragment() {
 
         viewModel.navigateToCheckoutSuccess.observe(viewLifecycleOwner, Observer {
 
-            if (viewModel.event.value?.buyUser == "") {
+            if (viewModel.event.value?.buyerId == "") {
                 null
             } else {
-                viewModel.postNotification(viewModel.getNotification("您的出價已被超過!"), it.buyUser)
+                viewModel.postNotification(viewModel.getNotification("您的出價已被超過!"), it.buyerId)
             }
             viewModel.postAuction(it, viewModel.price.value as Int)
-            viewModel.postNotification(viewModel.getNotification("您的商品有人出價"), viewModel.event.value!!.userId)
+            viewModel.postNotification(viewModel.getNotification("您的商品有人出價"), viewModel.event.value!!.sellerId)
             findNavController().navigate(AuctionDialogDirections.actionAuctionDialogToCheckSuccessAuctionFragment())
             viewModel.leave()
         })
