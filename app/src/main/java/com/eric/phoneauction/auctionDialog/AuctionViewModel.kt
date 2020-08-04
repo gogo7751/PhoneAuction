@@ -77,8 +77,6 @@ class AuctionViewModel(
     // the Coroutine runs using the Main (UI) dispatcher
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
-
-
     init {
         Logger.i("------------------------------------")
         Logger.i("[${this::class.simpleName}]${this}")
@@ -182,8 +180,6 @@ class AuctionViewModel(
         _navigateToCheckoutSuccess.value = event
     }
 
-
-
     fun leave() {
         _leave.value = true
     }
@@ -191,7 +187,6 @@ class AuctionViewModel(
     fun onLeaveCompleted() {
         _leave.value = null
     }
-
 
     fun nothing() {}
 }

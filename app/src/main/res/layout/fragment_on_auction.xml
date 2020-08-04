@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.eric.phoneauction.onAuctionFragment.OnAuctionViewModel" />
+            type="com.eric.phoneauction.onAuction.OnAuctionViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

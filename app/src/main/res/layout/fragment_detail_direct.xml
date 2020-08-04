@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable name="viewModel" type="com.eric.phoneauction.detailDirectFragment.DetailDirectViewModel"/>
+        <variable name="viewModel" type="com.eric.phoneauction.detailDirect.DetailDirectViewModel"/>
         <import type="android.view.View"/>
     </data>
 

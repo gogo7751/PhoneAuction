@@ -3,7 +3,7 @@ package com.eric.phoneauction.factory
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.eric.phoneauction.data.source.PhoneAuctionRepository
-import com.eric.phoneauction.searchFragment.SearchViewModel
+import com.eric.phoneauction.search.SearchViewModel
 
 @Suppress("UNCHECKED_CAST")
 class SearchViewModelFactory constructor(

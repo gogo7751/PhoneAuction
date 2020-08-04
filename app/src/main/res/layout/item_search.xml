@@ -10,7 +10,7 @@
 
         <variable
             name="viewModel"
-            type="com.eric.phoneauction.searchFragment.SearchViewModel" />
+            type="com.eric.phoneauction.search.SearchViewModel" />
 
         <variable
             name="countDown"

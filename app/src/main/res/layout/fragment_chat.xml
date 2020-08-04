@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.eric.phoneauction.chatFragment.ChatViewModel" />
+            type="com.eric.phoneauction.chat.ChatViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

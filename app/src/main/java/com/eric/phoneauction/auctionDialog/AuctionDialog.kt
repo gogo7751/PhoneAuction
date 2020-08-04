@@ -18,21 +18,26 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
  */
 class AuctionDialog : BottomSheetDialogFragment() {
 
-    private val viewModel by viewModels<AuctionViewModel> { getVmFactory(AuctionDialogArgs.fromBundle(requireArguments()).event) }
+    private val viewModel by viewModels<AuctionViewModel> {
+        getVmFactory(
+            AuctionDialogArgs.fromBundle(
+                requireArguments()
+            ).event
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = DialogAuctionBinding.inflate(inflater, container, false)
+        val binding = DialogAuctionBinding.inflate(inflater, container,
+            false)
+
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
-
         binding.textAuctionNt.paintFlags = Paint.UNDERLINE_TEXT_FLAG
         binding.editAuctionPrice.paintFlags = Paint.UNDERLINE_TEXT_FLAG
-
-
 
         viewModel.leave.observe(viewLifecycleOwner, Observer {
             it?.let {
@@ -40,7 +45,6 @@ class AuctionDialog : BottomSheetDialogFragment() {
                 viewModel.onLeaveCompleted()
             }
         })
-
 
         viewModel.navigateToCheckoutSuccess.observe(viewLifecycleOwner, Observer {
 
@@ -55,12 +59,6 @@ class AuctionDialog : BottomSheetDialogFragment() {
             viewModel.leave()
         })
 
-
-
-
-
-
         return binding.root
     }
-
 }

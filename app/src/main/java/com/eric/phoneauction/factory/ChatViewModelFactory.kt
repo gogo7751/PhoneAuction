@@ -2,7 +2,7 @@ package com.eric.phoneauction.factory
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.eric.phoneauction.chatToChatDetailFragment.ChatToDetailChatViewModel
+import com.eric.phoneauction.chatToChatDetail.ChatToDetailChatViewModel
 import com.eric.phoneauction.data.ChatRoom
 import com.eric.phoneauction.data.source.PhoneAuctionRepository
 

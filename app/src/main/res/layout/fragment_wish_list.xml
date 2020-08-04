@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.eric.phoneauction.wishListFragment.WishListViewModel" />
+            type="com.eric.phoneauction.wishList.WishListViewModel" />
 
     </data>
 
