@@ -10,6 +10,7 @@ import com.eric.phoneauction.data.Event
 import com.eric.phoneauction.data.Notification
 import com.eric.phoneauction.data.source.PhoneAuctionRepository
 import com.eric.phoneauction.util.Logger
+import com.eric.phoneauction.util.Util.getString
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -34,12 +35,9 @@ class AuctionViewModel(
     val notification: LiveData<Notification>
         get() = _notification
 
-    var buyerId = MutableLiveData<String>()
-
     val price = MutableLiveData<Int>().apply {
         value = event.value?.price
     }
-
 
     // Handle leave auction
     private val _leave = MutableLiveData<Boolean>()
@@ -48,10 +46,10 @@ class AuctionViewModel(
         get() = _leave
 
     // Handle navigation to checkoutSuccess
-    private val _navigateToCheckoutSuccess = MutableLiveData<Event>()
+    private val _navigateToCheckout = MutableLiveData<Event>()
 
-    val navigateToCheckoutSuccess: LiveData<Event>
-        get() = _navigateToCheckoutSuccess
+    val navigateToCheckout: LiveData<Event>
+        get() = _navigateToCheckout
 
     // status: The internal MutableLiveData that stores the status of the most recent request
     private val _status = MutableLiveData<LoadApiStatus>()
@@ -81,7 +79,6 @@ class AuctionViewModel(
         Logger.i("------------------------------------")
         Logger.i("[${this::class.simpleName}]${this}")
         Logger.i("------------------------------------")
-        buyerId.value = event.value?.buyerId
     }
 
     override fun onCleared() {
@@ -89,21 +86,21 @@ class AuctionViewModel(
         viewModelJob.cancel()
     }
 
-    fun getNotification(title: String): Notification{
+    private fun getNotificationData(title: String): Notification{
         return Notification(
-                id = "",
-                title = title,
-                time = -1,
-                brand = event.value?.brand.toString(),
-                name = event.value?.productName.toString(),
-                image = event.value?.images?.component1().toString(),
-                storage = event.value?.storage.toString(),
-                visibility = true,
-                event = event.value.apply { event.value?.price = price.value as Int }
+                "",
+                title,
+                -1,
+                event.value?.brand.toString(),
+                event.value?.productName.toString(),
+                event.value?.images?.component1().toString(),
+                event.value?.storage.toString(),
+                true,
+                event.value.apply { event.value?.price = price.value as Int }
         )
     }
 
-    fun postNotification(notification: Notification, userId: String) {
+    private fun postNotification(notification: Notification, userId: String) {
 
         coroutineScope.launch {
 
@@ -130,7 +127,7 @@ class AuctionViewModel(
         }
     }
 
-    fun postAuction(event: Event, price: Int) {
+    private fun postAuction(event: Event, price: Int) {
 
         coroutineScope.launch {
 
@@ -161,20 +158,17 @@ class AuctionViewModel(
         price.value = originPrice.times(1.01).toInt()
     }
 
-    fun add100() {
-        price.value = price.value?.plus(100)
+    fun addPrice(newPrice: Int) {
+        price.value = price.value?.plus(newPrice)
     }
 
-    fun add300() {
-        price.value = price.value?.plus(300)
-    }
-
-    fun add500() {
-        price.value = price.value?.plus(500)
-    }
-
-    fun navigateToCheckoutSuccess(event: Event) {
-        _navigateToCheckoutSuccess.value = event
+    fun navigateToCheckout(event: Event) {
+        if (event.buyerId != "") {
+            postNotification(getNotificationData(getString(R.string.bid_over)), event.buyerId)
+        }
+        postAuction(event, price.value as Int)
+        postNotification(getNotificationData(getString(R.string.bid_someone)), event.sellerId)
+        _navigateToCheckout.value = event
     }
 
     fun leave() {

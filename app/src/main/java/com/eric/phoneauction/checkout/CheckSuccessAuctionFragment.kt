@@ -45,10 +45,7 @@ class CheckSuccessAuctionFragment : Fragment() {
                 viewModel.onHomeNavigated()
             }
         })
-
-
-
-
+        
         return binding.root
     }
 

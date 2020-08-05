@@ -60,14 +60,12 @@ class MessageDialog : AppCompatDialogFragment() {
                 message = messageType.value.message
             }
             else -> {
-
             }
         }
     }
 
     enum class MessageType(val value: Message) {
         COLLECTION_SUCCESS(Message()),
-        LOGIN_FAIL(Message()),
         UN_COLLECTION_SUCCESS(Message()),
         MESSAGE(Message())
     }

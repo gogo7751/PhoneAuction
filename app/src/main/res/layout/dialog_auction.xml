@@ -75,7 +75,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
-
             <TextView
                 android:id="@+id/text_auction_nt"
                 android:layout_width="wrap_content"
@@ -91,7 +90,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/text_auction_your_price"
                 tools:layout_editor_absoluteY="85dp" />
-
 
             <EditText
                 android:id="@+id/edit_auction_price"
@@ -168,7 +166,7 @@
                 android:layout_height="30dp"
                 android:fontFamily="@font/noto_sans"
                 android:letterSpacing="0.15"
-                android:onClick="@{() -> viewModel.add100()}"
+                android:onClick="@{() -> viewModel.addPrice(100)}"
                 android:text="加$100"
                 android:textColor="@color/black212121"
                 android:textSize="14sp"
@@ -193,7 +191,7 @@
                 android:layout_height="30dp"
                 android:fontFamily="@font/noto_sans"
                 android:letterSpacing="0.15"
-                android:onClick="@{() -> viewModel.add300()}"
+                android:onClick="@{() -> viewModel.addPrice(300)}"
                 android:text="加$300"
                 android:textColor="@color/black212121"
                 android:textSize="14sp"
@@ -218,7 +216,7 @@
                 android:layout_height="30dp"
                 android:fontFamily="@font/noto_sans"
                 android:letterSpacing="0.15"
-                android:onClick="@{() -> viewModel.add500()}"
+                android:onClick="@{() -> viewModel.addPrice(500)}"
                 android:text="加$500"
                 android:textColor="@color/black212121"
                 android:textSize="14sp"
@@ -239,7 +237,7 @@
                 android:ellipsize="end"
                 android:fontFamily="@font/noto_sans"
                 android:letterSpacing="0.15"
-                android:onClick="@{() -> viewModel.navigateToCheckoutSuccess(viewModel.event)}"
+                android:onClick="@{() -> viewModel.navigateToCheckout(viewModel.event)}"
                 android:text="我要出價"
                 android:textColor="@android:color/white"
                 android:textSize="18dp"

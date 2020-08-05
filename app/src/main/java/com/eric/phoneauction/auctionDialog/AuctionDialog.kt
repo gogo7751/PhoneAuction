@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import com.eric.phoneauction.R
 import com.eric.phoneauction.databinding.DialogAuctionBinding
 import com.eric.phoneauction.ext.getVmFactory
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -42,13 +41,8 @@ class AuctionDialog : BottomSheetDialogFragment() {
             }
         })
 
-        viewModel.navigateToCheckoutSuccess.observe(viewLifecycleOwner, Observer {
+        viewModel.navigateToCheckout.observe(viewLifecycleOwner, Observer {
             it?.let {
-                if (viewModel.event.value?.buyerId != "") {
-                    viewModel.postNotification(viewModel.getNotification(getString(R.string.bid_over)), it.buyerId)
-                }
-                viewModel.postAuction(it, viewModel.price.value as Int)
-                viewModel.postNotification(viewModel.getNotification(getString(R.string.bid_someone)), viewModel.event.value!!.sellerId)
                 findNavController().navigate(AuctionDialogDirections.actionAuctionDialogToCheckSuccessAuctionFragment())
                 viewModel.leave()
             }

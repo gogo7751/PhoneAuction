@@ -12,7 +12,6 @@ import com.eric.phoneauction.databinding.DialogImageBinding
 
 class ImageDialog:  AppCompatDialogFragment() {
 
-    var iconRes: Drawable? = null
     var message: String? = null
     private val messageType by lazy {
         ImageDialogArgs.fromBundle(requireArguments()).messageTypeKey
@@ -33,7 +32,6 @@ class ImageDialog:  AppCompatDialogFragment() {
 
         return binding.root
     }
-
 
     interface IMessage {
         var message: String

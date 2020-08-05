@@ -28,9 +28,6 @@ class CheckoutSuccessDirectFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = FragmentCheckoutSuccessDirectBinding.inflate(inflater, container, false)
-
-
-
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
@@ -40,10 +37,6 @@ class CheckoutSuccessDirectFragment : Fragment() {
                 viewModel.onHomeNavigated()
             }
         })
-
-
-
-
 
         return binding.root
     }
