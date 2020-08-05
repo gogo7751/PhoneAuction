@@ -306,8 +306,7 @@ class PostViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
         const val INVALID_FORMAT_TAG_EMPTY          = 16
         const val INVALID_FORMAT_TRADE_EMPTY        = 17
         const val INVALID_FORMAT_DESCRIPTION_EMPTY  = 18
-        const val NO_ONE_KNOWS                      = 21
-
     }
+
 }
 

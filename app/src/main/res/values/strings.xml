@@ -11,6 +11,18 @@
     <string name="minutes">\u0020:\u0020</string>
     <string name="seconds">\u0020</string>
 
+    <!-- toast -->
+    <string name="leave_app">再按一次退出程式</string>
+    <string name="recently_viewed">最近瀏覽 coming soon</string>
+    <string name="information">使用說明 coming soon</string>
+
+    <!-- Chat -->
+    <string name="picture">圖片</string>
+
+    <!-- Notification -->
+    <string name="bid_over">您的出價已被超過</string>
+    <string name="bid_someone">您的商品有人出價</string>
+
     <!-- 出價 -->
     <string name="collection_success">加入成功</string>
     <string name="un_collection_success">移除成功</string>
@@ -211,7 +223,6 @@
         <item>R9s Plus</item>
     </string-array>
 
-
     <!-- HUAWEI -->
     <string-array name="huawei_list">
         <item>Mate 20 X</item>
@@ -307,7 +318,6 @@
         <item>AQUOS R3</item>
         <item>AQUOS Zero 2</item>
     </string-array>
-
 
     <!-- vivo -->
     <string-array name="vivo_list">

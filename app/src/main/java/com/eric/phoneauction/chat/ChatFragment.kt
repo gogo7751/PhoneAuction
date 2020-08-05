@@ -34,24 +34,20 @@ class ChatFragment : Fragment() {
         adapter.setHasStableIds(true)
         binding.recyclerviewChat.adapter = adapter
 
-        viewModel.liveChatRooms.observe(viewLifecycleOwner, Observer { chatRoom ->
-            adapter.submitList(chatRoom)
+        viewModel.liveChatRooms.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                adapter.submitList(it)
+            }
         })
 
         viewModel.navigateToChatToDetail.observe(viewLifecycleOwner, Observer {
             it?.let {
                 findNavController().navigate(ChatFragmentDirections.actionChatFragmentToChatToDetailChatFragment(it))
+                viewModel.onChatToDetailNavigated()
             }
-        })
-
-        viewModel.isEmpty.observe(viewLifecycleOwner, Observer {
-            binding.textNoContent.visibility = View.GONE
         })
 
         (activity as AppCompatActivity).bottomNavView.visibility = View.VISIBLE
         return binding.root
     }
-
-
-
 }

@@ -12,6 +12,7 @@ import com.eric.phoneauction.data.UserManager
 import com.eric.phoneauction.databinding.ActivityMainBinding
 import com.eric.phoneauction.databinding.BadgeBottomBinding
 import com.eric.phoneauction.ext.getVmFactory
+import com.eric.phoneauction.ext.showToast
 import com.eric.phoneauction.notification.NotificationViewModel
 import com.eric.phoneauction.util.Logger
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
@@ -23,16 +24,13 @@ import kotlin.system.exitProcess
 @Suppress("DEPRECATED_IDENTITY_EQUALS")
 class MainActivity : AppCompatActivity() {
 
-
     val viewModel by viewModels<MainViewModel> { getVmFactory() }
     private lateinit var binding: ActivityMainBinding
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        viewModel
         setupBottomNav()
         viewModel.postUser(UserManager.user)
         viewModel.getUser()
@@ -41,29 +39,23 @@ class MainActivity : AppCompatActivity() {
 
         notificationViewModel.getLiveNotificationsResult()
         notificationViewModel.liveNotifications.observe(this, androidx.lifecycle.Observer {
-            viewModel.notifications.value = notificationViewModel.liveNotifications.value
+            viewModel.notifications.value = it
         })
 
         viewModel.user.observe(this, androidx.lifecycle.Observer {
             it?.let {
                 UserManager.user = it
-                Logger.d("123456789$it")
             }
         })
     }
 
-
     var exitTime:Long = 0
     override fun onKeyDown(keyCode:Int, event: KeyEvent):Boolean {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() === KeyEvent.ACTION_DOWN)
-        {
-            if ((System.currentTimeMillis() - exitTime) > 3000)
-            {
-                Toast.makeText(applicationContext, "再按一次退出程式", Toast.LENGTH_SHORT).show()
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() === KeyEvent.ACTION_DOWN) {
+            if ((System.currentTimeMillis() - exitTime) > 3000) {
+                showToast(getString(R.string.leave_app))
                 exitTime = System.currentTimeMillis()
-            }
-            else
-            {
+            } else {
                 finish()
                 exitProcess(0)
             }
@@ -71,7 +63,6 @@ class MainActivity : AppCompatActivity() {
         }
         return super.onKeyDown(keyCode, event)
     }
-
 
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
@@ -100,8 +91,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupBottomNav() {
-        binding.bottomNavView.itemBackground = null
-
         binding.bottomNavView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
 
         val menuView = binding.bottomNavView.getChildAt(0) as BottomNavigationMenuView
@@ -110,10 +99,4 @@ class MainActivity : AppCompatActivity() {
         bindingBadge.lifecycleOwner = this
         bindingBadge.viewModel = viewModel
     }
-
-
-
-
-
-
 }

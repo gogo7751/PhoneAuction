@@ -7,7 +7,6 @@ import kotlin.properties.Delegates
 
 class PhoneAuctionApplication : Application() {
 
-    // Depends on the flavor,
     val repository: PhoneAuctionRepository
         get() = ServiceLocator.provideTasksRepository(this)
 

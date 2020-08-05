@@ -1,18 +1,13 @@
 package com.eric.phoneauction
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import androidx.navigation.Navigation
 import app.appworks.school.publisher.network.LoadApiStatus
-import com.eric.phoneauction.data.Event
 import com.eric.phoneauction.data.Notification
 import com.eric.phoneauction.data.User
-import com.eric.phoneauction.data.UserManager
 import com.eric.phoneauction.data.source.PhoneAuctionRepository
-
 import com.eric.phoneauction.util.Logger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -72,10 +67,7 @@ class MainViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
         Logger.i("------------------------------------")
         Logger.i("[${this::class.simpleName}]${this}")
         Logger.i("------------------------------------")
-
-
     }
-
 
     fun postUser(user: User) {
         coroutineScope.launch {
@@ -106,7 +98,6 @@ class MainViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
 
         coroutineScope.launch {
 
-
             val result = phoneAuctionRepository.getUser()
 
             _user.value = when (result) {
@@ -133,7 +124,6 @@ class MainViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
                     null
                 }
             }
-
         }
     }
 
@@ -146,7 +136,6 @@ class MainViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
     fun leave(needRefresh: Boolean = false) {
         _leave.value = needRefresh
     }
-
 
     fun onRefreshed() {
         if (!PhoneAuctionApplication.instance.isLiveDataDesign()) {

@@ -27,12 +27,19 @@ class AuctionViewModel(
     val event: LiveData<Event>
         get() = _event
 
-    var buyerId = MutableLiveData<String>()
-
-    private val _notification = MutableLiveData<Notification>()
+    private val _notification = MutableLiveData<Notification>().apply {
+        value = Notification()
+    }
 
     val notification: LiveData<Notification>
         get() = _notification
+
+    var buyerId = MutableLiveData<String>()
+
+    val price = MutableLiveData<Int>().apply {
+        value = event.value?.price
+    }
+
 
     // Handle leave auction
     private val _leave = MutableLiveData<Boolean>()
@@ -40,16 +47,11 @@ class AuctionViewModel(
     val leave: LiveData<Boolean>
         get() = _leave
 
-    val price = MutableLiveData<Int>().apply {
-        value = event.value?.price
-    }
-
     // Handle navigation to checkoutSuccess
     private val _navigateToCheckoutSuccess = MutableLiveData<Event>()
 
     val navigateToCheckoutSuccess: LiveData<Event>
         get() = _navigateToCheckoutSuccess
-
 
     // status: The internal MutableLiveData that stores the status of the most recent request
     private val _status = MutableLiveData<LoadApiStatus>()
@@ -68,7 +70,6 @@ class AuctionViewModel(
 
     val refreshStatus: LiveData<Boolean>
         get() = _refreshStatus
-
 
     // Create a Coroutine scope using a job to be able to cancel when needed
     private var viewModelJob = Job()
@@ -102,13 +103,13 @@ class AuctionViewModel(
         )
     }
 
-    fun postNotification(notification: Notification, user: String) {
+    fun postNotification(notification: Notification, userId: String) {
 
         coroutineScope.launch {
 
             _status.value = LoadApiStatus.LOADING
 
-            when (val result = phoneAuctionRepository.postNotification(notification, user)) {
+            when (val result = phoneAuctionRepository.postNotification(notification, userId)) {
                 is com.eric.phoneauction.data.Result.Success -> {
                     _error.value = null
                     _status.value = LoadApiStatus.DONE
@@ -128,7 +129,6 @@ class AuctionViewModel(
             }
         }
     }
-
 
     fun postAuction(event: Event, price: Int) {
 
@@ -157,7 +157,6 @@ class AuctionViewModel(
         }
     }
 
-
     fun addMinimalPrice(originPrice: Int) {
         price.value = originPrice.times(1.01).toInt()
     }
@@ -173,7 +172,6 @@ class AuctionViewModel(
     fun add500() {
         price.value = price.value?.plus(500)
     }
-
 
     fun navigateToCheckoutSuccess(event: Event) {
         _navigateToCheckoutSuccess.value = event

@@ -46,7 +46,7 @@ object PhoneAuctionRemoteDataSource :
     override suspend fun getEvents(): Result<List<Event>> = suspendCoroutine { continuation ->
         FirebaseFirestore.getInstance()
             .collection(PATH_EVENTS)
-            .whereEqualTo("dealDone", true)
+            .whereEqualTo("isDealDone", true)
             .orderBy(KEY_CREATED_TIME, Query.Direction.DESCENDING)
             .get()
             .addOnCompleteListener { task ->
@@ -105,7 +105,7 @@ object PhoneAuctionRemoteDataSource :
 
         FirebaseFirestore.getInstance()
             .collection(PATH_EVENTS)
-            .whereEqualTo("dealDone", isDealDone)
+            .whereEqualTo("isDealDone", isDealDone)
             .orderBy(KEY_CREATED_TIME, Query.Direction.DESCENDING)
             .addSnapshotListener { snapshot, exception ->
 
@@ -131,7 +131,7 @@ object PhoneAuctionRemoteDataSource :
         FirebaseFirestore.getInstance()
             .collection(PATH_EVENTS)
             .whereEqualTo("tag", "拍賣")
-            .whereEqualTo("dealDone", true)
+            .whereEqualTo("isDealDone", true)
             .get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -159,7 +159,7 @@ object PhoneAuctionRemoteDataSource :
         FirebaseFirestore.getInstance()
             .collection(PATH_EVENTS)
             .whereEqualTo("tag", "直購")
-            .whereEqualTo("dealDone", true)
+            .whereEqualTo("isDealDone", true)
             .get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -185,7 +185,7 @@ object PhoneAuctionRemoteDataSource :
 
         FirebaseFirestore.getInstance()
             .collection(PATH_EVENTS)
-            .whereEqualTo("dealDone", true)
+            .whereEqualTo("isDealDone", true)
             .whereEqualTo("tag", tag)
             .orderBy(sort, query)
             .get()
@@ -213,7 +213,7 @@ object PhoneAuctionRemoteDataSource :
 
         FirebaseFirestore.getInstance()
             .collection(PATH_EVENTS)
-            .whereEqualTo("dealDone", true)
+            .whereEqualTo("isDealDone", true)
             .orderBy(sort, query)
             .get()
             .addOnCompleteListener { task ->
@@ -405,7 +405,7 @@ object PhoneAuctionRemoteDataSource :
             val events = FirebaseFirestore.getInstance().collection(PATH_EVENTS).document(event.id)
 
             events
-                .update("dealDone", false, "buyerId", UserManager.userId)
+                .update("isDealDone", false, "buyerId", UserManager.userId)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         Logger.i("PhoneAuction: $event")
@@ -433,7 +433,7 @@ object PhoneAuctionRemoteDataSource :
             val document = events.document(event.id)
 
             document
-                .update("dealDone", false)
+                .update("isDealDone", false)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         Logger.i("PhoneAuction: $event")
@@ -788,7 +788,7 @@ object PhoneAuctionRemoteDataSource :
 
         FirebaseFirestore.getInstance()
             .collection(PATH_EVENTS)
-            .whereEqualTo("dealDone", true)
+            .whereEqualTo("isDealDone", true)
             .orderBy(field)
             .startAt(searchKey.toUpperCase())
             .endAt(searchKey.toLowerCase()+"\uf8ff")
@@ -818,7 +818,7 @@ object PhoneAuctionRemoteDataSource :
             .whereEqualTo("brand", brand)
             .whereEqualTo("productName", productName)
             .whereEqualTo("storage", storage)
-            .whereEqualTo("dealDone", isDealDone)
+            .whereEqualTo("isDealDone", isDealDone)
             .get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {

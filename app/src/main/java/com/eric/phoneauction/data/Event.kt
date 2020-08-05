@@ -1,6 +1,7 @@
 package com.eric.phoneauction.data
 
 import android.os.Parcelable
+import com.google.firebase.firestore.PropertyName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
@@ -20,6 +21,7 @@ data class Event(
     var buyerId: String = "",
     var sellerImage: String = "",
     var sellerName:String = "",
+    @get:PropertyName("isDealDone") @set:PropertyName("isDealDone")
     var isDealDone: Boolean = true
 ): Parcelable
 

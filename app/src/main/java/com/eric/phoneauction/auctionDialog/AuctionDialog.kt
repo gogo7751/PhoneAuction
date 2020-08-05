@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.eric.phoneauction.R
 import com.eric.phoneauction.databinding.DialogAuctionBinding
 import com.eric.phoneauction.ext.getVmFactory
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -19,11 +20,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 class AuctionDialog : BottomSheetDialogFragment() {
 
     private val viewModel by viewModels<AuctionViewModel> {
-        getVmFactory(
-            AuctionDialogArgs.fromBundle(
-                requireArguments()
-            ).event
-        )
+        getVmFactory(AuctionDialogArgs.fromBundle(requireArguments()).event)
     }
 
     override fun onCreateView(
@@ -32,7 +29,6 @@ class AuctionDialog : BottomSheetDialogFragment() {
     ): View? {
         val binding = DialogAuctionBinding.inflate(inflater, container,
             false)
-
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
@@ -47,16 +43,15 @@ class AuctionDialog : BottomSheetDialogFragment() {
         })
 
         viewModel.navigateToCheckoutSuccess.observe(viewLifecycleOwner, Observer {
-
-            if (viewModel.event.value?.buyerId == "") {
-                null
-            } else {
-                viewModel.postNotification(viewModel.getNotification("您的出價已被超過!"), it.buyerId)
+            it?.let {
+                if (viewModel.event.value?.buyerId != "") {
+                    viewModel.postNotification(viewModel.getNotification(getString(R.string.bid_over)), it.buyerId)
+                }
+                viewModel.postAuction(it, viewModel.price.value as Int)
+                viewModel.postNotification(viewModel.getNotification(getString(R.string.bid_someone)), viewModel.event.value!!.sellerId)
+                findNavController().navigate(AuctionDialogDirections.actionAuctionDialogToCheckSuccessAuctionFragment())
+                viewModel.leave()
             }
-            viewModel.postAuction(it, viewModel.price.value as Int)
-            viewModel.postNotification(viewModel.getNotification("您的商品有人出價"), viewModel.event.value!!.sellerId)
-            findNavController().navigate(AuctionDialogDirections.actionAuctionDialogToCheckSuccessAuctionFragment())
-            viewModel.leave()
         })
 
         return binding.root

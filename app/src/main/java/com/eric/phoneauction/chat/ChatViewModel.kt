@@ -18,9 +18,14 @@ class ChatViewModel(
     val phoneAuctionRepository: PhoneAuctionRepository
 ) : ViewModel() {
 
-    var liveChatRooms = MutableLiveData<List<ChatRoom>>()
+    private var _liveChatRooms = MutableLiveData<List<ChatRoom>>()
 
-    var isEmpty = MutableLiveData<Boolean>()
+    val liveChatRooms: LiveData<List<ChatRoom>>
+        get() = _liveChatRooms
+
+    var isEmpty = MutableLiveData<Boolean>().apply {
+        value = true
+    }
 
     // Handle navigation to detail
     private val _navigateToChatToDetail = MutableLiveData<ChatRoom>()
@@ -52,13 +57,11 @@ class ChatViewModel(
     // the Coroutine runs using the Main (UI) dispatcher
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
-
     init {
         Logger.i("------------------------------------")
         Logger.i("[${this::class.simpleName}]${this}")
         Logger.i("------------------------------------")
         getLiveChatRoomsResult()
-
     }
 
     fun deleteChatRoom(charRoomId: String) {
@@ -88,15 +91,13 @@ class ChatViewModel(
         }
     }
 
-
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
     }
 
-
     fun getLiveChatRoomsResult() {
-        liveChatRooms = phoneAuctionRepository.getLiveChatRoom()
+        _liveChatRooms = phoneAuctionRepository.getLiveChatRoom()
         _status.value = LoadApiStatus.DONE
         _refreshStatus.value = false
     }

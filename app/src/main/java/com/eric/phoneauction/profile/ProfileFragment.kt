@@ -11,10 +11,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.eric.phoneauction.R
 
 import com.eric.phoneauction.data.Event
 import com.eric.phoneauction.databinding.FragmentProfileBinding
 import com.eric.phoneauction.ext.getVmFactory
+import com.eric.phoneauction.ext.showToast
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
@@ -33,12 +35,11 @@ class ProfileFragment : Fragment() {
 
 
         binding.buttonProfileRecently.setOnClickListener {
-            Toast.makeText(context, "最近瀏覽 coming soon", Toast.LENGTH_SHORT).show()
+            activity.showToast(getString(R.string.recently_viewed))
         }
 
         binding.buttonProfileQuestion.setOnClickListener {
-            Toast.makeText(context, "使用說明 coming soon", Toast.LENGTH_SHORT).show()
-            addData()
+            activity.showToast(getString(R.string.information))
         }
 
         binding.buttonProfilePolicy.setOnClickListener {

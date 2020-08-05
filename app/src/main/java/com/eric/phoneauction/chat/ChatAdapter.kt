@@ -5,6 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.eric.phoneauction.PhoneAuctionApplication
+import com.eric.phoneauction.R
 import com.eric.phoneauction.data.ChatRoom
 import com.eric.phoneauction.data.UserManager
 import com.eric.phoneauction.databinding.ItemChatBinding
@@ -21,17 +23,14 @@ class ChatAdapter( val onClickListener: OnClickListener, val viewModel:ChatViewM
             chatRoom: ChatRoom, viewModel: ChatViewModel
         ) {
             binding.chatRoom = chatRoom
-
             binding.textChatDelete.setOnClickListener {
                 viewModel.deleteChatRoom(chatRoom.id)
             }
             if (chatRoom.text.isNullOrEmpty()){
-                binding.textChatContent.text = "圖片"
+                binding.textChatContent.text = PhoneAuctionApplication.instance.getString(R.string.picture)
             } else {
                 binding.textChatContent.text = chatRoom.text
             }
-
-
             binding.executePendingBindings()
         }
     }
@@ -57,17 +56,22 @@ class ChatAdapter( val onClickListener: OnClickListener, val viewModel:ChatViewM
 
     override fun onBindViewHolder(holder: DetailChatViewHolder, position: Int) {
         val chatRoom = getItem(position)
-        if (UserManager.userId == chatRoom.senderId) {
-            holder.itemView.text_chat_title.text = chatRoom.receiverName
-            holder.itemView.image_chat_sender.visibility = View.GONE
-            viewModel.isEmpty.value = true
-        }else if (UserManager.userId == chatRoom.receiverId) {
-            holder.itemView.text_chat_title.text = chatRoom.senderName
-            holder.itemView.image_chat_receiver.visibility = View.GONE
-            viewModel.isEmpty.value = true
-        } else {
-            holder.itemView.visibility = View.GONE
-            holder.itemView.layoutParams.height = 0
+
+        when (UserManager.userId) {
+            chatRoom.senderId -> {
+                holder.itemView.text_chat_title.text = chatRoom.receiverName
+                holder.itemView.image_chat_sender.visibility = View.GONE
+                viewModel.isEmpty.value = false
+            }
+            chatRoom.receiverId -> {
+                holder.itemView.text_chat_title.text = chatRoom.senderName
+                holder.itemView.image_chat_receiver.visibility = View.GONE
+                viewModel.isEmpty.value = false
+            }
+            else -> {
+                holder.itemView.visibility = View.GONE
+                holder.itemView.layoutParams.height = 0
+            }
         }
 
         holder.itemView.setOnClickListener {
