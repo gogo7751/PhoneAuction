@@ -1,5 +1,6 @@
 package com.eric.phoneauction.chatToChatDetail
 
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -28,17 +29,35 @@ class ChatToDetailChatViewModel(
     val chatRoom: LiveData<ChatRoom>
         get() = _chatRoom
 
-    var image = MutableLiveData<String>()
+    private val _sendImage = MutableLiveData<String>()
+
+    val sendImage: LiveData<String>
+        get() = _sendImage
 
     var liveMessages = MutableLiveData<List<Message>>()
 
-    val message = MutableLiveData<Message>().apply {
+    private val _message = MutableLiveData<Message>().apply {
         value = Message()
     }
 
-    val document = MutableLiveData<String>().apply {
-        value =  chatRoom.value?.id
-    }
+    val message: LiveData<Message>
+        get() = _message
+
+    private var _isTitleName = MutableLiveData<Boolean>()
+
+    val isTitleName: LiveData<Boolean>
+        get() = _isTitleName
+
+    private var _setEditText = MutableLiveData<Boolean>()
+
+    val setEditText: LiveData<Boolean>
+        get() = _setEditText
+
+    // Handle leave
+    private val _leave = MutableLiveData<Boolean>()
+
+    val leave: LiveData<Boolean>
+        get() = _leave
 
     // status: The internal MutableLiveData that stores the status of the most recent request
     private val _status = MutableLiveData<LoadApiStatus>()
@@ -64,22 +83,21 @@ class ChatToDetailChatViewModel(
     // the Coroutine runs using the Main (UI) dispatcher
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
-
     init {
         Logger.i("------------------------------------")
         Logger.i("[${this::class.simpleName}]${this}")
         Logger.i("------------------------------------")
-        message.value?.senderImage = UserManager.user.image
-        message.value?.id = UserManager.userId.toString()
+        _message.value?.senderImage = UserManager.user.image
+        _message.value?.id = UserManager.userId.toString()
         getLiveMessagesResult()
+        _isTitleName.value = chatRoom.value?.senderId == UserManager.userId
     }
 
-    fun getLiveMessagesResult() {
-        liveMessages = phoneAuctionRepository.getLiveMessage(document.value.toString())
+    private fun getLiveMessagesResult() {
+        liveMessages = phoneAuctionRepository.getLiveMessage(chatRoom.value?.id.toString())
         _status.value = LoadApiStatus.DONE
         _refreshStatus.value = false
     }
-
 
     fun postMessage(message: Message, document: String) {
 
@@ -88,6 +106,34 @@ class ChatToDetailChatViewModel(
             _status.value = LoadApiStatus.LOADING
 
             when (val result = phoneAuctionRepository.postMessage(message, document)) {
+                is com.eric.phoneauction.data.Result.Success -> {
+                    _error.value = null
+                    _status.value = LoadApiStatus.DONE
+                    _setEditText.value = true
+                }
+                is com.eric.phoneauction.data.Result.Fail -> {
+                    _error.value = result.error
+                    _status.value = LoadApiStatus.ERROR
+                }
+                is com.eric.phoneauction.data.Result.Error -> {
+                    _error.value = result.exception.toString()
+                    _status.value = LoadApiStatus.ERROR
+                }
+                else -> {
+                    _error.value = PhoneAuctionApplication.instance.getString(R.string.you_know_nothing)
+                    _status.value = LoadApiStatus.ERROR
+                }
+            }
+        }
+    }
+
+    fun uploadImage(saveUri: Uri) {
+
+        coroutineScope.launch {
+
+            _status.value = LoadApiStatus.LOADING
+
+            when (val result = phoneAuctionRepository.uploadImage(_sendImage, saveUri)) {
                 is com.eric.phoneauction.data.Result.Success -> {
                     _error.value = null
                     _status.value = LoadApiStatus.DONE
@@ -108,9 +154,27 @@ class ChatToDetailChatViewModel(
         }
     }
 
+    fun sendImage(image: String) {
+        _message.value?.image = image
+        _message.value?.text = ""
+        _message.value?.let {message -> chatRoom.value?.id.let {
+                chatRoom -> postMessage(message, chatRoom as String) } }
+    }
+
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
     }
 
+    fun leave() {
+        _leave.value = true
+    }
+
+    fun clearEditText() {
+        _setEditText.value = null
+    }
+
+    fun onLeaveCompleted() {
+        _leave.value = null
+    }
 }

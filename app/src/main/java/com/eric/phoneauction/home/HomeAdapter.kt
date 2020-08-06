@@ -56,13 +56,17 @@ class HomeAdapter( val onClickListener: OnClickListener, val viewModel: HomeView
             timer = object : CountDownTimer(millsTime, ONE_SECOND) {
                 override fun onFinish() {
                     viewModel.finishAuction(event)
-                    if (event.buyerId != "") {
-                        viewModel.postNotification(getNotification("恭喜您得標!"), event.buyerId)
-                        viewModel.postNotification(getNotification("拍賣完成,請與買家聯絡完成出貨!"), event.sellerId)
-                    } else if (event.tag != "拍賣"){
-                        viewModel.postNotification(getNotification("商品已過期"), event.sellerId)
-                    } else {
-                        viewModel.postNotification(getNotification("流標"), event.sellerId)
+                    when {
+                        event.buyerId != "" -> {
+                            viewModel.postNotification(getNotification("恭喜您得標!"), event.buyerId)
+                            viewModel.postNotification(getNotification("拍賣完成,請與買家聯絡完成出貨!"), event.sellerId)
+                        }
+                        event.tag != "拍賣" -> {
+                            viewModel.postNotification(getNotification("商品已過期"), event.sellerId)
+                        }
+                        else -> {
+                            viewModel.postNotification(getNotification("流標"), event.sellerId)
+                        }
                     }
                 }
 
@@ -78,11 +82,11 @@ class HomeAdapter( val onClickListener: OnClickListener, val viewModel: HomeView
             }
         }
 
-        fun timerStart(){
+        fun timerStart() {
             timer.start()
         }
 
-        fun timerStop(){
+        fun timerStop() {
             timer.cancel()
         }
     }

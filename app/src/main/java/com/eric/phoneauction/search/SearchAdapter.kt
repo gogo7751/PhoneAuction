@@ -49,11 +49,11 @@ class SearchAdapter( val onClickListener: OnClickListener, val viewModel: Search
             }
         }
 
-        fun timerStart(){
+        fun timerStart() {
             timer.start()
         }
 
-        fun timerStop(){
+        fun timerStop() {
             timer.cancel()
         }
         companion object {

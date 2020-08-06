@@ -1,5 +1,6 @@
 package com.eric.phoneauction.post
 
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -307,6 +308,5 @@ class PostViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
         const val INVALID_FORMAT_TRADE_EMPTY        = 17
         const val INVALID_FORMAT_DESCRIPTION_EMPTY  = 18
     }
-
 }
 

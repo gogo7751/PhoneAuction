@@ -1,5 +1,6 @@
 package com.eric.phoneauction.detailChat
 
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -28,7 +29,10 @@ class DetailChatViewModel(
     val event: LiveData<Event>
         get() = _event
 
-    var image = MutableLiveData<String>()
+    private val _sendImage = MutableLiveData<String>()
+
+    val sendImage: LiveData<String>
+        get() = _sendImage
 
     var liveMessages = MutableLiveData<List<Message>>()
 
@@ -39,6 +43,11 @@ class DetailChatViewModel(
     val document = MutableLiveData<String>().apply {
         value = event.value?.id + UserManager.userId
     }
+
+    private var _setEditText = MutableLiveData<Boolean>()
+
+    val setEditText: LiveData<Boolean>
+        get() = _setEditText
 
     // status: The internal MutableLiveData that stores the status of the most recent request
     private val _status = MutableLiveData<LoadApiStatus>()
@@ -80,7 +89,6 @@ class DetailChatViewModel(
         _refreshStatus.value = false
     }
 
-
     fun postMessage(message: Message, document: String) {
 
         coroutineScope.launch {
@@ -88,6 +96,34 @@ class DetailChatViewModel(
             _status.value = LoadApiStatus.LOADING
 
             when (val result = phoneAuctionRepository.postMessage(message, document)) {
+                is com.eric.phoneauction.data.Result.Success -> {
+                    _error.value = null
+                    _status.value = LoadApiStatus.DONE
+                    _setEditText.value = true
+                }
+                is com.eric.phoneauction.data.Result.Fail -> {
+                    _error.value = result.error
+                    _status.value = LoadApiStatus.ERROR
+                }
+                is com.eric.phoneauction.data.Result.Error -> {
+                    _error.value = result.exception.toString()
+                    _status.value = LoadApiStatus.ERROR
+                }
+                else -> {
+                    _error.value = PhoneAuctionApplication.instance.getString(R.string.you_know_nothing)
+                    _status.value = LoadApiStatus.ERROR
+                }
+            }
+        }
+    }
+
+    fun uploadImage(saveUri: Uri) {
+
+        coroutineScope.launch {
+
+            _status.value = LoadApiStatus.LOADING
+
+            when (val result = phoneAuctionRepository.uploadImage(_sendImage, saveUri)) {
                 is com.eric.phoneauction.data.Result.Success -> {
                     _error.value = null
                     _status.value = LoadApiStatus.DONE
@@ -106,6 +142,17 @@ class DetailChatViewModel(
                 }
             }
         }
+    }
+
+    fun setImageValue(image: String) {
+        message.value?.image = image
+        message.value?.text = ""
+        message.value?.let {message -> document.value?.let {
+                document -> postMessage(message, document) } }
+    }
+
+    fun clearEditText() {
+        _setEditText.value = null
     }
 
     override fun onCleared() {

@@ -1,5 +1,6 @@
 package com.eric.phoneauction.data.source
 
+import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import com.eric.phoneauction.data.*
 import com.eric.phoneauction.data.Collection
@@ -143,5 +144,9 @@ class DefaultPhoneAuctionRepository(private val remoteDataSource: PhoneAuctionDa
 
     override suspend fun handleFacebookAccessToken(token: AccessToken?): Result<Boolean> {
         return remoteDataSource.handleFacebookAccessToken(token)
+    }
+
+    override suspend fun uploadImage(image: MutableLiveData<String>, saveUri: Uri): Result<Boolean> {
+        return remoteDataSource.uploadImage(image, saveUri)
     }
 }

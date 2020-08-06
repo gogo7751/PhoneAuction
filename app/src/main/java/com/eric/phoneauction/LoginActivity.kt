@@ -48,7 +48,7 @@ class LoginActivity : AppCompatActivity() {
 
         viewModel.status.observe(this, androidx.lifecycle.Observer {
             it?.let {
-                when(it) {
+                when (it) {
                     LoadApiStatus.LOADING -> {
                         binding.progressBarLogin.visibility = View.VISIBLE
                         binding.viewLoadingBg.visibility = View.VISIBLE
@@ -67,7 +67,7 @@ class LoginActivity : AppCompatActivity() {
         moveMainPage(auth?.currentUser)
     }
 
-    fun facebookLogin(){
+    fun facebookLogin() {
         LoginManager.getInstance()
             .logInWithReadPermissions(this, Arrays.asList("public_profile","email"))
 
@@ -91,8 +91,8 @@ class LoginActivity : AppCompatActivity() {
         callbackManager?.onActivityResult(requestCode,resultCode,data)
     }
 
-    fun moveMainPage(user:FirebaseUser?){
-        if(user != null){
+    private fun moveMainPage(user:FirebaseUser?) {
+        if (user != null) {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()

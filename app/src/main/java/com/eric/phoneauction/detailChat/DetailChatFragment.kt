@@ -23,6 +23,8 @@ import com.eric.phoneauction.PhoneAuctionApplication
 import com.eric.phoneauction.data.UserManager
 import com.eric.phoneauction.databinding.FragmentDetailChatBinding
 import com.eric.phoneauction.ext.getVmFactory
+import com.eric.phoneauction.ext.permission
+import com.eric.phoneauction.util.Logger
 import com.google.firebase.storage.FirebaseStorage
 import java.util.*
 
@@ -31,7 +33,8 @@ import java.util.*
  */
 class DetailChatFragment : Fragment() {
 
-    val viewModel: DetailChatViewModel by viewModels<DetailChatViewModel> { getVmFactory(DetailChatFragmentArgs.fromBundle(requireArguments()).event) }
+    val viewModel: DetailChatViewModel by viewModels {
+        getVmFactory(DetailChatFragmentArgs.fromBundle(requireArguments()).event) }
 
     private var saveUri: Uri? = null
 
@@ -43,7 +46,8 @@ class DetailChatFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = FragmentDetailChatBinding.inflate(inflater, container, false)
+        val binding = FragmentDetailChatBinding.inflate(inflater,
+            container, false)
 
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
@@ -59,7 +63,6 @@ class DetailChatFragment : Fragment() {
         }
 
         val adapter = DetailChatAdapter(viewModel)
-
         binding.recyclerviewChatDetail.adapter = adapter
 
         viewModel.liveMessages.observe(viewLifecycleOwner, Observer {
@@ -72,28 +75,18 @@ class DetailChatFragment : Fragment() {
             findNavController().navigateUp()
         }
 
-        if (viewModel.event.value?.sellerName == UserManager.user.name) {
-            binding.textChatTitle.text = UserManager.user.name
-        } else {
-            binding.textChatTitle.text = viewModel.event.value?.sellerName
-        }
-
-        viewModel.image.observe(viewLifecycleOwner, Observer {
-            viewModel.message.value?.image = it
-            viewModel.message.value?.text = ""
-            viewModel.message.value?.let { message -> viewModel.document.value?.let { document ->
-                viewModel.postMessage(message, document)
-            } }
+        viewModel.sendImage.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                viewModel.setImageValue(it)
+            }
         })
 
-        binding.imageChatDetailSend.setOnClickListener {
-            viewModel.message.value?.let { it1 -> viewModel.document.value?.let { it2 ->
-                viewModel.postMessage(it1,
-                    it2
-                )
-            } }
-            Handler().postDelayed({binding.editChatDetailInput.text.clear()},500)
-        }
+        viewModel.setEditText.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                binding.editChatDetailInput.text.clear()
+                viewModel.clearEditText()
+            }
+        })
 
         return binding.root
     }
@@ -101,26 +94,10 @@ class DetailChatFragment : Fragment() {
     //上傳圖片
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        if(saveUri != null){
+        if (saveUri != null) {
             val uriString = saveUri.toString()
             outState.putString("saveUri", uriString)
         }
-    }
-
-    private fun permission() {
-        val permissionList = arrayListOf(android.Manifest.permission.CAMERA, android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.READ_EXTERNAL_STORAGE)
-        var size = permissionList.size
-        var i = 0
-        while (i < size) {
-            if (ActivityCompat.checkSelfPermission(PhoneAuctionApplication.instance.applicationContext, permissionList[i]) == PackageManager.PERMISSION_GRANTED) {
-                permissionList.removeAt(i)
-                i -= 1
-                size -= 1
-            }
-            i += 1
-        }
-        val array = arrayOfNulls<String>(permissionList.size)
-        if (permissionList.isNotEmpty()) ActivityCompat.requestPermissions((activity as AppCompatActivity), permissionList.toArray(array), 0)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -130,11 +107,10 @@ class DetailChatFragment : Fragment() {
                 when (resultCode) {
                     Activity.RESULT_OK -> {
                         saveUri = data?.data
-                        val bitmap = MediaStore.Images.Media.getBitmap(PhoneAuctionApplication.instance.contentResolver, saveUri)
-                        uploadImage(viewModel.image)
+                        saveUri?.let { viewModel.uploadImage(it) }
                     }
                     Activity.RESULT_CANCELED -> {
-                        Log.wtf("getImageResult", resultCode.toString())
+                        Logger.d(resultCode.toString())
                     }
                 }
             }
@@ -145,18 +121,5 @@ class DetailChatFragment : Fragment() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "image/*"
         startActivityForResult(intent, photoFromGallery)
-    }
-
-    private fun uploadImage(image: MutableLiveData<String>) {
-        val filename = UUID.randomUUID().toString()
-        val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
-        saveUri?.let { uri ->
-            ref.putFile(uri)
-                .addOnSuccessListener {
-                    ref.downloadUrl.addOnSuccessListener {
-                        image.value = it.toString()
-                    }
-                }
-        }
     }
 }

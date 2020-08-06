@@ -354,11 +354,11 @@ class DetailDirectViewModel(
         }
     }
 
-    fun timerStart(){
+    fun timerStart() {
         timer.start()
     }
 
-    fun timerStop(){
+    fun timerStop() {
         timer.cancel()
     }
 

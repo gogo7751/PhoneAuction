@@ -34,10 +34,10 @@ object Util {
 //        return stamp.time
 //    }
 
-    fun lessThenTenPadStart(time: Long): String{
-        return if(time < 10){
+    fun lessThenTenPadStart(time: Long): String {
+        return if (time < 10) {
             time.toString().padStart(2,'0')
-        }else time.toString()
+        } else time.toString()
     }
 
     fun getString(resourceId: Int): String {

@@ -1,5 +1,6 @@
 package com.eric.phoneauction.data.source
 
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.eric.phoneauction.data.*
@@ -78,4 +79,6 @@ interface PhoneAuctionRepository {
     suspend fun getWishListFromPost(brand: String, productName: String, storage: String, visibility: Boolean): Result<WishList>
 
     suspend fun handleFacebookAccessToken(token : AccessToken?): Result<Boolean>
+
+    suspend fun uploadImage(image: MutableLiveData<String>, saveUri: Uri): Result<Boolean>
 }

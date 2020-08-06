@@ -1,17 +1,10 @@
 package com.eric.phoneauction.data.remote
 
-import android.content.Context
-import android.content.Intent
 import android.icu.util.Calendar
+import android.net.Uri
 import android.os.Build
-import android.view.View
-import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.MutableLiveData
-import com.eric.phoneauction.LoginActivity
-import com.eric.phoneauction.MainActivity
 import com.eric.phoneauction.PhoneAuctionApplication
 import com.eric.phoneauction.R
 import com.eric.phoneauction.data.*
@@ -21,12 +14,10 @@ import com.eric.phoneauction.util.Logger
 import com.facebook.AccessToken
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
-import kotlinx.android.synthetic.main.activity_main.*
-import java.util.logging.Handler
+import com.google.firebase.storage.FirebaseStorage
+import java.util.*
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
@@ -42,6 +33,7 @@ object PhoneAuctionRemoteDataSource :
     private const val KEY_CREATED_TIME = "createdTime"
     private const val PATH_COLLECTION = "collections"
     private const val PATH_WISH_LIST = "wishLists"
+    private const val PATH_IMAGE = "images"
 
     override suspend fun getEvents(): Result<List<Event>> = suspendCoroutine { continuation ->
         FirebaseFirestore.getInstance()
@@ -931,7 +923,7 @@ object PhoneAuctionRemoteDataSource :
             auth.signInWithCredential(credential)
                 .addOnCompleteListener {
                         task ->
-                    if(task.isSuccessful){
+                    if (task.isSuccessful) {
                         val user = User(
                             id = task.result?.user?.uid.toString(),
                             image = task.result?.user?.photoUrl.toString(),
@@ -940,9 +932,8 @@ object PhoneAuctionRemoteDataSource :
                         UserManager.userId = task.result?.user?.uid.toString()
                         UserManager.user = user
                         continuation.resume(Result.Success(true))
-                    }else{
+                    } else {
                         task.exception?.let {
-
                             Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
                             continuation.resume(Result.Error(it))
                             return@addOnCompleteListener
@@ -972,6 +963,24 @@ object PhoneAuctionRemoteDataSource :
                     continuation.resume(Result.Fail(PhoneAuctionApplication.instance.getString(R.string.you_know_nothing)))
                 }
             }
+    }
+
+    override suspend fun uploadImage(image: MutableLiveData<String>, saveUri: Uri): Result<Boolean> = suspendCoroutine { continuation ->
+        val filename = UUID.randomUUID().toString()
+        val ref = FirebaseStorage.getInstance().getReference("/$PATH_IMAGE/$filename")
+        saveUri.let { uri ->
+            ref.putFile(uri)
+                .addOnSuccessListener {
+                    ref.downloadUrl.addOnSuccessListener {
+                        image.value = it.toString()
+                        continuation.resume(Result.Success(true))
+                    }
+                }
+                .addOnFailureListener {
+                    continuation.resume(Result.Error(it))
+                    return@addOnFailureListener
+                }
+        }
     }
 }
 

@@ -1,6 +1,7 @@
 package com.eric.phoneauction.data.local
 
 import android.content.Context
+import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import com.eric.phoneauction.data.*
 import com.eric.phoneauction.data.Collection
@@ -143,6 +144,10 @@ class PhoneAuctionLocalDataSource(val context: Context) :
     }
 
     override suspend fun handleFacebookAccessToken(token: AccessToken?): Result<Boolean> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun uploadImage(image: MutableLiveData<String>, saveUri: Uri): Result<Boolean> {
         TODO("Not yet implemented")
     }
 }

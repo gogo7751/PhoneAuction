@@ -29,6 +29,7 @@ import com.eric.phoneauction.databinding.FragmentPostBinding
 import com.eric.phoneauction.dialog.NoteDialog
 import com.eric.phoneauction.ext.getVmFactory
 import com.eric.phoneauction.ext.hideKeyboard
+import com.eric.phoneauction.ext.permission
 import com.eric.phoneauction.util.Logger
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_main.*
@@ -474,35 +475,6 @@ class PostFragment : Fragment() {
         intent.type = "image/*"
         startActivityForResult(intent, photoFromGallery)
     }
-
-    private fun permission() {
-        val permissionList = arrayListOf(
-            android.Manifest.permission.CAMERA,
-            android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            android.Manifest.permission.READ_EXTERNAL_STORAGE
-        )
-        var size = permissionList.size
-        var i = 0
-        while (i < size) {
-            if (ActivityCompat.checkSelfPermission(
-                    PhoneAuctionApplication.instance.applicationContext,
-                    permissionList[i]
-                ) == PackageManager.PERMISSION_GRANTED
-            ) {
-                permissionList.removeAt(i)
-                i -= 1
-                size -= 1
-            }
-            i += 1
-        }
-        val array = arrayOfNulls<String>(permissionList.size)
-        if (permissionList.isNotEmpty()) ActivityCompat.requestPermissions(
-            (activity as AppCompatActivity),
-            permissionList.toArray(array),
-            0
-        )
-    }
-
 
     private fun uploadImage(image: MutableLiveData<String>) {
         val filename = UUID.randomUUID().toString()
