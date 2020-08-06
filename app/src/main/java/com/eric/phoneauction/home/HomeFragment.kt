@@ -62,11 +62,11 @@ class HomeFragment : Fragment() {
         viewModel.navigateToDetail.observe(viewLifecycleOwner, Observer {
             it?.let {
                 when (it.tag) {
-                    "拍賣" -> {
+                    getString(R.string.auction_tag) -> {
                         findNavController().navigate(NavigationDirections.actionGlobalDetailAuctionFragment(it))
                         viewModel.onDetailNavigated()
                     }
-                    "直購" -> {
+                    getString(R.string.direct_tag) -> {
                         findNavController().navigate(NavigationDirections.actionGlobalDetailDirectFragment(it))
                         viewModel.onDetailNavigated()
                     }
@@ -99,9 +99,9 @@ class HomeFragment : Fragment() {
                     }
                     1 -> {
                         if (viewModel.isAuction.value == true) {
-                            viewModel.getSortWithTagResult("拍賣", "price", Query.Direction.DESCENDING)
+                            viewModel.getSortWithTagResult(getString(R.string.auction_tag), "price", Query.Direction.DESCENDING)
                         } else if (viewModel.isDirect.value == true) {
-                            viewModel.getSortWithTagResult("直購", "price", Query.Direction.DESCENDING)
+                            viewModel.getSortWithTagResult(getString(R.string.direct_tag), "price", Query.Direction.DESCENDING)
                         } else {
                             viewModel.getSort("price", Query.Direction.DESCENDING)
                         }
@@ -109,9 +109,9 @@ class HomeFragment : Fragment() {
                     }
                     2 -> {
                         if (viewModel.isAuction.value == true) {
-                            viewModel.getSortWithTagResult("拍賣", "price", Query.Direction.ASCENDING)
+                            viewModel.getSortWithTagResult(getString(R.string.auction_tag), "price", Query.Direction.ASCENDING)
                         } else if (viewModel.isDirect.value == true) {
-                            viewModel.getSortWithTagResult("直購", "price", Query.Direction.ASCENDING)
+                            viewModel.getSortWithTagResult(getString(R.string.direct_tag), "price", Query.Direction.ASCENDING)
                         } else {
                             viewModel.getSort("price", Query.Direction.ASCENDING)
                         }
@@ -119,9 +119,9 @@ class HomeFragment : Fragment() {
                     }
                     3 -> {
                         if (viewModel.isAuction.value == true) {
-                            viewModel.getSortWithTagResult("拍賣", "endTime", Query.Direction.DESCENDING)
+                            viewModel.getSortWithTagResult(getString(R.string.auction_tag), "endTime", Query.Direction.DESCENDING)
                         } else if (viewModel.isDirect.value == true) {
-                            viewModel.getSortWithTagResult("直購", "endTime", Query.Direction.DESCENDING)
+                            viewModel.getSortWithTagResult(getString(R.string.direct_tag), "endTime", Query.Direction.DESCENDING)
                         } else {
                             viewModel.getSort("endTime", Query.Direction.DESCENDING)
                         }
@@ -129,9 +129,9 @@ class HomeFragment : Fragment() {
                     }
                     4 -> {
                         if (viewModel.isAuction.value == true) {
-                            viewModel.getSortWithTagResult("拍賣", "endTime", Query.Direction.ASCENDING)
+                            viewModel.getSortWithTagResult(getString(R.string.auction_tag), "endTime", Query.Direction.ASCENDING)
                         } else if (viewModel.isDirect.value == true) {
-                            viewModel.getSortWithTagResult("直購", "endTime", Query.Direction.ASCENDING)
+                            viewModel.getSortWithTagResult(getString(R.string.direct_tag), "endTime", Query.Direction.ASCENDING)
                         } else {
                             viewModel.getSort("endTime", Query.Direction.ASCENDING)
                         }
@@ -163,10 +163,7 @@ class HomeFragment : Fragment() {
             binding.editSearch.text.clear()
         }
 
-
         (activity as AppCompatActivity).bottomNavView.visibility = View.VISIBLE
         return binding.root
     }
-
-
 }

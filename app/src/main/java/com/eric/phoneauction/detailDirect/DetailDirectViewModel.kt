@@ -40,21 +40,24 @@ class DetailDirectViewModel(
     val averageEvents: LiveData<List<Event>>
         get() = _averageEvents
 
+    private var _averagePrice = MutableLiveData<Int>()
+
+    val averagePrice: LiveData<Int>
+        get() = _averagePrice
+
     val isBuyerId = MutableLiveData<Boolean>().apply {
         value = arguments.buyerId.isNullOrEmpty()
     }
 
-    var averagePrice = MutableLiveData<Int>()
+    private val _collection = MutableLiveData<Collection>()
 
-    var collection = MutableLiveData<Collection>()
+    val collection: LiveData<Collection>
+        get() = _collection
 
     private var _events = MutableLiveData<List<Event>>()
 
     val events: LiveData<List<Event>>
         get() = _events
-
-    lateinit var timer: CountDownTimer
-    val countDown = MutableLiveData<String>()
 
     // Handle navigation to detail
     private val _navigateToDetail = MutableLiveData<Event>()
@@ -74,12 +77,31 @@ class DetailDirectViewModel(
     val navigateToDetailChat: LiveData<Event>
         get() = _navigateToDetailChat
 
+    private val _navigateToPost = MutableLiveData<Boolean>()
+
+    val navigateToPost: LiveData<Boolean>
+        get() = _navigateToPost
+
+    private val _navigateToDialog = MutableLiveData<Boolean>()
+
+    val navigateToDialog: LiveData<Boolean>
+        get() = _navigateToDialog
+
+    private val _navigateToCollect = MutableLiveData<Boolean>()
+
+    val navigateToCollect: LiveData<Boolean>
+        get() = _navigateToCollect
+
+    private val _navigateToUnCollect = MutableLiveData<Boolean>()
+
+    val navigateToUnCollect: LiveData<Boolean>
+        get() = _navigateToUnCollect
+
     // it for gallery circles design
     private val _snapPosition = MutableLiveData<Int>()
 
     val snapPosition: LiveData<Int>
         get() = _snapPosition
-
 
     // Handle leave detail
     private val _leaveDetail = MutableLiveData<Boolean>()
@@ -129,12 +151,15 @@ class DetailDirectViewModel(
         Logger.i("[${this::class.simpleName}]${this}")
         Logger.i("------------------------------------")
         getDirectResult()
-        getCountdown()
         getCollectionResult()
         getAveragePriceResult(event.value?.brand.toString(), event.value?.productName.toString(), event.value?.storage.toString(), false)
     }
 
-    fun getAveragePriceResult(brand: String, productName: String, storage: String, isDealDone: Boolean) {
+    fun getAveragePrice() {
+        _averagePrice.value = averageEvents.value?.map { it.price }?.average()?.toInt()
+    }
+
+    private fun getAveragePriceResult(brand: String, productName: String, storage: String, isDealDone: Boolean) {
 
         coroutineScope.launch {
 
@@ -178,7 +203,7 @@ class DetailDirectViewModel(
 
             val result = phoneAuctionRepository.getCollection(arguments.id)
 
-            collection.value = when (result) {
+            _collection.value = when (result) {
                 is com.eric.phoneauction.data.Result.Success -> {
                     _error.value = null
                     _status.value = LoadApiStatus.DONE
@@ -336,33 +361,6 @@ class DetailDirectViewModel(
         }
     }
 
-    fun getCountdown() {
-
-        timer = object : CountDownTimer(event.value?.endTime!!, HomeAdapter.ONE_SECOND) {
-            override fun onFinish() {
-            }
-
-            override fun onTick(millisUntilFinished: Long) {
-                val sec = millisUntilFinished / HomeAdapter.ONE_SECOND % 60
-                val min = millisUntilFinished / HomeAdapter.ONE_SECOND / 60 % 60
-                val hr = millisUntilFinished / HomeAdapter.ONE_SECOND / 60 / 60 % 24
-                countDown.value = StringBuilder()
-                    .append(Util.lessThenTenPadStart(hr)).append(Util.getString(R.string.hours))
-                    .append(Util.lessThenTenPadStart(min)).append(Util.getString(R.string.minutes))
-                    .append(Util.lessThenTenPadStart(sec)).append(Util.getString(R.string.seconds)).toString()
-            }
-        }
-    }
-
-    fun timerStart() {
-        timer.start()
-    }
-
-    fun timerStop() {
-        timer.cancel()
-    }
-
-
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
@@ -391,6 +389,40 @@ class DetailDirectViewModel(
 
     fun onDetailChatNavigated() {
         _navigateToDetailChat.value = null
+    }
+
+    fun navigateToPost() {
+        _navigateToPost.value = true
+    }
+
+    fun onPostNavigated() {
+        _navigateToPost.value = null
+    }
+
+    fun navigateToDialog() {
+        _navigateToDialog.value = true
+    }
+
+    fun onDialogNavigated() {
+        _navigateToDialog.value = null
+    }
+
+    fun navigateToCollect() {
+        postCollection(addCollection(true), UserManager.user)
+        _navigateToCollect.value = true
+    }
+
+    fun onCollectNavigated() {
+        _navigateToDialog.value = null
+    }
+
+    fun navigateToUnCollect() {
+        postCollection(addCollection(false), UserManager.user)
+        _navigateToUnCollect.value = true
+    }
+
+    fun onUnCollectNavigated() {
+        _navigateToDialog.value = null
     }
 
     fun leaveDetail() {

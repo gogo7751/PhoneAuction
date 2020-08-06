@@ -17,13 +17,14 @@ import com.eric.phoneauction.ext.getVmFactory
  */
 class CollectionFragment : Fragment() {
 
-    val viewModel: CollectionViewModel by viewModels<CollectionViewModel> { getVmFactory() }
+    val viewModel: CollectionViewModel by viewModels { getVmFactory() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = FragmentCollectionBinding.inflate(inflater, container, false)
+        val binding = FragmentCollectionBinding.inflate(
+            inflater, container, false)
 
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
@@ -36,7 +37,8 @@ class CollectionFragment : Fragment() {
             it?.let {
                 if (it.isEmpty()) {
                     binding.textNoContent.visibility = View.VISIBLE
-                } else {
+                }
+                else {
                     binding.textNoContent.visibility = View.GONE
                     adapter.submitList(it)
                 }

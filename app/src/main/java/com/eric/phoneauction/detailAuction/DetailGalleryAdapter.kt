@@ -64,5 +64,4 @@ class DetailGalleryAdapter : RecyclerView.Adapter<DetailGalleryAdapter.ImageView
         this.images = images
         notifyDataSetChanged()
     }
-
 }

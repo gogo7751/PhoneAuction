@@ -1,6 +1,7 @@
 package com.eric.phoneauction
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.widget.Toast
@@ -47,21 +48,6 @@ class MainActivity : AppCompatActivity() {
                 UserManager.user = it
             }
         })
-    }
-
-    var exitTime:Long = 0
-    override fun onKeyDown(keyCode:Int, event: KeyEvent):Boolean {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() === KeyEvent.ACTION_DOWN) {
-            if ((System.currentTimeMillis() - exitTime) > 3000) {
-                showToast(getString(R.string.leave_app))
-                exitTime = System.currentTimeMillis()
-            } else {
-                finish()
-                exitProcess(0)
-            }
-            return true
-        }
-        return super.onKeyDown(keyCode, event)
     }
 
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->

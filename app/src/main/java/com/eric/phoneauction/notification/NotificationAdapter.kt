@@ -7,10 +7,12 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.DiffUtil
 import com.eric.phoneauction.NavigationDirections
+import com.eric.phoneauction.R
 import com.eric.phoneauction.data.Event
 import com.eric.phoneauction.data.Notification
 import com.eric.phoneauction.data.UserManager
 import com.eric.phoneauction.databinding.ItemNotificationBinding
+import com.eric.phoneauction.util.Util.getString
 
 
 class NotificationAdapter(val viewModel: NotificationViewModel) :
@@ -35,7 +37,7 @@ class NotificationAdapter(val viewModel: NotificationViewModel) :
             }
 
             binding.imageNotification.setOnClickListener {
-                if (notification.event?.tag == "拍賣") {
+                if (notification.event?.tag == getString(R.string.auction_tag)) {
                     Navigation.createNavigateOnClickListener(
                         NavigationDirections.actionGlobalDetailAuctionFragment(
                             notification.event as Event

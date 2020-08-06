@@ -11,6 +11,7 @@ import com.eric.phoneauction.data.Event
 import com.eric.phoneauction.databinding.ItemSearchBinding
 import com.eric.phoneauction.databinding.ItemSearchFooterBinding
 import com.eric.phoneauction.util.Util
+import com.eric.phoneauction.util.Util.getString
 
 class SearchAdapter( val onClickListener: OnClickListener, val viewModel: SearchViewModel) : androidx.recyclerview.widget.ListAdapter<Event, RecyclerView.ViewHolder>(
     DiffCallback
@@ -27,7 +28,7 @@ class SearchAdapter( val onClickListener: OnClickListener, val viewModel: Search
             binding.viewModel = viewModel
             binding.executePendingBindings()
 
-            if (event.tag == "直購") {
+            if (event.tag == getString(R.string.direct_tag)) {
                 binding.textSearchTime.visibility = View.GONE
             }
 

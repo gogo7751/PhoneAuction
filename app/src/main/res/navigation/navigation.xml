@@ -118,12 +118,10 @@
     </fragment>
     <action
         android:id="@+id/action_global_detailDirectFragment"
-        app:destination="@id/detailDirectFragment"
-        app:popUpToInclusive="true" />
+        app:destination="@id/detailDirectFragment" />
     <action
         android:id="@+id/action_global_detailAuctionFragment"
-        app:destination="@id/detailAuctionFragment"
-        app:popUpToInclusive="true" />
+        app:destination="@id/detailAuctionFragment" />
     <dialog
         android:id="@+id/auctionDialog"
         android:name="com.eric.phoneauction.auctionDialog.AuctionDialog"
@@ -161,7 +159,7 @@
         android:id="@+id/directDialog"
         android:name="com.eric.phoneauction.directDialog.DirectDialog"
         android:label="DirectDialog"
-        tools:layout="@layout/dialog_direct_fragment">
+        tools:layout="@layout/dialog_direct">
         <argument
             android:name="event"
             app:argType="com.eric.phoneauction.data.Event"

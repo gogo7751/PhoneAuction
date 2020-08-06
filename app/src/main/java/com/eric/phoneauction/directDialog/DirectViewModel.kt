@@ -8,6 +8,7 @@ import com.eric.phoneauction.PhoneAuctionApplication
 import com.eric.phoneauction.R
 import com.eric.phoneauction.data.Event
 import com.eric.phoneauction.data.Notification
+import com.eric.phoneauction.data.UserManager
 import com.eric.phoneauction.data.source.PhoneAuctionRepository
 import com.eric.phoneauction.util.Logger
 import kotlinx.coroutines.CoroutineScope
@@ -83,15 +84,18 @@ class DirectViewModel(
     fun getNotification(title: String): Notification {
         event.value?.isDealDone = false
         return Notification(
-            id = "",
-            title = title,
-            time = -1,
-            brand = event.value?.brand.toString(),
-            name = event.value?.productName.toString(),
-            image = event.value?.images?.component1().toString(),
-            storage = event.value?.storage.toString(),
-            visibility = true,
-            event = event.value.apply { event.value?.isDealDone = false }
+            "",
+            title,
+            -1,
+            event.value?.brand.toString(),
+            event.value?.productName.toString(),
+            event.value?.images?.component1().toString(),
+            event.value?.storage.toString(),
+            true,
+            event.value.apply {
+                event.value?.isDealDone = false
+                event.value?.buyerId = UserManager.userId.toString()
+            }
         )
     }
 
@@ -100,7 +104,7 @@ class DirectViewModel(
         viewModelJob.cancel()
     }
 
-    fun postAuction(event: Event) {
+    fun postDirect(event: Event) {
 
         coroutineScope.launch {
 

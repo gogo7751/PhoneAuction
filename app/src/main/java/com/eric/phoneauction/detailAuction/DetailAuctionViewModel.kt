@@ -43,7 +43,10 @@ class DetailAuctionViewModel(
     val averageEvents: LiveData<List<Event>>
         get() = _averageEvents
 
-    var averagePrice = MutableLiveData<Int>()
+    private var _averagePrice = MutableLiveData<Int>()
+
+    val averagePrice: LiveData<Int>
+        get() = _averagePrice
 
     private var _events = MutableLiveData<List<Event>>()
 
@@ -74,8 +77,28 @@ class DetailAuctionViewModel(
     // Handle navigation to detail chat
     private val _navigateToDetailChat = MutableLiveData<Event>()
 
-    val navigateToDetailChat: LiveData<Event>
+    val navigateDetailChat: LiveData<Event>
         get() = _navigateToDetailChat
+
+    private val _navigateToPost = MutableLiveData<Boolean>()
+
+    val navigateToPost: LiveData<Boolean>
+        get() = _navigateToPost
+
+    private val _navigateToDialog = MutableLiveData<Boolean>()
+
+    val navigateToDialog: LiveData<Boolean>
+        get() = _navigateToDialog
+
+    private val _navigateToCollect = MutableLiveData<Boolean>()
+
+    val navigateToCollect: LiveData<Boolean>
+        get() = _navigateToCollect
+
+    private val _navigateToUnCollect = MutableLiveData<Boolean>()
+
+    val navigateToUnCollect: LiveData<Boolean>
+        get() = _navigateToUnCollect
 
     // it for gallery circles design
     private val _snapPosition = MutableLiveData<Int>()
@@ -137,7 +160,11 @@ class DetailAuctionViewModel(
         getAveragePriceResult(event.value?.brand.toString(), event.value?.productName.toString(), event.value?.storage.toString(), false)
     }
 
-    fun getAveragePriceResult(brand: String, productName: String, storage: String, isDealDone: Boolean) {
+    fun getAveragePrice() {
+        _averagePrice.value = averageEvents.value?.map { it.price }?.average()?.toInt()
+    }
+
+    private fun getAveragePriceResult(brand: String, productName: String, storage: String, isDealDone: Boolean) {
 
         coroutineScope.launch {
 
@@ -146,18 +173,18 @@ class DetailAuctionViewModel(
             val result = phoneAuctionRepository.getAveragePrice(brand, productName, storage, isDealDone)
 
             _averageEvents.value = when (result) {
-                is com.eric.phoneauction.data.Result.Success -> {
+                is Result.Success -> {
                     _error.value = null
                     _status.value = LoadApiStatus.DONE
                     result.data
                 }
-                is com.eric.phoneauction.data.Result.Fail -> {
+                is Result.Fail -> {
                     Log.d("Result","fail")
                     _error.value = result.error
                     _status.value = LoadApiStatus.ERROR
                     null
                 }
-                is com.eric.phoneauction.data.Result.Error -> {
+                is Result.Error -> {
                     Log.d("Result","error")
                     _error.value = result.exception.toString()
                     _status.value = LoadApiStatus.ERROR
@@ -187,18 +214,18 @@ class DetailAuctionViewModel(
             val result = phoneAuctionRepository.getCollection(arguments.id)
 
             collection.value = when (result) {
-                is com.eric.phoneauction.data.Result.Success -> {
+                is Result.Success -> {
                     _error.value = null
                     _status.value = LoadApiStatus.DONE
                     result.data
                 }
-                is com.eric.phoneauction.data.Result.Fail -> {
+                is Result.Fail -> {
                     Log.d("Result","fail")
                     _error.value = result.error
                     _status.value = LoadApiStatus.ERROR
                     null
                 }
-                is com.eric.phoneauction.data.Result.Error -> {
+                is Result.Error -> {
                     Log.d("Result","error")
                     _error.value = result.exception.toString()
                     _status.value = LoadApiStatus.ERROR
@@ -214,7 +241,6 @@ class DetailAuctionViewModel(
         }
     }
 
-
     fun addCollection(boolean: Boolean) :Collection{
         return Collection(
             id = "",
@@ -229,15 +255,15 @@ class DetailAuctionViewModel(
             _status.value = LoadApiStatus.LOADING
 
             when (val result = phoneAuctionRepository.postCollection(collection, user)) {
-                is com.eric.phoneauction.data.Result.Success -> {
+                is Result.Success -> {
                     _error.value = null
                     _status.value = LoadApiStatus.DONE
                 }
-                is com.eric.phoneauction.data.Result.Fail -> {
+                is Result.Fail -> {
                     _error.value = result.error
                     _status.value = LoadApiStatus.ERROR
                 }
-                is com.eric.phoneauction.data.Result.Error -> {
+                is Result.Error -> {
                     _error.value = result.exception.toString()
                     _status.value = LoadApiStatus.ERROR
                 }
@@ -250,14 +276,14 @@ class DetailAuctionViewModel(
     }
 
     fun getChatRoom(): ChatRoom{
-        val list = listOf<String>(event.value?.sellerId.toString(), com.eric.phoneauction.data.UserManager.user.id)
+        val list = listOf<String>(event.value?.sellerId.toString(), UserManager.user.id)
         return ChatRoom(
-            id = event.value?.id.toString() + com.eric.phoneauction.data.UserManager.userId,
+            id = event.value?.id.toString() + UserManager.userId,
             text = "查看訊息",
             time = -1,
-            senderName = com.eric.phoneauction.data.UserManager.user.name,
-            senderImage = com.eric.phoneauction.data.UserManager.user.image,
-            senderId = com.eric.phoneauction.data.UserManager.user.id,
+            senderName = UserManager.user.name,
+            senderImage = UserManager.user.image,
+            senderId = UserManager.user.id,
             receiverId = event.value?.sellerId.toString(),
             receiverImage = event.value?.sellerImage.toString(),
             receiverName = event.value?.sellerName.toString(),
@@ -275,15 +301,15 @@ class DetailAuctionViewModel(
             _status.value = LoadApiStatus.LOADING
 
             when (val result = phoneAuctionRepository.postChatRoom(chatRoom)) {
-                is com.eric.phoneauction.data.Result.Success -> {
+                is Result.Success -> {
                     _error.value = null
                     _status.value = LoadApiStatus.DONE
                 }
-                is com.eric.phoneauction.data.Result.Fail -> {
+                is Result.Fail -> {
                     _error.value = result.error
                     _status.value = LoadApiStatus.ERROR
                 }
-                is com.eric.phoneauction.data.Result.Error -> {
+                is Result.Error -> {
                     _error.value = result.exception.toString()
                     _status.value = LoadApiStatus.ERROR
                 }
@@ -319,18 +345,18 @@ class DetailAuctionViewModel(
             val result = phoneAuctionRepository.getAuction()
 
             _events.value = when (result) {
-                is com.eric.phoneauction.data.Result.Success -> {
+                is Result.Success -> {
                     _error.value = null
                     _status.value = LoadApiStatus.DONE
                     result.data
                 }
-                is com.eric.phoneauction.data.Result.Fail -> {
+                is Result.Fail -> {
                     Log.d("Result","fail")
                     _error.value = result.error
                     _status.value = LoadApiStatus.ERROR
                     null
                 }
-                is com.eric.phoneauction.data.Result.Error -> {
+                is Result.Error -> {
                     Log.d("Result","error")
                     _error.value = result.exception.toString()
                     _status.value = LoadApiStatus.ERROR
@@ -353,15 +379,15 @@ class DetailAuctionViewModel(
             _status.value = LoadApiStatus.LOADING
 
             when (val result = phoneAuctionRepository.postNotification(notification, buyerId)) {
-                is com.eric.phoneauction.data.Result.Success -> {
+                is Result.Success -> {
                     _error.value = null
                     _status.value = LoadApiStatus.DONE
                 }
-                is com.eric.phoneauction.data.Result.Fail -> {
+                is Result.Fail -> {
                     _error.value = result.error
                     _status.value = LoadApiStatus.ERROR
                 }
-                is com.eric.phoneauction.data.Result.Error -> {
+                is Result.Error -> {
                     _error.value = result.exception.toString()
                     _status.value = LoadApiStatus.ERROR
                 }
@@ -380,15 +406,15 @@ class DetailAuctionViewModel(
             _status.value = LoadApiStatus.LOADING
 
             when (val result = phoneAuctionRepository.finishAuction(event)) {
-                is com.eric.phoneauction.data.Result.Success -> {
+                is Result.Success -> {
                     _error.value = null
                     _status.value = LoadApiStatus.DONE
                 }
-                is com.eric.phoneauction.data.Result.Fail -> {
+                is Result.Fail -> {
                     _error.value = result.error
                     _status.value = LoadApiStatus.ERROR
                 }
-                is com.eric.phoneauction.data.Result.Error -> {
+                is Result.Error -> {
                     _error.value = result.exception.toString()
                     _status.value = LoadApiStatus.ERROR
                 }
@@ -414,11 +440,10 @@ class DetailAuctionViewModel(
         )
     }
 
-    fun getCountdown() {
+    private fun getCountdown() {
         timer = @RequiresApi(Build.VERSION_CODES.N)
         object : CountDownTimer(arguments.endTime.minus(Calendar.getInstance().timeInMillis), HomeAdapter.ONE_SECOND) {
             override fun onFinish() {
-
             }
 
             override fun onTick(millisUntilFinished: Long) {
@@ -441,7 +466,6 @@ class DetailAuctionViewModel(
         timer.cancel()
     }
 
-
     fun navigateToAuction(event: Event) {
         _navigateToAuction.value = event
     }
@@ -459,11 +483,46 @@ class DetailAuctionViewModel(
     }
 
     fun navigateToDetailChat(event: Event) {
+        postChatRoom(getChatRoom())
         _navigateToDetailChat.value = event
     }
 
     fun onDetailChatNavigated() {
         _navigateToDetailChat.value = null
+    }
+
+    fun navigateToPost() {
+        _navigateToPost.value = true
+    }
+
+    fun onPostNavigated() {
+        _navigateToPost.value = null
+    }
+
+    fun navigateToDialog() {
+        _navigateToDialog.value = true
+    }
+
+    fun onDialogNavigated() {
+        _navigateToDialog.value = null
+    }
+
+    fun navigateToCollect() {
+        postCollection(addCollection(true), UserManager.user)
+        _navigateToCollect.value = true
+    }
+
+    fun onCollectNavigated() {
+        _navigateToDialog.value = null
+    }
+
+    fun navigateToUnCollect() {
+        postCollection(addCollection(false), UserManager.user)
+        _navigateToUnCollect.value = true
+    }
+
+    fun onUnCollectNavigated() {
+        _navigateToDialog.value = null
     }
 
     fun leaveDetail() {

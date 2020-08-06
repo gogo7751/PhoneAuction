@@ -6,11 +6,13 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.eric.phoneauction.NavigationDirections
+import com.eric.phoneauction.R
 import com.eric.phoneauction.data.Collection
 import com.eric.phoneauction.data.Event
 import com.eric.phoneauction.data.UserManager
 import com.eric.phoneauction.databinding.ItemCollectionBinding
 import com.eric.phoneauction.dialog.MessageDialog
+import com.eric.phoneauction.util.Util.getString
 
 class CollectionAdapter(val viewModel: CollectionViewModel) :
     androidx.recyclerview.widget.ListAdapter<Collection, CollectionAdapter.CollectionViewHolder>(
@@ -26,18 +28,21 @@ class CollectionAdapter(val viewModel: CollectionViewModel) :
             binding.collection = collection
 
             binding.imageCollection.setOnClickListener {
-                if (collection.event?.tag == "拍賣") {
-                    Navigation.createNavigateOnClickListener(
-                        NavigationDirections.actionGlobalDetailAuctionFragment(
-                            collection.event as Event
-                        )
-                    ).onClick(binding.imageCollection)
-                } else {
-                    Navigation.createNavigateOnClickListener(
-                        NavigationDirections.actionGlobalDetailDirectFragment(
-                            collection.event as Event
-                        )
-                    ).onClick(binding.imageCollection)
+                when (collection.event?.tag) {
+                    getString(R.string.auction_tag) -> {
+                        Navigation.createNavigateOnClickListener(
+                            NavigationDirections.actionGlobalDetailAuctionFragment(
+                                collection.event as Event
+                            )
+                        ).onClick(binding.imageCollection)
+                    }
+                    else -> {
+                        Navigation.createNavigateOnClickListener(
+                            NavigationDirections.actionGlobalDetailDirectFragment(
+                                collection.event as Event
+                            )
+                        ).onClick(binding.imageCollection)
+                    }
                 }
             }
 

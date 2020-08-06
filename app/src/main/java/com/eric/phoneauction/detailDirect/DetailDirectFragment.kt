@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearSnapHelper
 import com.eric.phoneauction.NavigationDirections
+import com.eric.phoneauction.R
 import com.eric.phoneauction.data.UserManager
 import com.eric.phoneauction.databinding.FragmentDetailDirectBinding
 import com.eric.phoneauction.detailAuction.DetailCircleAdapter
@@ -22,6 +23,7 @@ import com.eric.phoneauction.dialog.NoteDialog
 import com.eric.phoneauction.ext.getVmFactory
 import com.eric.phoneauction.home.HomeAdapter
 import com.eric.phoneauction.home.HomeViewModel
+import com.eric.phoneauction.util.Logger
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -78,7 +80,6 @@ class DetailDirectFragment : Fragment() {
             })
         }
 
-
         viewModel.events.observe(viewLifecycleOwner, Observer {
             it?.let {
                 adapter.submitList(it)
@@ -88,11 +89,11 @@ class DetailDirectFragment : Fragment() {
         viewModel.navigateToDetail.observe(viewLifecycleOwner, Observer {
             it?.let {
                 when (it.tag) {
-                    "拍賣" -> {
+                    getString(R.string.auction_tag) -> {
                         findNavController().navigate(NavigationDirections.actionGlobalDetailAuctionFragment(it))
                         viewModel.onDetailNavigated()
                     }
-                    "直購" -> {
+                    getString(R.string.direct_tag) -> {
                         findNavController().navigate(NavigationDirections.actionGlobalDetailDirectFragment(it))
                         viewModel.onDetailNavigated()
                     }
@@ -115,47 +116,45 @@ class DetailDirectFragment : Fragment() {
             }
         })
 
-        viewModel.countDown.observe(viewLifecycleOwner, Observer {
+        viewModel.navigateToPost.observe(viewLifecycleOwner, Observer {
             it?.let {
-                binding.textDetailDirectTime.text = it
+                findNavController().navigate(NavigationDirections.actionGlobalPostFragment())
+                viewModel.onPostNavigated()
             }
         })
 
-        binding.imageViewDetailDirectCollection.setOnClickListener {
-            viewModel.postCollection(viewModel.addCollection(true), UserManager.user)
-            binding.imageViewDetailDirectCollection.visibility = View.GONE
-            binding.imageViewDetailDirectCollectioned.visibility = View.VISIBLE
-            findNavController().navigate(NavigationDirections.navigateToMessageDialog(
-                MessageDialog.MessageType.COLLECTION_SUCCESS))
-        }
+        viewModel.navigateToCollect.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                binding.imageViewDetailDirectCollection.visibility = View.GONE
+                binding.imageViewDetailDirectUnCollection.visibility = View.VISIBLE
+                findNavController().navigate(NavigationDirections.navigateToMessageDialog(MessageDialog.MessageType.COLLECTION_SUCCESS))
+                viewModel.onCollectNavigated()
+            }
+        })
 
-        binding.imageViewDetailDirectCollectioned.setOnClickListener {
-            viewModel.postCollection(viewModel.addCollection(false), UserManager.user)
-            binding.imageViewDetailDirectCollection.visibility = View.VISIBLE
-            binding.imageViewDetailDirectCollectioned.visibility = View.GONE
-            findNavController().navigate(NavigationDirections.navigateToMessageDialog(MessageDialog.MessageType.UN_COLLECTION_SUCCESS))
-        }
+        viewModel.navigateToUnCollect.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                binding.imageViewDetailDirectCollection.visibility = View.VISIBLE
+                binding.imageViewDetailDirectUnCollection.visibility = View.GONE
+                findNavController().navigate(NavigationDirections.navigateToMessageDialog(MessageDialog.MessageType.UN_COLLECTION_SUCCESS))
+                viewModel.onUnCollectNavigated()
+            }
+        })
 
         //最近商品成交價
-        viewModel.averageEvents.observe(viewLifecycleOwner, Observer { list ->
-            list?.let { event ->
-                viewModel.averagePrice.value = event.map { it.price }.average().toInt()
+        viewModel.averageEvents.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                viewModel.getAveragePrice()
             }
         })
 
-        binding.imageDirectQuestion.setOnClickListener {
-            findNavController().navigate(NavigationDirections.actionGlobalNoteDialog(NoteDialog.MessageType.AVERAGE_PRICE))
-        }
-
-        viewModel.timerStart()
+        viewModel.navigateToDialog.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                findNavController().navigate(NavigationDirections.actionGlobalNoteDialog(NoteDialog.MessageType.AVERAGE_PRICE))
+                viewModel.onDialogNavigated()
+            }
+        })
         (activity as AppCompatActivity).bottomNavView.visibility = View.GONE
         return binding.root
     }
-
-    //bottom navigation view gone
-    override fun onDestroy() {
-        super.onDestroy()
-        viewModel.timerStop()
-    }
-
 }

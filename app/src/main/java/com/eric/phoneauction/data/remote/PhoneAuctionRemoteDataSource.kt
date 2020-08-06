@@ -11,6 +11,7 @@ import com.eric.phoneauction.data.*
 import com.eric.phoneauction.data.Collection
 import com.eric.phoneauction.data.source.PhoneAuctionDataSource
 import com.eric.phoneauction.util.Logger
+import com.eric.phoneauction.util.Util.getString
 import com.facebook.AccessToken
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
@@ -122,7 +123,7 @@ object PhoneAuctionRemoteDataSource :
     override suspend fun getAuction(): Result<List<Event>> = suspendCoroutine { continuation ->
         FirebaseFirestore.getInstance()
             .collection(PATH_EVENTS)
-            .whereEqualTo("tag", "拍賣")
+            .whereEqualTo("tag", getString(R.string.auction_tag))
             .whereEqualTo("isDealDone", true)
             .get()
             .addOnCompleteListener { task ->
@@ -150,7 +151,7 @@ object PhoneAuctionRemoteDataSource :
     override suspend fun getDirect(): Result<List<Event>> = suspendCoroutine { continuation ->
         FirebaseFirestore.getInstance()
             .collection(PATH_EVENTS)
-            .whereEqualTo("tag", "直購")
+            .whereEqualTo("tag", getString(R.string.direct_tag))
             .whereEqualTo("isDealDone", true)
             .get()
             .addOnCompleteListener { task ->

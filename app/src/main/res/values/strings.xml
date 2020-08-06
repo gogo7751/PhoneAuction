@@ -19,6 +19,10 @@
     <!-- Chat -->
     <string name="picture">圖片</string>
 
+    <!-- Tag -->
+    <string name="auction_tag">拍賣</string>
+    <string name="direct_tag">直購</string>
+
     <!-- Notification -->
     <string name="bid_over">您的出價已被超過</string>
     <string name="bid_someone">您的商品有人出價</string>

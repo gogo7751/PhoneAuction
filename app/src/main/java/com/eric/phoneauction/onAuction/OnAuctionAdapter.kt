@@ -7,9 +7,11 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.eric.phoneauction.NavigationDirections
+import com.eric.phoneauction.R
 import com.eric.phoneauction.data.Event
 import com.eric.phoneauction.data.UserManager
 import com.eric.phoneauction.databinding.ItemOnAuctionBinding
+import com.eric.phoneauction.util.Util.getString
 
 class OnAuctionAdapter :
     androidx.recyclerview.widget.ListAdapter<Event, OnAuctionAdapter.OnAuctionViewHolder>(
@@ -24,7 +26,7 @@ class OnAuctionAdapter :
             binding.event = event
 
             binding.imageOnAuction.setOnClickListener {
-                if (event.tag == "拍賣") {
+                if (event.tag == getString(R.string.auction_tag)) {
                     Navigation.createNavigateOnClickListener(
                         NavigationDirections.actionGlobalDetailAuctionFragment(
                             event

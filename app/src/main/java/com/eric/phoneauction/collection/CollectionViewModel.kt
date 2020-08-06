@@ -1,6 +1,5 @@
 package com.eric.phoneauction.collection
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -17,8 +16,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class CollectionViewModel(val phoneAuctionRepository: PhoneAuctionRepository): ViewModel() {
-
-    var collections = MutableLiveData<List<Collection>>()
 
     var liveCollections = MutableLiveData<List<Collection>>()
 
@@ -46,14 +43,12 @@ class CollectionViewModel(val phoneAuctionRepository: PhoneAuctionRepository): V
     // the Coroutine runs using the Main (UI) dispatcher
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
-
     init {
         Logger.i("------------------------------------")
         Logger.i("[${this::class.simpleName}]${this}")
         Logger.i("------------------------------------")
         getLiveEventsResult()
     }
-
 
     fun postCollection(collection: Collection, user: User) {
         coroutineScope.launch {
@@ -81,45 +76,7 @@ class CollectionViewModel(val phoneAuctionRepository: PhoneAuctionRepository): V
         }
     }
 
-
-    fun getAllCollectionResult() {
-
-        coroutineScope.launch {
-
-            _status.value = LoadApiStatus.LOADING
-
-            val result = phoneAuctionRepository.getAllCollection()
-
-            collections.value = when (result) {
-                is com.eric.phoneauction.data.Result.Success -> {
-                    _error.value = null
-                    _status.value = LoadApiStatus.DONE
-                    result.data
-                }
-                is com.eric.phoneauction.data.Result.Fail -> {
-                    Log.d("Result","fail")
-                    _error.value = result.error
-                    _status.value = LoadApiStatus.ERROR
-                    null
-                }
-                is com.eric.phoneauction.data.Result.Error -> {
-                    Log.d("Result","error")
-                    _error.value = result.exception.toString()
-                    _status.value = LoadApiStatus.ERROR
-                    null
-                }
-                else -> {
-                    _error.value = PhoneAuctionApplication.instance.getString(R.string.you_know_nothing)
-                    _status.value = LoadApiStatus.ERROR
-                    null
-                }
-            }
-            _refreshStatus.value = false
-        }
-    }
-
-
-    fun getLiveEventsResult() {
+    private fun getLiveEventsResult() {
         liveCollections = phoneAuctionRepository.getAllLiveCollection()
         _status.value = LoadApiStatus.DONE
         _refreshStatus.value = false

@@ -159,6 +159,7 @@
                     android:layout_height="22dp"
                     android:layout_marginTop="3dp"
                     android:alpha="0.7"
+                    android:onClick="@{() -> viewModel.navigateToDialog()}"
                     app:srcCompat="@drawable/ic_questionmark"
                     app:layout_constraintStart_toStartOf="@+id/text_detail_direct_price"
                     app:layout_constraintTop_toBottomOf="@+id/text_detail_direct_price"
@@ -342,6 +343,7 @@
             android:background="@drawable/button"
             android:fontFamily="@font/noto_sans"
             android:letterSpacing="0.1"
+            android:onClick="@{() -> viewModel.navigateToPost()}"
             android:visibility="@{viewModel.event.isDealDone == false &amp;&amp; viewModel.isBuyerId() == true ? View.VISIBLE : View.GONE}"
             android:text="重新上架"
             android:textColor="@android:color/white"
@@ -378,7 +380,7 @@
             />
 
         <ImageView
-            android:id="@+id/imageView_detail_direct_collectioned"
+            android:id="@+id/imageView_detail_direct_UnCollection"
             android:layout_width="26dp"
             android:layout_height="26dp"
             android:layout_marginStart="16dp"

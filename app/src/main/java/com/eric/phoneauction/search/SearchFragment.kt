@@ -61,11 +61,11 @@ class SearchFragment : Fragment() {
         viewModel.navigateToDetail.observe(viewLifecycleOwner, Observer {
             it?.let {
                 when (it.tag) {
-                    "拍賣" -> {
+                    getString(R.string.auction_tag) -> {
                         findNavController().navigate(NavigationDirections.actionGlobalDetailAuctionFragment(it))
                         viewModel.onDetailNavigated()
                     }
-                    "直購" -> {
+                    getString(R.string.direct_tag) -> {
                         findNavController().navigate(NavigationDirections.actionGlobalDetailDirectFragment(it))
                         viewModel.onDetailNavigated()
                     }

@@ -14,6 +14,7 @@ import com.eric.phoneauction.data.Event
 import com.eric.phoneauction.data.Notification
 import com.eric.phoneauction.databinding.ItemHomeGirdBinding
 import com.eric.phoneauction.util.Util
+import com.eric.phoneauction.util.Util.getString
 
 class HomeAdapter( val onClickListener: OnClickListener, val viewModel: HomeViewModel ) : androidx.recyclerview.widget.ListAdapter<Event, HomeAdapter.HomeViewHolder>(
     DiffCallback
@@ -31,7 +32,7 @@ class HomeAdapter( val onClickListener: OnClickListener, val viewModel: HomeView
             binding.viewModel = viewModel
             binding.executePendingBindings()
 
-             if (event.tag == "直購") {
+             if (event.tag == getString(R.string.direct_tag)) {
                  binding.textHomeTime.visibility = View.GONE
             }
 
@@ -61,7 +62,7 @@ class HomeAdapter( val onClickListener: OnClickListener, val viewModel: HomeView
                             viewModel.postNotification(getNotification("恭喜您得標!"), event.buyerId)
                             viewModel.postNotification(getNotification("拍賣完成,請與買家聯絡完成出貨!"), event.sellerId)
                         }
-                        event.tag != "拍賣" -> {
+                        event.tag != getString(R.string.auction_tag) -> {
                             viewModel.postNotification(getNotification("商品已過期"), event.sellerId)
                         }
                         else -> {
