@@ -39,7 +39,6 @@ class NoteDialog : AppCompatDialogFragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.dialog = this
 
-
         return binding.root
     }
 

@@ -18,13 +18,15 @@ import com.eric.phoneauction.ext.getVmFactory
  */
 class OnPostFragment : Fragment() {
 
-    val viewModel: OnPostViewModel by viewModels<OnPostViewModel> { getVmFactory() }
+    val viewModel: OnPostViewModel by viewModels { getVmFactory() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = FragmentOnPostBinding.inflate(inflater, container, false)
+        val binding = FragmentOnPostBinding.inflate(
+            inflater, container, false
+        )
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
@@ -39,15 +41,15 @@ class OnPostFragment : Fragment() {
         })
 
         viewModel.isEmpty.observe(viewLifecycleOwner, Observer {
-            binding.textNoContent.visibility = View.GONE
+            it?.let {
+                binding.textNoContent.visibility = View.GONE
+            }
         })
 
         binding.imageOnPostBack.setOnClickListener {
             findNavController().navigateUp()
         }
 
-
         return binding.root
     }
-
 }

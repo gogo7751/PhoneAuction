@@ -23,7 +23,7 @@ import java.util.*
 
 class ProfileFragment : Fragment() {
 
-    val viewModel: ProfileViewModel by viewModels<ProfileViewModel> { getVmFactory() }
+    val viewModel: ProfileViewModel by viewModels { getVmFactory() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,7 +32,6 @@ class ProfileFragment : Fragment() {
         val binding = FragmentProfileBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
-
 
         binding.buttonProfileRecently.setOnClickListener {
             activity.showToast(getString(R.string.recently_viewed))
@@ -44,7 +43,7 @@ class ProfileFragment : Fragment() {
 
         binding.buttonProfilePolicy.setOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW)
-            intent.data = Uri.parse("https://docs.google.com/document/d/1fS0I6PN980hEX1K5jTg5cjInUaPvNTub05IfiJVsXok/edit?usp=sharing")
+            intent.data = Uri.parse(getString(R.string.privacy_policy))
             startActivity(intent)
         }
 
@@ -71,7 +70,6 @@ class ProfileFragment : Fragment() {
         (activity as AppCompatActivity).bottomNavView.visibility = View.VISIBLE
         return binding.root
     }
-
 }
 
 fun addData() {

@@ -50,7 +50,6 @@ class HomeAdapter( val onClickListener: OnClickListener, val viewModel: HomeView
                 )
             }
 
-
             val millsTime = event.endTime.minus(Calendar.getInstance().timeInMillis)
 
 
@@ -59,14 +58,14 @@ class HomeAdapter( val onClickListener: OnClickListener, val viewModel: HomeView
                     viewModel.finishAuction(event)
                     when {
                         event.buyerId != "" -> {
-                            viewModel.postNotification(getNotification("恭喜您得標!"), event.buyerId)
-                            viewModel.postNotification(getNotification("拍賣完成,請與買家聯絡完成出貨!"), event.sellerId)
+                            viewModel.postNotification(getNotification(getString(R.string.auction_done_buyer)), event.buyerId)
+                            viewModel.postNotification(getNotification(getString(R.string.auction_done_seller)), event.sellerId)
                         }
                         event.tag != getString(R.string.auction_tag) -> {
-                            viewModel.postNotification(getNotification("商品已過期"), event.sellerId)
+                            viewModel.postNotification(getNotification(getString(R.string.direct_overtime)), event.sellerId)
                         }
                         else -> {
-                            viewModel.postNotification(getNotification("流標"), event.sellerId)
+                            viewModel.postNotification(getNotification(getString(R.string.auction_overtime)), event.sellerId)
                         }
                     }
                 }

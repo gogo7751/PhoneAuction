@@ -42,7 +42,6 @@ class HomeFragment : Fragment() {
         adapter.setHasStableIds(true)
         binding.recyclerviewHome.adapter = adapter
 
-
         viewModel.refreshStatus.observe(viewLifecycleOwner, Observer {
             it?.let {
                 binding.layoutSwipeRefreshHome.isRefreshing = it
@@ -98,42 +97,58 @@ class HomeFragment : Fragment() {
                         binding.spinnerSort.setBackgroundResource(R.drawable.spinner_home_bg)
                     }
                     1 -> {
-                        if (viewModel.isAuction.value == true) {
-                            viewModel.getSortWithTagResult(getString(R.string.auction_tag), "price", Query.Direction.DESCENDING)
-                        } else if (viewModel.isDirect.value == true) {
-                            viewModel.getSortWithTagResult(getString(R.string.direct_tag), "price", Query.Direction.DESCENDING)
-                        } else {
-                            viewModel.getSort("price", Query.Direction.DESCENDING)
+                        when {
+                            viewModel.isAuction.value == true -> {
+                                viewModel.getSortWithTagResult(getString(R.string.auction_tag), "price", Query.Direction.DESCENDING)
+                            }
+                            viewModel.isDirect.value == true -> {
+                                viewModel.getSortWithTagResult(getString(R.string.direct_tag), "price", Query.Direction.DESCENDING)
+                            }
+                            else -> {
+                                viewModel.getSort("price", Query.Direction.DESCENDING)
+                            }
                         }
                         binding.spinnerSort.setBackgroundResource(R.drawable.spinner_home_selected)
                     }
                     2 -> {
-                        if (viewModel.isAuction.value == true) {
-                            viewModel.getSortWithTagResult(getString(R.string.auction_tag), "price", Query.Direction.ASCENDING)
-                        } else if (viewModel.isDirect.value == true) {
-                            viewModel.getSortWithTagResult(getString(R.string.direct_tag), "price", Query.Direction.ASCENDING)
-                        } else {
-                            viewModel.getSort("price", Query.Direction.ASCENDING)
+                        when {
+                            viewModel.isAuction.value == true -> {
+                                viewModel.getSortWithTagResult(getString(R.string.auction_tag), "price", Query.Direction.ASCENDING)
+                            }
+                            viewModel.isDirect.value == true -> {
+                                viewModel.getSortWithTagResult(getString(R.string.direct_tag), "price", Query.Direction.ASCENDING)
+                            }
+                            else -> {
+                                viewModel.getSort("price", Query.Direction.ASCENDING)
+                            }
                         }
                         binding.spinnerSort.setBackgroundResource(R.drawable.spinner_home_selected)
                     }
                     3 -> {
-                        if (viewModel.isAuction.value == true) {
-                            viewModel.getSortWithTagResult(getString(R.string.auction_tag), "endTime", Query.Direction.DESCENDING)
-                        } else if (viewModel.isDirect.value == true) {
-                            viewModel.getSortWithTagResult(getString(R.string.direct_tag), "endTime", Query.Direction.DESCENDING)
-                        } else {
-                            viewModel.getSort("endTime", Query.Direction.DESCENDING)
+                        when {
+                            viewModel.isAuction.value == true -> {
+                                viewModel.getSortWithTagResult(getString(R.string.auction_tag), "endTime", Query.Direction.DESCENDING)
+                            }
+                            viewModel.isDirect.value == true -> {
+                                viewModel.getSortWithTagResult(getString(R.string.direct_tag), "endTime", Query.Direction.DESCENDING)
+                            }
+                            else -> {
+                                viewModel.getSort("endTime", Query.Direction.DESCENDING)
+                            }
                         }
                         binding.spinnerSort.setBackgroundResource(R.drawable.spinner_home_selected)
                     }
                     4 -> {
-                        if (viewModel.isAuction.value == true) {
-                            viewModel.getSortWithTagResult(getString(R.string.auction_tag), "endTime", Query.Direction.ASCENDING)
-                        } else if (viewModel.isDirect.value == true) {
-                            viewModel.getSortWithTagResult(getString(R.string.direct_tag), "endTime", Query.Direction.ASCENDING)
-                        } else {
-                            viewModel.getSort("endTime", Query.Direction.ASCENDING)
+                        when {
+                            viewModel.isAuction.value == true -> {
+                                viewModel.getSortWithTagResult(getString(R.string.auction_tag), "endTime", Query.Direction.ASCENDING)
+                            }
+                            viewModel.isDirect.value == true -> {
+                                viewModel.getSortWithTagResult(getString(R.string.direct_tag), "endTime", Query.Direction.ASCENDING)
+                            }
+                            else -> {
+                                viewModel.getSort("endTime", Query.Direction.ASCENDING)
+                            }
                         }
                         binding.spinnerSort.setBackgroundResource(R.drawable.spinner_home_selected)
                     }

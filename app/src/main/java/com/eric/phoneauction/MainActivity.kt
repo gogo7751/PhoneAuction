@@ -40,7 +40,9 @@ class MainActivity : AppCompatActivity() {
 
         notificationViewModel.getLiveNotificationsResult()
         notificationViewModel.liveNotifications.observe(this, androidx.lifecycle.Observer {
-            viewModel.notifications.value = it
+            it?.let {
+                viewModel.notifications.value = it
+            }
         })
 
         viewModel.user.observe(this, androidx.lifecycle.Observer {

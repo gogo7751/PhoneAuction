@@ -33,13 +33,6 @@ class PurchasedViewModel(val phoneAuctionRepository: PhoneAuctionRepository) : V
     val refreshStatus: LiveData<Boolean>
         get() = _refreshStatus
 
-    // Create a Coroutine scope using a job to be able to cancel when needed
-    private var viewModelJob = Job()
-
-    // the Coroutine runs using the Main (UI) dispatcher
-    private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
-
-
     init {
         Logger.i("------------------------------------")
         Logger.i("[${this::class.simpleName}]${this}")
@@ -47,12 +40,9 @@ class PurchasedViewModel(val phoneAuctionRepository: PhoneAuctionRepository) : V
         getLiveEventsResult()
     }
 
-
-    fun getLiveEventsResult() {
+    private fun getLiveEventsResult() {
         liveEvents = phoneAuctionRepository.getLiveEvent(false)
         _status.value = LoadApiStatus.DONE
         _refreshStatus.value = false
     }
-
-
 }

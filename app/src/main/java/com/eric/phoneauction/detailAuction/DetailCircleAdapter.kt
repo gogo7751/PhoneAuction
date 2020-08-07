@@ -20,8 +20,10 @@ class DetailCircleAdapter : RecyclerView.Adapter<DetailCircleAdapter.ImageViewHo
         fun bind(context: Context, selectedPosition: MutableLiveData<Int>) {
 
             selectedPosition.observe(context as MainActivity, Observer {
-                binding.isSelected = it == adapterPosition
-                binding.executePendingBindings()
+                it?.let {
+                    binding.isSelected = it == adapterPosition
+                    binding.executePendingBindings()
+                }
             })
         }
     }

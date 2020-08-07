@@ -33,10 +33,20 @@ class SearchViewModel(
         value = false
     }
 
+    private val _navigateToDialog = MutableLiveData<Boolean>()
+
+    val navigateToDialog: LiveData<Boolean>
+        get() = _navigateToDialog
+
     private val _navigateToDetail = MutableLiveData<Event>()
 
     val navigateToDetail: LiveData<Event>
         get() = _navigateToDetail
+
+    private val _navigateToCollect = MutableLiveData<Boolean>()
+
+    val navigateToCollect: LiveData<Boolean>
+        get() = _navigateToCollect
 
     // status: The internal MutableLiveData that stores the status of the most recent request
     private val _status = MutableLiveData<LoadApiStatus>()
@@ -114,6 +124,18 @@ class SearchViewModel(
         }
     }
 
+    fun getBrandValue(brand: String) {
+        wishList.value?.brand = brand
+    }
+
+    fun getProductNameValue(productName: String) {
+        wishList.value?.productName = productName
+    }
+
+    fun getStorageValue(storage: String) {
+        wishList.value?.storage = storage
+    }
+
     fun navigateToDetail(event: Event) {
         _navigateToDetail.value = event
     }
@@ -122,6 +144,24 @@ class SearchViewModel(
         _navigateToDetail.value = null
     }
 
+    fun navigateToDialog() {
+        _navigateToDialog.value = true
+    }
+
+    fun onDialogNavigated() {
+        _navigateToDialog.value = null
+    }
+
+    fun navigateToCollect() {
+        wishList.value?.let { postWishList(it) }
+        _navigateToCollect.value = true
+    }
+
+    fun onCollectNavigated() {
+        _navigateToDialog.value = null
+    }
+
+
     fun getVisibility() {
         isVisibility.value = true
     }
@@ -129,5 +169,4 @@ class SearchViewModel(
     fun leave(needRefresh: Boolean = false) {
         _leave.value = needRefresh
     }
-
 }

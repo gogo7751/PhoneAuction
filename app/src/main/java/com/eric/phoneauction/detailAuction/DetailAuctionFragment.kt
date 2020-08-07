@@ -79,8 +79,10 @@ class DetailAuctionFragment : Fragment() {
             }
 
             viewModel.snapPosition.observe(viewLifecycleOwner, Observer {
-                (binding.recyclerDetailAuctionCircles.adapter as DetailCircleAdapter).selectedPosition.value =
-                    (it % (product.images.size))
+                it?.let {
+                    (binding.recyclerDetailAuctionCircles.adapter as DetailCircleAdapter).selectedPosition.value =
+                        (it % (product.images.size))
+                }
             })
         }
 

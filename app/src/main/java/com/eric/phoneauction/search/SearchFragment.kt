@@ -31,7 +31,8 @@ import kotlinx.android.synthetic.main.activity_main.*
  */
 class SearchFragment : Fragment() {
 
-    val viewModel: SearchViewModel by viewModels<SearchViewModel> { getVmFactory(SearchFragmentArgs.fromBundle(requireArguments()).search) }
+    val viewModel: SearchViewModel by viewModels {
+        getVmFactory(SearchFragmentArgs.fromBundle(requireArguments()).search) }
     lateinit var binding: FragmentSearchBinding
 
     override fun onCreateView(
@@ -74,30 +75,35 @@ class SearchFragment : Fragment() {
         })
 
         binding.editSearch.setOnEditorActionListener { v, actionId, event ->
-            if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+            if ((event != null && (event.keyCode == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
                 binding.editSearch.hideKeyboard()
                 findNavController().navigate(NavigationDirections.actionGlobalSearchFragment(v.text.toString()))
             }
             return@setOnEditorActionListener false
         }
 
-        binding.editSearch.setText(viewModel.search)
-
         binding.imageSearchClear.setOnClickListener {
             binding.editSearch.text.clear()
         }
 
-        binding.imageSearchNotificationVisibility.startAnimation(AnimationUtils.loadAnimation(context, R.anim.anim_shakes))
+        binding.imageSearchNotificationVisibility.startAnimation(
+            AnimationUtils.loadAnimation(context, R.anim.anim_shakes)
+        )
 
-        binding.imageSearchQuestion.setOnClickListener {
-            findNavController().navigate(NavigationDirections.actionGlobalNoteDialog(NoteDialog.MessageType.WISH))
-        }
+        viewModel.navigateToDialog.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                findNavController().navigate(NavigationDirections.actionGlobalNoteDialog(NoteDialog.MessageType.WISH))
+                viewModel.onDialogNavigated()
+            }
+        })
 
-        binding.buttonPost.setOnClickListener {
-            viewModel.wishList.value?.let { it1 -> viewModel.postWishList(it1) }
-            findNavController().navigate(NavigationDirections.navigateToMessageDialog(MessageDialog.MessageType.COLLECTION_SUCCESS))
-            Handler().postDelayed({findNavController().navigate(NavigationDirections.actionGlobalHomeFragment())},2500)
-        }
+        viewModel.navigateToCollect.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                findNavController().navigate(NavigationDirections.navigateToMessageDialog(MessageDialog.MessageType.COLLECTION_SUCCESS))
+                Handler().postDelayed({findNavController().navigate(NavigationDirections.actionGlobalHomeFragment())},2500)
+                viewModel.onCollectNavigated()
+            }
+        })
 
         //選擇品牌
         binding.spinnerBrand.adapter = PostSpinnerAdapter(
@@ -110,68 +116,37 @@ class SearchFragment : Fragment() {
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long
             ) {
-                when (position) {
-                    1 -> {
-                        getSpinnerNameString(PhoneAuctionApplication.instance.resources.getStringArray(R.array.iphone_list))
-                    }
-                    2 -> {
-                        getSpinnerNameString(PhoneAuctionApplication.instance.resources.getStringArray(R.array.samsung_list))
-                    }
-                    3 -> {
-                        getSpinnerNameString(PhoneAuctionApplication.instance.resources.getStringArray(R.array.sony_list))
-                    }
-                    4 -> {
-                        getSpinnerNameString(PhoneAuctionApplication.instance.resources.getStringArray(R.array.google_list))
-                    }
-                    5 -> {
-                        getSpinnerNameString(PhoneAuctionApplication.instance.resources.getStringArray(R.array.asus_list))
-                    }
-                    6 -> {
-                        getSpinnerNameString(PhoneAuctionApplication.instance.resources.getStringArray(R.array.oppo_list))
-                    }
-                    7 -> {
-                        getSpinnerNameString(PhoneAuctionApplication.instance.resources.getStringArray(R.array.huawei_list))
-                    }
-                    8 -> {
-                        getSpinnerNameString(PhoneAuctionApplication.instance.resources.getStringArray(R.array.mi_list))
-                    }
-                    9 -> {
-                        getSpinnerNameString(PhoneAuctionApplication.instance.resources.getStringArray(R.array.htc_list))
-                    }
-                    10 -> {
-                        getSpinnerNameString(PhoneAuctionApplication.instance.resources.getStringArray(R.array.nokia_list))
-                    }
-                    11 -> {
-                        getSpinnerNameString(PhoneAuctionApplication.instance.resources.getStringArray(R.array.realme_list))
-                    }
-                    12 -> {
-                        getSpinnerNameString(PhoneAuctionApplication.instance.resources.getStringArray(R.array.lg_list))
-                    }
-                    13 -> {
-                        getSpinnerNameString(PhoneAuctionApplication.instance.resources.getStringArray(R.array.sugar_list))
-                    }
-                    14 -> {
-                        getSpinnerNameString(PhoneAuctionApplication.instance.resources.getStringArray(R.array.sharp_list))
-                    }
-                    15 -> {
-                        getSpinnerNameString(PhoneAuctionApplication.instance.resources.getStringArray(R.array.vivo_list))
-                    }
-                }
-                viewModel.wishList.value?.brand = binding.spinnerBrand.selectedItem.toString()
+                getSpinnerNameString (
+                    when (position) {
+                        1 -> R.array.iphone_list
+                        2 -> R.array.samsung_list
+                        3 -> R.array.sony_list
+                        4 -> R.array.google_list
+                        5 -> R.array.asus_list
+                        6 -> R.array.oppo_list
+                        7 -> R.array.huawei_list
+                        8 -> R.array.mi_list
+                        9 -> R.array.htc_list
+                        10 -> R.array.nokia_list
+                        11 -> R.array.realme_list
+                        12 -> R.array.lg_list
+                        13 -> R.array.sugar_list
+                        14 -> R.array.sharp_list
+                        15 -> R.array.vivo_list
+                        else -> R.array.empty_list
+                    })
+                viewModel.getBrandValue(binding.spinnerBrand.selectedItem.toString())
             }
         }
 
         //選擇名稱
-        getSpinnerNameString(
-            PhoneAuctionApplication.instance.resources.getStringArray(R.array.name_list)
-        )
-
+        getSpinnerNameString(R.array.name_list)
         binding.spinnerName.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long
             ) {
-                viewModel.wishList.value?.productName = binding.spinnerName.selectedItem.toString()
+                viewModel.getProductNameValue(binding.spinnerName.selectedItem.toString())
             }
         }
 
@@ -186,7 +161,7 @@ class SearchFragment : Fragment() {
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long
             ) {
-                viewModel.wishList.value?.storage = binding.spinnerStorage.selectedItem.toString()
+                viewModel.getStorageValue(binding.spinnerStorage.selectedItem.toString())
             }
         }
 
@@ -195,9 +170,7 @@ class SearchFragment : Fragment() {
     }
 
     //get spinnerNameString
-    fun getSpinnerNameString(stringArray: Array<String>) {
-        binding.spinnerName.adapter = PostSpinnerAdapter(
-            stringArray)
+    fun getSpinnerNameString(stringArray: Int) {
+        binding.spinnerName.adapter = PostSpinnerAdapter(PhoneAuctionApplication.instance.resources.getStringArray(stringArray))
     }
-
 }

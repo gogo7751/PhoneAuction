@@ -46,7 +46,6 @@ class OnAuctionViewModel(val phoneAuctionRepository: PhoneAuctionRepository) : V
     // the Coroutine runs using the Main (UI) dispatcher
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
-
     init {
         Logger.i("------------------------------------")
         Logger.i("[${this::class.simpleName}]${this}")
@@ -54,8 +53,7 @@ class OnAuctionViewModel(val phoneAuctionRepository: PhoneAuctionRepository) : V
         getAuctionResult()
     }
 
-
-    fun getAuctionResult() {
+    private fun getAuctionResult() {
 
         coroutineScope.launch {
 
@@ -91,5 +89,8 @@ class OnAuctionViewModel(val phoneAuctionRepository: PhoneAuctionRepository) : V
         }
     }
 
-
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
+    }
 }

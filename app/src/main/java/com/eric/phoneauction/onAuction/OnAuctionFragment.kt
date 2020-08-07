@@ -18,7 +18,7 @@ import com.eric.phoneauction.ext.getVmFactory
  */
 class OnAuctionFragment : Fragment() {
 
-    val viewModel: OnAuctionViewModel by viewModels<OnAuctionViewModel> { getVmFactory() }
+    val viewModel: OnAuctionViewModel by viewModels { getVmFactory() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,11 +32,11 @@ class OnAuctionFragment : Fragment() {
         adapter.setHasStableIds(true)
         binding.recyclerviewOnAuction.adapter = adapter
 
-        viewModel.events.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                if (it.map { it.buyerId }.equals(UserManager.userId)) {
+        viewModel.events.observe(viewLifecycleOwner, Observer { event ->
+            event?.let {
+                if (event.map { it.buyerId }.equals(UserManager.userId)) {
                     binding.textNoContent.visibility = View.GONE
-                    adapter.submitList(it)
+                    adapter.submitList(event)
                 } else {
                     binding.textNoContent.visibility = View.VISIBLE
                 }
@@ -46,12 +46,6 @@ class OnAuctionFragment : Fragment() {
         binding.imageOnAuctionBack.setOnClickListener {
             findNavController().navigateUp()
         }
-
-
-
-
-
-
 
         return binding.root
     }

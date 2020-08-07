@@ -82,5 +82,4 @@ class OnPostAdapter(val viewModel: OnPostViewModel) :
     override fun getItemId(position: Int): Long {
         return position.toLong()
     }
-
 }

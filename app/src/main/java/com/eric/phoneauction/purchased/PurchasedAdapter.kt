@@ -27,21 +27,24 @@ class PurchasedAdapter :
             binding.event = event
 
             binding.imagePurchased.setOnClickListener {
-                if (event.tag == getString(R.string.auction_tag)) {
-                    Navigation.createNavigateOnClickListener(
-                        NavigationDirections.actionGlobalDetailAuctionFragment(
-                            event
-                        )
-                    ).onClick(binding.imagePurchased)
-                } else {
-                    Navigation.createNavigateOnClickListener(
-                        NavigationDirections.actionGlobalDetailDirectFragment(
-                            event
-                        )
-                    ).onClick(binding.imagePurchased)
+                when (event.tag) {
+                    getString(R.string.auction_tag) -> {
+                        Navigation.createNavigateOnClickListener(
+                            NavigationDirections.actionGlobalDetailAuctionFragment(
+                                event
+                            )
+                        ).onClick(binding.imagePurchased)
+                    }
+                    else -> {
+                        Navigation.createNavigateOnClickListener(
+                            NavigationDirections.actionGlobalDetailDirectFragment(
+                                event
+                            )
+                        ).onClick(binding.imagePurchased)
+                    }
                 }
             }
-
+            
             binding.executePendingBindings()
         }
     }
@@ -80,5 +83,4 @@ class PurchasedAdapter :
     override fun getItemId(position: Int): Long {
         return position.toLong()
     }
-
 }

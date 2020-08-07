@@ -30,11 +30,13 @@ class NotificationFragment : Fragment() {
         binding.recyclerviewNotification.adapter = adapter
 
         viewModel.liveNotifications.observe(viewLifecycleOwner, Observer {
-            adapter.submitList(it)
-            if (it.isEmpty()) {
-                binding.textNoContent.visibility = View.VISIBLE
-            } else {
-                binding.textNoContent.visibility = View.GONE
+            it?.let {
+                adapter.submitList(it)
+                if (it.isEmpty()) {
+                    binding.textNoContent.visibility = View.VISIBLE
+                } else {
+                    binding.textNoContent.visibility = View.GONE
+                }
             }
     })
 

@@ -34,7 +34,6 @@ class DirectDialog : BottomSheetDialogFragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
-
         viewModel.leave.observe(viewLifecycleOwner, Observer {
             it?.let {
                 dismiss()
@@ -42,21 +41,16 @@ class DirectDialog : BottomSheetDialogFragment() {
             }
         })
 
-
         viewModel.navigateToCheckoutSuccess.observe(viewLifecycleOwner, Observer {
-            viewModel.postDirect(it)
-            viewModel.postNotification(viewModel.getNotification("您的商品已被購買,請盡快進行出貨事宜!"), viewModel.event.value?.sellerId.toString())
-            viewModel.postNotification(viewModel.getNotification("恭喜您購買成功,請與賣家聯絡並完成付款!"), UserManager.userId as String)
-            findNavController().navigate(DirectDialogDirections.actionDirectDialogToCheckoutSuccessDirectFragment())
-            viewModel.leave()
+            it?.let {
+                findNavController().navigate(DirectDialogDirections.actionDirectDialogToCheckoutSuccessDirectFragment())
+                viewModel.leave()
+            }
         })
 
         binding.imageDirectClose.setOnClickListener {
             dismiss()
         }
-
-
-
 
         //畫面展開
         dialog?.setOnShowListener { dialog ->
@@ -65,8 +59,6 @@ class DirectDialog : BottomSheetDialogFragment() {
             val bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
         }
-
-
 
         return binding.root
     }

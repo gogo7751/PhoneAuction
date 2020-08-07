@@ -17,13 +17,15 @@ import com.eric.phoneauction.ext.getVmFactory
  */
 class PurchasedFragment : Fragment() {
 
-    val viewModel: PurchasedViewModel by viewModels<PurchasedViewModel> { getVmFactory() }
+    val viewModel: PurchasedViewModel by viewModels { getVmFactory() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = FragmentPurchasedBinding.inflate(inflater, container, false)
+        val binding = FragmentPurchasedBinding.inflate(
+            inflater, container, false
+        )
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
@@ -46,5 +48,4 @@ class PurchasedFragment : Fragment() {
 
         return binding.root
     }
-
 }

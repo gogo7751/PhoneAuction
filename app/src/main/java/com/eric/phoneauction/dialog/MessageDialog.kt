@@ -42,7 +42,6 @@ class MessageDialog : AppCompatDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         Handler().postDelayed({ this.dismiss() }, 2000)
-
     }
 
     private fun init() {
@@ -55,19 +54,12 @@ class MessageDialog : AppCompatDialogFragment() {
                 iconRes = PhoneAuctionApplication.instance.getDrawable(R.drawable.ic_success)
                 message = getString(R.string.un_collection_success)
             }
-            MessageType.MESSAGE -> {
-                iconRes = PhoneAuctionApplication.instance.getDrawable(R.drawable.ic_launcher_foreground)
-                message = messageType.value.message
-            }
-            else -> {
-            }
         }
     }
 
     enum class MessageType(val value: Message) {
         COLLECTION_SUCCESS(Message()),
         UN_COLLECTION_SUCCESS(Message()),
-        MESSAGE(Message())
     }
 
     interface IMessage {

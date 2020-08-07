@@ -83,7 +83,6 @@ class HomeViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
 
     }
 
-
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()

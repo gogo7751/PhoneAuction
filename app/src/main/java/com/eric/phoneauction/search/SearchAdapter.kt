@@ -22,7 +22,6 @@ class SearchAdapter( val onClickListener: OnClickListener, val viewModel: Search
 
         lateinit var timer: CountDownTimer
 
-
         fun bind(event: Event, viewModel: SearchViewModel) {
             binding.event = event
             binding.viewModel = viewModel
@@ -36,7 +35,6 @@ class SearchAdapter( val onClickListener: OnClickListener, val viewModel: Search
 
             timer = object : CountDownTimer(millsTime, ONE_SECOND) {
                 override fun onFinish() {
-
                 }
                 override fun onTick(millisUntilFinished: Long) {
                     val sec = millisUntilFinished / ONE_SECOND % 60
@@ -124,7 +122,6 @@ class SearchAdapter( val onClickListener: OnClickListener, val viewModel: Search
                 holder.bind()
             }
         }
-
     }
 
     class OnClickListener(val clickListener: (event: Event) -> Unit) {
