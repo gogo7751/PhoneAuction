@@ -36,25 +36,19 @@ class WishListFragment : Fragment() {
 
         viewModel.wishLists.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it)
-            if (it.isEmpty()) {
-                binding.textNoContent.visibility = View.VISIBLE
-            } else {
-                binding.textNoContent.visibility = View.GONE
-            }
         })
 
         binding.imageWishListBack.setOnClickListener {
             findNavController().navigateUp()
         }
 
-        binding.imageWishListQuestion.setOnClickListener {
-            findNavController().navigate(NavigationDirections.actionGlobalNoteDialog(NoteDialog.MessageType.WISH))
-        }
-
-
-
+        viewModel.navigateToDialog.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                findNavController().navigate(NavigationDirections.actionGlobalNoteDialog(NoteDialog.MessageType.WISH))
+                viewModel.onDialogNavigated()
+            }
+        })
 
         return binding.root
     }
-
 }

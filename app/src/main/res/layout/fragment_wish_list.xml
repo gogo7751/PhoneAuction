@@ -7,7 +7,7 @@
         <variable
             name="viewModel"
             type="com.eric.phoneauction.wishList.WishListViewModel" />
-
+        <import type="android.view.View"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -57,6 +57,7 @@
                 android:layout_height="28dp"
                 app:srcCompat="@drawable/ic_question_mark_white"
                 android:layout_marginStart="6dp"
+                android:onClick="@{() -> viewModel.navigateToDialog()}"
                 app:layout_constraintStart_toEndOf="@id/text_wish_list_title"
                 app:layout_constraintTop_toTopOf="@id/text_wish_list_title"
                 app:layout_constraintBottom_toBottomOf="@id/text_wish_list_title"/>
@@ -87,7 +88,7 @@
             android:letterSpacing="0.15"
             android:alpha="0.8"
             android:textColor="@color/gary757575"
-            tools:visibility="gone" />
+            tools:visibility="@{viewModel.wishLists.empty == true ? View.VISIBLE : View.GONE}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -21,6 +21,10 @@ class WishListViewModel(val phoneAuctionRepository: PhoneAuctionRepository) : Vi
     val wishLists: LiveData<List<WishList>>
         get() = _wishLists
 
+    private val _navigateToDialog = MutableLiveData<Boolean>()
+
+    val navigateToDialog: LiveData<Boolean>
+        get() = _navigateToDialog
 
     // status: The internal MutableLiveData that stores the status of the most recent request
     private val _status = MutableLiveData<LoadApiStatus>()
@@ -50,7 +54,6 @@ class WishListViewModel(val phoneAuctionRepository: PhoneAuctionRepository) : Vi
 
     // the Coroutine runs using the Main (UI) dispatcher
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
-
 
     init {
         Logger.i("------------------------------------")
@@ -93,9 +96,15 @@ class WishListViewModel(val phoneAuctionRepository: PhoneAuctionRepository) : Vi
             }
         }
 
+    fun navigateToDialog() {
+        _navigateToDialog.value = true
+    }
+
+    fun onDialogNavigated() {
+        _navigateToDialog.value = null
+    }
+
     fun leave(needRefresh: Boolean = false) {
         _leave.value = needRefresh
     }
-
-
 }

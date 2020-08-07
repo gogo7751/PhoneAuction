@@ -272,6 +272,7 @@
                     android:fontFamily="@font/noto_sans"
                     android:letterSpacing="0.15"
                     android:text="送出"
+                    android:onClick="@{() -> viewModel.navigateToCollect()}"
                     android:textColor="@android:color/white"
                     android:textSize="18dp"
                     android:visibility="@{viewModel.isVisibility == false ? View.INVISIBLE : View.VISIBLE}"
