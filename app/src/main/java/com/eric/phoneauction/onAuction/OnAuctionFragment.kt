@@ -32,15 +32,9 @@ class OnAuctionFragment : Fragment() {
         adapter.setHasStableIds(true)
         binding.recyclerviewOnAuction.adapter = adapter
 
-        viewModel.events.observe(viewLifecycleOwner, Observer { event ->
-            event?.let {
-                if (event.map { it.buyerId }.equals(UserManager.userId)) {
-                    binding.textNoContent.visibility = View.GONE
-                    adapter.submitList(event)
-                } else {
-                    binding.textNoContent.visibility = View.VISIBLE
-                }
-            }
+        viewModel.events.observe(viewLifecycleOwner, Observer {
+            adapter.submitList(it)
+            viewModel.isNotEmpty(it)
         })
 
         binding.imageOnAuctionBack.setOnClickListener {

@@ -8,6 +8,7 @@ import com.eric.phoneauction.PhoneAuctionApplication
 import com.eric.phoneauction.R
 import com.eric.phoneauction.data.Event
 import com.eric.phoneauction.data.Notification
+import com.eric.phoneauction.data.UserManager
 import com.eric.phoneauction.data.source.PhoneAuctionRepository
 import com.eric.phoneauction.util.Logger
 import com.eric.phoneauction.util.Util.getString
@@ -28,6 +29,9 @@ class AuctionViewModel(
     val event: LiveData<Event>
         get() = _event
 
+    val isBuyerId = _event.value?.buyerId == UserManager.userId
+    val isSellerId = _event.value?.sellerId == UserManager.userId
+
     private val _notification = MutableLiveData<Notification>().apply {
         value = Notification()
     }
@@ -36,7 +40,7 @@ class AuctionViewModel(
         get() = _notification
 
     val price = MutableLiveData<Int>().apply {
-        value = event.value?.price
+        value = _event.value?.price
     }
 
     // Handle leave auction

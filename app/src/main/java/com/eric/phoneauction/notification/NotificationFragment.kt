@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-
 import com.eric.phoneauction.databinding.FragmentNotificationBinding
 import com.eric.phoneauction.ext.getVmFactory
 import kotlinx.android.synthetic.main.activity_main.*
@@ -32,20 +31,10 @@ class NotificationFragment : Fragment() {
         viewModel.liveNotifications.observe(viewLifecycleOwner, Observer {
             it?.let {
                 adapter.submitList(it)
-                if (it.isEmpty()) {
-                    binding.textNoContent.visibility = View.VISIBLE
-                } else {
-                    binding.textNoContent.visibility = View.GONE
-                }
             }
-    })
-
-
+        })
 
         (activity as AppCompatActivity).bottomNavView.visibility = View.VISIBLE
         return binding.root
     }
-
-
-
 }

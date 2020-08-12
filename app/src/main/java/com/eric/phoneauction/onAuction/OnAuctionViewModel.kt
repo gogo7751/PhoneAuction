@@ -8,6 +8,7 @@ import app.appworks.school.publisher.network.LoadApiStatus
 import com.eric.phoneauction.PhoneAuctionApplication
 import com.eric.phoneauction.R
 import com.eric.phoneauction.data.Event
+import com.eric.phoneauction.data.UserManager
 import com.eric.phoneauction.data.source.PhoneAuctionRepository
 import com.eric.phoneauction.util.Logger
 import kotlinx.coroutines.CoroutineScope
@@ -21,6 +22,11 @@ class OnAuctionViewModel(val phoneAuctionRepository: PhoneAuctionRepository) : V
 
     val events: LiveData<List<Event>>
         get() = _events
+
+    private val _isNotEmpty = MutableLiveData<Boolean>()
+
+    val isNotEmpty: LiveData<Boolean>
+        get() = _isNotEmpty
 
     // status: The internal MutableLiveData that stores the status of the most recent request
     private val _status = MutableLiveData<LoadApiStatus>()
@@ -51,6 +57,10 @@ class OnAuctionViewModel(val phoneAuctionRepository: PhoneAuctionRepository) : V
         Logger.i("[${this::class.simpleName}]${this}")
         Logger.i("------------------------------------")
         getAuctionResult()
+    }
+
+    fun isNotEmpty(event: List<Event>) {
+        _isNotEmpty.value = event.map { it.buyerId }.contains(UserManager.userId)
     }
 
     private fun getAuctionResult() {

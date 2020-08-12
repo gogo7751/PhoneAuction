@@ -37,12 +37,7 @@ class OnPostFragment : Fragment() {
         viewModel.liveEvents.observe(viewLifecycleOwner, Observer {
             it?.let {
                 adapter.submitList(it)
-            }
-        })
-
-        viewModel.isEmpty.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                binding.textNoContent.visibility = View.GONE
+                viewModel.isNotEmpty(it)
             }
         })
 

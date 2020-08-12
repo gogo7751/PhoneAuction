@@ -19,6 +19,10 @@
     <!-- Chat -->
     <string name="picture">圖片</string>
 
+    <!-- Auction Dialog -->
+    <string name="is_buyer">你是目前最高出價者</string>
+    <string name="is_seller">你是刊登者</string>
+
     <!-- Privacy policy -->
     <string name="privacy_policy">https://docs.google.com/document/d/1fS0I6PN980hEX1K5jTg5cjInUaPvNTub05IfiJVsXok/edit?usp=sharing</string>
 
@@ -55,6 +59,8 @@
     <string name="sort_price_upward">價格↑</string>
     <string name="sort_price_downward">價格↓</string>
     <string name="sort_time">剩餘時間</string>
+    <string name="sort_price">price</string>
+    <string name="sort_endTime">endTime</string>
     <string-array name="sort_list">
         <item>全部</item>
         <item>價格↑</item>

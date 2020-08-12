@@ -93,6 +93,10 @@ class ChatToDetailChatViewModel(
         _isTitleName.value = chatRoom.value?.senderId == UserManager.userId
     }
 
+    fun isUserManager(id: String): Boolean{
+        return id == UserManager.userId
+    }
+
     private fun getLiveMessagesResult() {
         liveMessages = phoneAuctionRepository.getLiveMessage(chatRoom.value?.id.toString())
         _status.value = LoadApiStatus.DONE

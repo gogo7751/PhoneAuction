@@ -37,7 +37,6 @@ class HomeViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
     val navigateToDetail: LiveData<Event>
         get() = _navigateToDetail
 
-
     // status: The internal MutableLiveData that stores the status of the most recent request
     private val _status = MutableLiveData<LoadApiStatus>()
 
@@ -67,20 +66,16 @@ class HomeViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
     val leave: LiveData<Boolean>
         get() = _leave
 
-
-
     init {
         Logger.i("------------------------------------")
         Logger.i("[${this::class.simpleName}]${this}")
         Logger.i("------------------------------------")
-
 
         if (PhoneAuctionApplication.instance.isLiveDataDesign()) {
             getLiveEventsResult()
         } else {
             getEventsResult()
         }
-
     }
 
     override fun onCleared() {
@@ -141,7 +136,6 @@ class HomeViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
             }
         }
     }
-
 
     fun getSort( sort: String, query: Query.Direction) {
 
@@ -215,7 +209,6 @@ class HomeViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
         }
     }
 
-
     fun getEventsResult() {
 
         coroutineScope.launch {
@@ -288,7 +281,6 @@ class HomeViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
         }
     }
 
-
     fun getDirectResult() {
 
         coroutineScope.launch {
@@ -325,15 +317,30 @@ class HomeViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
         }
     }
 
+    fun getAuctionSort() {
+        isAuction.value = true
+        isDirect.value = false
+        getAuctionResult()
+    }
 
-    fun getLiveEventsResult() {
+    fun getDirectSort() {
+        isDirect.value = true
+        isAuction.value = false
+        getDirectResult()
+    }
+
+    fun getAllSort() {
+        isDirect.value = false
+        isAuction.value = false
+    }
+
+    private fun getLiveEventsResult() {
         liveEvents = phoneAuctionRepository.getLiveEvent(true)
         _status.value = LoadApiStatus.DONE
         _refreshStatus.value = false
     }
 
     fun refresh() {
-
         if (PhoneAuctionApplication.instance.isLiveDataDesign()) {
             _status.value = LoadApiStatus.DONE
             _refreshStatus.value = false

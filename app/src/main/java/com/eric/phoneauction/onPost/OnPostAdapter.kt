@@ -69,7 +69,6 @@ class OnPostAdapter(val viewModel: OnPostViewModel) :
         when (event.sellerId == UserManager.userId) {
             true -> {
                 holder.itemView.visibility = View.VISIBLE
-                viewModel.isEmpty.value = false
             }
             false -> {
                 holder.itemView.visibility = View.GONE

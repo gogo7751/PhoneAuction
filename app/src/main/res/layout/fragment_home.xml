@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="viewModel"
             type="com.eric.phoneauction.home.HomeViewModel" />
@@ -22,7 +21,7 @@
         android:layout_height="match_parent">
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/layout_swipe_refresh_home"
+            android:id="@+id/layout_swipe_refresh_homepage"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:paddingRight="12dp"
@@ -125,8 +124,6 @@
                 app:layout_constraintBottom_toBottomOf="@id/image_home"
                 app:srcCompat="@drawable/icons_clean"
                 />
-
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Button
@@ -140,6 +137,7 @@
             android:layout_marginTop="8dp"
             android:background="@color/transparent"
             android:textColor="@color/black212121"
+            android:onClick="@{() -> viewModel.getAuctionSort()}"
             android:text="拍賣商品"
             android:textSize="16dp"
             app:layout_constraintEnd_toStartOf="@+id/view_home_line"
@@ -157,7 +155,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintVertical_bias="0.52" />
-
 
         <View
             android:id="@+id/view_home_line"
@@ -181,6 +178,7 @@
             android:letterSpacing="0.15"
             android:background="@color/transparent"
             android:textColor="@color/black212121"
+            android:onClick="@{() -> viewModel.getDirectSort()}"
             android:text="直購商品"
             android:textSize="16dp"
             app:layout_constraintEnd_toStartOf="@+id/view_home_line2"
@@ -213,7 +211,5 @@
             app:layout_constraintStart_toEndOf="@+id/view_home_line2"
             app:layout_constraintTop_toTopOf="@+id/button_auction"
             app:layout_constraintVertical_bias="0.0" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </layout>

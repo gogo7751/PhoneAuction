@@ -7,6 +7,15 @@
         <variable
             name="message"
             type="com.eric.phoneauction.data.Message" />
+        <variable
+            name="isOwner"
+            type="Boolean" />
+        <variable
+            name="isTextEmpty"
+            type="Boolean" />
+        <variable
+            name="isImageEmpty"
+            type="Boolean" />
         <import type="android.view.View"/>
     </data>
 
@@ -14,7 +23,6 @@
             android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/image_chatToDetail_sender"
@@ -24,6 +32,7 @@
                 android:layout_marginTop="6dp"
                 android:scaleType="centerCrop"
                 app:imageUrl="@{message.senderImage}"
+                android:visibility="@{isOwner == true &amp;&amp; isTextEmpty == true ? View.GONE : (isOwner == true &amp;&amp; isImageEmpty == true ? View.GONE : View.VISIBLE)}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:src="@tools:sample/backgrounds/scenic" />
@@ -42,6 +51,7 @@
                 android:paddingEnd="8dp"
                 android:paddingBottom="8dp"
                 android:text="@{message.text}"
+                android:visibility="@{isOwner == true ? View.GONE : (isTextEmpty == true ? View.GONE : View.VISIBLE)}"
                 android:textColor="@android:color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/image_chatToDetail_sender"
@@ -57,6 +67,7 @@
                 android:alpha="0.7"
                 android:textColor="@color/gary757575"
                 android:textSize="13sp"
+                android:visibility="@{isOwner == true ? View.GONE : (isTextEmpty == true ? View.GONE : View.VISIBLE)}"
                 app:layout_constraintBottom_toBottomOf="@id/textview_chatToDetail_sent"
                 app:layout_constraintStart_toEndOf="@id/textview_chatToDetail_sent"
                 app:time="@{message.time}"
@@ -75,6 +86,7 @@
                 android:paddingEnd="24dp"
                 android:paddingBottom="8dp"
                 android:text="@{message.text}"
+                android:visibility="@{isOwner == false  ? View.GONE : (isTextEmpty == true ? View.GONE : View.VISIBLE)}"
                 android:textColor="@android:color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -92,6 +104,7 @@
                 android:textSize="13sp"
                 app:layout_constraintBottom_toBottomOf="@id/textview_chatToDetail_received"
                 app:layout_constraintEnd_toStartOf="@id/textview_chatToDetail_received"
+                android:visibility="@{isOwner == false  ? View.GONE : (isTextEmpty == true ? View.GONE : View.VISIBLE)}"
                 app:time="@{message.time}"
                 tools:text="09:23" />
 
@@ -103,6 +116,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="10dp"
                 app:cardCornerRadius="6dp"
+                android:visibility="@{isOwner == true ? View.GONE : (isImageEmpty == true ? View.GONE : View.VISIBLE)}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/image_chatToDetail_sender"
                 app:layout_constraintTop_toTopOf="parent">
@@ -124,6 +138,7 @@
                 android:alpha="0.7"
                 android:textColor="@color/gary757575"
                 android:textSize="13sp"
+                android:visibility="@{isOwner == true ? View.GONE : (isImageEmpty == true ? View.GONE : View.VISIBLE)}"
                 app:layout_constraintBottom_toBottomOf="@id/cardView_chatToDetail_send"
                 app:layout_constraintStart_toEndOf="@id/cardView_chatToDetail_send"
                 app:time="@{message.time}"
@@ -137,6 +152,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="10dp"
                 app:cardCornerRadius="6dp"
+                android:visibility="@{isOwner == false ? View.GONE : (isImageEmpty == true ? View.GONE : View.VISIBLE)}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -155,6 +171,7 @@
                 android:layout_marginEnd="3dp"
                 android:layout_marginBottom="3dp"
                 android:alpha="0.7"
+                android:visibility="@{isOwner == false ? View.GONE : (isImageEmpty == true ? View.GONE : View.VISIBLE)}"
                 android:textColor="@color/gary757575"
                 android:textSize="13sp"
                 app:layout_constraintBottom_toBottomOf="@id/cardView_chatToDetail_received"

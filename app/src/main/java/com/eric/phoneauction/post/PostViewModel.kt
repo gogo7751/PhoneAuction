@@ -1,6 +1,5 @@
 package com.eric.phoneauction.post
 
-import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -29,9 +28,7 @@ class PostViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
 
     private val eventsCollection = FirebaseFirestore.getInstance().collection("events")
     val document = eventsCollection.document()
-
     var id: String
-
 
     // Handle the error for post
     private val _invalidPost = MutableLiveData<Int>()
@@ -43,20 +40,16 @@ class PostViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
 
     var averagePrice = MutableLiveData<Int>()
 
-    val event = MutableLiveData<Event>()
+    val event = MutableLiveData<Event>().apply {
+        value = Event()
+    }
 
-    var productName = MutableLiveData<String>()
-    var storage = MutableLiveData<String>()
-    var brand = MutableLiveData<String>()
-    var price = MutableLiveData<String>()
+    var priceEdit = MutableLiveData<String>()
     var image1 = MutableLiveData<String>()
     var image2 = MutableLiveData<String>()
     var image3 = MutableLiveData<String>()
     var image4 = MutableLiveData<String>()
     var image5 = MutableLiveData<String>()
-    var trade = MutableLiveData<String>()
-    var description = MutableLiveData<String>()
-    var tag = MutableLiveData<String>()
 
     private val _leave = MutableLiveData<Boolean>()
 
@@ -144,12 +137,21 @@ class PostViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
             id = "",
             title = title,
             time = -1,
-            brand = brand.value.toString(),
-            name = productName.value.toString(),
-            image = image1.value.toString(),
-            storage = storage.value.toString(),
+            brand = event.value?.brand.toString(),
+            name = event.value?.productName.toString(),
+            image = image1.toString(),
+            storage = event.value?.storage.toString(),
             visibility = true,
-            event = getEvent()
+            event = event.value?.apply {
+                price = priceEdit.value?.toInt() as Int
+                val listImages = mutableListOf<String>()
+                if (image1.value != null) { listImages.add(image1.value.toString()) }
+                if (image2.value != null) { listImages.add(image2.value.toString()) }
+                if (image3.value != null) { listImages.add(image3.value.toString()) }
+                if (image4.value != null) { listImages.add(image4.value.toString()) }
+                if (image5.value != null) { listImages.add(image5.value.toString()) }
+                images = listImages
+            }
         )
     }
 
@@ -180,13 +182,14 @@ class PostViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
         }
     }
 
-    fun getAveragePriceResult(brand: String, productName: String, storage: String, isDealDone: Boolean) {
+    fun getAveragePriceResult() {
 
         coroutineScope.launch {
 
             _status.value = LoadApiStatus.LOADING
 
-            val result = phoneAuctionRepository.getAveragePrice(brand, productName, storage, isDealDone)
+            val result = phoneAuctionRepository.getAveragePrice(
+                event.value?.brand.toString(), event.value?.productName.toString(), event.value?.storage.toString(), false)
 
             _events.value = when (result) {
                 is com.eric.phoneauction.data.Result.Success -> {
@@ -216,47 +219,37 @@ class PostViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
         }
     }
 
-    private fun getEvent(): Event {
+    private fun getEvent() {
         val images = mutableListOf<String>()
         if (image1.value != null) { images.add(image1.value.toString()) }
         if (image2.value != null) { images.add(image2.value.toString()) }
         if (image3.value != null) { images.add(image3.value.toString()) }
         if (image4.value != null) { images.add(image4.value.toString()) }
         if (image5.value != null) { images.add(image5.value.toString()) }
-
-        return Event(
-            id = id,
-            productName = productName.value.toString(),
-            storage = storage.value.toString(),
-            brand = brand.value.toString(),
-            price = price.value?.toInt() as Int,
-            images = images,
-            trade = trade.value.toString(),
-            description = description.value.toString(),
-            endTime = Calendar.getInstance().timeInMillis + 259200000,
-            createdTime = Calendar.getInstance().timeInMillis,
-            tag = tag.value.toString(),
-            sellerId = UserManager.userId.toString(),
-            buyerId = "",
-            sellerImage = UserManager.user.image,
-            sellerName = UserManager.user.name,
-            isDealDone = true
-        )
+        event.value?.sellerImage = UserManager.user.image
+        event.value?.sellerName = UserManager.user.name
+        event.value?.sellerId = UserManager.userId.toString()
+        event.value?.endTime = Calendar.getInstance().timeInMillis + 259200000
+        event.value?.createdTime = Calendar.getInstance().timeInMillis
+        event.value?.price = priceEdit.value?.toInt() as Int
+        event.value?.images = images
+        event.value?.id = id
     }
 
     fun preparePost() {
         when {
-            brand.value == "0" -> _invalidPost.value = INVALID_FORMAT_BRAND_EMPTY
-            productName.value == "0" -> _invalidPost.value = INVALID_FORMAT_PRODUCT_NAME_EMPTY
-            storage.value == "0" -> _invalidPost.value = INVALID_FORMAT_STORAGE_EMPTY
-            description.value.isNullOrEmpty() -> _invalidPost.value = INVALID_FORMAT_DESCRIPTION_EMPTY
-            tag.value.isNullOrEmpty() -> _invalidPost.value = INVALID_FORMAT_TAG_EMPTY
-            price.value.isNullOrEmpty() -> _invalidPost.value = INVALID_FORMAT_PRICE_EMPTY
+            event.value?.brand == "0" -> _invalidPost.value = INVALID_FORMAT_BRAND_EMPTY
+            event.value?.productName == "0" -> _invalidPost.value = INVALID_FORMAT_PRODUCT_NAME_EMPTY
+            event.value?.storage == "0" -> _invalidPost.value = INVALID_FORMAT_STORAGE_EMPTY
+            event.value?.description.isNullOrEmpty() -> _invalidPost.value = INVALID_FORMAT_DESCRIPTION_EMPTY
+            event.value?.tag.isNullOrEmpty() -> _invalidPost.value = INVALID_FORMAT_TAG_EMPTY
+            priceEdit.value.isNullOrEmpty() -> _invalidPost.value = INVALID_FORMAT_PRICE_EMPTY
             image1.value.isNullOrEmpty() -> _invalidPost.value = INVALID_FORMAT_IMAGE_EMPTY
-            trade.value.isNullOrEmpty() -> _invalidPost.value = INVALID_FORMAT_TRADE_EMPTY
+            event.value?.trade.isNullOrEmpty() -> _invalidPost.value = INVALID_FORMAT_TRADE_EMPTY
             else -> {
-                post(getEvent())
-                getWishListFromPost(brand.value.toString(), productName.value.toString(), storage.value.toString())
+                getEvent()
+                event.value?.let { post(it) }
+                getWishListFromPost(event.value?.brand.toString(), event.value?.productName.toString(), event.value?.storage.toString())
             }
         }
     }
@@ -289,6 +282,26 @@ class PostViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
         }
     }
 
+    fun getBrandValue(brand: String) {
+        event.value?.brand = brand
+    }
+
+    fun getProductNameValue(productName: String) {
+        event.value?.productName = productName
+    }
+
+    fun getStorageValue(storage: String) {
+        event.value?.storage = storage
+    }
+
+    fun getTagValue(tag: String) {
+        event.value?.tag = tag
+    }
+
+    fun getTradeValue(trade: String) {
+        event.value?.trade = trade
+    }
+
     fun leave(needRefresh: Boolean = false) {
         _leave.value = needRefresh
     }
@@ -298,7 +311,6 @@ class PostViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
     }
 
     companion object {
-
         const val INVALID_FORMAT_IMAGE_EMPTY        = 11
         const val INVALID_FORMAT_BRAND_EMPTY        = 12
         const val INVALID_FORMAT_PRODUCT_NAME_EMPTY = 13

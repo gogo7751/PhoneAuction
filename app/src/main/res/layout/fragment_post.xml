@@ -49,8 +49,8 @@
                     android:id="@+id/text_post_image_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
                     android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
                     android:fontFamily="@font/noto_sans_bold"
                     android:letterSpacing="0.15"
                     android:text="新增商品照片"
@@ -154,9 +154,7 @@
                         android:layout_marginEnd="4dp"
                         android:background="@drawable/ic_change"
                         android:visibility="@{viewModel.image1 != null &amp;&amp; viewModel.image2 == null ? View.VISIBLE : View.GONE}" />
-
                 </com.google.android.material.card.MaterialCardView>
-
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardView_post2"
@@ -185,7 +183,6 @@
                         android:layout_marginEnd="4dp"
                         android:background="@drawable/ic_change"
                         android:visibility="@{viewModel.image2 != null &amp;&amp; viewModel.image3 == null ? View.VISIBLE : View.GONE}" />
-
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
@@ -227,7 +224,6 @@
                     app:layout_constraintTop_toTopOf="@id/cardView_post5"
                     app:srcCompat="@drawable/ic_add_black" />
 
-
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardView_post5"
                     android:layout_width="66dp"
@@ -253,7 +249,6 @@
                         android:layout_marginTop="4dp"
                         android:layout_marginEnd="4dp"
                         android:background="@drawable/ic_change" />
-
                 </com.google.android.material.card.MaterialCardView>
 
                 <TextView
@@ -277,7 +272,7 @@
                     android:fontFamily="@font/noto_sans_bold"
                     android:letterSpacing="0.15"
                     android:text="品牌"
-                    android:textColor="@{viewModel.invalidPost != null ? (viewModel.brand == String.valueOf(0) ? @color/red_d0021b : @color/alpha_black) : @color/alpha_black}"
+                    android:textColor="@{viewModel.invalidPost != null ? (viewModel.event.brand == String.valueOf(0) ? @color/red_d0021b : @color/alpha_black) : @color/alpha_black}"
                     android:textSize="20dp"
                     app:layout_constraintStart_toStartOf="@id/imageView_post_back"
                     app:layout_constraintTop_toBottomOf="@id/text_upload_title" />
@@ -304,7 +299,7 @@
                     android:fontFamily="@font/noto_sans_bold"
                     android:letterSpacing="0.15"
                     android:text="型號"
-                    android:textColor="@{viewModel.invalidPost != null ? (viewModel.productName == String.valueOf(0) ? @color/red_d0021b : @color/alpha_black) : @color/alpha_black}"
+                    android:textColor="@{viewModel.invalidPost != null ? (viewModel.event.productName == String.valueOf(0) ? @color/red_d0021b : @color/alpha_black) : @color/alpha_black}"
                     android:textSize="20dp"
                     app:layout_constraintStart_toStartOf="@id/imageView_post_back"
                     app:layout_constraintTop_toBottomOf="@+id/spinner_brand" />
@@ -330,7 +325,7 @@
                     android:fontFamily="@font/noto_sans_bold"
                     android:letterSpacing="0.15"
                     android:text="容量"
-                    android:textColor="@{viewModel.invalidPost != null ? (viewModel.storage == String.valueOf(0) ? @color/red_d0021b : @color/alpha_black) : @color/alpha_black}"
+                    android:textColor="@{viewModel.invalidPost != null ? (viewModel.event.storage == String.valueOf(0) ? @color/red_d0021b : @color/alpha_black) : @color/alpha_black}"
                     android:textSize="20dp"
                     app:layout_constraintStart_toStartOf="@id/imageView_post_back"
                     app:layout_constraintTop_toBottomOf="@+id/spinner_name" />
@@ -356,11 +351,10 @@
                     android:fontFamily="@font/noto_sans_bold"
                     android:letterSpacing="0.15"
                     android:text="商品描述"
-                    android:textColor="@{viewModel.invalidPost != null ? (TextUtils.isEmpty(viewModel.description) ? @color/red_d0021b : @color/alpha_black) : @color/alpha_black}"
+                    android:textColor="@{viewModel.invalidPost != null ? (TextUtils.isEmpty(viewModel.event.description) ? @color/red_d0021b : @color/alpha_black) : @color/alpha_black}"
                     android:textSize="20dp"
                     app:layout_constraintStart_toStartOf="@+id/text_post_name_title"
                     app:layout_constraintTop_toBottomOf="@+id/spinner_storage" />
-
 
                 <EditText
                     android:id="@+id/edit_post_description"
@@ -376,7 +370,7 @@
                     android:paddingLeft="16dp"
                     android:paddingTop="9dp"
                     android:paddingRight="16dp"
-                    android:text="@={viewModel.description}"
+                    android:text="@={viewModel.event.description}"
                     android:textSize="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -390,7 +384,7 @@
                     android:fontFamily="@font/noto_sans_bold"
                     android:letterSpacing="0.15"
                     android:text="出售方式"
-                    android:textColor="@{viewModel.invalidPost != null ? (viewModel.tag == String.valueOf(0) ? @color/red_d0021b : @color/alpha_black) : @color/alpha_black}"
+                    android:textColor="@{viewModel.invalidPost != null ? (viewModel.event.tag == String.valueOf(0) ? @color/red_d0021b : @color/alpha_black) : @color/alpha_black}"
                     android:textSize="20dp"
                     app:layout_constraintStart_toStartOf="@+id/text_post_name_description"
                     app:layout_constraintTop_toBottomOf="@+id/edit_post_description" />
@@ -431,13 +425,14 @@
                     android:layout_marginEnd="16dp"
                     android:background="@drawable/spinner_bg"
                     android:fontFamily="@font/noto_sans"
+                    android:text="@={viewModel.priceEdit}"
                     android:hint="輸入金額"
                     android:inputType="number"
                     android:letterSpacing="0.15"
                     android:paddingHorizontal="16dp"
                     android:singleLine="true"
-                    android:text="@={viewModel.price}"
-                    android:textColorHint="@{viewModel.invalidPost != null ? (TextUtils.isEmpty(viewModel.price) ? @color/red_d0021b : @color/gary757575) : @color/gary757575}"
+
+
                     android:textSize="16dp"
                     android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -472,8 +467,8 @@
                     android:letterSpacing="0.15"
                     android:paddingHorizontal="16dp"
                     android:singleLine="true"
-                    android:text="@={viewModel.price}"
-                    android:textColorHint="@{viewModel.invalidPost != null ? (TextUtils.isEmpty(viewModel.price) ? @color/red_d0021b : @color/gary757575) : @color/gary757575}"
+                    android:text="@={viewModel.priceEdit}"
+                    android:textColorHint="@{viewModel.invalidPost != null ? (TextUtils.isEmpty(viewModel.priceEdit) ? @color/red_d0021b : @color/gary757575) : @color/gary757575}"
                     android:textSize="16dp"
                     android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -486,7 +481,7 @@
                     android:layout_height="22dp"
                     android:layout_marginTop="3dp"
                     android:alpha="0.7"
-                    android:visibility="gone"
+                    android:visibility="@{viewModel.event.trade.empty == true ? View.GONE : View.VISIBLE}"
                     app:layout_constraintStart_toStartOf="@+id/spinner_brand"
                     app:layout_constraintTop_toBottomOf="@+id/edit_post_auction"
                     app:srcCompat="@drawable/ic_questionmark" />
@@ -499,7 +494,7 @@
                     android:fontFamily="@font/noto_sans"
                     android:letterSpacing="0.15"
                     android:textColor="@color/black_3f3a3a"
-                    android:visibility="gone"
+                    android:visibility="@{viewModel.event.trade.empty == true ? View.GONE : View.VISIBLE}"
                     app:average_price="@{viewModel.averagePrice}"
                     app:layout_constraintBottom_toBottomOf="@+id/image_post_question"
                     app:layout_constraintStart_toEndOf="@+id/image_post_question"
@@ -514,7 +509,7 @@
                     android:fontFamily="@font/noto_sans_bold"
                     android:letterSpacing="0.15"
                     android:text="交易方式"
-                    android:textColor="@{viewModel.invalidPost != null ? (viewModel.trade == String.valueOf(0) ? @color/red_d0021b : @color/alpha_black) : @color/alpha_black}"
+                    android:textColor="@{viewModel.invalidPost != null ? (viewModel.event.trade == String.valueOf(0) ? @color/red_d0021b : @color/alpha_black) : @color/alpha_black}"
                     android:textSize="20dp"
                     app:layout_constraintStart_toStartOf="@+id/text_post_name_auction"
                     app:layout_constraintTop_toBottomOf="@+id/image_post_question" />
@@ -533,9 +528,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text_post_trade" />
-
-
             </androidx.constraintlayout.widget.ConstraintLayout>
+
         </ScrollView>
 
         <View

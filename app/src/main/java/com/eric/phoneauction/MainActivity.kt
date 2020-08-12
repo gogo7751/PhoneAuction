@@ -6,6 +6,7 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
@@ -52,30 +53,43 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        when (item.itemId) {
-            R.id.navigation_home -> {
-                findNavController(R.id.myNavHostFragment).navigate(NavigationDirections.actionGlobalHomeFragment())
-                return@OnNavigationItemSelectedListener true
+    private val onNavigationItemSelectedListener =
+        BottomNavigationView.OnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.navigation_home -> {
+                    findNavController(R.id.myNavHostFragment).navigate(NavigationDirections.actionGlobalHomeFragment())
+                    return@OnNavigationItemSelectedListener true
+                }
+                R.id.navigation_chat -> {
+                    findNavController(R.id.myNavHostFragment).navigate(NavigationDirections.actionGlobalChatFragment())
+                    return@OnNavigationItemSelectedListener true
+                }
+                R.id.navigation_post -> {
+                    findNavController(R.id.myNavHostFragment).navigate(NavigationDirections.actionGlobalPostFragment())
+                    return@OnNavigationItemSelectedListener true
+                }
+                R.id.navigation_notification -> {
+                    findNavController(R.id.myNavHostFragment).navigate(NavigationDirections.actionGlobalNotificationFragment())
+                    return@OnNavigationItemSelectedListener true
+                }
+                R.id.navigation_profile -> {
+                    findNavController(R.id.myNavHostFragment).navigate(NavigationDirections.actionGlobalProfileFragment())
+                    return@OnNavigationItemSelectedListener true
+                }
             }
-            R.id.navigation_chat -> {
-                findNavController(R.id.myNavHostFragment).navigate(NavigationDirections.actionGlobalChatFragment())
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_post -> {
-                findNavController(R.id.myNavHostFragment).navigate(NavigationDirections.actionGlobalPostFragment())
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_notification -> {
-                findNavController(R.id.myNavHostFragment).navigate(NavigationDirections.actionGlobalNotificationFragment())
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_profile -> {
-                findNavController(R.id.myNavHostFragment).navigate(NavigationDirections.actionGlobalProfileFragment())
-                return@OnNavigationItemSelectedListener true
-            }
+            false
         }
-        false
+
+    override fun onBackPressed() {
+        val manager = supportFragmentManager
+        val count =
+            manager.findFragmentById(R.id.myNavHostFragment)?.childFragmentManager?.backStackEntryCount
+        if (count == 0) {
+            showToast(getString(R.string.leave_app))
+            Handler().postDelayed({super.onBackPressed()},2000)
+        } else {
+            super.onBackPressed()
+        }
     }
 
     private fun setupBottomNav() {

@@ -19,15 +19,10 @@ class NotificationViewModel(
     val phoneAuctionRepository: PhoneAuctionRepository
 ) : ViewModel() {
 
-    private var _notifications = MutableLiveData<List<Notification>>()
+    private var _liveNotifications = MutableLiveData<List<Notification>>()
 
-    val notifications: LiveData<List<Notification>>
-        get() = _notifications
-
-    var liveNotifications = MutableLiveData<List<Notification>>()
-
-
-
+    val liveNotifications: LiveData<List<Notification>>
+        get() = _liveNotifications
 
     // status: The internal MutableLiveData that stores the status of the most recent request
     private val _status = MutableLiveData<LoadApiStatus>()
@@ -53,17 +48,12 @@ class NotificationViewModel(
     // the Coroutine runs using the Main (UI) dispatcher
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
-
     init {
         Logger.i("------------------------------------")
         Logger.i("[${this::class.simpleName}]${this}")
         Logger.i("------------------------------------")
 
-        if (PhoneAuctionApplication.instance.isLiveDataDesign()) {
-            getLiveNotificationsResult()
-        } else {
-            getNotificationsResult()
-        }
+        getLiveNotificationsResult()
     }
 
     fun deleteNotification(notificationId: String, user: String) {
@@ -93,44 +83,8 @@ class NotificationViewModel(
         }
     }
 
-    fun getNotificationsResult() {
-
-        coroutineScope.launch {
-
-            _status.value = LoadApiStatus.LOADING
-
-            val result = phoneAuctionRepository.getNotification()
-
-            _notifications.value = when (result) {
-                is com.eric.phoneauction.data.Result.Success -> {
-                    _error.value = null
-                    _status.value = LoadApiStatus.DONE
-                    result.data
-                }
-                is com.eric.phoneauction.data.Result.Fail -> {
-                    Log.d("Result","fail")
-                    _error.value = result.error
-                    _status.value = LoadApiStatus.ERROR
-                    null
-                }
-                is com.eric.phoneauction.data.Result.Error -> {
-                    Log.d("Result","error")
-                    _error.value = result.exception.toString()
-                    _status.value = LoadApiStatus.ERROR
-                    null
-                }
-                else -> {
-                    _error.value = PhoneAuctionApplication.instance.getString(R.string.you_know_nothing)
-                    _status.value = LoadApiStatus.ERROR
-                    null
-                }
-            }
-            _refreshStatus.value = false
-        }
-    }
-
     fun getLiveNotificationsResult() {
-        liveNotifications = phoneAuctionRepository.getLiveNotification()
+        _liveNotifications = phoneAuctionRepository.getLiveNotification()
         _status.value = LoadApiStatus.DONE
         _refreshStatus.value = false
     }
@@ -139,19 +93,4 @@ class NotificationViewModel(
         super.onCleared()
         viewModelJob.cancel()
     }
-
-    fun refresh() {
-
-        if (PhoneAuctionApplication.instance.isLiveDataDesign()) {
-            _status.value = LoadApiStatus.DONE
-            _refreshStatus.value = false
-
-        } else {
-            if (status.value != LoadApiStatus.LOADING) {
-                getNotificationsResult()
-            }
-        }
-    }
-
-
 }

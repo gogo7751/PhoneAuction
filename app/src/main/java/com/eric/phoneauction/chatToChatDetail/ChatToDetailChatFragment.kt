@@ -58,7 +58,7 @@ class ChatToDetailChatFragment : Fragment() {
             toAlbum(PHOTO_FROM_GALLERY)
         }
 
-        val adapter = ChatToDetailChatAdapter()
+        val adapter = ChatToDetailChatAdapter(viewModel)
         binding.recyclerviewChatToDetail.adapter = adapter
 
         viewModel.liveMessages.observe(viewLifecycleOwner, Observer {

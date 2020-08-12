@@ -83,6 +83,10 @@ class DetailChatViewModel(
         getLiveMessagesResult()
     }
 
+    fun isUserManager(id: String): Boolean{
+        return id == UserManager.userId
+    }
+
     fun getLiveMessagesResult() {
         liveMessages = phoneAuctionRepository.getLiveMessage(document.value.toString())
         _status.value = LoadApiStatus.DONE

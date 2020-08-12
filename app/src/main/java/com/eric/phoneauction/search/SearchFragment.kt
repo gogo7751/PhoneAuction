@@ -55,6 +55,22 @@ class SearchFragment : Fragment() {
             }
         })
 
+        binding.editSearch.setOnEditorActionListener { v, actionId, event ->
+            if ((event != null && (event.keyCode == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+                binding.editSearch.hideKeyboard()
+                findNavController().navigate(NavigationDirections.actionGlobalSearchFragment(v.text.toString()))
+            }
+            return@setOnEditorActionListener false
+        }
+
+        binding.imageSearchClear.setOnClickListener {
+            binding.editSearch.text.clear()
+        }
+
+        binding.imageSearchNotificationVisibility.startAnimation(
+            AnimationUtils.loadAnimation(context, R.anim.anim_shakes)
+        )
+
         binding.imageSearchBack.setOnClickListener {
             findNavController().navigate(NavigationDirections.actionGlobalHomeFragment())
         }
@@ -73,22 +89,6 @@ class SearchFragment : Fragment() {
                 }
             }
         })
-
-        binding.editSearch.setOnEditorActionListener { v, actionId, event ->
-            if ((event != null && (event.keyCode == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
-                binding.editSearch.hideKeyboard()
-                findNavController().navigate(NavigationDirections.actionGlobalSearchFragment(v.text.toString()))
-            }
-            return@setOnEditorActionListener false
-        }
-
-        binding.imageSearchClear.setOnClickListener {
-            binding.editSearch.text.clear()
-        }
-
-        binding.imageSearchNotificationVisibility.startAnimation(
-            AnimationUtils.loadAnimation(context, R.anim.anim_shakes)
-        )
 
         viewModel.navigateToDialog.observe(viewLifecycleOwner, Observer {
             it?.let {
@@ -171,6 +171,7 @@ class SearchFragment : Fragment() {
 
     //get spinnerNameString
     fun getSpinnerNameString(stringArray: Int) {
-        binding.spinnerName.adapter = PostSpinnerAdapter(PhoneAuctionApplication.instance.resources.getStringArray(stringArray))
+        binding.spinnerName.adapter = PostSpinnerAdapter(
+            PhoneAuctionApplication.instance.resources.getStringArray(stringArray))
     }
 }
