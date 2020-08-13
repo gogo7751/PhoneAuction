@@ -8,7 +8,10 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.get
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import com.eric.phoneauction.data.UserManager
 import com.eric.phoneauction.databinding.ActivityMainBinding
@@ -34,6 +37,7 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         setupBottomNav()
+//        setupNavController()
         viewModel.postUser(UserManager.user)
         viewModel.getUser()
 
@@ -80,17 +84,40 @@ class MainActivity : AppCompatActivity() {
             false
         }
 
+    private var doubleBackToExitPressedOnce = false
     override fun onBackPressed() {
         val manager = supportFragmentManager
         val count =
             manager.findFragmentById(R.id.myNavHostFragment)?.childFragmentManager?.backStackEntryCount
+
         if (count == 0) {
+            if (doubleBackToExitPressedOnce) {
+                super.onBackPressed()
+                return
+            }
+
+            this.doubleBackToExitPressedOnce = true
             showToast(getString(R.string.leave_app))
-            Handler().postDelayed({super.onBackPressed()},2000)
+
+            Handler().postDelayed(Runnable { doubleBackToExitPressedOnce = false }, 2000)
         } else {
             super.onBackPressed()
         }
     }
+
+//    private fun setupNavController() {
+//        findNavController(R.id.myNavHostFragment).addOnDestinationChangedListener { _: NavController, nd: NavDestination, _: Bundle? ->
+//            binding.bottomNavView.selectedItemId = when (nd.id) {
+//                R.id.homeFragment -> R.id.navigation_home
+//                R.id.chatFragment -> R.id.navigation_chat
+//                R.id.postFragment -> R.id.navigation_post
+//                R.id.notificationFragment -> R.id.navigation_notification
+//                R.id.profileFragment -> R.id.navigation_profile
+//                else -> R.id.homeFragment
+//            }
+//        }
+//        Logger.d("binding.bottomNavView.selectedItemId = ${binding.bottomNavView.selectedItemId}")
+//    }
 
     private fun setupBottomNav() {
         binding.bottomNavView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)

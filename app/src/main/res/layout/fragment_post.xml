@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="viewModel"
             type="com.eric.phoneauction.post.PostViewModel" />
@@ -481,7 +480,7 @@
                     android:layout_height="22dp"
                     android:layout_marginTop="3dp"
                     android:alpha="0.7"
-                    android:visibility="@{viewModel.event.trade.empty == true ? View.GONE : View.VISIBLE}"
+                    android:visibility="@{TextUtils.isEmpty(viewModel.event.trade) == true ? View.GONE : View.VISIBLE}"
                     app:layout_constraintStart_toStartOf="@+id/spinner_brand"
                     app:layout_constraintTop_toBottomOf="@+id/edit_post_auction"
                     app:srcCompat="@drawable/ic_questionmark" />
@@ -494,7 +493,7 @@
                     android:fontFamily="@font/noto_sans"
                     android:letterSpacing="0.15"
                     android:textColor="@color/black_3f3a3a"
-                    android:visibility="@{viewModel.event.trade.empty == true ? View.GONE : View.VISIBLE}"
+                    android:visibility="@{TextUtils.isEmpty(viewModel.event.trade) == true ? View.GONE : View.VISIBLE}"
                     app:average_price="@{viewModel.averagePrice}"
                     app:layout_constraintBottom_toBottomOf="@+id/image_post_question"
                     app:layout_constraintStart_toEndOf="@+id/image_post_question"

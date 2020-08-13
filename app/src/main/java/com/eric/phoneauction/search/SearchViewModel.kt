@@ -161,7 +161,6 @@ class SearchViewModel(
         _navigateToDialog.value = null
     }
 
-
     fun getVisibility() {
         isVisibility.value = true
     }

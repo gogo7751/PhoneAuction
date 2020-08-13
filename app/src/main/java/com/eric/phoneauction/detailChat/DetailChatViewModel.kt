@@ -1,6 +1,8 @@
 package com.eric.phoneauction.detailChat
 
+import android.content.Intent
 import android.net.Uri
+import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

@@ -67,7 +67,6 @@
         <item name="android:letterSpacing">0.15</item>
     </style>
 
-
     <style name="AuctionRippleButton" parent="AuctionButton">
         <item name="android:background">@drawable/button_auction_ripple</item>
     </style>

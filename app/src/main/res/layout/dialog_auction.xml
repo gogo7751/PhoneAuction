@@ -233,7 +233,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
                 android:background="@{viewModel.price &lt;= Integer.valueOf(viewModel.event.price) ? @drawable/button_false : @drawable/button}"
-                android:clickable="@{viewModel.price &lt;= Integer.valueOf(viewModel.event.price) ? false : true}"
+                android:clickable="@{viewModel.isBuyerId == true || viewModel.isSellerId == true || viewModel.price &lt;= Integer.valueOf(viewModel.event.price) ? false : true}"
                 android:ellipsize="end"
                 android:fontFamily="@font/noto_sans"
                 android:letterSpacing="0.15"
@@ -247,7 +247,7 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
             <Button
-                android:id="@+id/button_auction_isBuyer"
+                android:id="@+id/button_auction_isOwner"
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
                 android:layout_marginStart="16dp"

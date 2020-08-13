@@ -107,7 +107,6 @@ class PostFragment : Fragment() {
             }
         })
 
-
         binding.editPostDescription.setOnEditorActionListener { _, actionId, event ->
             if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
                 binding.editPostDescription.hideKeyboard()
@@ -178,7 +177,6 @@ class PostFragment : Fragment() {
             }
         }
 
-
         //選擇交易方式
         binding.spinnerTrade.adapter = PostSpinnerAdapter(
             PhoneAuctionApplication.instance.resources.getStringArray(R.array.trade_list)
@@ -220,7 +218,6 @@ class PostFragment : Fragment() {
                 viewModel.getAveragePriceResult()
             }
         }
-
 
         //最近商品成交價
         viewModel.events.observe(viewLifecycleOwner, Observer { list ->
@@ -269,10 +266,10 @@ class PostFragment : Fragment() {
     //bottom navigation view gone
     override fun onDestroy() {
         super.onDestroy()
+        (activity as AppCompatActivity).bottomNavView.selectedItemId = R.id.navigation_home
         (activity as AppCompatActivity).bottomNavView.visibility = View.VISIBLE
     }
 
-    //上傳圖片
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         if (saveUri != null) {
@@ -293,7 +290,7 @@ class PostFragment : Fragment() {
                             saveUri
                         )
                         binding.imagePost1.setImageBitmap(bitmap)
-                        uploadImage(viewModel.image1)
+                        saveUri?.let { viewModel.uploadImage(viewModel.image1, it) }
                     }
                     Activity.RESULT_CANCELED -> {
                         Logger.d(resultCode.toString())
@@ -309,7 +306,7 @@ class PostFragment : Fragment() {
                             saveUri
                         )
                         binding.imagePost2.setImageBitmap(bitmap)
-                        uploadImage(viewModel.image2)
+                        saveUri?.let { viewModel.uploadImage(viewModel.image2, it) }
                     }
                     Activity.RESULT_CANCELED -> {
                         Logger.d(resultCode.toString())
@@ -325,7 +322,7 @@ class PostFragment : Fragment() {
                             saveUri
                         )
                         binding.imagePost3.setImageBitmap(bitmap)
-                        uploadImage(viewModel.image3)
+                        saveUri?.let { viewModel.uploadImage(viewModel.image3, it) }
                     }
                     Activity.RESULT_CANCELED -> {
                         Logger.d(resultCode.toString())
@@ -341,7 +338,7 @@ class PostFragment : Fragment() {
                             saveUri
                         )
                         binding.imagePost4.setImageBitmap(bitmap)
-                        uploadImage(viewModel.image4)
+                        saveUri?.let { viewModel.uploadImage(viewModel.image4, it) }
                     }
                     Activity.RESULT_CANCELED -> {
                         Logger.d(resultCode.toString())
@@ -357,7 +354,7 @@ class PostFragment : Fragment() {
                             saveUri
                         )
                         binding.imagePost5.setImageBitmap(bitmap)
-                        uploadImage(viewModel.image5)
+                        saveUri?.let { viewModel.uploadImage(viewModel.image5, it) }
                     }
                     Activity.RESULT_CANCELED -> {
                         Logger.d(resultCode.toString())
@@ -373,16 +370,4 @@ class PostFragment : Fragment() {
         startActivityForResult(intent, photoFromGallery)
     }
 
-    private fun uploadImage(image: MutableLiveData<String>){
-        val filename = UUID.randomUUID().toString()
-        val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
-        saveUri?.let { uri ->
-            ref.putFile(uri)
-                .addOnSuccessListener {
-                    ref.downloadUrl.addOnSuccessListener {
-                        image.value = it.toString()
-                    }
-                }
-        }
-    }
 }
