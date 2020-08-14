@@ -11,6 +11,7 @@ import com.eric.phoneauction.data.Event
 import com.eric.phoneauction.data.Notification
 import com.eric.phoneauction.data.source.PhoneAuctionRepository
 import com.eric.phoneauction.util.Logger
+import com.eric.phoneauction.util.Util.getString
 import com.google.firebase.firestore.Query
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -317,9 +318,65 @@ class HomeViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
         }
     }
 
+    fun localPriceDescending() {
+        if (isAuction.value == true) {
+            getSortWithTagResult(
+                getString(R.string.auction_tag), getString(R.string.sort_price), Query.Direction.DESCENDING
+            )
+        } else if (isDirect.value == true) {
+            getSortWithTagResult(
+                getString(R.string.direct_tag), getString(R.string.sort_price), Query.Direction.DESCENDING
+            )
+        } else {
+            getSort(getString(R.string.sort_price), Query.Direction.DESCENDING)
+        }
+    }
+
+    fun localPriceAscending() {
+        if (isAuction.value == true) {
+            getSortWithTagResult(
+                getString(R.string.auction_tag), getString(R.string.sort_price), Query.Direction.ASCENDING
+            )
+        } else if (isDirect.value == true) {
+            getSortWithTagResult(
+                getString(R.string.direct_tag), getString(R.string.sort_price), Query.Direction.ASCENDING
+            )
+        } else {
+            getSort(getString(R.string.sort_price), Query.Direction.ASCENDING)
+        }
+    }
+
+    fun localTimeDescending() {
+        if (isAuction.value == true) {
+            getSortWithTagResult(
+                getString(R.string.auction_tag), getString(R.string.sort_endTime), Query.Direction.DESCENDING
+            )
+        } else if (isDirect.value == true) {
+            getSortWithTagResult(
+                getString(R.string.direct_tag), getString(R.string.sort_endTime), Query.Direction.DESCENDING
+            )
+        } else {
+            getSort(getString(R.string.sort_endTime), Query.Direction.DESCENDING)
+        }
+    }
+
+    fun localTimeAscending() {
+        if (isAuction.value == true) {
+            getSortWithTagResult(getString(
+                R.string.auction_tag), getString(R.string.sort_endTime), Query.Direction.ASCENDING
+            )
+        } else if (isDirect.value == true) {
+            getSortWithTagResult(getString(
+                R.string.direct_tag), getString(R.string.sort_endTime), Query.Direction.ASCENDING
+            )
+        } else {
+            getSort(getString(R.string.sort_endTime), Query.Direction.ASCENDING)
+        }
+    }
+
     fun getAuctionSort() {
-        isAuction.value = true
-        isDirect.value = false
+        isDirect.value = true
+        isAuction.value = false
         getAuctionResult()
     }
 
@@ -332,6 +389,7 @@ class HomeViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
     fun getAllSort() {
         isDirect.value = false
         isAuction.value = false
+        getEventsResult()
     }
 
     private fun getLiveEventsResult() {

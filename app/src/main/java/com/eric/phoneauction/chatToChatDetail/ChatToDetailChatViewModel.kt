@@ -113,6 +113,7 @@ class ChatToDetailChatViewModel(
                 is com.eric.phoneauction.data.Result.Success -> {
                     _error.value = null
                     _status.value = LoadApiStatus.DONE
+                    _message.value?.image = ""
                     _setEditText.value = true
                 }
                 is com.eric.phoneauction.data.Result.Fail -> {

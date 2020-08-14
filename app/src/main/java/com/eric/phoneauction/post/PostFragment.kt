@@ -216,6 +216,8 @@ class PostFragment : Fragment() {
                 }
                 viewModel.getTagValue(binding.spinnerTag.selectedItem.toString())
                 viewModel.getAveragePriceResult()
+                binding.imagePostQuestion.visibility = View.VISIBLE
+                binding.textPostAverage.visibility = View.VISIBLE
             }
         }
 

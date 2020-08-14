@@ -100,7 +100,7 @@ class HomeAdapter( val onClickListener: OnClickListener, val viewModel: HomeView
         }
 
         override fun areContentsTheSame(oldItem: Event, newItem: Event): Boolean {
-            return oldItem.id == newItem.id
+            return oldItem == newItem
         }
     }
 
@@ -135,8 +135,8 @@ class HomeAdapter( val onClickListener: OnClickListener, val viewModel: HomeView
         holder.timerStart()
     }
 
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
-    }
+//    override fun getItemId(position: Int): Long {
+//        return position.toLong()
+//    }
 
 }

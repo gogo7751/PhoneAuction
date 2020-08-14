@@ -38,7 +38,7 @@ class HomeFragment : Fragment() {
         val adapter = HomeAdapter(HomeAdapter.OnClickListener{
             viewModel.navigateToDetail(it)
         }, viewModel)
-        adapter.setHasStableIds(true)
+//        adapter.setHasStableIds(true)
         binding.recyclerviewHome.adapter = adapter
 
         viewModel.refreshStatus.observe(viewLifecycleOwner, Observer {
@@ -91,62 +91,11 @@ class HomeFragment : Fragment() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long
             ) {
                 when (position) {
-                    0 -> {
-                        viewModel.getEventsResult()
-                        viewModel.getAllSort()
-                    }
-                    1 -> {
-                        when {
-                            viewModel.isAuction.value == true -> {
-                                viewModel.getSortWithTagResult(getString(R.string.auction_tag), getString(R.string.sort_price), Query.Direction.DESCENDING)
-                            }
-                            viewModel.isDirect.value == true -> {
-                                viewModel.getSortWithTagResult(getString(R.string.direct_tag), getString(R.string.sort_price), Query.Direction.DESCENDING)
-                            }
-                            else -> {
-                                viewModel.getSort(getString(R.string.sort_price), Query.Direction.DESCENDING)
-                            }
-                        }
-                    }
-                    2 -> {
-                        when {
-                            viewModel.isAuction.value == true -> {
-                                viewModel.getSortWithTagResult(getString(R.string.auction_tag), getString(R.string.sort_price), Query.Direction.ASCENDING)
-                            }
-                            viewModel.isDirect.value == true -> {
-                                viewModel.getSortWithTagResult(getString(R.string.direct_tag), getString(R.string.sort_price), Query.Direction.ASCENDING)
-                            }
-                            else -> {
-                                viewModel.getSort(getString(R.string.sort_price), Query.Direction.ASCENDING)
-                            }
-                        }
-                    }
-                    3 -> {
-                        when {
-                            viewModel.isAuction.value == true -> {
-                                viewModel.getSortWithTagResult(getString(R.string.auction_tag), getString(R.string.sort_endTime), Query.Direction.DESCENDING)
-                            }
-                            viewModel.isDirect.value == true -> {
-                                viewModel.getSortWithTagResult(getString(R.string.direct_tag), getString(R.string.sort_endTime), Query.Direction.DESCENDING)
-                            }
-                            else -> {
-                                viewModel.getSort(getString(R.string.sort_endTime), Query.Direction.DESCENDING)
-                            }
-                        }
-                    }
-                    4 -> {
-                        when {
-                            viewModel.isAuction.value == true -> {
-                                viewModel.getSortWithTagResult(getString(R.string.auction_tag), getString(R.string.sort_endTime), Query.Direction.ASCENDING)
-                            }
-                            viewModel.isDirect.value == true -> {
-                                viewModel.getSortWithTagResult(getString(R.string.direct_tag), getString(R.string.sort_endTime), Query.Direction.ASCENDING)
-                            }
-                            else -> {
-                                viewModel.getSort(getString(R.string.sort_endTime), Query.Direction.ASCENDING)
-                            }
-                        }
-                    }
+                    0 -> viewModel.getAllSort()
+                    1 -> viewModel.localPriceDescending()
+                    2 -> viewModel.localPriceAscending()
+                    3 -> viewModel.localTimeDescending()
+                    4 -> viewModel.localTimeAscending()
                 }
             }
         }
