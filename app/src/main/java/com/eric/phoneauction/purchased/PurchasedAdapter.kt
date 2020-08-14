@@ -1,0 +1,86 @@
+package com.eric.phoneauction.purchased
+
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.navigation.Navigation
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
+import com.eric.phoneauction.NavigationDirections
+import com.eric.phoneauction.R
+import com.eric.phoneauction.data.Event
+import com.eric.phoneauction.data.UserManager
+import com.eric.phoneauction.databinding.ItemPurchasedBinding
+import com.eric.phoneauction.util.Util.getString
+
+
+class PurchasedAdapter :
+    androidx.recyclerview.widget.ListAdapter<Event, PurchasedAdapter.PurchasedViewHolder>(
+        DiffCallback
+    ) {
+
+    class PurchasedViewHolder(private var binding: ItemPurchasedBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(
+            event: Event
+        ) {
+            binding.event = event
+
+            binding.imagePurchased.setOnClickListener {
+                when (event.tag) {
+                    getString(R.string.auction_tag) -> {
+                        Navigation.createNavigateOnClickListener(
+                            NavigationDirections.actionGlobalDetailAuctionFragment(
+                                event
+                            )
+                        ).onClick(binding.imagePurchased)
+                    }
+                    else -> {
+                        Navigation.createNavigateOnClickListener(
+                            NavigationDirections.actionGlobalDetailDirectFragment(
+                                event
+                            )
+                        ).onClick(binding.imagePurchased)
+                    }
+                }
+            }
+            
+            binding.executePendingBindings()
+        }
+    }
+
+    companion object DiffCallback : DiffUtil.ItemCallback<Event>() {
+        override fun areItemsTheSame(oldItem: Event, newItem: Event): Boolean {
+            return oldItem === newItem
+        }
+
+        override fun areContentsTheSame(oldItem: Event, newItem: Event): Boolean {
+            return oldItem.id == newItem.id
+        }
+    }
+
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): PurchasedViewHolder {
+        return PurchasedViewHolder(
+            ItemPurchasedBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        )
+    }
+
+    override fun onBindViewHolder(holder: PurchasedViewHolder, position: Int) {
+        val event = getItem(position)
+        when (event.buyerId == UserManager.userId) {
+            true -> holder.itemView.visibility = View.VISIBLE
+            false -> {
+                holder.itemView.visibility = View.GONE
+                holder.itemView.layoutParams.height = 0
+            }
+        }
+        holder.bind(event)
+    }
+
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+}

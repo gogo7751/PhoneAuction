@@ -35,7 +35,8 @@ class CheckSuccessAuctionFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        val binding = FragmentCheckoutSuccessAuctionBinding.inflate(inflater, container, false)
+        val binding = FragmentCheckoutSuccessAuctionBinding.inflate(
+            inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
@@ -45,10 +46,7 @@ class CheckSuccessAuctionFragment : Fragment() {
                 viewModel.onHomeNavigated()
             }
         })
-
-
-
-
+        
         return binding.root
     }
 

@@ -8,8 +8,10 @@ import com.eric.phoneauction.PhoneAuctionApplication
 import com.eric.phoneauction.R
 import com.eric.phoneauction.data.Event
 import com.eric.phoneauction.data.Notification
+import com.eric.phoneauction.data.UserManager
 import com.eric.phoneauction.data.source.PhoneAuctionRepository
 import com.eric.phoneauction.util.Logger
+import com.eric.phoneauction.util.Util.getString
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -62,15 +64,11 @@ class DirectViewModel(
     val refreshStatus: LiveData<Boolean>
         get() = _refreshStatus
 
-
-
     // Create a Coroutine scope using a job to be able to cancel when needed
     private var viewModelJob = Job()
 
     // the Coroutine runs using the Main (UI) dispatcher
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
-
-
 
     init {
         Logger.i("------------------------------------")
@@ -81,17 +79,20 @@ class DirectViewModel(
     }
 
     fun getNotification(title: String): Notification {
-        event.value?.deal = false
+        event.value?.isDealDone = false
         return Notification(
-            id = "",
-            title = title,
-            time = -1,
-            brand = event.value?.brand.toString(),
-            name = event.value?.productName.toString(),
-            image = event.value?.images?.component1().toString(),
-            storage = event.value?.storage.toString(),
-            visibility = true,
-            event = event.value.apply { event.value?.deal = false }
+            "",
+            title,
+            -1,
+            event.value?.brand.toString(),
+            event.value?.productName.toString(),
+            event.value?.images?.component1().toString(),
+            event.value?.storage.toString(),
+            true,
+            event.value.apply {
+                event.value?.isDealDone = false
+                event.value?.buyerId = UserManager.userId.toString()
+            }
         )
     }
 
@@ -100,7 +101,7 @@ class DirectViewModel(
         viewModelJob.cancel()
     }
 
-    fun postAuction(event: Event) {
+    fun postDirect(event: Event) {
 
         coroutineScope.launch {
 
@@ -155,19 +156,19 @@ class DirectViewModel(
     }
 
     fun navigateToCheckoutSuccess(event: Event) {
+        postDirect(event)
+        postNotification(getNotification(getString(R.string.direct_done_seller)), event.sellerId)
+        postNotification(getNotification(getString(R.string.direct_done_buyer)), UserManager.userId as String)
         _navigateToCheckoutSuccess.value = event
     }
 
-    fun getFreight() {
+    private fun getFreight() {
         if (_event.value?.trade == "面交") {
             freight.value = 0
         } else {
             freight.value = 60
         }
     }
-
-
-
 
     fun leave() {
         _leave.value = true
@@ -177,8 +178,5 @@ class DirectViewModel(
         _leave.value = null
     }
 
-
     fun nothing() {}
-
-
 }

@@ -37,6 +37,7 @@
                     android:layout_width="99dp"
                     android:layout_height="99dp"
                     app:cardCornerRadius="10dp"
+                    app:cardElevation="0dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -139,6 +140,7 @@
                     android:id="@+id/text_onPost_delete"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
+                    android:visibility="gone"
                     android:background="@drawable/ic_close"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

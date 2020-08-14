@@ -57,65 +57,17 @@
                 android:layout_height="50dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="50dp"
                 android:background="@drawable/button_fb"
                 android:fontFamily="@font/roboto_bold"
                 android:text="使用 Facebook 登入"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
                 android:textSize="18dp"
-                app:layout_constraintBottom_toTopOf="@id/text_login_private1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <TextView
-                android:id="@+id/text_login_private1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="30dp"
-                android:text="登入表示同意我們的"
-                android:textColor="@color/black212121"
-                android:textSize="12dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/text_login_private2"
-                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
-            <TextView
-                android:id="@+id/text_login_private2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="服務條款"
-                android:textColor="@color/fbBlue"
-                android:textSize="12dp"
-                app:layout_constraintBaseline_toBaselineOf="@+id/text_login_private1"
-                app:layout_constraintEnd_toStartOf="@+id/text_login_private3"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/text_login_private1" />
-
-            <TextView
-                android:id="@+id/text_login_private3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="和"
-                android:textColor="@color/black212121"
-                android:textSize="12dp"
-                app:layout_constraintBaseline_toBaselineOf="@+id/text_login_private1"
-                app:layout_constraintEnd_toStartOf="@+id/text_login_private4"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/text_login_private2" />
-
-            <TextView
-                android:id="@+id/text_login_private4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="隱私政策"
-                android:textColor="@color/fbBlue"
-                android:textSize="12dp"
-                app:layout_constraintBaseline_toBaselineOf="@+id/text_login_private1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/text_login_private3" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <View

@@ -5,15 +5,14 @@
             <solid android:color="#00000000"/>
         </shape>
     </item>
-            <!--stroke
-            <corners android:radius="5dp" />
-            <stroke android:color="@color/colorPrimary" android:width="1dp"/>
-            -->
+    <!--stroke
+    <corners android:radius="5dp" />
+    <stroke android:color="@color/colorPrimary" android:width="1dp"/>
+    -->
 
 
     <!--icon
     <item android:gravity="center_vertical|right" android:right="12dp">
-
         <bitmap
               android:src="@drawable/ic_sort_black_16px" />
     </item>

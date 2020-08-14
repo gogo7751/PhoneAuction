@@ -9,7 +9,6 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -18,10 +17,10 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.eric.phoneauction.data.Event
 import com.eric.phoneauction.util.TimeUtil
-import com.eric.phoneauction.detailAuctionFragment.DetailCircleAdapter
-import com.eric.phoneauction.detailAuctionFragment.DetailGalleryAdapter
+import com.eric.phoneauction.detailAuction.DetailCircleAdapter
+import com.eric.phoneauction.detailAuction.DetailGalleryAdapter
 import com.eric.phoneauction.ext.toDisplayFormat
-import com.eric.phoneauction.homeFragment.HomeAdapter
+import com.eric.phoneauction.home.HomeAdapter
 import com.eric.phoneauction.util.Util
 
 @BindingAdapter("events")

@@ -7,7 +7,16 @@
         <variable
             name="message"
             type="com.eric.phoneauction.data.Message" />
-
+        <variable
+            name="isOwner"
+            type="Boolean" />
+        <variable
+            name="isTextEmpty"
+            type="Boolean" />
+        <variable
+            name="isImageEmpty"
+            type="Boolean" />
+        <import type="android.view.View"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -24,6 +33,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:imageUrl="@{message.senderImage}"
+            android:visibility="@{isOwner == true &amp;&amp; isTextEmpty == true ? View.GONE : (isOwner == true &amp;&amp; isImageEmpty == true ? View.GONE : View.VISIBLE)}"
             tools:src="@tools:sample/backgrounds/scenic"
             />
 
@@ -40,6 +50,7 @@
             android:layout_marginStart="5dp"
             tools:text="對方傳的訊息中午要吃什麼好餓"
             android:text="@{message.text}"
+            android:visibility="@{isOwner == true ? View.GONE : (isTextEmpty == true ? View.GONE : View.VISIBLE)}"
             android:background="@drawable/shape_bubble_sent"
             android:textColor="@android:color/black"
             android:maxWidth="216dp"
@@ -55,6 +66,7 @@
             android:layout_marginStart="3dp"
             android:alpha="0.7"
             app:time="@{message.time}"
+            android:visibility="@{isOwner == true ? View.GONE : (isTextEmpty == true ? View.GONE : View.VISIBLE)}"
             android:layout_marginBottom="3dp"
             android:textSize="13sp"
             app:layout_constraintStart_toEndOf="@id/textview_chat_sent"
@@ -72,6 +84,7 @@
             android:paddingEnd="24dp"
             android:layout_marginBottom="8dp"
             android:text="@{message.text}"
+            android:visibility="@{isOwner == false  ? View.GONE : (isTextEmpty == true ? View.GONE : View.VISIBLE)}"
             tools:text="我傳的訊息隨便啦我都可以不要"
             android:background="@drawable/shape_bubble_received"
             android:textColor="@android:color/white"
@@ -88,6 +101,7 @@
             app:time="@{message.time}"
             android:alpha="0.7"
             android:textSize="13sp"
+            android:visibility="@{isOwner == false  ? View.GONE : (isTextEmpty == true ? View.GONE : View.VISIBLE)}"
             android:layout_marginEnd="3dp"
             android:layout_marginBottom="3dp"
             app:layout_constraintEnd_toStartOf="@id/textview_chat_received"
@@ -102,6 +116,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginBottom="10dp"
+            android:visibility="@{isOwner == true ? View.GONE : (isImageEmpty == true ? View.GONE : View.VISIBLE)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/image_chat_sender"
             app:layout_constraintTop_toTopOf="parent">
@@ -124,6 +139,7 @@
             app:time="@{message.time}"
             android:layout_marginBottom="3dp"
             android:textSize="13sp"
+            android:visibility="@{isOwner == true ? View.GONE : (isImageEmpty == true ? View.GONE : View.VISIBLE)}"
             app:layout_constraintStart_toEndOf="@id/image_chat_send"
             app:layout_constraintBottom_toBottomOf="@id/image_chat_send"
             tools:text="09:23"/>
@@ -134,6 +150,7 @@
             android:layout_width="220dp"
             android:layout_height="220dp"
             app:cardCornerRadius="6dp"
+            android:visibility="@{isOwner == false ? View.GONE : (isImageEmpty == true ? View.GONE : View.VISIBLE)}"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="10dp"
             android:layout_marginEnd="8dp"
@@ -156,6 +173,7 @@
             app:time="@{message.time}"
             android:alpha="0.7"
             android:textSize="13sp"
+            android:visibility="@{isOwner == false ? View.GONE : (isImageEmpty == true ? View.GONE : View.VISIBLE)}"
             android:layout_marginEnd="3dp"
             android:layout_marginBottom="3dp"
             app:layout_constraintEnd_toStartOf="@id/image_chat_received"

@@ -1,13 +1,11 @@
 package com.eric.phoneauction
 
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Base64
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -23,7 +21,10 @@ import com.facebook.login.LoginResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_login.*
+import java.security.MessageDigest
+import java.security.NoSuchAlgorithmException
 import java.util.*
+
 
 @Suppress("DEPRECATION")
 class LoginActivity : AppCompatActivity() {
@@ -47,7 +48,7 @@ class LoginActivity : AppCompatActivity() {
 
         viewModel.status.observe(this, androidx.lifecycle.Observer {
             it?.let {
-                when(it) {
+                when (it) {
                     LoadApiStatus.LOADING -> {
                         binding.progressBarLogin.visibility = View.VISIBLE
                         binding.viewLoadingBg.visibility = View.VISIBLE
@@ -59,7 +60,6 @@ class LoginActivity : AppCompatActivity() {
         })
 
         callbackManager = CallbackManager.Factory.create()
-
     }
 
     override fun onStart() {
@@ -67,8 +67,7 @@ class LoginActivity : AppCompatActivity() {
         moveMainPage(auth?.currentUser)
     }
 
-
-    fun facebookLogin(){
+    fun facebookLogin() {
         LoginManager.getInstance()
             .logInWithReadPermissions(this, Arrays.asList("public_profile","email"))
 
@@ -77,17 +76,13 @@ class LoginActivity : AppCompatActivity() {
                 override fun onSuccess(result: LoginResult?) {
                     //Second step
                     viewModel.handleFacebookAccessToken(result?.accessToken)
-
                 }
 
                 override fun onCancel() {
-
                 }
 
                 override fun onError(error: FacebookException?) {
-
                 }
-
             })
     }
 
@@ -96,8 +91,8 @@ class LoginActivity : AppCompatActivity() {
         callbackManager?.onActivityResult(requestCode,resultCode,data)
     }
 
-    fun moveMainPage(user:FirebaseUser?){
-        if(user != null){
+    private fun moveMainPage(user:FirebaseUser?) {
+        if (user != null) {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()

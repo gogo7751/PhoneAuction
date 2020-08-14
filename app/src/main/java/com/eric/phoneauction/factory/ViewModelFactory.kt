@@ -4,18 +4,18 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.eric.phoneauction.LoginViewModel
 import com.eric.phoneauction.MainViewModel
-import com.eric.phoneauction.chatFragment.ChatViewModel
+import com.eric.phoneauction.chat.ChatViewModel
 import com.eric.phoneauction.checkout.CheckoutSuccessViewModel
-import com.eric.phoneauction.collectionFragment.CollectionViewModel
+import com.eric.phoneauction.collection.CollectionViewModel
 import com.eric.phoneauction.data.source.PhoneAuctionRepository
-import com.eric.phoneauction.homeFragment.HomeViewModel
-import com.eric.phoneauction.notificationFragment.NotificationViewModel
-import com.eric.phoneauction.onAuctionFragment.OnAuctionViewModel
-import com.eric.phoneauction.onPostFragment.OnPostViewModel
-import com.eric.phoneauction.postFragment.PostViewModel
-import com.eric.phoneauction.profileFragment.ProfileViewModel
-import com.eric.phoneauction.purchasedFragment.PurchasedViewModel
-import com.eric.phoneauction.wishListFragment.WishListViewModel
+import com.eric.phoneauction.home.HomeViewModel
+import com.eric.phoneauction.notification.NotificationViewModel
+import com.eric.phoneauction.onAuction.OnAuctionViewModel
+import com.eric.phoneauction.onPost.OnPostViewModel
+import com.eric.phoneauction.post.PostViewModel
+import com.eric.phoneauction.profile.ProfileViewModel
+import com.eric.phoneauction.purchased.PurchasedViewModel
+import com.eric.phoneauction.wishList.WishListViewModel
 import java.lang.IllegalArgumentException
 
 @Suppress("UNCHECKED_CAST")

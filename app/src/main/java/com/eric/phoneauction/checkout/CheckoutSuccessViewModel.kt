@@ -18,20 +18,15 @@ class CheckoutSuccessViewModel(phoneAuctionRepository: PhoneAuctionRepository): 
     val navigateToHome: LiveData<Boolean>
         get() = _navigateToHome
 
-
     private val _error = MutableLiveData<String>()
 
     val error: LiveData<String>
         get() = _error
 
-
     init {
         Logger.i("------------------------------------")
         Logger.i("[${this::class.simpleName}]${this}")
         Logger.i("------------------------------------")
-
-//        createCoupons(arguments.id, arguments.birthday, arguments.member)
-
     }
 
     fun navigateToHome() {
@@ -41,6 +36,4 @@ class CheckoutSuccessViewModel(phoneAuctionRepository: PhoneAuctionRepository): 
     fun onHomeNavigated() {
         _navigateToHome.value = null
     }
-
-
 }

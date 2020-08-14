@@ -6,7 +6,8 @@
     <data>
         <variable
             name="viewModel"
-            type="com.eric.phoneauction.purchasedFragment.PurchasedViewModel" />
+            type="com.eric.phoneauction.purchased.PurchasedViewModel" />
+        <import type="android.view.View"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -64,6 +65,7 @@
             android:text="沒有購買紀錄"
             android:letterSpacing="0.15"
             android:alpha="0.8"
+            android:visibility="@{viewModel.isNotEmpty() == true ? View.GONE : View.VISIBLE}"
             android:textColor="@color/gary757575"
             tools:visibility="gone" />
 
@@ -79,10 +81,6 @@
             app:layout_constraintTop_toBottomOf="@id/layout_purchased_header"
             tools:listitem="@layout/item_notification"/>
 
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
 </layout>

@@ -4,7 +4,7 @@ import android.util.Log
 import com.eric.phoneauction.BuildConfig
 
 /**
- * Created by Wayne Chen on 2020-01-15.
+ * Created by Eric Chang in Jul. 2020.
  */
 object Logger {
 
