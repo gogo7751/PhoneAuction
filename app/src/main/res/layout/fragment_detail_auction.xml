@@ -341,7 +341,7 @@
             android:fontFamily="@font/noto_sans"
             android:letterSpacing="0.15"
             android:text="對話"
-            android:visibility="@{viewModel.event.isDealDone == false &amp;&amp; viewModel.isBuyerId() == false ? View.VISIBLE : View.GONE}"
+            android:visibility="@{viewModel.event.isDealDone == false &amp;&amp; viewModel.isBuyerId() == false ? View.VISIBLE : View.VISIBLE}"
             android:textColor="@android:color/white"
             android:onClick="@{() -> viewModel.navigateToDetailChat(viewModel.event)}"
             android:textSize="18dp"

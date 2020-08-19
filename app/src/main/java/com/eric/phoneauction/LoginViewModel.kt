@@ -16,7 +16,6 @@ import kotlinx.coroutines.launch
 
 class LoginViewModel(val phoneAuctionRepository: PhoneAuctionRepository) : ViewModel() {
 
-
     // status: The internal MutableLiveData that stores the status of the most recent request
     private val _status = MutableLiveData<LoadApiStatus>()
 
@@ -41,13 +40,11 @@ class LoginViewModel(val phoneAuctionRepository: PhoneAuctionRepository) : ViewM
     // the Coroutine runs using the Main (UI) dispatcher
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
-
     init {
         Logger.i("------------------------------------")
         Logger.i("[${this::class.simpleName}]${this}")
         Logger.i("------------------------------------")
     }
-
 
     override fun onCleared() {
         super.onCleared()
@@ -79,7 +76,5 @@ class LoginViewModel(val phoneAuctionRepository: PhoneAuctionRepository) : ViewM
                 }
             }
         }
-
     }
-
 }

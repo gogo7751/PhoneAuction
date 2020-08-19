@@ -327,12 +327,11 @@
             android:text="對話"
             android:textColor="@android:color/white"
             android:textSize="18dp"
-            android:visibility="@{viewModel.event.isDealDone == false ? View.VISIBLE : View.GONE}"
+            android:visibility="@{viewModel.event.isDealDone == false ? View.VISIBLE : View.VISIBLE}"
             android:onClick="@{() -> viewModel.navigateToDetailChat(viewModel.event)}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="@+id/view_detail_direct_bg"
             app:layout_constraintTop_toTopOf="@+id/view_detail_direct_bg" />
-
         <Button
             android:id="@+id/button_rePost"
             android:layout_width="100dp"

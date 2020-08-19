@@ -38,7 +38,7 @@ class HomeFragment : Fragment() {
         val adapter = HomeAdapter(HomeAdapter.OnClickListener{
             viewModel.navigateToDetail(it)
         }, viewModel)
-//        adapter.setHasStableIds(true)
+        adapter.setHasStableIds(true)
         binding.recyclerviewHome.adapter = adapter
 
         viewModel.refreshStatus.observe(viewLifecycleOwner, Observer {
