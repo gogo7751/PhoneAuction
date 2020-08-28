@@ -32,6 +32,8 @@ class MainViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
     // countInCart: Count number for bottom badge
     val countInCart: LiveData<Int> = Transformations.map(notifications) { it.size }
 
+    val countBadge = MutableLiveData<Int>()
+
     // error: The internal MutableLiveData that stores the error of the most recent request
     private val _error = MutableLiveData<String>()
 
@@ -125,6 +127,14 @@ class MainViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
                 }
             }
         }
+    }
+
+    fun getBadge(countInCart: Int) {
+        countBadge.value = countInCart
+    }
+
+    fun clearBadge() {
+        countBadge.value = 0
     }
 
     fun refresh() {

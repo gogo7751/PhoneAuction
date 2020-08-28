@@ -87,12 +87,10 @@ fun bindDisplayFormatTime(textView: TextView, time: Long?) {
     textView.text = time?.let { TimeUtil.StampToDate(it) }
 }
 
-
 @BindingAdapter("time")
 fun bindDisplayFormatTimeDetail(textView: TextView, time: Long?) {
     textView.text = time?.toDisplayFormat()
 }
-
 
 @BindingAdapter("images")
 fun bindRecyclerViewWithImages(recyclerView: RecyclerView, images: List<String>?) {

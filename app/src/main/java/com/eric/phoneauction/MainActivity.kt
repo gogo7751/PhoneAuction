@@ -4,12 +4,15 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.KeyEvent
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
@@ -25,10 +28,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlin.system.exitProcess
 
-
 @Suppress("DEPRECATED_IDENTITY_EQUALS")
 class MainActivity : AppCompatActivity() {
-
 
     val viewModel by viewModels<MainViewModel> { getVmFactory() }
     private lateinit var binding: ActivityMainBinding
@@ -38,7 +39,6 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         setupBottomNav()
-//        setupNavController()
         viewModel.postUser(UserManager.user)
         viewModel.getUser()
 
@@ -55,6 +55,10 @@ class MainActivity : AppCompatActivity() {
             it?.let {
                 UserManager.user = it
             }
+        })
+
+        viewModel.countInCart.observe(this, Observer {
+            viewModel.getBadge(it)
         })
     }
 
@@ -75,6 +79,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.navigation_notification -> {
                     findNavController(R.id.myNavHostFragment).navigate(NavigationDirections.actionGlobalNotificationFragment())
+                    viewModel.clearBadge()
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.navigation_profile -> {
@@ -91,6 +96,13 @@ class MainActivity : AppCompatActivity() {
         val count =
             manager.findFragmentById(R.id.myNavHostFragment)?.childFragmentManager?.backStackEntryCount
 
+        val postFragment = findViewById<View>(R.id.postFragment)
+
+        if (postFragment == manager.findFragmentById(R.id.postFragment)) {
+            findNavController(R.id.myNavHostFragment).navigate(NavigationDirections.actionGlobalHomeFragment())
+            return
+        }
+
         if (count == 0) {
             if (doubleBackToExitPressedOnce) {
                 super.onBackPressed()
@@ -105,20 +117,6 @@ class MainActivity : AppCompatActivity() {
             super.onBackPressed()
         }
     }
-
-//    private fun setupNavController() {
-//        findNavController(R.id.myNavHostFragment).addOnDestinationChangedListener { _: NavController, nd: NavDestination, _: Bundle? ->
-//            binding.bottomNavView.selectedItemId = when (nd.id) {
-//                R.id.homeFragment -> R.id.navigation_home
-//                R.id.chatFragment -> R.id.navigation_chat
-//                R.id.postFragment -> R.id.navigation_post
-//                R.id.notificationFragment -> R.id.navigation_notification
-//                R.id.profileFragment -> R.id.navigation_profile
-//                else -> R.id.homeFragment
-//            }
-//        }
-//        Logger.d("binding.bottomNavView.selectedItemId = ${binding.bottomNavView.selectedItemId}")
-//    }
 
     private fun setupBottomNav() {
         binding.bottomNavView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)

@@ -72,5 +72,4 @@ class DetailChatAdapter(val viewModel: DetailChatViewModel) :
         val message = getItem(position)
         holder.bind(message, viewModel)
     }
-
 }

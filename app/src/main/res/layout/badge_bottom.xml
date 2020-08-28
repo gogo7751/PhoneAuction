@@ -20,6 +20,6 @@
             android:minWidth="20dp"
             android:textColor="@color/white"
             android:textSize="12sp"
-            android:text="@{String.valueOf(viewModel.countInCart)}"
-            android:visibility="@{viewModel.countInCart > 0 ? View.VISIBLE : View.GONE}"/>
+            android:text="@{String.valueOf(viewModel.countBadge)}"
+            android:visibility="@{viewModel.countBadge > 0 ? View.VISIBLE : View.GONE}"/>
 </layout>

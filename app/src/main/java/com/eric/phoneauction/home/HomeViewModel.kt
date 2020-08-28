@@ -27,9 +27,13 @@ class HomeViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
 
     var liveEvents = MutableLiveData<List<Event>>()
 
-    val isAuction = MutableLiveData<Boolean>()
+    val isAuction = MutableLiveData<Boolean>().apply {
+        value = false
+    }
 
-    val isDirect = MutableLiveData<Boolean>()
+    val isDirect = MutableLiveData<Boolean>().apply {
+        value = false
+    }
 
     val editSearch = MutableLiveData<String>()
 
@@ -375,20 +379,26 @@ class HomeViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
     }
 
     fun getAuctionSort() {
-        isDirect.value = true
-        isAuction.value = false
+        isDirect.value = false
+        isAuction.value = true
+        Logger.d("isDirect=${isDirect.value}")
+        Logger.d("isAuction=${isAuction.value}")
         getAuctionResult()
     }
 
     fun getDirectSort() {
         isDirect.value = true
         isAuction.value = false
+        Logger.d("isDirect=${isDirect.value}")
+        Logger.d("isAuction=${isAuction.value}")
         getDirectResult()
     }
 
     fun getAllSort() {
         isDirect.value = false
         isAuction.value = false
+        Logger.d("isDirect=${isDirect.value}")
+        Logger.d("isAuction=${isAuction.value}")
         getEventsResult()
     }
 
