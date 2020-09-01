@@ -11,6 +11,7 @@ import com.eric.phoneauction.data.Notification
 import com.eric.phoneauction.data.UserManager
 import com.eric.phoneauction.data.source.PhoneAuctionRepository
 import com.eric.phoneauction.util.Logger
+import com.eric.phoneauction.util.Util.getString
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -28,12 +29,19 @@ class AuctionViewModel(
     val event: LiveData<Event>
         get() = _event
 
-    var buyUser = MutableLiveData<String>()
+    val isBuyerId = _event.value?.buyerId == UserManager.userId
+    val isSellerId = _event.value?.sellerId == UserManager.userId
 
-    private val _notification = MutableLiveData<Notification>()
+    private val _notification = MutableLiveData<Notification>().apply {
+        value = Notification()
+    }
 
     val notification: LiveData<Notification>
         get() = _notification
+
+    val price = MutableLiveData<Int>().apply {
+        value = _event.value?.price
+    }
 
     // Handle leave auction
     private val _leave = MutableLiveData<Boolean>()
@@ -41,16 +49,11 @@ class AuctionViewModel(
     val leave: LiveData<Boolean>
         get() = _leave
 
-    val price = MutableLiveData<Int>().apply {
-        value = event.value?.price
-    }
-
     // Handle navigation to checkoutSuccess
-    private val _navigateToCheckoutSuccess = MutableLiveData<Event>()
+    private val _navigateToCheckout = MutableLiveData<Event>()
 
-    val navigateToCheckoutSuccess: LiveData<Event>
-        get() = _navigateToCheckoutSuccess
-
+    val navigateToCheckout: LiveData<Event>
+        get() = _navigateToCheckout
 
     // status: The internal MutableLiveData that stores the status of the most recent request
     private val _status = MutableLiveData<LoadApiStatus>()
@@ -70,20 +73,16 @@ class AuctionViewModel(
     val refreshStatus: LiveData<Boolean>
         get() = _refreshStatus
 
-
     // Create a Coroutine scope using a job to be able to cancel when needed
     private var viewModelJob = Job()
 
     // the Coroutine runs using the Main (UI) dispatcher
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
-
-
     init {
         Logger.i("------------------------------------")
         Logger.i("[${this::class.simpleName}]${this}")
         Logger.i("------------------------------------")
-        buyUser.value = event.value?.buyUser
     }
 
     override fun onCleared() {
@@ -91,27 +90,27 @@ class AuctionViewModel(
         viewModelJob.cancel()
     }
 
-    fun getNotification(title: String): Notification{
+    private fun getNotificationData(title: String): Notification{
         return Notification(
-                id = "",
-                title = title,
-                time = -1,
-                brand = event.value?.brand.toString(),
-                name = event.value?.productName.toString(),
-                image = event.value?.images?.component1().toString(),
-                storage = event.value?.storage.toString(),
-                visibility = true,
-                event = event.value
+                "",
+                title,
+                -1,
+                event.value?.brand.toString(),
+                event.value?.productName.toString(),
+                event.value?.images?.component1().toString(),
+                event.value?.storage.toString(),
+                true,
+                event.value.apply { event.value?.price = price.value as Int }
         )
     }
 
-    fun postNotification(notification: Notification, user: String) {
+    private fun postNotification(notification: Notification, userId: String) {
 
         coroutineScope.launch {
 
             _status.value = LoadApiStatus.LOADING
 
-            when (val result = phoneAuctionRepository.postNotification(notification, user)) {
+            when (val result = phoneAuctionRepository.postNotification(notification, userId)) {
                 is com.eric.phoneauction.data.Result.Success -> {
                     _error.value = null
                     _status.value = LoadApiStatus.DONE
@@ -132,8 +131,7 @@ class AuctionViewModel(
         }
     }
 
-
-    fun postAuction(event: Event, price: Int) {
+    private fun postAuction(event: Event, price: Int) {
 
         coroutineScope.launch {
 
@@ -160,29 +158,22 @@ class AuctionViewModel(
         }
     }
 
-
     fun addMinimalPrice(originPrice: Int) {
         price.value = originPrice.times(1.01).toInt()
     }
 
-    fun add100() {
-        price.value = price.value?.plus(100)
+    fun addPrice(newPrice: Int) {
+        price.value = price.value?.plus(newPrice)
     }
 
-    fun add300() {
-        price.value = price.value?.plus(300)
+    fun navigateToCheckout(event: Event) {
+        if (event.buyerId != "") {
+            postNotification(getNotificationData(getString(R.string.bid_over)), event.buyerId)
+        }
+        postAuction(event, price.value as Int)
+        postNotification(getNotificationData(getString(R.string.bid_someone)), event.sellerId)
+        _navigateToCheckout.value = event
     }
-
-    fun add500() {
-        price.value = price.value?.plus(500)
-    }
-
-
-    fun navigateToCheckoutSuccess(event: Event) {
-        _navigateToCheckoutSuccess.value = event
-    }
-
-
 
     fun leave() {
         _leave.value = true
@@ -191,7 +182,6 @@ class AuctionViewModel(
     fun onLeaveCompleted() {
         _leave.value = null
     }
-
 
     fun nothing() {}
 }

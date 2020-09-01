@@ -5,9 +5,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.eric.phoneauction.auctionDialog.AuctionViewModel
 import com.eric.phoneauction.data.Event
 import com.eric.phoneauction.data.source.PhoneAuctionRepository
-import com.eric.phoneauction.detailAuctionFragment.DetailAuctionViewModel
-import com.eric.phoneauction.detailChatFragment.DetailChatViewModel
-import com.eric.phoneauction.detailDirectFragment.DetailDirectViewModel
+import com.eric.phoneauction.detailAuction.DetailAuctionViewModel
+import com.eric.phoneauction.detailChat.DetailChatViewModel
+import com.eric.phoneauction.detailDirect.DetailDirectViewModel
 import com.eric.phoneauction.directDialog.DirectViewModel
 
 @Suppress("UNCHECKED_CAST")

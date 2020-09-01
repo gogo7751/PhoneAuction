@@ -1,35 +1,26 @@
 package com.eric.phoneauction.data.remote
 
-import android.content.Context
-import android.content.Intent
 import android.icu.util.Calendar
+import android.net.Uri
 import android.os.Build
-import android.view.View
-import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.MutableLiveData
-import com.eric.phoneauction.LoginActivity
-import com.eric.phoneauction.MainActivity
 import com.eric.phoneauction.PhoneAuctionApplication
 import com.eric.phoneauction.R
 import com.eric.phoneauction.data.*
 import com.eric.phoneauction.data.Collection
 import com.eric.phoneauction.data.source.PhoneAuctionDataSource
 import com.eric.phoneauction.util.Logger
+import com.eric.phoneauction.util.Util.getString
 import com.facebook.AccessToken
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
-import kotlinx.android.synthetic.main.activity_main.*
-import java.util.logging.Handler
+import com.google.firebase.storage.FirebaseStorage
+import java.util.*
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
-
 
 object PhoneAuctionRemoteDataSource :
     PhoneAuctionDataSource {
@@ -42,17 +33,18 @@ object PhoneAuctionRemoteDataSource :
     private const val KEY_CREATED_TIME = "createdTime"
     private const val PATH_COLLECTION = "collections"
     private const val PATH_WISH_LIST = "wishLists"
+    private const val PATH_IMAGE = "images"
 
     override suspend fun getEvents(): Result<List<Event>> = suspendCoroutine { continuation ->
         FirebaseFirestore.getInstance()
             .collection(PATH_EVENTS)
-            .whereEqualTo("deal", true)
+            .whereEqualTo("isDealDone", true)
             .orderBy(KEY_CREATED_TIME, Query.Direction.DESCENDING)
             .get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val list = mutableListOf<Event>()
-                    for (document in task.result!!) {
+                    task.result?.forEach { document ->
                         Logger.d(document.id + " => " + document.data)
 
                         val event = document.toObject(Event::class.java)
@@ -79,7 +71,7 @@ object PhoneAuctionRemoteDataSource :
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     var user1 = UserManager.user
-                    for (document in task.result!!) {
+                    task.result?.forEach { document ->
                         val user = com.eric.phoneauction.data.User(
                             id = document.getString("id") as String,
                             image = document.getString("image") as String,
@@ -100,12 +92,12 @@ object PhoneAuctionRemoteDataSource :
             }
     }
 
-    override fun getLiveEvent(deal: Boolean): MutableLiveData<List<Event>> {
+    override fun getLiveEvent(isDealDone: Boolean): MutableLiveData<List<Event>> {
         val liveData = MutableLiveData<List<Event>>()
 
         FirebaseFirestore.getInstance()
             .collection(PATH_EVENTS)
-            .whereEqualTo("deal", deal)
+            .whereEqualTo("isDealDone", isDealDone)
             .orderBy(KEY_CREATED_TIME, Query.Direction.DESCENDING)
             .addSnapshotListener { snapshot, exception ->
 
@@ -116,10 +108,12 @@ object PhoneAuctionRemoteDataSource :
                 }
 
                 val list = mutableListOf<Event>()
-                for (document in snapshot!!) {
-                    Logger.d(document.id + " => " + document.data)
-                    val event = document.toObject(Event::class.java)
-                    list.add(event)
+                if (snapshot != null) {
+                    for (document in snapshot) {
+                        Logger.d(document.id + " => " + document.data)
+                        val event = document.toObject(Event::class.java)
+                        list.add(event)
+                    }
                 }
 
                 liveData.value = list
@@ -130,13 +124,13 @@ object PhoneAuctionRemoteDataSource :
     override suspend fun getAuction(): Result<List<Event>> = suspendCoroutine { continuation ->
         FirebaseFirestore.getInstance()
             .collection(PATH_EVENTS)
-            .whereEqualTo("tag", "拍賣")
-            .whereEqualTo("deal", true)
+            .whereEqualTo("tag", getString(R.string.auction_tag))
+            .whereEqualTo("isDealDone", true)
             .get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val list = mutableListOf<Event>()
-                    for (document in task.result!!) {
+                    task.result?.forEach { document ->
                         Logger.d(document.id + " => " + document.data)
 
                         val event = document.toObject(Event::class.java)
@@ -158,13 +152,13 @@ object PhoneAuctionRemoteDataSource :
     override suspend fun getDirect(): Result<List<Event>> = suspendCoroutine { continuation ->
         FirebaseFirestore.getInstance()
             .collection(PATH_EVENTS)
-            .whereEqualTo("tag", "直購")
-            .whereEqualTo("deal", true)
+            .whereEqualTo("tag", getString(R.string.direct_tag))
+            .whereEqualTo("isDealDone", true)
             .get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val list = mutableListOf<Event>()
-                    for (document in task.result!!) {
+                    task.result?.forEach { document ->
                         Logger.d(document.id + " => " + document.data)
                         val event = document.toObject(Event::class.java)
                         list.add(event)
@@ -181,18 +175,22 @@ object PhoneAuctionRemoteDataSource :
             }
     }
 
-    override suspend fun getSortWithTag(tag: String, sort: String, query: Query.Direction): Result<List<Event>> = suspendCoroutine { continuation ->
+    override suspend fun getSortWithTag(
+        tag: String,
+        sort: String,
+        query: Query.Direction
+    ): Result<List<Event>> = suspendCoroutine { continuation ->
 
         FirebaseFirestore.getInstance()
             .collection(PATH_EVENTS)
-            .whereEqualTo("deal", true)
+            .whereEqualTo("isDealDone", true)
             .whereEqualTo("tag", tag)
             .orderBy(sort, query)
             .get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val list = mutableListOf<Event>()
-                    for (document in task.result!!) {
+                    task.result?.forEach { document ->
                         Logger.d(document.id + " => " + document.data)
                         val event = document.toObject(Event::class.java)
                         list.add(event)
@@ -209,32 +207,33 @@ object PhoneAuctionRemoteDataSource :
             }
     }
 
-    override suspend fun getSort(sort: String, query: Query.Direction): Result<List<Event>> = suspendCoroutine { continuation ->
+    override suspend fun getSort(sort: String, query: Query.Direction): Result<List<Event>> =
+        suspendCoroutine { continuation ->
 
-        FirebaseFirestore.getInstance()
-            .collection(PATH_EVENTS)
-            .whereEqualTo("deal", true)
-            .orderBy(sort, query)
-            .get()
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val list = mutableListOf<Event>()
-                    for (document in task.result!!) {
-                        Logger.d(document.id + " => " + document.data)
-                        val event = document.toObject(Event::class.java)
-                        list.add(event)
+            FirebaseFirestore.getInstance()
+                .collection(PATH_EVENTS)
+                .whereEqualTo("isDealDone", true)
+                .orderBy(sort, query)
+                .get()
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val list = mutableListOf<Event>()
+                        task.result?.forEach { document ->
+                            Logger.d(document.id + " => " + document.data)
+                            val event = document.toObject(Event::class.java)
+                            list.add(event)
+                        }
+                        continuation.resume(Result.Success(list))
+                    } else {
+                        task.exception?.let {
+                            Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
+                            continuation.resume(Result.Error(it))
+                            return@addOnCompleteListener
+                        }
+                        continuation.resume(Result.Fail(PhoneAuctionApplication.instance.getString(R.string.you_know_nothing)))
                     }
-                    continuation.resume(Result.Success(list))
-                } else {
-                    task.exception?.let {
-                        Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
-                        continuation.resume(Result.Error(it))
-                        return@addOnCompleteListener
-                    }
-                    continuation.resume(Result.Fail(PhoneAuctionApplication.instance.getString(R.string.you_know_nothing)))
                 }
-            }
-    }
+        }
 
     override suspend fun getNotification(): Result<List<Notification>> =
         suspendCoroutine { continuation ->
@@ -247,7 +246,7 @@ object PhoneAuctionRemoteDataSource :
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
                             val list = mutableListOf<Notification>()
-                            for (document in task.result!!) {
+                            task.result?.forEach { document ->
                                 Logger.d(document.id + " => " + document.data)
                                 val notification = document.toObject(Notification::class.java)
                                 list.add(notification)
@@ -290,10 +289,12 @@ object PhoneAuctionRemoteDataSource :
                     }
 
                     val list = mutableListOf<Notification>()
-                    for (document in snapshot!!) {
-                        Logger.d(document.id + " => " + document.data)
-                        val notification = document.toObject(Notification::class.java)
-                        list.add(notification)
+                    if (snapshot != null) {
+                        for (document in snapshot) {
+                            Logger.d(document.id + " => " + document.data)
+                            val notification = document.toObject(Notification::class.java)
+                            list.add(notification)
+                        }
                     }
 
                     liveData.value = list
@@ -317,10 +318,12 @@ object PhoneAuctionRemoteDataSource :
                 }
 
                 val list = mutableListOf<ChatRoom>()
-                for (document in snapshot!!) {
-                    Logger.d(document.id + " => " + document.data)
-                    val chatRoom = document.toObject(ChatRoom::class.java)
-                    list.add(chatRoom)
+                if (snapshot != null) {
+                    for (document in snapshot) {
+                        Logger.d(document.id + " => " + document.data)
+                        val chatRoom = document.toObject(ChatRoom::class.java)
+                        list.add(chatRoom)
+                    }
                 }
 
                 liveData.value = list
@@ -328,7 +331,7 @@ object PhoneAuctionRemoteDataSource :
         return liveData
     }
 
-    override fun getLiveMessage(documentId: String): MutableLiveData<List<Message>>  {
+    override fun getLiveMessage(documentId: String): MutableLiveData<List<Message>> {
         val liveData = MutableLiveData<List<Message>>()
         FirebaseFirestore.getInstance()
             .collection(PATH_CHAT_ROOM)
@@ -344,10 +347,12 @@ object PhoneAuctionRemoteDataSource :
                 }
 
                 val list = mutableListOf<Message>()
-                for (document in snapshot!!) {
-                    Logger.d(document.id + " => " + document.data)
-                    val chatRoom = document.toObject(Message::class.java)
-                    list.add(chatRoom)
+                if (snapshot != null) {
+                    for (document in snapshot) {
+                        Logger.d(document.id + " => " + document.data)
+                        val chatRoom = document.toObject(Message::class.java)
+                        list.add(chatRoom)
+                    }
                 }
 
                 liveData.value = list
@@ -359,9 +364,6 @@ object PhoneAuctionRemoteDataSource :
     override suspend fun post(event: Event): Result<Boolean> = suspendCoroutine { continuation ->
         val events = FirebaseFirestore.getInstance().collection(PATH_EVENTS)
         val document = events.document(event.id)
-
-        event.createdTime = Calendar.getInstance().timeInMillis
-        event.endTime = Calendar.getInstance().timeInMillis + 259200000
 
         document
             .set(event)
@@ -386,7 +388,7 @@ object PhoneAuctionRemoteDataSource :
 
             events
                 .document(event.id)
-                .update("price", price, "buyUser", UserManager.userId)
+                .update("price", price, "buyerId", UserManager.userId)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         Logger.i("PhoneAuction: $event")
@@ -408,7 +410,7 @@ object PhoneAuctionRemoteDataSource :
             val events = FirebaseFirestore.getInstance().collection(PATH_EVENTS).document(event.id)
 
             events
-                .update("deal", false, "buyUser", UserManager.userId)
+                .update("isDealDone", false, "buyerId", UserManager.userId)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         Logger.i("PhoneAuction: $event")
@@ -428,7 +430,7 @@ object PhoneAuctionRemoteDataSource :
         }
 
 
-    override suspend fun finishAuction(event: Event): Result<Boolean>  =
+    override suspend fun finishAuction(event: Event): Result<Boolean> =
 
         suspendCoroutine { continuation ->
             val events = FirebaseFirestore.getInstance().collection(PATH_EVENTS)
@@ -436,7 +438,7 @@ object PhoneAuctionRemoteDataSource :
             val document = events.document(event.id)
 
             document
-                .update("deal", false)
+                .update("isDealDone", false)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         Logger.i("PhoneAuction: $event")
@@ -496,15 +498,16 @@ object PhoneAuctionRemoteDataSource :
     @RequiresApi(Build.VERSION_CODES.N)
     override suspend fun postNotification(
         notification: Notification,
-        buyUser: String
+        buyerId: String
     ): Result<Boolean> = suspendCoroutine { continuation ->
 
         val notifications =
-            FirebaseFirestore.getInstance().collection(PATH_USER).document(buyUser).collection(PATH_NOTIFICATION)
+            FirebaseFirestore.getInstance().collection(PATH_USER).document(buyerId)
+                .collection(PATH_NOTIFICATION)
         val document = notifications.document()
 
 
-        notification.event?.buyUser = UserManager.userId.toString()
+//        notification.event?.buyerId = UserManager.userId.toString()
         notification.id = document.id
         notification.time = Calendar.getInstance().timeInMillis
 
@@ -554,7 +557,6 @@ object PhoneAuctionRemoteDataSource :
         }
 
 
-
     @RequiresApi(Build.VERSION_CODES.N)
     override suspend fun postChatRoom(chatRoom: ChatRoom): Result<Boolean> =
         suspendCoroutine { continuation ->
@@ -597,7 +599,6 @@ object PhoneAuctionRemoteDataSource :
         }
 
 
-
     @RequiresApi(Build.VERSION_CODES.N)
     override suspend fun postMessage(message: Message, document: String): Result<Boolean> =
         suspendCoroutine { continuation ->
@@ -605,13 +606,14 @@ object PhoneAuctionRemoteDataSource :
             val messages =
                 FirebaseFirestore.getInstance().collection(PATH_CHAT_ROOM).document(document)
                     .collection(PATH_MESSAGE)
-            val updateMessages = FirebaseFirestore.getInstance().collection(PATH_CHAT_ROOM).document(document)
+            val updateMessages =
+                FirebaseFirestore.getInstance().collection(PATH_CHAT_ROOM).document(document)
             val document = messages.document()
 
             message.time = Calendar.getInstance().timeInMillis
 
             updateMessages
-                .update("text", message.text , "time", message.time)
+                .update("text", message.text, "time", message.time)
 
             document
                 .set(message)
@@ -636,7 +638,7 @@ object PhoneAuctionRemoteDataSource :
                 }
         }
 
-    override suspend fun deleteChatRoom(chatRoomId: String): Result<Boolean>  =
+    override suspend fun deleteChatRoom(chatRoomId: String): Result<Boolean> =
         suspendCoroutine { continuation ->
 
             val chatRooms = FirebaseFirestore.getInstance().collection(PATH_CHAT_ROOM)
@@ -693,68 +695,82 @@ object PhoneAuctionRemoteDataSource :
                 }
         }
 
-    override suspend fun getCollection(id: String): Result<Collection> = suspendCoroutine { continuation ->
-        UserManager.userId?.let {
-            FirebaseFirestore.getInstance()
-                .collection(PATH_USER)
-                .document(it)
-                .collection(PATH_COLLECTION)
-                .whereEqualTo("id", id)
-                .whereEqualTo("visibility", true)
-                .get()
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        var getCollection = Collection()
-                        for (document in task.result!!) {
-                            Logger.d(document.id + " => " + document.data)
+    override suspend fun getCollection(id: String): Result<Collection> =
+        suspendCoroutine { continuation ->
+            UserManager.userId?.let {
+                FirebaseFirestore.getInstance()
+                    .collection(PATH_USER)
+                    .document(it)
+                    .collection(PATH_COLLECTION)
+                    .whereEqualTo("id", id)
+                    .whereEqualTo("visibility", true)
+                    .get()
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            var getCollection = Collection()
+                            task.result?.forEach { document ->
+                                Logger.d(document.id + " => " + document.data)
 
-                            val collection = document.toObject(Collection::class.java)
-                            getCollection = collection
-                        }
-                        continuation.resume(Result.Success(getCollection))
-                    } else {
-                        task.exception?.let {
+                                val collection = document.toObject(Collection::class.java)
+                                getCollection = collection
+                            }
+                            continuation.resume(Result.Success(getCollection))
+                        } else {
+                            task.exception?.let {
 
-                            Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
-                            continuation.resume(Result.Error(it))
-                            return@addOnCompleteListener
+                                Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
+                                continuation.resume(Result.Error(it))
+                                return@addOnCompleteListener
+                            }
+                            continuation.resume(
+                                Result.Fail(
+                                    PhoneAuctionApplication.instance.getString(
+                                        R.string.you_know_nothing
+                                    )
+                                )
+                            )
                         }
-                        continuation.resume(Result.Fail(PhoneAuctionApplication.instance.getString(R.string.you_know_nothing)))
                     }
-                }
+            }
         }
-    }
 
-    override suspend fun getAllCollection(): Result<List<Collection>> = suspendCoroutine { continuation ->
-        UserManager.userId?.let {
-            FirebaseFirestore.getInstance()
-                .collection(PATH_USER)
-                .document(it)
-                .collection(PATH_COLLECTION)
-                .whereEqualTo("visibility", true)
-                .get()
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        var list = mutableListOf<Collection>()
-                        for (document in task.result!!) {
-                            Logger.d(document.id + " => " + document.data)
+    override suspend fun getAllCollection(): Result<List<Collection>> =
+        suspendCoroutine { continuation ->
+            UserManager.userId?.let {
+                FirebaseFirestore.getInstance()
+                    .collection(PATH_USER)
+                    .document(it)
+                    .collection(PATH_COLLECTION)
+                    .whereEqualTo("visibility", true)
+                    .get()
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            var list = mutableListOf<Collection>()
+                            task.result?.forEach { document ->
+                                Logger.d(document.id + " => " + document.data)
 
-                            val collection = document.toObject(Collection::class.java)
-                            list.add(collection)
+                                val collection = document.toObject(Collection::class.java)
+                                list.add(collection)
+                            }
+                            continuation.resume(Result.Success(list))
+                        } else {
+                            task.exception?.let {
+
+                                Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
+                                continuation.resume(Result.Error(it))
+                                return@addOnCompleteListener
+                            }
+                            continuation.resume(
+                                Result.Fail(
+                                    PhoneAuctionApplication.instance.getString(
+                                        R.string.you_know_nothing
+                                    )
+                                )
+                            )
                         }
-                        continuation.resume(Result.Success(list))
-                    } else {
-                        task.exception?.let {
-
-                            Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
-                            continuation.resume(Result.Error(it))
-                            return@addOnCompleteListener
-                        }
-                        continuation.resume(Result.Fail(PhoneAuctionApplication.instance.getString(R.string.you_know_nothing)))
                     }
-                }
+            }
         }
-    }
 
     override fun getAllLiveCollection(): MutableLiveData<List<Collection>> {
         val liveData = MutableLiveData<List<Collection>>()
@@ -769,15 +785,17 @@ object PhoneAuctionRemoteDataSource :
 
                     Logger.i("addSnapshotListener detect")
 
-                    exception?.let {
-                        Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
+                    exception?.let { exception ->
+                        Logger.w("[${this::class.simpleName}] Error getting documents. ${exception.message}")
                     }
 
                     val list = mutableListOf<Collection>()
-                    for (document in snapshot!!) {
-                        Logger.d(document.id + " => " + document.data)
-                        val collection = document.toObject(Collection::class.java)
-                        list.add(collection)
+                    if (snapshot != null) {
+                        for (document in snapshot) {
+                            Logger.d(document.id + " => " + document.data)
+                            val collection = document.toObject(Collection::class.java)
+                            list.add(collection)
+                        }
                     }
 
                     liveData.value = list
@@ -791,10 +809,10 @@ object PhoneAuctionRemoteDataSource :
 
         FirebaseFirestore.getInstance()
             .collection(PATH_EVENTS)
-            .whereEqualTo("deal", true)
+            .whereEqualTo("isDealDone", true)
             .orderBy(field)
             .startAt(searchKey.toUpperCase())
-            .endAt(searchKey.toLowerCase()+"\uf8ff")
+            .endAt(searchKey.toLowerCase() + "\uf8ff")
             .addSnapshotListener { snapshot, exception ->
 
                 Logger.i("addSnapshotListener detect")
@@ -804,10 +822,12 @@ object PhoneAuctionRemoteDataSource :
                 }
 
                 val list = mutableListOf<Event>()
-                for (document in snapshot!!) {
-                    Logger.d(document.id + " => " + document.data)
-                    val event = document.toObject(Event::class.java)
-                    list.add(event)
+                if (snapshot != null) {
+                    for (document in snapshot) {
+                        Logger.d(document.id + " => " + document.data)
+                        val event = document.toObject(Event::class.java)
+                        list.add(event)
+                    }
                 }
 
                 liveData.value = list
@@ -815,18 +835,23 @@ object PhoneAuctionRemoteDataSource :
         return liveData
     }
 
-    override suspend fun getAveragePrice(brand: String, productName: String, storage: String, deal: Boolean): Result<List<Event>> = suspendCoroutine { continuation ->
+    override suspend fun getAveragePrice(
+        brand: String,
+        productName: String,
+        storage: String,
+        isDealDone: Boolean
+    ): Result<List<Event>> = suspendCoroutine { continuation ->
         FirebaseFirestore.getInstance()
             .collection(PATH_EVENTS)
             .whereEqualTo("brand", brand)
             .whereEqualTo("productName", productName)
             .whereEqualTo("storage", storage)
-            .whereEqualTo("deal", deal)
+            .whereEqualTo("isDealDone", isDealDone)
             .get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val list = mutableListOf<Event>()
-                    for (document in task.result!!) {
+                    task.result?.forEach { document ->
                         Logger.d(document.id + " => " + document.data)
 
                         val event = document.toObject(Event::class.java)
@@ -845,28 +870,29 @@ object PhoneAuctionRemoteDataSource :
             }
     }
 
-    override suspend fun postWishList(wishList: WishList): Result<Boolean>  = suspendCoroutine { continuation ->
-        val wishLists = FirebaseFirestore.getInstance().collection(PATH_WISH_LIST)
-        val document = wishLists.document()
+    override suspend fun postWishList(wishList: WishList): Result<Boolean> =
+        suspendCoroutine { continuation ->
+            val wishLists = FirebaseFirestore.getInstance().collection(PATH_WISH_LIST)
+            val document = wishLists.document()
 
-        wishList.id = document.id
+            wishList.id = document.id
 
-        document
-            .set(wishList)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    Logger.i("PhoneAuction: $wishList")
-                    continuation.resume(Result.Success(true))
-                } else {
-                    task.exception?.let {
-                        Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
-                        continuation.resume(Result.Error(it))
-                        return@addOnCompleteListener
+            document
+                .set(wishList)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Logger.i("PhoneAuction: $wishList")
+                        continuation.resume(Result.Success(true))
+                    } else {
+                        task.exception?.let {
+                            Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
+                            continuation.resume(Result.Error(it))
+                            return@addOnCompleteListener
+                        }
+                        continuation.resume(Result.Fail(PhoneAuctionApplication.instance.getString(R.string.you_know_nothing)))
                     }
-                    continuation.resume(Result.Fail(PhoneAuctionApplication.instance.getString(R.string.you_know_nothing)))
                 }
-            }
-    }
+        }
 
     override fun getWishList(): MutableLiveData<List<WishList>> {
         val liveData = MutableLiveData<List<WishList>>()
@@ -884,10 +910,12 @@ object PhoneAuctionRemoteDataSource :
                 }
 
                 val list = mutableListOf<WishList>()
-                for (document in snapshot!!) {
-                    Logger.d(document.id + " => " + document.data)
-                    val wishList = document.toObject(WishList::class.java)
-                    list.add(wishList)
+                if (snapshot != null) {
+                    for (document in snapshot) {
+                        Logger.d(document.id + " => " + document.data)
+                        val wishList = document.toObject(WishList::class.java)
+                        list.add(wishList)
+                    }
                 }
 
                 liveData.value = list
@@ -895,7 +923,12 @@ object PhoneAuctionRemoteDataSource :
         return liveData
     }
 
-    override suspend fun getWishListFromPost(brand: String, productName: String, storage: String, visibility: Boolean):
+    override suspend fun getWishListFromPost(
+        brand: String,
+        productName: String,
+        storage: String,
+        visibility: Boolean
+    ):
             Result<WishList> = suspendCoroutine { continuation ->
         FirebaseFirestore.getInstance()
             .collection(PATH_WISH_LIST)
@@ -907,7 +940,7 @@ object PhoneAuctionRemoteDataSource :
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     var list = WishList()
-                    for (document in task.result!!) {
+                    task.result?.forEach { document ->
                         Logger.d(document.id + " => " + document.data)
 
                         val wishList = document.toObject(WishList::class.java)
@@ -926,26 +959,54 @@ object PhoneAuctionRemoteDataSource :
             }
     }
 
-    override suspend fun handleFacebookAccessToken(token: AccessToken?): Result<Boolean> = suspendCoroutine { continuation ->
-        val auth = FirebaseAuth.getInstance()
-        val credential = token?.token?.let { FacebookAuthProvider.getCredential(it) }
-        Logger.d("${token!!.token}")
-        if (credential != null) {
-            auth?.signInWithCredential(credential)
-                ?.addOnCompleteListener {
-                        task ->
-                    if(task.isSuccessful){
-                        val user = User(
-                            id = task.result?.user?.uid.toString(),
-                            image = task.result?.user?.photoUrl.toString(),
-                            name = task.result?.user?.displayName.toString()
-                        )
-                        UserManager.userId = task.result?.user?.uid.toString()
-                        UserManager.user = user
-                        continuation.resume(Result.Success(true))
-                    }else{
-                        task.exception?.let {
+    override suspend fun handleFacebookAccessToken(token: AccessToken?): Result<Boolean> =
+        suspendCoroutine { continuation ->
+            val auth = FirebaseAuth.getInstance()
+            val credential = token?.token?.let { FacebookAuthProvider.getCredential(it) }
 
+            if (credential != null) {
+                auth.signInWithCredential(credential)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            val user = User(
+                                id = task.result?.user?.uid.toString(),
+                                image = task.result?.user?.photoUrl.toString(),
+                                name = task.result?.user?.displayName.toString()
+                            )
+                            UserManager.userId = task.result?.user?.uid.toString()
+                            UserManager.user = user
+                            continuation.resume(Result.Success(true))
+                        } else {
+                            task.exception?.let {
+                                Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
+                                continuation.resume(Result.Error(it))
+                                return@addOnCompleteListener
+                            }
+                            continuation.resume(
+                                Result.Fail(
+                                    PhoneAuctionApplication.instance.getString(
+                                        R.string.you_know_nothing
+                                    )
+                                )
+                            )
+                        }
+                    }
+            }
+        }
+
+    override suspend fun updateWishList(id: String): Result<Boolean> =
+        suspendCoroutine { continuation ->
+            val wishLists = FirebaseFirestore.getInstance().collection(PATH_WISH_LIST)
+            val document = wishLists.document(id)
+
+            document
+                .update("visibility", false)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Logger.i("PhoneAuction: $id")
+                        continuation.resume(Result.Success(true))
+                    } else {
+                        task.exception?.let {
                             Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
                             continuation.resume(Result.Error(it))
                             return@addOnCompleteListener
@@ -954,27 +1015,26 @@ object PhoneAuctionRemoteDataSource :
                     }
                 }
         }
-    }
 
-    override suspend fun updateWishList(id: String): Result<Boolean> = suspendCoroutine { continuation ->
-        val wishLists = FirebaseFirestore.getInstance().collection(PATH_WISH_LIST)
-        val document = wishLists.document(id)
-
-        document
-            .update("visibility", false)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    Logger.i("PhoneAuction: $id")
-                    continuation.resume(Result.Success(true))
-                } else {
-                    task.exception?.let {
-                        Logger.w("[${this::class.simpleName}] Error getting documents. ${it.message}")
-                        continuation.resume(Result.Error(it))
-                        return@addOnCompleteListener
+    override suspend fun uploadImage(
+        image: MutableLiveData<String>,
+        saveUri: Uri
+    ): Result<Boolean> = suspendCoroutine { continuation ->
+        val filename = UUID.randomUUID().toString()
+        val ref = FirebaseStorage.getInstance().getReference("/$PATH_IMAGE/$filename")
+        saveUri.let { uri ->
+            ref.putFile(uri)
+                .addOnSuccessListener {
+                    ref.downloadUrl.addOnSuccessListener {
+                        image.value = it.toString()
+                        continuation.resume(Result.Success(true))
                     }
-                    continuation.resume(Result.Fail(PhoneAuctionApplication.instance.getString(R.string.you_know_nothing)))
                 }
-            }
+                .addOnFailureListener {
+                    continuation.resume(Result.Error(it))
+                    return@addOnFailureListener
+                }
+        }
     }
 }
 

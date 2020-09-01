@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable name="viewModel" type="com.eric.phoneauction.detailDirectFragment.DetailDirectViewModel"/>
+        <variable name="viewModel" type="com.eric.phoneauction.detailDirect.DetailDirectViewModel"/>
         <import type="android.view.View"/>
     </data>
 
@@ -159,6 +159,7 @@
                     android:layout_height="22dp"
                     android:layout_marginTop="3dp"
                     android:alpha="0.7"
+                    android:onClick="@{() -> viewModel.navigateToDialog()}"
                     app:srcCompat="@drawable/ic_questionmark"
                     app:layout_constraintStart_toStartOf="@+id/text_detail_direct_price"
                     app:layout_constraintTop_toBottomOf="@+id/text_detail_direct_price"
@@ -283,7 +284,7 @@
             android:layout_marginStart="16dp"
             android:background="@drawable/button"
             android:ellipsize="end"
-            android:visibility="@{viewModel.event.deal == false ? View.GONE : View.VISIBLE}"
+            android:visibility="@{viewModel.event.isDealDone == false ? View.GONE : View.VISIBLE}"
             android:fontFamily="@font/noto_sans"
             android:letterSpacing="0.15"
             android:text="@string/direct"
@@ -294,7 +295,6 @@
             app:layout_constraintEnd_toEndOf="@+id/view_detail_direct_bg"
             app:layout_constraintStart_toEndOf="@+id/image_detail_direct_message"
             app:layout_constraintTop_toTopOf="@+id/view_detail_direct_bg" />
-
 
         <Button
             android:id="@+id/button_direct_done"
@@ -309,7 +309,7 @@
             android:background="@drawable/button_false"
             android:textSize="18dp"
             android:text="已完成交易"
-            android:visibility="@{viewModel.event.deal == false ? View.VISIBLE : View.GONE}"
+            android:visibility="@{viewModel.event.isDealDone == false ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="@+id/view_detail_direct_bg"
             app:layout_constraintEnd_toEndOf="@+id/view_detail_direct_bg"
             app:layout_constraintStart_toEndOf="@id/button_message_direct"
@@ -327,12 +327,11 @@
             android:text="對話"
             android:textColor="@android:color/white"
             android:textSize="18dp"
-            android:visibility="@{viewModel.event.deal == false ? View.VISIBLE : View.GONE}"
+            android:visibility="@{viewModel.event.isDealDone == false ? View.VISIBLE : View.VISIBLE}"
             android:onClick="@{() -> viewModel.navigateToDetailChat(viewModel.event)}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="@+id/view_detail_direct_bg"
             app:layout_constraintTop_toTopOf="@+id/view_detail_direct_bg" />
-
         <Button
             android:id="@+id/button_rePost"
             android:layout_width="100dp"
@@ -343,7 +342,8 @@
             android:background="@drawable/button"
             android:fontFamily="@font/noto_sans"
             android:letterSpacing="0.1"
-            android:visibility="@{viewModel.event.deal == false &amp;&amp; viewModel.isBuyUser() == true ? View.VISIBLE : View.GONE}"
+            android:onClick="@{() -> viewModel.navigateToPost()}"
+            android:visibility="@{viewModel.event.isDealDone == false &amp;&amp; viewModel.isBuyerId() == true ? View.VISIBLE : View.GONE}"
             android:text="重新上架"
             android:textColor="@android:color/white"
             android:textSize="18dp"
@@ -359,7 +359,7 @@
             android:layout_marginStart="56dp"
             android:src="@drawable/ic_message"
             android:onClick="@{() -> viewModel.navigateToDetailChat(viewModel.event)}"
-            android:visibility="@{viewModel.event.deal == false ? View.GONE : View.VISIBLE}"
+            android:visibility="@{viewModel.event.isDealDone == false ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="@+id/view_detail_direct_bg"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/view_detail_direct_bg"
@@ -372,20 +372,20 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:src="@drawable/ic_heart_128px"
-            android:visibility="@{viewModel.event.deal == false || viewModel.collection.visibility == true ? View.GONE : View.VISIBLE}"
+            android:visibility="@{viewModel.event.isDealDone == false || viewModel.collection.visibility == true ? View.GONE : View.VISIBLE}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/view_detail_direct_bg"
             app:layout_constraintBottom_toBottomOf="@id/view_detail_direct_bg"
             />
 
         <ImageView
-            android:id="@+id/imageView_detail_direct_collectioned"
+            android:id="@+id/imageView_detail_direct_UnCollection"
             android:layout_width="26dp"
             android:layout_height="26dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:src="@drawable/baseline_favorite_black_48"
-            android:visibility="@{viewModel.event.deal == false || viewModel.collection.visibility == false ? View.GONE : View.VISIBLE}"
+            android:visibility="@{viewModel.event.isDealDone == false || viewModel.collection.visibility == false ? View.GONE : View.VISIBLE}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/view_detail_direct_bg"
             app:layout_constraintBottom_toBottomOf="@id/view_detail_direct_bg"

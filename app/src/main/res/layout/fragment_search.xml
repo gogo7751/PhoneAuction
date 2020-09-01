@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.eric.phoneauction.searchFragment.SearchViewModel" />
+            type="com.eric.phoneauction.search.SearchViewModel" />
 
         <import type="android.view.View" />
 
@@ -140,6 +140,7 @@
                     android:layout_height="22dp"
                     android:layout_marginEnd="8dp"
                     android:alpha="0.7"
+                    android:onClick="@{() -> viewModel.navigateToDialog()}"
                     app:srcCompat="@drawable/ic_questionmark"
                     app:layout_constraintEnd_toStartOf="@+id/text_wish_title1"
                     app:layout_constraintTop_toTopOf="@+id/text_wish_title1"
@@ -271,6 +272,7 @@
                     android:fontFamily="@font/noto_sans"
                     android:letterSpacing="0.15"
                     android:text="送出"
+                    android:onClick="@{() -> viewModel.navigateToCollect()}"
                     android:textColor="@android:color/white"
                     android:textSize="18dp"
                     android:visibility="@{viewModel.isVisibility == false ? View.INVISIBLE : View.VISIBLE}"

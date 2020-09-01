@@ -1,5 +1,6 @@
 package com.eric.phoneauction.data.source
 
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.eric.phoneauction.data.*
@@ -9,7 +10,7 @@ import com.google.firebase.firestore.Query
 
 
 /**
- * Created by Wayne Chen on 2020-01-15.
+ * Created by Eric Chang in Jul. 2020.
  *
  * Interface to the Publisher layers.
  */
@@ -17,7 +18,7 @@ interface PhoneAuctionRepository {
 
     suspend fun getEvents(): Result<List<Event>>
 
-    fun getLiveEvent(deal: Boolean): MutableLiveData<List<Event>>
+    fun getLiveEvent(isDealDone: Boolean): MutableLiveData<List<Event>>
 
     suspend fun getAuction(): Result<List<Event>>
 
@@ -45,7 +46,7 @@ interface PhoneAuctionRepository {
 
     suspend fun postDirect(event: Event): Result<Boolean>
 
-    suspend fun postNotification(notification: Notification, buyUser: String): Result<Boolean>
+    suspend fun postNotification(notification: Notification, buyerId: String): Result<Boolean>
 
     suspend fun deleteNotification(notificationId: String, user: String): Result<Boolean>
 
@@ -67,7 +68,7 @@ interface PhoneAuctionRepository {
 
     fun getLiveSearch(field: String, searchKey: String): MutableLiveData<List<Event>>
 
-    suspend fun getAveragePrice(brand: String, productName: String, storage: String, deal: Boolean): Result<List<Event>>
+    suspend fun getAveragePrice(brand: String, productName: String, storage: String, isDealDone: Boolean): Result<List<Event>>
 
     suspend fun postWishList(wishList: WishList): Result<Boolean>
 
@@ -78,4 +79,6 @@ interface PhoneAuctionRepository {
     suspend fun getWishListFromPost(brand: String, productName: String, storage: String, visibility: Boolean): Result<WishList>
 
     suspend fun handleFacebookAccessToken(token : AccessToken?): Result<Boolean>
+
+    suspend fun uploadImage(image: MutableLiveData<String>, saveUri: Uri): Result<Boolean>
 }

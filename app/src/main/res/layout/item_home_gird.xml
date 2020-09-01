@@ -10,7 +10,7 @@
 
         <variable
             name="viewModel"
-            type="com.eric.phoneauction.homeFragment.HomeViewModel" />
+            type="com.eric.phoneauction.home.HomeViewModel" />
 
         <variable
             name="countDown"
@@ -49,9 +49,9 @@
                     android:scaleType="centerCrop"
                     app:imageUrl="@{event.images[0]}"
                     app:layout_constraintDimensionRatio="5:4"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
                     tools:src="@tools:sample/backgrounds/scenic" />
 
                 <View
@@ -62,34 +62,33 @@
                     android:layout_marginEnd="4dp"
                     android:background="@drawable/button_tag"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/image_product"
-                    />
+                    app:layout_constraintTop_toBottomOf="@+id/image_product" />
 
                 <TextView
                     android:id="@+id/text_detail_auction_tag"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:textSize="11dp"
                     android:fontFamily="@font/noto_sans"
                     android:letterSpacing="0.1"
+                    android:maxLines="1"
                     android:text="@{event.tag}"
-                    app:layout_constraintStart_toStartOf="@+id/view_detail_auction_tag"
-                    app:layout_constraintEnd_toEndOf="@+id/view_detail_auction_tag"
-                    app:layout_constraintTop_toTopOf="@+id/view_detail_auction_tag"
+                    android:textSize="11dp"
                     app:layout_constraintBottom_toBottomOf="@+id/view_detail_auction_tag"
+                    app:layout_constraintEnd_toEndOf="@+id/view_detail_auction_tag"
+                    app:layout_constraintStart_toStartOf="@+id/view_detail_auction_tag"
+                    app:layout_constraintTop_toTopOf="@+id/view_detail_auction_tag"
                     tools:text="拍賣" />
 
                 <TextView
                     android:id="@+id/text_home_brand"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
                     android:layout_marginTop="8dp"
                     android:ellipsize="end"
                     android:fontFamily="@font/noto_sans"
                     android:letterSpacing="0.15"
                     android:maxLines="2"
-                    android:layout_marginStart="4dp"
                     android:text="@{event.brand}"
                     android:textColor="@color/black212121"
                     app:layout_constraintStart_toStartOf="parent"
@@ -100,12 +99,12 @@
                     android:id="@+id/text_home_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="2dp"
                     android:ellipsize="end"
                     android:fontFamily="@font/noto_sans"
                     android:letterSpacing="0.15"
                     android:maxLines="2"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginStart="4dp"
                     android:text="@{event.productName}"
                     android:textColor="@color/black212121"
                     android:textSize="13dp"
@@ -119,10 +118,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="3dp"
                     android:ellipsize="end"
-                    android:singleLine="true"
                     android:fontFamily="@font/noto_sans"
                     android:letterSpacing="0.15"
                     android:maxLines="2"
+                    android:singleLine="true"
                     android:text="@{event.storage}"
                     android:textColor="@color/black212121"
                     android:textSize="13dp"
@@ -135,17 +134,21 @@
                     android:id="@+id/text_home_price"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
                     android:layout_marginTop="2dp"
                     android:layout_marginBottom="4dp"
                     android:ellipsize="end"
+                    android:maxLines="1"
                     android:fontFamily="@font/noto_sans_bold"
                     android:letterSpacing="0.1"
-                    android:layout_marginStart="4dp"
                     android:textColor="@color/black212121"
                     android:textSize="13sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/text_home_time"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintHorizontal_chainStyle="spread"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text_home_title"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:price="@{event.price}"
                     tools:text="NT$1200" />
 
@@ -153,12 +156,12 @@
                     android:id="@+id/text_home_time"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
                     android:ellipsize="end"
                     android:fontFamily="@font/noto_sans_bold"
-                    android:textSize="13sp"
                     android:text="@{countDown}"
-                    android:layout_marginEnd="4dp"
                     android:textColor="@color/black212121"
+                    android:textSize="13sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/text_home_price"
                     tools:text="15:00:20" />

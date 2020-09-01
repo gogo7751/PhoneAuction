@@ -6,10 +6,10 @@
     <data>
         <variable
             name="viewModel"
-            type="com.eric.phoneauction.notificationFragment.NotificationViewModel" />
-        <import type="android.view.View"/>
-    </data>
+            type="com.eric.phoneauction.notification.NotificationViewModel" />
 
+        <import type="android.view.View" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -19,28 +19,26 @@
             android:id="@+id/layout_notification_header"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:background="#f6b76a"
             android:layout_marginBottom="4dp"
+            android:background="#f6b76a"
             app:layout_constraintBottom_toTopOf="@id/recyclerview_notification"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="通知"
                 android:fontFamily="@font/noto_sans"
                 android:letterSpacing="0.15"
+                android:text="通知"
                 android:textColor="@color/white"
                 android:textSize="22sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                />
-
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -53,43 +51,43 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layout_notification_header"
-            tools:listitem="@layout/item_notification"/>
+            tools:listitem="@layout/item_notification" />
 
-    <ProgressBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:theme="@style/ProgressTheme"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:setupApiStatus="@{viewModel.status}"
-        tools:visibility="gone" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:setupApiErrorMessage="@{viewModel.error}"
-        tools:visibility="gone" />
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@style/ProgressTheme"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:setupApiStatus="@{viewModel.status}"
+            tools:visibility="gone" />
 
         <TextView
-            android:id="@+id/text_noContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="目前沒有通知"
-            android:letterSpacing="0.15"
-            android:alpha="0.8"
-            android:textColor="@color/gary757575"
+            app:setupApiErrorMessage="@{viewModel.error}"
             tools:visibility="gone" />
 
+        <TextView
+            android:id="@+id/text_noContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0.8"
+            android:letterSpacing="0.15"
+            android:text="目前沒有通知"
+            android:textColor="@color/gary757575"
+            android:visibility="@{viewModel.liveNotifications.empty == true ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="gone" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

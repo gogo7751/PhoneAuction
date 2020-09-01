@@ -6,7 +6,8 @@
     <data>
         <variable
             name="viewModel"
-            type="com.eric.phoneauction.onAuctionFragment.OnAuctionViewModel" />
+            type="com.eric.phoneauction.onAuction.OnAuctionViewModel" />
+        <import type="android.view.View"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -73,6 +74,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:visibility="@{viewModel.isNotEmpty == true ? View.GONE : View.VISIBLE}"
             android:text="沒有競標中商品"
             android:letterSpacing="0.15"
             android:alpha="0.8"

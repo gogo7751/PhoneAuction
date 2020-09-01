@@ -1,7 +1,7 @@
 package app.appworks.school.publisher.network
 
 /**
- * Created by Wayne Chen on 2020-01-15.
+ * Created by Eric Chang in Jul. 2020.
  */
 enum class LoadApiStatus {
     LOADING,

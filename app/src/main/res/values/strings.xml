@@ -6,10 +6,40 @@
     <string name="facebook_app_id">2889906371135498</string>
     <string name="fb_login_protocol_scheme">fb2889906371135498</string>
 
-    <!-- time -->
+    <!-- Time -->
     <string name="hours">\u0020:\u0020</string>
     <string name="minutes">\u0020:\u0020</string>
     <string name="seconds">\u0020</string>
+
+    <!-- Toast -->
+    <string name="leave_app">再按一次退出程式</string>
+    <string name="recently_viewed">最近瀏覽 coming soon</string>
+    <string name="information">使用說明 coming soon</string>
+
+    <!-- Chat -->
+    <string name="picture">圖片</string>
+
+    <!-- Auction Dialog -->
+    <string name="is_buyer">你是目前最高出價者</string>
+    <string name="is_seller">你是刊登者</string>
+
+    <!-- Privacy policy -->
+    <string name="privacy_policy">https://docs.google.com/document/d/1fS0I6PN980hEX1K5jTg5cjInUaPvNTub05IfiJVsXok/edit?usp=sharing</string>
+
+    <!-- Tag -->
+    <string name="auction_tag">拍賣</string>
+    <string name="direct_tag">直購</string>
+
+    <!-- Notification -->
+    <string name="bid_over">您的出價已被超過</string>
+    <string name="bid_someone">您的商品有人出價</string>
+    <string name="direct_done_seller">您的商品已被購買,請盡快進行出貨事宜!</string>
+    <string name="direct_done_buyer">恭喜您購買成功,請與賣家聯絡並完成付款!</string>
+    <string name="direct_overtime">商品已過期</string>
+    <string name="auction_done_seller">拍賣完成,請與買家聯絡完成出貨!</string>
+    <string name="auction_done_buyer">恭喜您得標!</string>
+    <string name="auction_overtime">流標</string>
+    <string name="wish_list">符合您許願清單的商品上架囉</string>
 
     <!-- 出價 -->
     <string name="collection_success">加入成功</string>
@@ -29,6 +59,8 @@
     <string name="sort_price_upward">價格↑</string>
     <string name="sort_price_downward">價格↓</string>
     <string name="sort_time">剩餘時間</string>
+    <string name="sort_price">price</string>
+    <string name="sort_endTime">endTime</string>
     <string-array name="sort_list">
         <item>全部</item>
         <item>價格↑</item>
@@ -211,7 +243,6 @@
         <item>R9s Plus</item>
     </string-array>
 
-
     <!-- HUAWEI -->
     <string-array name="huawei_list">
         <item>Mate 20 X</item>
@@ -308,7 +339,6 @@
         <item>AQUOS Zero 2</item>
     </string-array>
 
-
     <!-- vivo -->
     <string-array name="vivo_list">
         <item>Y19</item>
@@ -324,5 +354,8 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="empty_list">
+    </string-array>
 
 </resources>

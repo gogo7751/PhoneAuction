@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.eric.phoneauction.chatToChatDetailFragment.ChatToDetailChatViewModel" />
+            type="com.eric.phoneauction.chatToChatDetail.ChatToDetailChatViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -29,6 +29,7 @@
                 android:background="@drawable/icons_back"
                 android:scaleType="centerCrop"
                 android:layout_marginStart="16dp"
+                android:onClick="@{() -> viewModel.leave()}"
                 app:layout_constraintEnd_toStartOf="@+id/text_chatToDetail_title"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
@@ -44,6 +45,7 @@
                 android:layout_marginStart="10dp"
                 android:textColor="@color/white"
                 android:textSize="18sp"
+                android:text="@{viewModel.isTitleName == true ? viewModel.chatRoom.receiverName : viewModel.chatRoom.senderName}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/image_chatToDetail_back"
                 app:layout_constraintTop_toTopOf="parent"
@@ -98,6 +100,7 @@
             android:layout_height="22dp"
             android:background="@drawable/ic_send_24px"
             android:layout_marginEnd="12dp"
+            android:onClick="@{() -> viewModel.postMessage(viewModel.message, viewModel.chatRoom.id)}"
             app:layout_constraintEnd_toEndOf="@id/edit_chatToDetail_input"
             app:layout_constraintTop_toTopOf="@id/edit_chatToDetail_input"
             app:layout_constraintBottom_toBottomOf="@id/edit_chatToDetail_input"/>

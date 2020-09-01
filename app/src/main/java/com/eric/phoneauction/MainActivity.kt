@@ -1,45 +1,43 @@
 package com.eric.phoneauction
 
-import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.view.KeyEvent
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.get
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import com.eric.phoneauction.data.UserManager
 import com.eric.phoneauction.databinding.ActivityMainBinding
 import com.eric.phoneauction.databinding.BadgeBottomBinding
 import com.eric.phoneauction.ext.getVmFactory
-import com.eric.phoneauction.homeFragment.HomeViewModel
-import com.eric.phoneauction.notificationFragment.NotificationViewModel
+import com.eric.phoneauction.ext.showToast
+import com.eric.phoneauction.notification.NotificationViewModel
 import com.eric.phoneauction.util.Logger
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.storage.FirebaseStorage
-import com.tbuonomo.morphbottomnavigation.MorphBottomNavigationView
-import java.util.*
 import kotlin.system.exitProcess
-
 
 @Suppress("DEPRECATED_IDENTITY_EQUALS")
 class MainActivity : AppCompatActivity() {
 
-
     val viewModel by viewModels<MainViewModel> { getVmFactory() }
     private lateinit var binding: ActivityMainBinding
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        viewModel
         setupBottomNav()
         viewModel.postUser(UserManager.user)
         viewModel.getUser()
@@ -48,67 +46,79 @@ class MainActivity : AppCompatActivity() {
 
         notificationViewModel.getLiveNotificationsResult()
         notificationViewModel.liveNotifications.observe(this, androidx.lifecycle.Observer {
-            viewModel.notifications.value = notificationViewModel.liveNotifications.value
+            it?.let {
+                viewModel.notifications.value = it
+            }
         })
 
         viewModel.user.observe(this, androidx.lifecycle.Observer {
             it?.let {
                 UserManager.user = it
-                Logger.d("123456789$it")
             }
+        })
+
+        viewModel.countInCart.observe(this, Observer {
+            viewModel.getBadge(it)
         })
     }
 
-
-    var exitTime:Long = 0
-    override fun onKeyDown(keyCode:Int, event: KeyEvent):Boolean {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() === KeyEvent.ACTION_DOWN)
-        {
-            if ((System.currentTimeMillis() - exitTime) > 3000)
-            {
-                Toast.makeText(applicationContext, "再按一次退出程式", Toast.LENGTH_SHORT).show()
-                exitTime = System.currentTimeMillis()
+    private val onNavigationItemSelectedListener =
+        BottomNavigationView.OnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.navigation_home -> {
+                    findNavController(R.id.myNavHostFragment).navigate(NavigationDirections.actionGlobalHomeFragment())
+                    return@OnNavigationItemSelectedListener true
+                }
+                R.id.navigation_chat -> {
+                    findNavController(R.id.myNavHostFragment).navigate(NavigationDirections.actionGlobalChatFragment())
+                    return@OnNavigationItemSelectedListener true
+                }
+                R.id.navigation_post -> {
+                    findNavController(R.id.myNavHostFragment).navigate(NavigationDirections.actionGlobalPostFragment())
+                    return@OnNavigationItemSelectedListener true
+                }
+                R.id.navigation_notification -> {
+                    findNavController(R.id.myNavHostFragment).navigate(NavigationDirections.actionGlobalNotificationFragment())
+                    viewModel.clearBadge()
+                    return@OnNavigationItemSelectedListener true
+                }
+                R.id.navigation_profile -> {
+                    findNavController(R.id.myNavHostFragment).navigate(NavigationDirections.actionGlobalProfileFragment())
+                    return@OnNavigationItemSelectedListener true
+                }
             }
-            else
-            {
-                finish()
-                exitProcess(0)
-            }
-            return true
+            false
         }
-        return super.onKeyDown(keyCode, event)
-    }
 
+    private var doubleBackToExitPressedOnce = false
+    override fun onBackPressed() {
+        val manager = supportFragmentManager
+        val count =
+            manager.findFragmentById(R.id.myNavHostFragment)?.childFragmentManager?.backStackEntryCount
 
-    private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        when (item.itemId) {
-            R.id.navigation_home -> {
-                findNavController(R.id.myNavHostFragment).navigate(NavigationDirections.actionGlobalHomeFragment())
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_chat -> {
-                findNavController(R.id.myNavHostFragment).navigate(NavigationDirections.actionGlobalChatFragment())
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_post -> {
-                findNavController(R.id.myNavHostFragment).navigate(NavigationDirections.actionGlobalPostFragment())
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_notification -> {
-                findNavController(R.id.myNavHostFragment).navigate(NavigationDirections.actionGlobalNotificationFragment())
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_profile -> {
-                findNavController(R.id.myNavHostFragment).navigate(NavigationDirections.actionGlobalProfileFragment())
-                return@OnNavigationItemSelectedListener true
-            }
+        val postFragment = findViewById<View>(R.id.postFragment)
+
+        if (postFragment == manager.findFragmentById(R.id.postFragment)) {
+            findNavController(R.id.myNavHostFragment).navigate(NavigationDirections.actionGlobalHomeFragment())
+            return
         }
-        false
+
+        if (count == 0) {
+            if (doubleBackToExitPressedOnce) {
+                super.onBackPressed()
+                return
+            }
+
+            this.doubleBackToExitPressedOnce = true
+            showToast(getString(R.string.leave_app))
+
+            Handler().postDelayed(Runnable { doubleBackToExitPressedOnce = false }, 2000)
+        } else {
+            super.onBackPressed()
+        }
     }
 
     private fun setupBottomNav() {
-        binding.bottomNavView.itemBackground = null
-
         binding.bottomNavView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
 
         val menuView = binding.bottomNavView.getChildAt(0) as BottomNavigationMenuView
@@ -117,10 +127,4 @@ class MainActivity : AppCompatActivity() {
         bindingBadge.lifecycleOwner = this
         bindingBadge.viewModel = viewModel
     }
-
-
-
-
-
-
 }

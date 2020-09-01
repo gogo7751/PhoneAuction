@@ -67,7 +67,6 @@
         <item name="android:letterSpacing">0.15</item>
     </style>
 
-
     <style name="AuctionRippleButton" parent="AuctionButton">
         <item name="android:background">@drawable/button_auction_ripple</item>
     </style>
@@ -81,5 +80,31 @@
         <item name="android:background">@drawable/button_auction_ripple</item>
         <item name="android:fontFamily">@font/noto_sans</item>
     </style>
+
+    <style name="CardViewStyle">
+        <item name="cardCornerRadius">10dp</item>
+        <item name="cardElevation">3dp</item>
+    </style>
+
+    <style name="CardViewPicture">
+        <item name="cardCornerRadius">5dp</item>
+    </style>
+
+    <style name="TextViewGary">
+        <item name="android:textColor">@color/gary757575</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:letterSpacing">0.15</item>
+        <item name="fontFamily">@font/noto_sans</item>
+    </style>
+
+    <style name="TextViewTitle">
+        <item name="fontFamily">@font/noto_sans</item>
+        <item name="android:letterSpacing">0.15</item>
+        <item name="android:textColor">@color/black212121</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+
 
 </resources>
