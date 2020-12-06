@@ -1,4 +1,4 @@
-package com.eric.phoneauction.ext
+    package com.eric.phoneauction.ext
 
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity

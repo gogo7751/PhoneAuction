@@ -17,6 +17,4 @@ object Util {
     fun getString(resourceId: Int): String {
         return PhoneAuctionApplication.instance.getString(resourceId)
     }
-
-
 }

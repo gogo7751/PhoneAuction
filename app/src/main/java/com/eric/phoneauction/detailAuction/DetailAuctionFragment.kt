@@ -14,12 +14,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearSnapHelper
 import com.eric.phoneauction.NavigationDirections
 import com.eric.phoneauction.R
-import com.eric.phoneauction.data.UserManager
 import com.eric.phoneauction.databinding.FragmentDetailAuctionBinding
 import com.eric.phoneauction.dialog.MessageDialog
 import com.eric.phoneauction.dialog.NoteDialog
 import com.eric.phoneauction.ext.getVmFactory
-import com.eric.phoneauction.ext.showToast
 import com.eric.phoneauction.home.HomeAdapter
 import com.eric.phoneauction.home.HomeViewModel
 import kotlinx.android.synthetic.main.activity_main.*

@@ -33,6 +33,7 @@ class MainActivity : AppCompatActivity() {
 
     val viewModel by viewModels<MainViewModel> { getVmFactory() }
     private lateinit var binding: ActivityMainBinding
+    var backPress = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,6 +76,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.navigation_post -> {
                     findNavController(R.id.myNavHostFragment).navigate(NavigationDirections.actionGlobalPostFragment())
+                    backPress = true
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.navigation_notification -> {
@@ -96,10 +98,9 @@ class MainActivity : AppCompatActivity() {
         val count =
             manager.findFragmentById(R.id.myNavHostFragment)?.childFragmentManager?.backStackEntryCount
 
-        val postFragment = findViewById<View>(R.id.postFragment)
-
-        if (postFragment == manager.findFragmentById(R.id.postFragment)) {
+        if (backPress) {
             findNavController(R.id.myNavHostFragment).navigate(NavigationDirections.actionGlobalHomeFragment())
+            backPress = false
             return
         }
 

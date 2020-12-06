@@ -18,8 +18,8 @@ android {
         applicationId "com.eric.phoneauction"
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 10
-        versionName "1.0.9"
+        versionCode 14
+        versionName "1.1.0"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -53,6 +53,9 @@ android {
         // annotations("com.another.Annotation", "com.third.Annotation")
     }
     dataBinding {
+        enabled = true
+    }
+    viewBinding {
         enabled = true
     }
 
@@ -140,7 +143,6 @@ dependencies {
     //Lottie
     implementation 'com.airbnb.android:lottie:3.4.1'
 
-
     //bottomNav
     implementation 'com.tbuonomo:morph-bottom-navigation:1.0.1'
     api 'com.tbuonomo:magicshapepath:1.0.0-alpha3'
@@ -151,9 +153,6 @@ dependencies {
 
     testImplementation 'junit:junit:4.13'
 
-//    implementation 'androidx.test:core:1.2.0'
-//    androidTestImplementation 'androidx.test:core:1.2.0'
-
     testImplementation 'io.mockk:mockk:1.8.6'
     testImplementation "org.mockito:mockito-core:2.28.2"
     androidTestImplementation "org.mockito:mockito-core:2.28.2"
@@ -162,14 +161,13 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.3.0-rc03'
     androidTestImplementation 'androidx.test:rules:1.3.0-rc03'
-//    androidTestImplementation 'com.google.guava:guava:26.0-android'
-
-//    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-//    androidTestImplementation 'androidx.test:runner:1.2.0'
-//    androidTestImplementation 'androidx.test:rules:1.2.0'
 
     androidTestImplementation 'org.hamcrest:hamcrest:2.2'
     androidTestImplementation 'org.hamcrest:hamcrest-library:2.2'
+
+    //In-app review
+    implementation 'com.google.android.play:core:1.8.2'
+    implementation 'com.google.android.play:core-ktx:1.8.1'
 }
 
 

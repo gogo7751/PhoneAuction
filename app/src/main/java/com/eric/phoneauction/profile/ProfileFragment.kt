@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.navigateUp
 import com.eric.phoneauction.R
 
 import com.eric.phoneauction.data.Event
@@ -42,9 +43,10 @@ class ProfileFragment : Fragment() {
         }
 
         binding.buttonProfilePolicy.setOnClickListener {
-            val intent = Intent(Intent.ACTION_VIEW)
-            intent.data = Uri.parse(getString(R.string.privacy_policy))
-            startActivity(intent)
+            findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToProfilePolicyFragment())
+//            val intent = Intent(Intent.ACTION_VIEW)
+//            intent.data = Uri.parse(getString(R.string.privacy_policy))
+//            startActivity(intent)
         }
 
         binding.buttonProfilePurchased.setOnClickListener {

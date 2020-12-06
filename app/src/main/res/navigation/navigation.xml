@@ -9,7 +9,7 @@
         android:id="@+id/homeFragment"
         android:name="com.eric.phoneauction.home.HomeFragment"
         android:label="home_fragment"
-        tools:layout="@layout/home_fragment" >
+        tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_homeFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
@@ -30,7 +30,7 @@
         android:id="@+id/postFragment"
         android:name="com.eric.phoneauction.post.PostFragment"
         android:label="post_fragment"
-        tools:layout="@layout/post_fragment" />
+        tools:layout="@layout/fragment_post" />
 
     <fragment
         android:id="@+id/profileFragment"
@@ -55,6 +55,9 @@
         <action
             android:id="@+id/action_profileFragment_to_wishListFragment"
             app:destination="@id/wishListFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_profilePolicyFragment"
+            app:destination="@id/profilePolicyFragment" />
     </fragment>
 
     <fragment
@@ -93,7 +96,7 @@
         android:id="@+id/detailAuctionFragment"
         android:name="com.eric.phoneauction.detailAuction.DetailAuctionFragment"
         android:label="DetailAuctionFragment"
-        tools:layout="@layout/detail_auction_fragment" >
+        tools:layout="@layout/fragment_detail_auction" >
         <argument
             android:name="event"
             app:argType="com.eric.phoneauction.data.Event"
@@ -107,7 +110,7 @@
         android:id="@+id/detailDirectFragment"
         android:name="com.eric.phoneauction.detailDirect.DetailDirectFragment"
         android:label="DetailDirectFragment"
-        tools:layout="@layout/detail_direct_fragment">
+        tools:layout="@layout/fragment_detail_direct">
         <argument
             android:name="event"
             app:argType="com.eric.phoneauction.data.Event"
@@ -126,7 +129,7 @@
         android:id="@+id/auctionDialog"
         android:name="com.eric.phoneauction.auctionDialog.AuctionDialog"
         android:label="AuctionDialog"
-        tools:layout="@layout/auction_dialog">
+        tools:layout="@layout/dialog_auction">
     <argument
         android:name="event"
         app:argType="com.eric.phoneauction.data.Event"
@@ -223,6 +226,7 @@
         android:id="@+id/searchFragment"
         android:name="com.eric.phoneauction.search.SearchFragment"
         android:label="SearchFragment"
+        tools:layout="@layout/fragment_search"
         >
         <argument
             android:name="search"
@@ -232,7 +236,8 @@
     <dialog
         android:id="@+id/noteDialog"
         android:name="com.eric.phoneauction.dialog.NoteDialog"
-        android:label="NoteDialog">
+        android:label="NoteDialog"
+        tools:layout="@layout/dialog_note">
         <argument android:name="messageTypeKey"
             app:argType="com.eric.phoneauction.dialog.NoteDialog$MessageType"
             app:nullable="false"/>
@@ -241,16 +246,24 @@
     <fragment
         android:id="@+id/wishListFragment"
         android:name="com.eric.phoneauction.wishList.WishListFragment"
-        android:label="WishListFragment" />
+        android:label="WishListFragment"
+        tools:layout="@layout/fragment_wish_list"/>
     <dialog
         android:id="@+id/imageDialog"
         android:name="com.eric.phoneauction.dialog.ImageDialog"
-        android:label="ImageDialog" >
+        android:label="ImageDialog"
+        tools:layout="@layout/dialog_image">
         <argument android:name="messageTypeKey"
             app:argType="string"
             app:nullable="false"/>
+        too
     </dialog>
 
     <action android:id="@+id/action_global_imageDialog" app:destination="@id/imageDialog" />
+    <fragment
+        android:id="@+id/profilePolicyFragment"
+        android:name="com.eric.phoneauction.profilePolicy.ProfilePolicyFragment"
+        android:label="ProfilePolicyFragment"
+        tools:layout="@layout/fragment_profile_policy"/>
 
 </navigation>
