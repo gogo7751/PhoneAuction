@@ -30,8 +30,8 @@ import com.eric.phoneauction.dialog.NoteDialog
 import com.eric.phoneauction.ext.getVmFactory
 import com.eric.phoneauction.ext.hideKeyboard
 import com.eric.phoneauction.util.Logger
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.storage.FirebaseStorage
-import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
 @Suppress("DEPRECATION")
@@ -108,22 +108,22 @@ class PostFragment : Fragment() {
         })
 
 
-        binding.editPostDescription.setOnEditorActionListener { v, actionId, event ->
-            if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+        binding.editPostDescription.setOnEditorActionListener { _, actionId, event ->
+            if ((event != null && (event.keyCode == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
                 binding.editPostDescription.hideKeyboard()
             }
             return@setOnEditorActionListener false
         }
 
-        binding.editPostAuction.setOnEditorActionListener { v, actionId, event ->
-            if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+        binding.editPostAuction.setOnEditorActionListener { _, actionId, event ->
+            if ((event != null && (event.keyCode == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
                 binding.editPostAuction.hideKeyboard()
             }
             return@setOnEditorActionListener false
         }
 
-        binding.editPostDirect.setOnEditorActionListener { v, actionId, event ->
-            if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+        binding.editPostDirect.setOnEditorActionListener { _, actionId, event ->
+            if ((event != null && (event.keyCode == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
                 binding.editPostDirect.hideKeyboard()
             }
             return@setOnEditorActionListener false
@@ -356,7 +356,7 @@ class PostFragment : Fragment() {
             findNavController().navigate(NavigationDirections.actionGlobalHomeFragment())
         }
 
-        (activity as AppCompatActivity).bottomNavView.visibility = View.GONE
+        (activity as AppCompatActivity).findViewById<BottomNavigationView>(R.id.bottomNavView).visibility = View.GONE
 
         return binding.root
     }
@@ -371,7 +371,7 @@ class PostFragment : Fragment() {
     //bottom navigation view gone
     override fun onDestroy() {
         super.onDestroy()
-        (activity as AppCompatActivity).bottomNavView.visibility = View.VISIBLE
+        (activity as AppCompatActivity).findViewById<BottomNavigationView>(R.id.bottomNavView).visibility = View.VISIBLE
     }
 
     //上傳圖片

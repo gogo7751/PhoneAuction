@@ -34,6 +34,7 @@
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/image_notification"
+                    android:theme="@style/Theme.MaterialComponents.Light"
                     android:layout_width="77dp"
                     android:layout_height="77dp"
                     app:cardCornerRadius="10dp"

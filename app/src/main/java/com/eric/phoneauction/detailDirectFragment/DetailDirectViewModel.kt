@@ -94,9 +94,9 @@ class DetailDirectViewModel(
         get() = _status
 
     // error: The internal MutableLiveData that stores the error of the most recent request
-    private val _error = MutableLiveData<String>()
+    private val _error = MutableLiveData<String?>()
 
-    val error: LiveData<String>
+    val error: MutableLiveData<String?>
         get() = _error
 
     // Create a Coroutine scope using a job to be able to cancel when needed

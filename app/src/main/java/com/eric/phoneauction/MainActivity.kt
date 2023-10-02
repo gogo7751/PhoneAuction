@@ -1,6 +1,5 @@
 package com.eric.phoneauction
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -8,21 +7,16 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.eric.phoneauction.data.UserManager
 import com.eric.phoneauction.databinding.ActivityMainBinding
 import com.eric.phoneauction.databinding.BadgeBottomBinding
 import com.eric.phoneauction.ext.getVmFactory
-import com.eric.phoneauction.homeFragment.HomeViewModel
 import com.eric.phoneauction.notificationFragment.NotificationViewModel
 import com.eric.phoneauction.util.Logger
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.storage.FirebaseStorage
-import com.tbuonomo.morphbottomnavigation.MorphBottomNavigationView
 import java.util.*
 import kotlin.system.exitProcess
 
@@ -117,10 +111,4 @@ class MainActivity : AppCompatActivity() {
         bindingBadge.lifecycleOwner = this
         bindingBadge.viewModel = viewModel
     }
-
-
-
-
-
-
 }

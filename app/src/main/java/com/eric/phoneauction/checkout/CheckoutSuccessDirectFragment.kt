@@ -11,10 +11,8 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.eric.phoneauction.NavigationDirections
 
-import com.eric.phoneauction.R
 import com.eric.phoneauction.databinding.FragmentCheckoutSuccessDirectBinding
 import com.eric.phoneauction.ext.getVmFactory
-import kotlinx.android.synthetic.main.activity_main.*
 
 /**
  * A simple [Fragment] subclass.
@@ -29,8 +27,6 @@ class CheckoutSuccessDirectFragment : Fragment() {
     ): View? {
         val binding = FragmentCheckoutSuccessDirectBinding.inflate(inflater, container, false)
 
-
-
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
@@ -41,12 +37,6 @@ class CheckoutSuccessDirectFragment : Fragment() {
             }
         })
 
-
-
-
-
         return binding.root
     }
-
-
 }

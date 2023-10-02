@@ -96,6 +96,7 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/image_chat_send"
+            android:theme="@style/Theme.MaterialComponents.Light"
             android:layout_width="220dp"
             android:layout_height="220dp"
             app:cardCornerRadius="6dp"
@@ -131,6 +132,7 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/image_chat_received"
+            android:theme="@style/Theme.MaterialComponents.Light"
             android:layout_width="220dp"
             android:layout_height="220dp"
             app:cardCornerRadius="6dp"

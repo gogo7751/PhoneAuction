@@ -9,8 +9,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".MainActivity">
+        android:layout_height="match_parent">
 
         <fragment
             android:id="@+id/myNavHostFragment"
@@ -24,19 +23,16 @@
             app:layout_constraintTop_toTopOf="parent"
             app:navGraph="@navigation/navigation" />
 
-        <com.tbuonomo.morphbottomnavigation.MorphBottomNavigationView
+        <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNavView"
-            style="@style/BottomNavigationView"
+            android:theme="@style/BottomNavigationView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:itemIconSize="30dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:menu="@menu/bottom_nav_menu"
-            app:morphCornerRadius="128dp"
-            app:morphItemRadius="64dp"
-            app:morphVerticalOffset="6dp" />
+            app:menu="@menu/bottom_nav_menu" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

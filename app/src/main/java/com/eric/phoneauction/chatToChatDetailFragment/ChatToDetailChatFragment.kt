@@ -14,21 +14,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.eric.phoneauction.NavigationDirections
 import com.eric.phoneauction.PhoneAuctionApplication
-import com.eric.phoneauction.chatFragment.ChatViewModel
+import com.eric.phoneauction.R
 import com.eric.phoneauction.data.UserManager
 import com.eric.phoneauction.databinding.FragmentChatToDetailChatBinding
-import com.eric.phoneauction.databinding.FragmentDetailChatBinding
 import com.eric.phoneauction.ext.getVmFactory
-import com.eric.phoneauction.postFragment.PostFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.storage.FirebaseStorage
-import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
 /**
@@ -99,7 +96,7 @@ class ChatToDetailChatFragment : Fragment() {
             Handler().postDelayed({binding.editChatToDetailInput.text.clear()},500)
         }
 
-        (activity as AppCompatActivity).bottomNavView.visibility = View.GONE
+        (activity as AppCompatActivity).findViewById<BottomNavigationView>(R.id.bottomNavView).visibility = View.GONE
 
         return binding.root
     }
@@ -107,7 +104,7 @@ class ChatToDetailChatFragment : Fragment() {
     //bottom navigation view gone
     override fun onDestroy() {
         super.onDestroy()
-        (activity as AppCompatActivity).bottomNavView.visibility = View.VISIBLE
+        (activity as AppCompatActivity).findViewById<BottomNavigationView>(R.id.bottomNavView).visibility = View.VISIBLE
     }
 
     //上傳圖片

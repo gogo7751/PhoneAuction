@@ -11,13 +11,13 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-
 import com.eric.phoneauction.R
+
 import com.eric.phoneauction.data.Event
 import com.eric.phoneauction.databinding.FragmentProfileBinding
 import com.eric.phoneauction.ext.getVmFactory
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
 class ProfileFragment : Fragment() {
@@ -68,7 +68,7 @@ class ProfileFragment : Fragment() {
             findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToWishListFragment())
         }
 
-        (activity as AppCompatActivity).bottomNavView.visibility = View.VISIBLE
+        (activity as AppCompatActivity).findViewById<BottomNavigationView>(R.id.bottomNavView).visibility = View.VISIBLE
         return binding.root
     }
 

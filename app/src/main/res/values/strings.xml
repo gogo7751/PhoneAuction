@@ -3,8 +3,9 @@
     <string name="you_know_nothing">You know nothing</string>
 
     <!-- Fb -->
-    <string name="facebook_app_id">2889906371135498</string>
-    <string name="fb_login_protocol_scheme">fb2889906371135498</string>
+    <string name="facebook_app_id">3328245187241950</string>
+    <string name="fb_login_protocol_scheme">fb3328245187241950</string>
+    <string name="facebook_client_token">2f6d17c85ca0698ea0c478bcd4aeff7f</string>
 
     <!-- time -->
     <string name="hours">\u0020:\u0020</string>

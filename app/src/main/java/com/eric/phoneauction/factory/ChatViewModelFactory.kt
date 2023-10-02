@@ -11,7 +11,7 @@ class ChatViewModelFactory constructor(
     private val phoneAuctionRepository: PhoneAuctionRepository,
     private val chatRoom: ChatRoom
 ) : ViewModelProvider.NewInstanceFactory() {
-    override fun <T : ViewModel?> create(modelClass: Class<T>) =
+    override fun <T : ViewModel> create(modelClass: Class<T>): T =
         with(modelClass) {
             when {
                 isAssignableFrom(ChatToDetailChatViewModel::class.java) ->

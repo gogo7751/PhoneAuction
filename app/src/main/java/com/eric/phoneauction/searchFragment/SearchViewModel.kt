@@ -46,9 +46,9 @@ class SearchViewModel(
         get() = _status
 
     // error: The internal MutableLiveData that stores the error of the most recent request
-    private val _error = MutableLiveData<String>()
+    private val _error = MutableLiveData<String?>()
 
-    val error: LiveData<String>
+    val error: MutableLiveData<String?>
         get() = _error
 
     private val _leave = MutableLiveData<Boolean>()

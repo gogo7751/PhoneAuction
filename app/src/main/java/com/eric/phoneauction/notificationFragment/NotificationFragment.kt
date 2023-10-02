@@ -1,7 +1,6 @@
 package com.eric.phoneauction.notificationFragment
 
 import android.os.Bundle
-import android.os.Handler
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,14 +8,11 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import com.eric.phoneauction.MainViewModel
-
 import com.eric.phoneauction.R
 import com.eric.phoneauction.databinding.FragmentNotificationBinding
 import com.eric.phoneauction.ext.getVmFactory
-import com.eric.phoneauction.util.Logger
-import kotlinx.android.synthetic.main.activity_main.*
+import com.google.android.material.bottomnavigation.BottomNavigationView
+
 
 class NotificationFragment : Fragment() {
 
@@ -45,7 +41,7 @@ class NotificationFragment : Fragment() {
 
 
 
-        (activity as AppCompatActivity).bottomNavView.visibility = View.VISIBLE
+        (activity as AppCompatActivity).findViewById<BottomNavigationView>(R.id.bottomNavView).visibility = View.VISIBLE
         return binding.root
     }
 

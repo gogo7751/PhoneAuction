@@ -11,23 +11,21 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.eric.phoneauction.NavigationDirections
 
-import com.eric.phoneauction.R
 import com.eric.phoneauction.databinding.FragmentWishListBinding
 import com.eric.phoneauction.dialog.NoteDialog
 import com.eric.phoneauction.ext.getVmFactory
-import kotlinx.android.synthetic.main.fragment_profile.*
 
 /**
  * A simple [Fragment] subclass.
  */
 class WishListFragment : Fragment() {
 
-    val viewModel: WishListViewModel by viewModels<WishListViewModel> { getVmFactory() }
+    val viewModel: WishListViewModel by viewModels { getVmFactory() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val binding = FragmentWishListBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
@@ -53,9 +51,6 @@ class WishListFragment : Fragment() {
         binding.imageWishListQuestion.setOnClickListener {
             findNavController().navigate(NavigationDirections.actionGlobalNoteDialog(NoteDialog.MessageType.WISH))
         }
-
-
-
 
         return binding.root
     }

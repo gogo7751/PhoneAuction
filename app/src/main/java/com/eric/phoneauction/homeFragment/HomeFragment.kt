@@ -18,8 +18,9 @@ import com.eric.phoneauction.R
 import com.eric.phoneauction.databinding.FragmentHomeBinding
 import com.eric.phoneauction.ext.getVmFactory
 import com.eric.phoneauction.ext.hideKeyboard
+import com.eric.phoneauction.util.Logger
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.firestore.Query
-import kotlinx.android.synthetic.main.activity_main.*
 
 
 class HomeFragment : Fragment() {
@@ -55,6 +56,7 @@ class HomeFragment : Fragment() {
 
         viewModel.liveEvents.observe(viewLifecycleOwner, Observer {
             it?.let {
+                Logger.e("testestest${it}")
                 adapter.submitList(it)
             }
         })
@@ -164,9 +166,12 @@ class HomeFragment : Fragment() {
         }
 
 
-        (activity as AppCompatActivity).bottomNavView.visibility = View.VISIBLE
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        (activity as AppCompatActivity).findViewById<BottomNavigationView>(R.id.bottomNavView).visibility = View.VISIBLE
+    }
 
 }

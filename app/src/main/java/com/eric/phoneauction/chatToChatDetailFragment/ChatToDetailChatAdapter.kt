@@ -1,35 +1,22 @@
 package com.eric.phoneauction.chatToChatDetailFragment
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
-import android.animation.AnimatorSet
-import android.animation.ObjectAnimator
-import android.graphics.Point
-import android.graphics.Rect
-import android.graphics.RectF
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.DecelerateInterpolator
-import android.widget.ImageView
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.eric.phoneauction.NavigationDirections
-import com.eric.phoneauction.R
 import com.eric.phoneauction.data.Message
 import com.eric.phoneauction.data.UserManager
 import com.eric.phoneauction.databinding.ItemChatToDetailChatBinding
-import kotlinx.android.synthetic.main.item_chat.view.*
-import kotlinx.android.synthetic.main.item_chat_to_detail_chat.view.*
 
 class ChatToDetailChatAdapter(val viewModel: ChatToDetailChatViewModel) :
     androidx.recyclerview.widget.ListAdapter<Message, ChatToDetailChatAdapter.DetailChatViewHolder>(
         DiffCallback
     ) {
 
-    class DetailChatViewHolder(private var binding: ItemChatToDetailChatBinding) :
+    class DetailChatViewHolder(var binding: ItemChatToDetailChatBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(
             message: Message, viewModel: ChatToDetailChatViewModel
@@ -83,56 +70,56 @@ class ChatToDetailChatAdapter(val viewModel: ChatToDetailChatViewModel) :
         if (message.id == UserManager.userId) {
             //訊息是空的不顯示
             if (message.text.isNullOrEmpty()){
-                holder.itemView.textview_chatToDetail_received.visibility = View.GONE
-                holder.itemView.text_chatToDetail_receivedTime.visibility =View.GONE
-                holder.itemView.text_chatToDetail_sentTime.visibility = View.GONE
-                holder.itemView.textview_chatToDetail_sent.visibility = View.GONE
-                holder.itemView.image_chatToDetail_sender.visibility = View.GONE
+                holder.binding.textviewChatToDetailReceived.visibility = View.GONE
+                holder.binding.textChatToDetailReceivedTime.visibility =View.GONE
+                holder.binding.textChatToDetailSentTime.visibility = View.GONE
+                holder.binding.textviewChatToDetailSent.visibility = View.GONE
+                holder.binding.imageChatToDetailSender.visibility = View.GONE
             } else {
-                holder.itemView.textview_chatToDetail_received.visibility = View.VISIBLE
-                holder.itemView.text_chatToDetail_receivedTime.visibility =View.VISIBLE
-                holder.itemView.text_chatToDetail_sentTime.visibility = View.GONE
-                holder.itemView.textview_chatToDetail_sent.visibility = View.GONE
-                holder.itemView.image_chatToDetail_sender.visibility = View.GONE
+                holder.binding.textviewChatToDetailReceived.visibility = View.VISIBLE
+                holder.binding.textChatToDetailReceivedTime.visibility =View.VISIBLE
+                holder.binding.textChatToDetailSentTime.visibility = View.GONE
+                holder.binding.textviewChatToDetailSent.visibility = View.GONE
+                holder.binding.imageChatToDetailSender.visibility = View.GONE
             }
             //圖片是空的不顯示
             if (message.image.isNullOrEmpty()){
-                holder.itemView.cardView_chatToDetail_send.visibility = View.GONE
-                holder.itemView.cardView_chatToDetail_received.visibility = View.GONE
-                holder.itemView.image_chatToDetail_receivedTime.visibility = View.GONE
-                holder.itemView.image_chatToDetail_sentTime.visibility = View.GONE
+                holder.binding.cardViewChatToDetailSend.visibility = View.GONE
+                holder.binding.cardViewChatToDetailReceived.visibility = View.GONE
+                holder.binding.imageChatToDetailReceivedTime.visibility = View.GONE
+                holder.binding.imageChatToDetailSentTime.visibility = View.GONE
             } else {
-                holder.itemView.cardView_chatToDetail_send.visibility = View.GONE
-                holder.itemView.cardView_chatToDetail_received.visibility = View.VISIBLE
-                holder.itemView.image_chatToDetail_receivedTime.visibility = View.VISIBLE
-                holder.itemView.image_chatToDetail_sentTime.visibility = View.GONE
+                holder.binding.cardViewChatToDetailSend.visibility = View.GONE
+                holder.binding.cardViewChatToDetailReceived.visibility = View.VISIBLE
+                holder.binding.imageChatToDetailReceivedTime.visibility = View.VISIBLE
+                holder.binding.imageChatToDetailSentTime.visibility = View.GONE
             }
         //左邊的訊息
         } else {
             //訊息是空的不顯示
             if (message.text.isNullOrEmpty()){
-                holder.itemView.textview_chatToDetail_received.visibility = View.GONE
-                holder.itemView.text_chatToDetail_receivedTime.visibility =View.GONE
-                holder.itemView.text_chatToDetail_sentTime.visibility = View.GONE
-                holder.itemView.textview_chatToDetail_sent.visibility = View.GONE
+                holder.binding.textviewChatToDetailReceived.visibility = View.GONE
+                holder.binding.textChatToDetailReceivedTime.visibility =View.GONE
+                holder.binding.textChatToDetailSentTime.visibility = View.GONE
+                holder.binding.textviewChatToDetailSent.visibility = View.GONE
             } else {
-                holder.itemView.textview_chatToDetail_received.visibility = View.GONE
-                holder.itemView.text_chatToDetail_sentTime.visibility = View.VISIBLE
-                holder.itemView.text_chatToDetail_receivedTime.visibility = View.GONE
-                holder.itemView.cardView_chatToDetail_received.visibility = View.GONE
-                holder.itemView.textview_chatToDetail_sent.visibility = View.VISIBLE
+                holder.binding.textviewChatToDetailReceived.visibility = View.GONE
+                holder.binding.textChatToDetailSentTime.visibility = View.VISIBLE
+                holder.binding.textChatToDetailReceivedTime.visibility = View.GONE
+                holder.binding.cardViewChatToDetailReceived.visibility = View.GONE
+                holder.binding.textviewChatToDetailSent.visibility = View.VISIBLE
             }
             //圖片是空的不顯示
             if (message.image.isNullOrEmpty()){
-                holder.itemView.cardView_chatToDetail_send.visibility = View.GONE
-                holder.itemView.cardView_chatToDetail_received.visibility = View.GONE
-                holder.itemView.image_chatToDetail_receivedTime.visibility = View.GONE
-                holder.itemView.image_chatToDetail_sentTime.visibility = View.GONE
+                holder.binding.cardViewChatToDetailSend.visibility = View.GONE
+                holder.binding.cardViewChatToDetailReceived.visibility = View.GONE
+                holder.binding.imageChatToDetailReceivedTime.visibility = View.GONE
+                holder.binding.imageChatToDetailSentTime.visibility = View.GONE
             } else {
-                holder.itemView.cardView_chatToDetail_send.visibility = View.VISIBLE
-                holder.itemView.cardView_chatToDetail_received.visibility = View.GONE
-                holder.itemView.image_chatToDetail_receivedTime.visibility = View.GONE
-                holder.itemView.image_chatToDetail_sentTime.visibility = View.VISIBLE
+                holder.binding.cardViewChatToDetailSend.visibility = View.VISIBLE
+                holder.binding.cardViewChatToDetailReceived.visibility = View.GONE
+                holder.binding.imageChatToDetailReceivedTime.visibility = View.GONE
+                holder.binding.imageChatToDetailSentTime.visibility = View.VISIBLE
             }
         }
         holder.bind(message, viewModel)

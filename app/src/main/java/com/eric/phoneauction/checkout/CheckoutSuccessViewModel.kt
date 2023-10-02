@@ -19,9 +19,9 @@ class CheckoutSuccessViewModel(phoneAuctionRepository: PhoneAuctionRepository): 
         get() = _navigateToHome
 
 
-    private val _error = MutableLiveData<String>()
+    private val _error = MutableLiveData<String?>()
 
-    val error: LiveData<String>
+    val error: MutableLiveData<String?>
         get() = _error
 
 

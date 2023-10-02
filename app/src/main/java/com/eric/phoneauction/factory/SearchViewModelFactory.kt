@@ -10,7 +10,7 @@ class SearchViewModelFactory constructor(
     private val phoneAuctionRepository: PhoneAuctionRepository,
     private val search: String
 ) : ViewModelProvider.NewInstanceFactory() {
-    override fun <T : ViewModel?> create(modelClass: Class<T>) =
+    override fun <T : ViewModel> create(modelClass: Class<T>): T =
         with(modelClass) {
             when {
                 isAssignableFrom(SearchViewModel::class.java) ->

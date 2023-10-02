@@ -10,14 +10,10 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.EditorInfo
 import android.widget.AdapterView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isEmpty
-import androidx.core.view.isNotEmpty
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.RecyclerView
 import com.eric.phoneauction.NavigationDirections
 import com.eric.phoneauction.PhoneAuctionApplication
 
@@ -25,13 +21,11 @@ import com.eric.phoneauction.R
 import com.eric.phoneauction.databinding.FragmentSearchBinding
 import com.eric.phoneauction.dialog.MessageDialog
 import com.eric.phoneauction.dialog.NoteDialog
-import com.eric.phoneauction.dialog.NoteDialogDirections
 import com.eric.phoneauction.ext.getVmFactory
 import com.eric.phoneauction.ext.hideKeyboard
 import com.eric.phoneauction.postFragment.PostSpinnerAdapter
-import com.eric.phoneauction.util.Logger
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_search.*
+import com.google.android.material.bottomnavigation.BottomNavigationView
+
 
 /**
  * A simple [Fragment] subclass.
@@ -197,7 +191,7 @@ class SearchFragment : Fragment() {
             }
         }
 
-        (activity as AppCompatActivity).bottomNavView.visibility = View.GONE
+        (activity as AppCompatActivity).findViewById<BottomNavigationView>(R.id.bottomNavView).visibility = View.GONE
         return binding.root
     }
 

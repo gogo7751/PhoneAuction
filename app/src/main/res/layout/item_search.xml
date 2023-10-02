@@ -27,6 +27,7 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/image_search_main"
+            android:theme="@style/Theme.MaterialComponents.Light"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:cardCornerRadius="6dp"

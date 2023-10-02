@@ -1,17 +1,9 @@
 package com.eric.phoneauction.data.remote
 
-import android.content.Context
-import android.content.Intent
 import android.icu.util.Calendar
 import android.os.Build
-import android.view.View
-import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.MutableLiveData
-import com.eric.phoneauction.LoginActivity
-import com.eric.phoneauction.MainActivity
 import com.eric.phoneauction.PhoneAuctionApplication
 import com.eric.phoneauction.R
 import com.eric.phoneauction.data.*
@@ -21,12 +13,8 @@ import com.eric.phoneauction.util.Logger
 import com.facebook.AccessToken
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
-import kotlinx.android.synthetic.main.activity_main.*
-import java.util.logging.Handler
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
@@ -116,10 +104,12 @@ object PhoneAuctionRemoteDataSource :
                 }
 
                 val list = mutableListOf<Event>()
-                for (document in snapshot!!) {
-                    Logger.d(document.id + " => " + document.data)
-                    val event = document.toObject(Event::class.java)
-                    list.add(event)
+                if (snapshot != null) {
+                    for (document in snapshot) {
+                        Logger.d(document.id + " => " + document.data)
+                        val event = document.toObject(Event::class.java)
+                        list.add(event)
+                    }
                 }
 
                 liveData.value = list
@@ -274,7 +264,7 @@ object PhoneAuctionRemoteDataSource :
     override fun getLiveNotification(): MutableLiveData<List<Notification>> {
         val liveData = MutableLiveData<List<Notification>>()
 
-        UserManager.userId?.let {
+        UserManager.userId?.let { it ->
             FirebaseFirestore.getInstance()
                 .collection(PATH_USER)
                 .document(it)
@@ -290,10 +280,12 @@ object PhoneAuctionRemoteDataSource :
                     }
 
                     val list = mutableListOf<Notification>()
-                    for (document in snapshot!!) {
-                        Logger.d(document.id + " => " + document.data)
-                        val notification = document.toObject(Notification::class.java)
-                        list.add(notification)
+                    if (snapshot != null) {
+                        for (document in snapshot) {
+                            Logger.d(document.id + " => " + document.data)
+                            val notification = document.toObject(Notification::class.java)
+                            list.add(notification)
+                        }
                     }
 
                     liveData.value = list
@@ -317,12 +309,13 @@ object PhoneAuctionRemoteDataSource :
                 }
 
                 val list = mutableListOf<ChatRoom>()
-                for (document in snapshot!!) {
-                    Logger.d(document.id + " => " + document.data)
-                    val chatRoom = document.toObject(ChatRoom::class.java)
-                    list.add(chatRoom)
+                if (snapshot != null) {
+                    for (document in snapshot) {
+                        Logger.d(document.id + " => " + document.data)
+                        val chatRoom = document.toObject(ChatRoom::class.java)
+                        list.add(chatRoom)
+                    }
                 }
-
                 liveData.value = list
             }
         return liveData
@@ -344,12 +337,13 @@ object PhoneAuctionRemoteDataSource :
                 }
 
                 val list = mutableListOf<Message>()
-                for (document in snapshot!!) {
-                    Logger.d(document.id + " => " + document.data)
-                    val chatRoom = document.toObject(Message::class.java)
-                    list.add(chatRoom)
+                if (snapshot != null) {
+                    for (document in snapshot) {
+                        Logger.d(document.id + " => " + document.data)
+                        val chatRoom = document.toObject(Message::class.java)
+                        list.add(chatRoom)
+                    }
                 }
-
                 liveData.value = list
             }
         return liveData
@@ -774,10 +768,12 @@ object PhoneAuctionRemoteDataSource :
                     }
 
                     val list = mutableListOf<Collection>()
-                    for (document in snapshot!!) {
-                        Logger.d(document.id + " => " + document.data)
-                        val collection = document.toObject(Collection::class.java)
-                        list.add(collection)
+                    if (snapshot != null) {
+                        for (document in snapshot) {
+                            Logger.d(document.id + " => " + document.data)
+                            val collection = document.toObject(Collection::class.java)
+                            list.add(collection)
+                        }
                     }
 
                     liveData.value = list
@@ -804,12 +800,13 @@ object PhoneAuctionRemoteDataSource :
                 }
 
                 val list = mutableListOf<Event>()
-                for (document in snapshot!!) {
-                    Logger.d(document.id + " => " + document.data)
-                    val event = document.toObject(Event::class.java)
-                    list.add(event)
+                if (snapshot != null) {
+                    for (document in snapshot) {
+                        Logger.d(document.id + " => " + document.data)
+                        val event = document.toObject(Event::class.java)
+                        list.add(event)
+                    }
                 }
-
                 liveData.value = list
             }
         return liveData
@@ -884,12 +881,13 @@ object PhoneAuctionRemoteDataSource :
                 }
 
                 val list = mutableListOf<WishList>()
-                for (document in snapshot!!) {
-                    Logger.d(document.id + " => " + document.data)
-                    val wishList = document.toObject(WishList::class.java)
-                    list.add(wishList)
+                if (snapshot != null) {
+                    for (document in snapshot) {
+                        Logger.d(document.id + " => " + document.data)
+                        val wishList = document.toObject(WishList::class.java)
+                        list.add(wishList)
+                    }
                 }
-
                 liveData.value = list
             }
         return liveData
@@ -929,7 +927,7 @@ object PhoneAuctionRemoteDataSource :
     override suspend fun handleFacebookAccessToken(token: AccessToken?): Result<Boolean> = suspendCoroutine { continuation ->
         val auth = FirebaseAuth.getInstance()
         val credential = token?.token?.let { FacebookAuthProvider.getCredential(it) }
-        Logger.d("${token!!.token}")
+        Logger.d(token!!.token)
         if (credential != null) {
             auth?.signInWithCredential(credential)
                 ?.addOnCompleteListener {

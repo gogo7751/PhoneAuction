@@ -18,11 +18,12 @@ import com.eric.phoneauction.util.Logger.d
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
+import com.facebook.FacebookSdk
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
+import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import kotlinx.android.synthetic.main.activity_login.*
 import java.util.*
 
 @Suppress("DEPRECATION")
@@ -31,16 +32,17 @@ class LoginActivity : AppCompatActivity() {
     val viewModel by viewModels<LoginViewModel> { getVmFactory() }
     private lateinit var binding: ActivityLoginBinding
 
-    var auth : FirebaseAuth? = null
-    var callbackManager : CallbackManager? = null
+    private var auth : FirebaseAuth? = null
+    private var callbackManager : CallbackManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
+        FacebookSdk.sdkInitialize(this)
 
         auth = FirebaseAuth.getInstance()
 
-        facebook_login_button.setOnClickListener {
+        binding.facebookLoginButton.setOnClickListener {
             //First step
             facebookLogin()
         }
@@ -74,18 +76,15 @@ class LoginActivity : AppCompatActivity() {
 
         LoginManager.getInstance()
             .registerCallback(callbackManager, object : FacebookCallback<LoginResult>{
-                override fun onSuccess(result: LoginResult?) {
-                    //Second step
-                    viewModel.handleFacebookAccessToken(result?.accessToken)
-
-                }
 
                 override fun onCancel() {
-
                 }
 
-                override fun onError(error: FacebookException?) {
+                override fun onError(error: FacebookException) {
+                }
 
+                override fun onSuccess(result: LoginResult) {
+                    viewModel.handleFacebookAccessToken(result?.accessToken)
                 }
 
             })

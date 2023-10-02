@@ -12,14 +12,13 @@ import com.eric.phoneauction.data.ChatRoom
 import com.eric.phoneauction.data.UserManager
 import com.eric.phoneauction.databinding.ItemChatBinding
 import com.eric.phoneauction.util.Logger
-import kotlinx.android.synthetic.main.item_chat.view.*
 
-class ChatAdapter( val onClickListener: OnClickListener, val viewModel:ChatViewModel) :
+class ChatAdapter(private val onClickListener: OnClickListener, val viewModel:ChatViewModel) :
     androidx.recyclerview.widget.ListAdapter<ChatRoom, ChatAdapter.DetailChatViewHolder>(
         DiffCallback
     ) {
 
-    class DetailChatViewHolder(private var binding: ItemChatBinding) :
+    class DetailChatViewHolder(var binding: ItemChatBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(
             chatRoom: ChatRoom, viewModel: ChatViewModel
@@ -62,12 +61,12 @@ class ChatAdapter( val onClickListener: OnClickListener, val viewModel:ChatViewM
     override fun onBindViewHolder(holder: DetailChatViewHolder, position: Int) {
         val chatRoom = getItem(position)
         if (UserManager.userId == chatRoom.senderId) {
-            holder.itemView.text_chat_title.text = chatRoom.receiverName
-            holder.itemView.image_chat_sender.visibility = View.GONE
+            holder.binding.textChatTitle.text = chatRoom.receiverName
+            holder.binding.imageChatSender.visibility = View.GONE
             viewModel.isEmpty.value = true
         }else if (UserManager.userId == chatRoom.receiverId) {
-            holder.itemView.text_chat_title.text = chatRoom.senderName
-            holder.itemView.image_chat_receiver.visibility = View.GONE
+            holder.binding.textChatTitle.text = chatRoom.senderName
+            holder.binding.imageChatReceiver.visibility = View.GONE
             viewModel.isEmpty.value = true
         } else {
             holder.itemView.visibility = View.GONE

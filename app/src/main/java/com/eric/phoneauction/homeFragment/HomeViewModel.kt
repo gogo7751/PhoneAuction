@@ -1,18 +1,14 @@
 package com.eric.phoneauction.homeFragment
 
-import android.os.CountDownTimer
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import app.appworks.school.publisher.network.LoadApiStatus
 import com.eric.phoneauction.PhoneAuctionApplication
 import com.eric.phoneauction.R
 import com.eric.phoneauction.data.Event
 import com.eric.phoneauction.data.Notification
-import com.eric.phoneauction.data.User
-import com.eric.phoneauction.data.UserManager
 import com.eric.phoneauction.data.source.PhoneAuctionRepository
 import com.eric.phoneauction.util.Logger
 import com.google.firebase.firestore.Query
@@ -49,9 +45,9 @@ class HomeViewModel(private val phoneAuctionRepository: PhoneAuctionRepository) 
         get() = _status
 
     // error: The internal MutableLiveData that stores the error of the most recent request
-    private val _error = MutableLiveData<String>()
+    private val _error = MutableLiveData<String?>()
 
-    val error: LiveData<String>
+    val error: MutableLiveData<String?>
         get() = _error
 
     // status for the loading icon of swl

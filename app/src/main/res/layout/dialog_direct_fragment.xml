@@ -49,6 +49,7 @@
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/image_direct_product"
+                android:theme="@style/Theme.MaterialComponents.Light"
                 android:layout_width="66dp"
                 android:layout_height="66dp"
                 app:cardCornerRadius="10dp"

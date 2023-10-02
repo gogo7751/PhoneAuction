@@ -101,6 +101,7 @@
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardView_post4"
+                    android:theme="@style/Theme.MaterialComponents.Light"
                     android:layout_width="66dp"
                     android:layout_height="66dp"
                     android:layout_marginStart="8dp"
@@ -130,6 +131,7 @@
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardView_post1"
+                    android:theme="@style/Theme.MaterialComponents.Light"
                     android:layout_width="66dp"
                     android:layout_height="66dp"
                     android:layout_marginStart="16dp"
@@ -160,6 +162,7 @@
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardView_post2"
+                    android:theme="@style/Theme.MaterialComponents.Light"
                     android:layout_width="66dp"
                     android:layout_height="66dp"
                     android:layout_marginStart="8dp"
@@ -190,6 +193,7 @@
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardView_post3"
+                    android:theme="@style/Theme.MaterialComponents.Light"
                     android:layout_width="66dp"
                     android:layout_height="66dp"
                     android:layout_marginStart="8dp"
@@ -230,6 +234,7 @@
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardView_post5"
+                    android:theme="@style/Theme.MaterialComponents.Light"
                     android:layout_width="66dp"
                     android:layout_height="66dp"
                     android:layout_marginStart="8dp"

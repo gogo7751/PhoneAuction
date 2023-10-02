@@ -3,6 +3,7 @@ package com.eric.phoneauction
 import android.app.Application
 import com.eric.phoneauction.data.source.PhoneAuctionRepository
 import com.eric.phoneauction.util.ServiceLocator
+import com.google.firebase.FirebaseApp
 import kotlin.properties.Delegates
 
 class PhoneAuctionApplication : Application() {
@@ -17,6 +18,7 @@ class PhoneAuctionApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        FirebaseApp.initializeApp(this)
         instance = this
     }
 

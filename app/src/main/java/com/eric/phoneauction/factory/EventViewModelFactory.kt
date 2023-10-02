@@ -15,7 +15,7 @@ class EventViewModelFactory constructor(
     private val phoneAuctionRepository: PhoneAuctionRepository,
     private val event: Event
 ) : ViewModelProvider.NewInstanceFactory() {
-    override fun <T : ViewModel?> create(modelClass: Class<T>) =
+    override fun <T : ViewModel> create(modelClass: Class<T>): T =
         with(modelClass) {
             when {
                 isAssignableFrom(DetailAuctionViewModel::class.java) ->
